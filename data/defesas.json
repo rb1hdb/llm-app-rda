@@ -1,0 +1,1530 @@
+{
+  "defesas": [
+    {
+      "id": "D01",
+      "nome": "Filtro lexical de input (regex, palavras-chave, similaridade de string)",
+      "descricao": "Verifica o prompt antes de chegar ao modelo por regras lexicais: regex, palavras-chave e listas de bloqueio contra frases de injeção conhecidas, mais correspondência aproximada (anagrama/distância de string) para capturar embaralhamentos de letras tipo typoglycemia. A decisão é sobre a forma do texto, sem modelar intenção.",
+      "locus": "input",
+      "fortalezas": [
+        "Atua antes de o modelo ver o prompt e não depende de LLM: é a camada 'heurística' do Rebuff, que filtra a entrada potencialmente maliciosa antes do LLM (R03) e a validação/sanitização de entrada recomendada pelo OWASP (R01).",
+        "A variante fuzzy captura embaralhamentos estilo anagrama (typoglycemia) que o casamento exato não vê (R01)."
+      ],
+      "fraquezas": [
+        "Julga superfície, não intenção: o próprio OWASP registra que 'similarity alone does not identify malicious intent' (R01), então paráfrase, tradução ou codificação do payload não são cobertas por casamento lexical.",
+        "A heurística fuzzy documentada é 'intentionally minimal' e só pega scrambles estilo anagrama (R01); outras ofuscações (codificação, split de payload) ficam fora.",
+        "Não cobre injeção indireta: 'Pattern-based filters do not reliably catch indirect injection in untrusted content' (R01).",
+        "O fornecedor da ferramenta declara que a camada heurística (junto das demais) não dá proteção completa: 'cannot provide 100% protection' (R03)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Filtragem de entrada",
+      "fontes": [
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R03",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D02",
+      "nome": "Classificador treinado de input (guard model)",
+      "descricao": "Um modelo separado do LLM principal, ajustado por instruções (ou treinado com dados sintéticos gerados a partir de regras em linguagem natural, ou ainda por treinamento adversarial online), classifica o prompt e o contexto recuperado contra uma taxonomia de riscos antes de o LLM processá-los; o resultado bloqueia ou deixa passar.",
+      "locus": "input",
+      "fortalezas": [
+        "Taxonomia de risco configurável e adaptável por instruções: o ajuste fino do Llama Guard permite 'customization of tasks and the adaptation of output formats', com prompting zero/few-shot sobre taxonomias diversas (R32).",
+        "Classificadores treinados com uma 'constituição' resistiram a mais de 3.000 horas estimadas de red teaming sem jailbreak universal (R84); guard treinado adversarialmente reporta 95,0% de recall em conteúdo inseguro com ~100% de passagem de benignos (R60).",
+        "Camada de 'prompt shields' faz parte da pilha recomendada pela Microsoft contra injeção indireta (R06)."
+      ],
+      "fraquezas": [
+        "Sob ataque adaptativo por busca, filtros do tipo modelo falham em massa: Protect AI, PromptGuard e Model Armor tiveram ASR acima de 90% e até o mais resistente (PIGuard) chegou a 71% (R79 §5.3).",
+        "Falsos positivos degradam utilidade: o detector de injeção do AgentDojo 'has too many false positives' e reduziu a utilidade benigna a 41,49% (R77 §4.3); a Microsoft lista falsos positivos como trade-off de defesas probabilísticas (R06).",
+        "O classificador pode ser evitado por injeção indireta construída contra ele: no EchoLeak o classificador XPIA da Microsoft foi evadido (R96).",
+        "A presença do guardrail é detectável por sinais HTTP, léxicos e de tempo, distinguindo bloqueio do guardrail de recusa do LLM (F1 médio 98%) (R65), o que entrega ao atacante o mapa da camada.",
+        "Custo operacional não nulo: nos Constitutional Classifiers, +0,38% de recusas em tráfego de produção e 23,7% de overhead de inferência (R84)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Classificadores",
+      "fontes": [
+        {
+          "r": "R32",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R84",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R60",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R06",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R79",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R77",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R96",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R65",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D03",
+      "nome": "Julgador LLM de input (detecção/remoção de injeção por LLM)",
+      "descricao": "Um LLM dedicado — ou o próprio modelo em modo de autoverificação — analisa o prompt ou o conteúdo não confiável que vai entrar no contexto, decide se há tentativa de ataque e, em algumas variantes, remove o trecho injetado antes de seguir.",
+      "locus": "input",
+      "fortalezas": [
+        "Julga semântica e não só forma: o Rebuff usa 'a dedicated LLM to analyze incoming prompts and identify potential attacks' (R03).",
+        "Pode remover o trecho injetado em vez de bloquear tudo: PromptArmor 'prompts an off-the-shelf LLM to detect and remove potential injected prompts' e reporta falsos positivos/negativos abaixo de 1% no AgentDojo (R86).",
+        "Sem retreino do modelo principal; o guardrail por LLM é configurável (self-check do NeMo Guardrails) (R10)."
+      ],
+      "fraquezas": [
+        "O próprio juiz é um LLM e é injetável: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection' (R01).",
+        "Detectores com conhecimento secreto baseados em LLM foram contornados por ataque adaptativo: DataSentinel 'In every case, the defense was bypassed' (R79 §5.4).",
+        "Falsos positivos de defesas probabilísticas bloqueiam ações legítimas e há custo de latência/computação (R06 Outcomes).",
+        "Os números de PromptArmor (<1%) vêm de avaliação no AgentDojo reportada pelos próprios autores (R86 abstract); nas fontes lidas não há confirmação independente sob ataque adaptativo contra esse detector."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Julgamento por LLM",
+      "fontes": [
+        {
+          "r": "R03",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R10",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R86",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R06",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R79",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D04",
+      "nome": "Similaridade semântica com base vetorial de ataques conhecidos",
+      "descricao": "Mantém embeddings de ataques já vistos numa base vetorial e sinaliza entradas cujo embedding fica próximo de algum deles; ataques bloqueados podem realimentar a base.",
+      "locus": "input",
+      "fortalezas": [
+        "Reconhece reescritas de ataques já catalogados sem depender da forma exata: armazena 'embeddings of previous attacks' para 'recognize and prevent similar attacks in the future' (R03)."
+      ],
+      "fraquezas": [
+        "Só reconhece o que se parece com ataques já armazenados ('previous attacks', R03): técnica conceitualmente nova ou com intenção equivalente porém distante no espaço vetorial não casa (consequência direta do desenho; registrado como inferência).",
+        "É uma das camadas de um protótipo que o próprio fornecedor declara não oferecer proteção de 100% (R03).",
+        "Detectores aprendidos foram contornados em massa por ataques adaptativos por busca (R79 §5.3, medido em outros filtros-modelo; o Rebuff não é citado nos trechos lidos de R79)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Filtragem de entrada",
+      "fontes": [
+        {
+          "r": "R03",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R79",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D05",
+      "nome": "Sanitização de conteúdo não confiável na ingestão (RAG, web, retorno de tool)",
+      "descricao": "Trata como não confiável todo conteúdo externo (documentos, páginas, e-mails, respostas de tools, mesmo de servidores aprovados) e o limpa antes de entrar no contexto: remove padrões de injeção, filtra markup suspeito e valida/sanitiza saídas de tools.",
+      "locus": "input",
+      "fortalezas": [
+        "Atua na fronteira de ingestão de fontes remotas: 'Remove common injection patterns from external sources' e 'Filter suspicious markup in web content and documents' (R01).",
+        "Regra explícita de não confiar nem em tools aprovadas: 'Treat every tool response as untrusted data, including responses from approved servers' (R27 §12)."
+      ],
+      "fraquezas": [
+        "Filtros por padrão 'do not reliably catch indirect injection in untrusted content' (R01).",
+        "A causa de fundo é que a IA não distingue entrada do usuário de conteúdo externo: 'the AI's inability to distinguish between user input and external content, making traditional input validation insufficient' (R06 Context), então a limpeza pode apenas reduzir, não eliminar.",
+        "Sanitização de links/markup foi contornada em incidente real: 'circumventing link redaction with reference-style Markdown' (R96)."
+      ],
+      "aplicabilidade": [
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Sanitização",
+      "fontes": [
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R27",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R06",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R96",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D06",
+      "nome": "Detecção e mascaramento de dados sensíveis (PII, segredos)",
+      "descricao": "Detecta entidades sensíveis (PII, chaves) em entradas, saídas e conteúdo recuperado e as mascara ou bloqueia antes de seguir no pipeline.",
+      "locus": "input",
+      "fortalezas": [
+        "Cobre os três pontos de passagem: o NeMo Guardrails oferece 'detecting and masking sensitive data in user inputs, LLM outputs, and retrieved content' (R10 docs).",
+        "Opera em modo bloquear ou mascarar entidades (R10 docs), reduzindo o que pode ser exfiltrado."
+      ],
+      "fraquezas": [
+        "Cobre apenas as entidades que o detector reconhece/foi configurado para reconhecer ('PII entities', R10 docs); dado sensível fora dessas classes, fragmentado ou codificado não é reconhecido (inferência lógica; ancoragem forte pendente).",
+        "A escolha 'block vs mask' é um trade-off: bloquear quebra a requisição legítima, mascarar pode ser reversível/previsível (inferência; sem fonte direta)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente"
+      ],
+      "categoria": "Sanitização",
+      "fontes": [
+        {
+          "r": "R10",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D07",
+      "nome": "Transformação do input antes do modelo (perturbação aleatória com agregação, reescrita de query)",
+      "descricao": "Em vez de julgar o prompt, o sistema o transforma antes do LLM: o SmoothLLM perturba aleatoriamente várias cópias do prompt (nível de caractere) e agrega as respostas para detectar/neutralizar sufixos adversariais; a reescrita de query reformula a entrada do usuário antes da tarefa final.",
+      "locus": "input",
+      "fortalezas": [
+        "Baseia-se no achado de que 'adversarially-generated prompts are brittle to character-level changes' e estabelece estado da arte contra GCG, PAIR, RandomSearch e AmpleGCG (R87).",
+        "Independe do modelo ('works with any LLM', R87 abstract/resumo) e resiste a GCG adaptativo segundo os autores (R87).",
+        "A reescrita de query foi a defesa mais eficaz contra o ataque de turno 1 de vazamento de prompt (≈ -17 pontos de ASR em modelos fechados) (R64 §5)."
+      ],
+      "fraquezas": [
+        "Custo de várias inferências por requisição e trade-off declarado entre robustez e desempenho nominal (R87).",
+        "A premissa é fragilidade a mudanças de caractere: ataques cuja eficácia é semântica (persuasão, roleplay) não dependem da forma exata e não são desfeitos por perturbação (consequência da premissa de R87; não testado em R87 com ataques semânticos longos — inferência).",
+        "A reescrita preserva a semântica do ataque: contra o desafiante de turno 2 a redução foi menor (≈ -32 pontos em fechados, relativo ao turno 1) e a técnica 'adds latency' (R64 §5)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG"
+      ],
+      "categoria": "Transformação",
+      "fontes": [
+        {
+          "r": "R87",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R64",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D08",
+      "nome": "Limitação de consumo e de tentativas (rate limit, quotas, timeouts)",
+      "descricao": "No gateway, antes do modelo, impõe limites de requisições por usuário/IP/sessão/tenant, quotas e timeouts, restringindo o orçamento de tentativas do atacante e o consumo de recursos.",
+      "locus": "input",
+      "fortalezas": [
+        "Limita o orçamento de tentativas de ataques por amostragem: 'Implement request rate limiting per user/IP' dentro da mitigação de Best-of-N (R01).",
+        "Resiste a DoS e abuso econômico: 'Apply resource controls (rate limits, quotas, timeouts) per session or tenant to resist DoS' (R27 §6; também R28/LLM10)."
+      ],
+      "fraquezas": [
+        "O próprio OWASP restringe a alegação: rate limiting 'Restricts attempt budgets; it does not establish model robustness' (R01).",
+        "Limita volume, não conteúdo: um ataque de uma única tentativa bem-sucedida não é afetado (consequência do desenho).",
+        "Limites chaveados por usuário/IP/sessão (R01, R27) pressupõem identidade estável; identidades descartáveis zeram o contador (inferência lógica)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Controle de recursos",
+      "fontes": [
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R27",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R28",
+          "tipo": "survey"
+        }
+      ]
+    },
+    {
+      "id": "D09",
+      "nome": "Demarcação instrução×dados no prompt (delimitadores, rótulos, XML)",
+      "descricao": "Estrutura o prompt com seções rotuladas ou delimitadores para separar instruções confiáveis de dados não confiáveis, pedindo ao modelo que trate o conteúdo delimitado como dado e ignore instruções dentro dele.",
+      "locus": "prompt",
+      "fortalezas": [
+        "Reduz parte da injeção em agentes: delimitar saídas de tools baixou o ASR direcionado de 57,69% para 41,65% no AgentDojo (R77 §4.3, Tabela 5).",
+        "É a prática base recomendada de separar 'trusted instructions' de 'untrusted data' (R01)."
+      ],
+      "fraquezas": [
+        "Delimitadores são burlados digitando o delimitador na entrada: 'This is very easily defeated' (R05).",
+        "Há ataque que nem usa os delimitadores: 'this attack doesn't attempt to use the delimiters at all' porque tudo 'is flattened down to that sequence of integers' (R05).",
+        "O OWASP orienta a não tratar rótulos como fronteira: 'do not treat text labels or prompt wording as an enforcement boundary' (R01).",
+        "Pode piorar: 'XML-tagging increases the ASR ... by 5.5% on the turn 1 attack and 3.4% on turn 2' no vazamento de prompt (R64 §5)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Estruturação do prompt",
+      "fontes": [
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R05",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R64",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R77",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D10",
+      "nome": "Spotlighting de conteúdo não confiável (marcação de dados e transformações de proveniência)",
+      "descricao": "Transforma o conteúdo não confiável (data marking, encoding, delimitação) de modo a dar ao modelo um sinal contínuo de proveniência e instrui o modelo, via metaprompt, a nunca obedecer instruções vindas do texto marcado.",
+      "locus": "prompt",
+      "fortalezas": [
+        "'The key insight is to utilize transformations of an input to provide a reliable and continuous signal of its provenance' (R04).",
+        "Em GPT, reduziu o ASR de >50% para <2% com impacto mínimo na tarefa (R04, ataques estáticos)."
+      ],
+      "fraquezas": [
+        "Sob ataque adaptativo por busca o ASR passa de 95%, enquanto em ataques estáticos chegava a 1% (R79 §5.1).",
+        "Avaliação original restrita a modelos da família GPT (R04 abstract).",
+        "A Microsoft não o apresenta como suficiente: só como uma camada dentro de defesa em profundidade com mitigações determinísticas (R06 Guidance 'Use multiple layers')."
+      ],
+      "aplicabilidade": [
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Estruturação do prompt",
+      "fontes": [
+        {
+          "r": "R04",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R06",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R79",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D11",
+      "nome": "Repetição da instrução do usuário após conteúdo não confiável (prompt sandwiching)",
+      "descricao": "Reanexa as instruções originais do usuário depois do conteúdo não confiável (por exemplo depois de cada chamada de tool), para que a última coisa que o modelo lê seja a instrução legítima.",
+      "locus": "prompt",
+      "fortalezas": [
+        "No AgentDojo foi a defesa de prompt com melhor utilidade benigna (85,53%) e reduziu o ASR direcionado para 27,82% (R77 §4.3).",
+        "Em vazamento de prompt reduziu o ASR no turno 1 (≈ -9,5 pontos em fechados) (R64 §5)."
+      ],
+      "fraquezas": [
+        "Os próprios autores avaliam que 'it is unlikely to withstand adaptive attacks' (R77 §4.3).",
+        "Sob ataque adaptativo por busca o ASR passa de 95% (R79 §5.1).",
+        "Ganhos moderados e menores no turno 2 de ataque de vazamento (R64 §5)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente"
+      ],
+      "categoria": "Estruturação do prompt",
+      "fontes": [
+        {
+          "r": "R77",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R79",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R64",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D12",
+      "nome": "Hardening do system prompt (regras anti-instrução e anti-vazamento)",
+      "descricao": "Embute no prompt de sistema políticas explícitas: papel e limites do modelo, 'tratar entrada do usuário como DADO, não COMANDO', não revelar as instruções, recusar tentativas de mudar as instruções centrais. Inclui variantes de otimização do prompt defensivo (soft prompt que reancora a atenção).",
+      "locus": "prompt",
+      "fortalezas": [
+        "Contra vazamento de prompt, a instrução defensiva foi a melhor defesa isolada no turno 2 do ataque (≈ -50 pontos em modelos fechados) (R64 §5).",
+        "Não requer componente extra e é recomendada como primeira camada: 'Design system prompts with clear role definitions and security constraints' (R01).",
+        "A variante AREA (soft prompt otimizável que reancora a atenção) iguala a resistência de defesas de ponta e melhora a usabilidade média em mais de 33% (R63)."
+      ],
+      "fraquezas": [
+        "É texto, não mecanismo: 'Avoid Reliance on System Prompts for Strict Behavior Control' e 'Ensure that security controls are enforced independently from the LLM' (R28/LLM07).",
+        "Defesas atuais de prompt vazam ou prejudicam usabilidade: 'Existing defenses often fail to prevent leakage without degrading usability', por 'attention drift' (R63).",
+        "Escala de falha medida: 'over 80% of deployments leak system prompts under realistic adversarial queries' em 1.200 aplicações (R63); mesmo com a melhor defesa o ASR médio ficou em ≈30% (R64).",
+        "Prompt de sistema continua extraível 'despite existing defenses in place' (R93)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Instrução defensiva",
+      "fontes": [
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R28",
+          "tipo": "survey"
+        },
+        {
+          "r": "R63",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R64",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R93",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D13",
+      "nome": "Restrição tópica e de diálogo (topical/dialog rails)",
+      "descricao": "Camada de diálogo programável que mantém a conversa dentro de um escopo: rails de tópico e de fluxo de diálogo operam sobre a mensagem em forma canônica, recusando o que sai do escopo ou impondo um caminho de diálogo predefinido.",
+      "locus": "prompt",
+      "fortalezas": [
+        "Rails são 'user-defined, independent of the underlying LLM, and interpretable' e controlam comportamentos como não falar de tópicos considerados nocivos ou seguir um caminho de diálogo predefinido (R59).",
+        "Os rails de diálogo 'influence how the LLM is prompted' e operam em mensagens de forma canônica (R10)."
+      ],
+      "fraquezas": [
+        "O próprio NeMo declara que 'The built-in guardrails may or may not be suitable for a given production use case' e que avaliar segurança é 'still an open research question' (R10).",
+        "Como operam sobre a forma canônica da mensagem (R10), o que não é mapeado ao escopo esperado, ou pedido proibido enquadrado dentro de um tópico permitido, depende do mapeamento e não da intenção (inferência lógica; ancoragem em técnica específica fica para a Etapa 5).",
+        "O OWASP lista 'constrain model behavior' como mitigação mas admite que 'it is unclear if there are fool-proof methods of prevention' (R28/LLM01)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "Agente"
+      ],
+      "categoria": "Controle de diálogo",
+      "fontes": [
+        {
+          "r": "R10",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R59",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R28",
+          "tipo": "survey"
+        }
+      ]
+    },
+    {
+      "id": "D14",
+      "nome": "Recusa treinada (RLHF/DPO/SFT de segurança)",
+      "descricao": "Comportamento de recusa treinado no próprio modelo por alinhamento de segurança (instruction tuning, RLHF, DPO, SFT de segurança). A recusa é uma propriedade do modelo, mediada internamente por uma direção do espaço residual, e não um componente externo.",
+      "locus": "modelo",
+      "fortalezas": [
+        "Não adiciona componente externo à pilha: a recusa é propriedade do modelo (consequência do desenho).",
+        "Pode ser aprofundada: 'safety recovery examples' ensinam o modelo a voltar à recusa mesmo após tokens iniciais danosos, e um objetivo de fine-tuning que limita atualizações nos primeiros tokens torna o alinhamento mais persistente (R92 §3.1, §4.1).",
+        "A recusa é mediada por uma única direção (um subespaço unidimensional) em 13 modelos abertos, o que a torna localizável e analisável (R91)."
+      ],
+      "fraquezas": [
+        "Alinhamento raso: 'the alignment adapts a model's generative distribution primarily over only its very first few output tokens' (R92); por isso um prefill de prefixo sem recusa derruba a defesa: 'A simple exploit is to prefill the first few tokens with a non-refusal prefix' (R92 §2.3.1).",
+        "Falha de generalização: 'mismatched generalization occurs when safety training fails to generalize to a domain for which capabilities exist' (R14) e 'competing objectives' entre capacidade e segurança (R14); idiomas de poucos recursos expõem 'the inherent cross-lingual vulnerability of these safety mechanisms' (R15).",
+        "Em white-box, apagar a direção de recusa desativa a recusa com efeito mínimo nas demais capacidades: 'erasing this direction ... prevents it from refusing harmful instructions' (R91).",
+        "Técnicas de recusa 'are often bypassed' (R88); jailbreaks multi-turn humanos passam de 70% de ASR em defesas com ASR de um dígito sob ataques automáticos single-turn (R21)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Alinhamento",
+      "fontes": [
+        {
+          "r": "R14",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R15",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R92",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R91",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R88",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R21",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D15",
+      "nome": "Raciocínio de segurança antes da resposta (reasoning-based safety guardrails)",
+      "descricao": "O modelo raciocina explicitamente sobre justificativas de segurança antes de responder (cadeia de pensamento dedicada), e a recusa nasce desse raciocínio; a lógica de transição entre a etapa de raciocínio de segurança e a resposta governa quando a checagem acontece.",
+      "locus": "modelo",
+      "fortalezas": [
+        "Descrita como defesa primária promissora: 'reasoning-based safety guardrails, where models explicitly reason on safety justifications before answering' (R44)."
+      ],
+      "fraquezas": [
+        "É 'alarmingly brittle': 'the stage-transition logic that governs when safety reasoning begins and ends can be trivially manipulated' (R44).",
+        "Os ataques funcionam 'either by bypassing reasoning entirely or exploiting it to produce targeted harmful content', com sucesso de até 90% (R44).",
+        "Modelos de raciocínio de pesos abertos são difíceis de corrigir ou monitorar após o lançamento; o guardrail é 'necessary but not sufficient' sem mecanismos de disparo robustos e alinhamento base mais forte (R44).",
+        "A cadeia de pensamento é superfície de ataque: títulos de R43 (H-CoT: 'Hijacking the Chain-of-Thought Safety Reasoning Mechanism') e R46 ('Chain-of-Thought Hijacking') apontam o sequestro do próprio raciocínio de segurança."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente"
+      ],
+      "categoria": "Alinhamento",
+      "fontes": [
+        {
+          "r": "R44",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R43",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R46",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D16",
+      "nome": "Hierarquia de instruções treinada",
+      "descricao": "Treina o modelo para respeitar uma ordem de privilégio entre fontes de instruções (sistema > desenvolvedor > usuário > conteúdo de tool/dados), ignorando seletivamente instruções de menor privilégio quando conflitam com as de maior privilégio.",
+      "locus": "modelo",
+      "fortalezas": [
+        "Define explicitamente 'how models should behave when instructions of different priorities conflict' e ensina o modelo a 'selectively ignore lower-privileged instructions' (R07).",
+        "Aumenta drasticamente a robustez 'even for attack types not seen during training', com degradação mínima de capacidade (R07 abstract)."
+      ],
+      "fraquezas": [
+        "Na prática falha: modelos 'struggle with consistent instruction prioritization, even for simple formatting conflicts' e a separação system/user 'fails to establish a reliable instruction hierarchy' (R08).",
+        "A prioridade atribuída não controla quem vence: há 'strong inherent biases toward certain constraint types regardless of their priority designation' (R08).",
+        "A fronteira é comportamento aprendido, não checagem: ataques que forjam marcadores de papel ou tokens especiais não são tratados pelo treino (R08 documenta a falha de prioridade; ataques de template em R42/R55 serão mapeados na Etapa 5)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Alinhamento",
+      "fontes": [
+        {
+          "r": "R07",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R08",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D17",
+      "nome": "Treino anti-injeção com canal de dados separado (StruQ, SecAlign, Meta SecAlign)",
+      "descricao": "Fine-tuning específico contra injeção de prompt: um front-end formata prompt e dados em canais separados (StruQ, instruction tuning estruturado) e/ou otimização de preferência (SecAlign) treina o modelo a preferir a resposta à instrução legítima em vez da resposta à instrução injetada nos dados.",
+      "locus": "modelo",
+      "fortalezas": [
+        "StruQ 'significantly improves resistance to prompt injection attacks, with little or no impact on utility' (R80).",
+        "SecAlign foi o 'first known method' a reduzir injeções a <10% e generaliza para ataques mais sofisticados do que os do treino (R81).",
+        "Meta SecAlign mantém quase toda a utilidade e supera o SecAlign, inclusive em fluxos agênticos (R82)."
+      ],
+      "fraquezas": [
+        "Ataques adaptativos o derrubam: contra StruQ 'succeeds in every case we tested' e Meta SecAlign chegou a 96% de ASR com busca, contra 2% reportado em ataque estático (R79 §5.2).",
+        "O SecAlign original 'suffers from significant utility degradation, especially in agentic tasks' (R82).",
+        "Exige pesos treináveis: não se aplica a modelos de API fechados (consequência do método)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente"
+      ],
+      "categoria": "Treino anti-injeção",
+      "fontes": [
+        {
+          "r": "R80",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R81",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R82",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R79",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D18",
+      "nome": "Circuit breakers (reroteamento de representações internas)",
+      "descricao": "Atua nas representações internas do modelo que produzem saídas danosas: ao detectá-las durante a geração, 'interrompe' o modelo (circuit-breaking), em vez de treinar recusa ou filtrar texto.",
+      "locus": "modelo",
+      "fortalezas": [
+        "Controla 'the representations that are responsible for harmful outputs in the first place' e interrompe o modelo enquanto responde (R88).",
+        "Aplica-se a modelos de texto e multimodais, com reduções consideráveis de ações danosas em agentes (R88)."
+      ],
+      "fraquezas": [
+        "Sob ataque adaptativo por RL chegou a 100% de ASR no HarmBench (R79 §5.2).",
+        "Exige acesso aos pesos/treinamento do modelo (consequência do método)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "Agente"
+      ],
+      "categoria": "Alinhamento",
+      "fontes": [
+        {
+          "r": "R88",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R79",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D19",
+      "nome": "Monitor lexical de output (padrões, segredos, vazamento manifesto)",
+      "descricao": "Examina a resposta gerada por regras de padrão para sinais de injeção bem-sucedida ou vazamento (segredos, chaves, instruções do sistema) e bloqueia ou trunca a saída que casar.",
+      "locus": "output",
+      "fortalezas": [
+        "Última verificação determinística antes da entrega: 'Monitor LLM outputs for signs of successful injection attacks' (R01).",
+        "Monitoramento de padrões incomuns na saída é recomendado como controle de logging/monitoring (R28/LLM05)."
+      ],
+      "fraquezas": [
+        "Insuficiente por si só: 'output keyword filtering is not sufficient' (R01 Secure Implementation Pipeline).",
+        "Só reconhece padrões previstos; vazamento reformulado, fragmentado ou transcodificado não casa (inferência lógica, o mesmo limite do filtro lexical R01).",
+        "Mais de 80% das implantações vazaram o system prompt sob consultas adversariais realistas mesmo com defesas (R63), e extração por ataques textuais simples tem alta probabilidade (R93)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Filtragem de saída",
+      "fontes": [
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R28",
+          "tipo": "survey"
+        },
+        {
+          "r": "R63",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R93",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D20",
+      "nome": "Classificador treinado de output (guard model sobre a resposta)",
+      "descricao": "O mesmo tipo de guard model da triagem de entrada, aplicado à resposta gerada: classifica o texto produzido contra a taxonomia de política antes de entregá-lo ao usuário ou a tools downstream.",
+      "locus": "output",
+      "fortalezas": [
+        "Julga a resposta e não o pedido: o Llama Guard faz 'response classification' dos outputs gerados (R32).",
+        "A mesma família de classificadores treinada por constituição foi avaliada contra jailbreaks universais com 3.000+ horas de red teaming (R84)."
+      ],
+      "fraquezas": [
+        "Os mesmos limites de D02 sob ataque adaptativo: filtros do tipo modelo com ASR >90% (R79 §5.3).",
+        "Julga o texto da resposta, não o efeito downstream (link, imagem, chamada): no EchoLeak a exfiltração passou por links e imagens auto-carregadas (R96).",
+        "Avalia cada resposta isoladamente; jailbreaks multi-turn humanos passam de 70% de ASR em defesas com ASR de um dígito sob ataques single-turn (R21; aplicação a classificadores por-turno é inferência).",
+        "Custo: +0,38% de recusas e 23,7% de overhead de inferência (R84)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Classificadores",
+      "fontes": [
+        {
+          "r": "R32",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R84",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R79",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R96",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R21",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D21",
+      "nome": "Julgador LLM de output (self-check / critic de resposta)",
+      "descricao": "Um LLM (o próprio ou outro) verifica a resposta gerada contra a política antes de liberá-la: self-check de saída e critic agents que auditam entradas e saídas em tempo real.",
+      "locus": "output",
+      "fortalezas": [
+        "Pega violações que surgiram na geração e não estavam no pedido: 'LLM self-checking (input/output moderation, fact-checking, hallucination detection)' (R10).",
+        "Critic agents auditam 'inputs and outputs in real time, especially in multi-agent systems' (R06)."
+      ],
+      "fraquezas": [
+        "O juiz é injetável: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection' (R01), e o texto a julgar foi produzido por um modelo que pode estar comprometido pelo mesmo ataque.",
+        "Falsos positivos e custo adicional por resposta (R06 Outcomes: Trade-offs).",
+        "Um juiz LLM não resolveu detecção sob ataque adaptativo: DataSentinel foi contornado 'In every case' (R79 §5.4)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Julgamento por LLM",
+      "fontes": [
+        {
+          "r": "R10",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R06",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R79",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D22",
+      "nome": "Verificação de factualidade e alucinação da resposta",
+      "descricao": "Checa a resposta gerada contra as fontes ou o contexto recuperado (fact-checking e detecção de alucinação) antes de devolvê-la.",
+      "locus": "output",
+      "fortalezas": [
+        "Há rails dedicados a 'fact-checking' e a 'hallucination detection for RAG applications' no NeMo Guardrails (R10).",
+        "Ancora a resposta no contexto recuperado, reduzindo conteúdo inventado (consequência do desenho; sem número publicado nas fontes lidas)."
+      ],
+      "fraquezas": [
+        "A verificação é feita contra o contexto fornecido: se o contexto RAG foi envenenado por injeção indireta, a resposta falsa pode ser 'verificada' como consistente (inferência lógica; ataque de envenenamento ancorado em R67/R96 na Etapa 5).",
+        "Checa factualidade, não segurança: uma resposta factual que vaza dado sensível passa (inferência lógica).",
+        "O NeMo afirma que avaliar a segurança de aplicações conversacionais é 'still an open research question' (R10)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG"
+      ],
+      "categoria": "Verificação de conteúdo",
+      "fontes": [
+        {
+          "r": "R10",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D23",
+      "nome": "Tratamento seguro da saída no consumo (encoding, validação de formato, CSP, link redaction)",
+      "descricao": "Trata a saída do LLM como entrada não confiável para qualquer consumidor downstream: encoding contextual (HTML, SQL, Markdown), queries parametrizadas, validação de formato esperado por código determinístico, redação de links e Content Security Policy estrita para impedir exfiltração e execução.",
+      "locus": "output",
+      "fortalezas": [
+        "Não depende da cooperação do modelo: 'Treat the model as any other user, adopting a zero-trust approach' e validar respostas antes de funções de backend (R28/LLM05).",
+        "Cobre vetores específicos: encoding contextual para JS/Markdown, queries parametrizadas e 'strict Content Security Policies (CSP)' contra XSS (R28/LLM05); formatos de saída esperados validados por código determinístico (R28/LLM01).",
+        "Recomendado em resposta ao EchoLeak: 'enhanced input/output filtering, provenance-based access control, and strict content security policies' (R96)."
+      ],
+      "fraquezas": [
+        "Link redaction e CSP foram contornados no EchoLeak: 'circumventing link redaction with reference-style Markdown' e 'abusing a Microsoft Teams proxy allowed by the content security policy' (R96).",
+        "Impor formato por decodificação restrita pode virar a superfície de ataque: 'schema-enforced logit masking injects a malicious prefix into the generation trajectory' (R37).",
+        "Formato estruturado ajudou em vazamento de prompt (-13 a -28 pontos), mas reduz apenas o canal, não a intenção (R64 §5, paráfrase)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Tratamento de saída",
+      "fontes": [
+        {
+          "r": "R28",
+          "tipo": "survey"
+        },
+        {
+          "r": "R96",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R37",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R64",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D24",
+      "nome": "Marcador canário de vazamento",
+      "descricao": "Insere um token único no prompt ou contexto e dispara alarme se ele reaparecer na saída, detectando vazamento do prompt por detecção positiva em vez de heurística.",
+      "locus": "output",
+      "fortalezas": [
+        "Detecção direta de vazamento: o Rebuff 'Add canary tokens to prompts to detect leakages' (R03).",
+        "O marcador é também usado para testar: 'a dummy marker placed in the system prompt appears in the response' é critério de teste de vazamento (R01 'Grade the intended outcome')."
+      ],
+      "fraquezas": [
+        "Ausência do marcador não prova ausência de vazamento: 'Marker absence means only that this exact marker was not observed' (R01).",
+        "Só detecta vazamento do texto exato marcado; paráfrase ou transcodificação do conteúdo sem o token passam (inferência lógica sobre a mesma limitação).",
+        "Cobertura limitada ao contexto efetivamente canarizado e a camada faz parte de protótipo sem proteção de 100% (R03)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente"
+      ],
+      "categoria": "Detecção de vazamento",
+      "fontes": [
+        {
+          "r": "R03",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D25",
+      "nome": "Verificação de alinhamento ação–tarefa em runtime (Task Shield, plan drift, tool-chain analysis)",
+      "descricao": "Antes de executar, compara cada instrução e cada chamada de tool com os objetivos especificados pelo usuário (e com o plano esperado), bloqueando o que não contribui para a tarefa; inclui monitorar desvios de plano em raciocínio multi-passo e analisar sequências de tools arriscadas.",
+      "locus": "acao",
+      "fortalezas": [
+        "Reformula segurança de agentes de 'preventing harmful actions' para 'ensuring task alignment': verifica se 'each instruction and tool call contributes to user-specified goals' (R85).",
+        "No AgentDojo com GPT-4o, o Task Shield reduziu o ASR a 2,07% com utilidade de 69,79% (R85).",
+        "A Microsoft lista como camadas complementares a detecção de plan drift ('deviations from intended task flows') e a análise de cadeia de tools ('block risky sequences of tool execution') (R06)."
+      ],
+      "fraquezas": [
+        "A Microsoft registra que defesas probabilísticas como plan drift detection 'may occasionally block legitimate actions' (falsos positivos) e que monitoramento em runtime traz latência/custo (R06 Outcomes).",
+        "O resultado de 2,07% é de benchmark de ataque estático (AgentDojo) reportado pelos autores; R79 mostra que defesas com ASR quase nulo em avaliação estática foram contornadas por ataques adaptativos (R79 abstract).",
+        "A intenção do usuário é texto interpretável; ação nociva justificável como 'contribuindo para a tarefa' tende a passar (inferência lógica; ancorar em técnica na Etapa 5)."
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Controle de ações",
+      "fontes": [
+        {
+          "r": "R85",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R06",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R79",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D26",
+      "nome": "Fluxo de controle pré-determinado (action selector, plan-then-execute, code-then-execute, tool filter)",
+      "descricao": "Fixa o fluxo de ações antes de o agente ver dados não confiáveis: o agente apenas seleciona de uma lista de ações permitidas (Action-Selector), formula um plano antes de executar (Plan-Then-Execute), escreve um programa formal (Code-Then-Execute) ou recebe só as tools necessárias à tarefa (tool filter), de modo que dados injetados não alterem o fluxo.",
+      "locus": "acao",
+      "fortalezas": [
+        "O tool filter baixou o ASR no AgentDojo: 'particularly effective, lowering the attack success rate to 7.5%' (R77 §4.3).",
+        "Padrões com 'provable resistance to prompt injection' propostos como princípios de projeto, com trade-offs documentados (R89).",
+        "Plan-Then-Execute permite 'formulate a plan to be executed' antes do contato com dados externos (R89 §3.1)."
+      ],
+      "fraquezas": [
+        "'This pattern does not prevent all prompt injections' (Plan-Then-Execute, R89 §3.1); em Code-Then-Execute 'we cannot prevent a prompt injection in the calendar data from altering the content of the email sent to John' (R89).",
+        "Action-Selector 'mostly loses the benefits of an LLM's fuzzy search abilities' (R89 §4.1.2).",
+        "O tool filter 'fails ... when the list of tools to use cannot be planned in advance' e quando as tools necessárias à tarefa bastam para o ataque (R77 §4.3)."
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Padrões de projeto",
+      "fontes": [
+        {
+          "r": "R89",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R77",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D27",
+      "nome": "Isolamento de dados não confiáveis em LLM de quarentena (Dual LLM, Map-Reduce)",
+      "descricao": "Divide o trabalho entre um LLM privilegiado (recebe instruções, planeja e usa tools) e um LLM em quarentena sem acesso a tools que processa o conteúdo não confiável; variante Map-Reduce despacha agentes isolados para cada pedaço de dados de terceiros. Só resultados estruturados cruzam a fronteira.",
+      "locus": "acao",
+      "fortalezas": [
+        "'A quarantined LLM with zero tool access parses the untrusted data' enquanto o privilegiado só planeja (R01 Model-Based Guardrails).",
+        "Dual LLM: um LLM privilegiado que 'receives instructions and plans actions, and can use tools' e um em quarentena sem tools (R89 §3.1).",
+        "Map-Reduce: 'dispatch an isolated LLM-agent to process individual pieces of 3rd party data' (R89 §3.1)."
+      ],
+      "fraquezas": [
+        "No estudo de caso do assistente de e-mail 'the quarantined LLM is still susceptible to prompt injection' (R89 §4.3.3).",
+        "Map-Reduce exige decomposição estrita: 'may be tasks where such a strict decomposition is impossible' (R89 §4.1.2).",
+        "Variante CaMeL: assume 'a trusted user prompt and uncompromised memory' e o código foi liberado como artefato de pesquisa, não componente de segurança suportado (R01)."
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "RAG",
+        "MCP"
+      ],
+      "categoria": "Padrões de projeto",
+      "fontes": [
+        {
+          "r": "R89",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R83",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D28",
+      "nome": "Capabilities e controle de fluxo de informação (CaMeL, IFC)",
+      "descricao": "Extrai o fluxo de controle e o de dados da consulta confiável, executa o plano num interpretador restrito e anexa 'capabilities' (tags de proveniência e permissão) a cada valor, para que dados não confiáveis nunca influenciem o fluxo de programa nem fluam para destinos não autorizados; violações de política exigem confirmação do usuário.",
+      "locus": "acao",
+      "fortalezas": [
+        "Dados não confiáveis 'can never impact the program flow' e capabilities impedem a exfiltração de dados privados por fluxos não autorizados (R83).",
+        "Resolve 77% das tarefas do AgentDojo com segurança provada, contra 84% do sistema sem defesa (R83).",
+        "A Microsoft recomenda IFC para 'prevent untrusted data from influencing critical inference or planning' (R06); a mitigação do EchoLeak inclui controle de acesso baseado em proveniência (R96)."
+      ],
+      "fraquezas": [
+        "'CaMeL is vulnerable to side-channel attacks' (R83 §7).",
+        "Confirmações de política geram fadiga: 'users become desensitized to security prompts' (R83 §9.2).",
+        "Carga de especificação: 'users needing to codify and specify security policies and maintain them' (R83 §9.3).",
+        "Custo de utilidade: 77% de tarefas resolvidas com garantias vs 84% sem defesa (R83 abstract)."
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Padrões de projeto",
+      "fontes": [
+        {
+          "r": "R83",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R06",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R96",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D29",
+      "nome": "Minimização de contexto (remoção de conteúdo desnecessário do contexto)",
+      "descricao": "Remove progressivamente do contexto o conteúdo que já não é necessário (por exemplo o prompt original do usuário ou resultados intermediários), evitando que texto injetado persista e influencie interações posteriores.",
+      "locus": "acao",
+      "fortalezas": [
+        "O padrão faz o sistema 'remove unnecessary content from the context over multiple interactions' (R89 §3.1)."
+      ],
+      "fraquezas": [
+        "No estudo do chatbot de medicação, 'adversarial users could still manipulate the retrieval part' (R89 §4.8.3).",
+        "Só reduz persistência; o conteúdo injetado que está no contexto no momento da decisão continua influenciando (consequência do desenho)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente"
+      ],
+      "categoria": "Padrões de projeto",
+      "fontes": [
+        {
+          "r": "R89",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D30",
+      "nome": "Regra de Dois (limitar propriedades de risco por sessão de agente)",
+      "descricao": "Regra de projeto: numa sessão, o agente deve satisfazer no máximo duas de três propriedades — [A] processar entradas não confiáveis, [B] acessar sistemas sensíveis ou dados privados, [C] mudar estado ou se comunicar externamente. Se a tarefa exigir as três, o agente não deve operar autonomamente e exige supervisão (aprovação humana ou outra validação confiável).",
+      "locus": "acao",
+      "fortalezas": [
+        "Evita 'the highest impact consequences of prompt injection' ao nunca juntar as três propriedades sem supervisão (R90).",
+        "Vale 'until robustness research allows us to reliably detect and refuse prompt injection' (R90): não depende de detectar o ataque."
+      ],
+      "fraquezas": [
+        "A Meta afirma que o framework 'should not be viewed as sufficient' contra outros vetores e 'as a finish line' (R90).",
+        "Designs conformes 'can still be prone to failure', por exemplo quando o usuário confirma um aviso sem ler (R90).",
+        "É 'a supplement — and not a substitute' para princípios como menor privilégio (R90)."
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Padrões de projeto",
+      "fontes": [
+        {
+          "r": "R90",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D31",
+      "nome": "Menor privilégio de tools, dados e identidade",
+      "descricao": "Concede a cada tool, servidor e aplicação apenas os dados e operações de que precisa: escopos OAuth estreitos e de curta duração, contas somente leitura, tokens próprios da aplicação, funções críticas mantidas em código fora do alcance do modelo.",
+      "locus": "acao",
+      "fortalezas": [
+        "'Grant each tool only the data and operations it needs' (R01).",
+        "Escopos estreitos: 'Request narrow OAuth scopes (e.g., mail.readonly instead of mail.modify or mail.full_access)' (R27 §1).",
+        "Limita o dano se o modelo for manipulado: o controle 'Least model privilege' visa 'Minimize what a model can do (trigger actions or access data)' (R17); a Microsoft acrescenta privilégios de curta duração, removidos após cada uso (R06)."
+      ],
+      "fraquezas": [
+        "Limita o dano, não o abuso dentro do privilégio concedido: a Regra de Dois mostra que um agente com [A] entrada não confiável, [B] dados sensíveis e [C] comunicação externa dentro do seu escopo legítimo permanece no pior caso (R90; inferência sobre o escopo concedido).",
+        "A própria Meta posiciona menor privilégio como princípio a ser complementado, não suficiente (R90: Regra de Dois é suplemento, não substituto).",
+        "Escopos largos concedidos por conveniência anulam o controle; por isso a Microsoft pede privilégios mínimos e de curta duração, revogados após o uso (R06; a degradação por conveniência é inferência lógica)."
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP",
+        "RAG"
+      ],
+      "categoria": "Controle de acesso",
+      "fontes": [
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R27",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R06",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R17",
+          "tipo": "survey"
+        },
+        {
+          "r": "R28",
+          "tipo": "survey"
+        },
+        {
+          "r": "R90",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D32",
+      "nome": "Aprovação humana de ações consequentes (human-in-the-loop)",
+      "descricao": "Exige aprovação humana explícita antes de executar ações destrutivas, financeiras, de compartilhamento de dados ou de alto risco, com os parâmetros completos à vista; o risco é avaliado pela ação e não pelo conteúdo do prompt.",
+      "locus": "acao",
+      "fortalezas": [
+        "'Require human approval for consequential tool actions before execution' (R01); 'Require explicit user confirmation for destructive, financial, or data-sharing operations' (R27 §4).",
+        "A Microsoft o classifica como 'the last line of defense' (R06).",
+        "Rodar tarefas com [A][B][C] só com supervisão é a saída da Regra de Dois (R90)."
+      ],
+      "fraquezas": [
+        "Fadiga de confirmação: 'users become desensitized to security prompts' (R83 §9.2); a Meta cita o caso de o usuário confirmar um aviso às cegas (R90).",
+        "O OWASP lembra que 'the most vulnerable pieces of a system are humans' (R01).",
+        "Gate roteado por palavra-chave do prompt é inválido: 'keyword counts in the user's prompt do not establish the action's risk' (R01).",
+        "'A prompt requesting human review does not itself stop execution' (R01, LangChain): o gate precisa ser imposto em código (R01)."
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Controle de ações",
+      "fontes": [
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R27",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R28",
+          "tipo": "survey"
+        },
+        {
+          "r": "R06",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R83",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R90",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D33",
+      "nome": "Validação estrita de schema e de parâmetros de tools",
+      "descricao": "Valida toda chamada de tool contra um schema estrito (JSON Schema com additionalProperties: false) e trata argumentos e retornos como não confiáveis, rejeitando estruturas fora do contrato antes da execução.",
+      "locus": "acao",
+      "fortalezas": [
+        "'Use strict JSON Schema for tool parameters: set additionalProperties: false' (R27 §2).",
+        "Valida respostas do modelo antes de funções de backend: 'apply proper input validation on responses coming from the model to backend functions' (R28/LLM05).",
+        "É uma verificação determinística no código, independente do LLM (R28/LLM07: controles de segurança 'enforced independently from the LLM')."
+      ],
+      "fraquezas": [
+        "Valida estrutura e tipos, não intenção: um valor bem formado e nocivo dentro de campo string livre passa (inferência lógica sobre o que um schema consegue expressar).",
+        "Campos de texto livre exigidos pela aplicação (queries, mensagens, código) continuam sendo veículo de injeção (R27 §5 exige validar/sanitizar também saídas, o que mostra que o schema sozinho não basta).",
+        "Controle determinístico no código não substitui os demais: o próprio R28/LLM07 pede que os controles de segurança sejam aplicados 'independently from the LLM', ou seja, em camadas além do prompt."
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Controle de ações",
+      "fontes": [
+        {
+          "r": "R27",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R28",
+          "tipo": "survey"
+        }
+      ]
+    },
+    {
+      "id": "D34",
+      "nome": "Sandbox e isolamento de execução de tools/servidores",
+      "descricao": "Executa servidores MCP locais e tools em ambiente isolado (container, chroot, caminhos restritos, rede desabilitada por padrão) com o mínimo de privilégios e acesso aos recursos do host, restringindo o acesso do LLM a rede, serviços internos e APIs.",
+      "locus": "acao",
+      "fortalezas": [
+        "'Run local MCP servers in a sandbox that enforces minimal privileges and access to host resources' (R27 §3).",
+        "'Restrict the LLM's access to network resources, internal services, and APIs' (R28/LLM10 'Sandbox Techniques')."
+      ],
+      "fraquezas": [
+        "Contém o raio de ação, não impede o abuso do que está permitido dentro do sandbox (consequência do desenho).",
+        "Tools que precisam de rede reabrem o canal de exfiltração; o que o sandbox libera é o que o atacante usa (inferência; ver D35 e o bypass de proxy permitido por CSP no EchoLeak, R96).",
+        "A eficácia depende da política de isolamento configurada; o OWASP descreve o sandbox como um controle entre vários para consumo de recursos, não como solução única (R28/LLM10)."
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Isolamento",
+      "fontes": [
+        {
+          "r": "R27",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R28",
+          "tipo": "survey"
+        },
+        {
+          "r": "R96",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D35",
+      "nome": "Allowlist de destinos de rede (anti-SSRF e anti-exfiltração)",
+      "descricao": "Nunca busca URL fornecida pelo LLM sem validação por allowlist estrita de domínios/destinos, cortando SSRF e exfiltração por fetch arbitrário.",
+      "locus": "acao",
+      "fortalezas": [
+        "'Never fetch arbitrary URLs provided by the LLM without strict allowlist validation' (R27 §5).",
+        "Estrutural: corta o destino independentemente do texto do prompt (consequência do desenho)."
+      ],
+      "fraquezas": [
+        "Destino permitido continua alcançável: no EchoLeak a exfiltração usou 'a Microsoft Teams proxy allowed by the content security policy' (R96).",
+        "Allowlists que crescem para manter funcionalidades diluem a proteção (inferência lógica; sem fonte direta).",
+        "Não cobre exfiltração por canais que não são fetch (texto ao usuário, imagens auto-carregadas por rendering) (R96)."
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Controle de ações",
+      "fontes": [
+        {
+          "r": "R27",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R96",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D36",
+      "nome": "Integridade de definições de tool (vetting, hash pinning, detecção de rug pull)",
+      "descricao": "Inspeciona descrições, nomes de parâmetros, tipos e schemas de retorno antes de aprovar uma tool; fixa (pinning) as definições aprovadas por hash criptográfico exigindo nova revisão em qualquer mudança; e monitora mudanças pós-instalação (rug pull).",
+      "locus": "acao",
+      "fortalezas": [
+        "'Inspect all tool descriptions, parameter names, types, and return schemas before approval' (R27 §2).",
+        "'Pin reviewed tool definitions using cryptographic hashes and require review when they change' (R27 §2) e 'Monitor for changes to tool descriptions post-installation (rug pull detection)' (R27 §9).",
+        "A verificação por hash é determinística e não depende de classificar o conteúdo (consequência do desenho)."
+      ],
+      "fraquezas": [
+        "O pinning protege o que foi revisado: se a definição revisada já era maliciosa, ela fica fixada; a segurança depende da qualidade da revisão inicial (R27 §2: o pin é de 'reviewed' definitions).",
+        "Cobre definições de tool, não o conteúdo que a tool retorna em runtime (por isso R27 §12 exige tratar retornos como não confiáveis).",
+        "Mudança de comportamento sem mudança de definição (o servidor responde diferente) não altera o hash (inferência lógica)."
+      ],
+      "aplicabilidade": [
+        "MCP",
+        "Agente"
+      ],
+      "categoria": "Cadeia de suprimentos",
+      "fontes": [
+        {
+          "r": "R27",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D37",
+      "nome": "Segregação de servidores e origens (isolamento cross-origin em MCP)",
+      "descricao": "Trata cada servidor MCP como um domínio de segurança independente e não confiável: descrições de um servidor não podem referenciar ou alterar o comportamento de tools de outro, e servidores sensíveis ficam separados dos de uso geral.",
+      "locus": "acao",
+      "fortalezas": [
+        "'Treat each MCP server as an untrusted, independent security domain' (R27 §8).",
+        "'Prevent tool descriptions from one server from referencing or modifying the behavior of tools from another server' (R27 §8)."
+      ],
+      "fraquezas": [
+        "O agente central ainda une todos os servidores no mesmo contexto: a separação de implantação não separa semanticamente o que o LLM lê (inferência lógica; ancorar com técnicas de tool shadowing na Etapa 5).",
+        "É controle de configuração: depende de gateway/proxy configurado corretamente (R27 §8 descreve como regra a aplicar, não como propriedade automática)."
+      ],
+      "aplicabilidade": [
+        "MCP",
+        "Agente"
+      ],
+      "categoria": "Isolamento",
+      "fontes": [
+        {
+          "r": "R27",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D38",
+      "nome": "Autenticação de transporte e sessão (binding de sessão, assinatura, anti-replay)",
+      "descricao": "Autentica o canal e a sessão em endpoints MCP remotos: IDs de sessão aleatórios vinculados ao usuário autenticado, TLS, assinatura de mensagens com regras de confiança de chaves e rejeição de replay, com falha fechada quando a verificação falha.",
+      "locus": "acao",
+      "fortalezas": [
+        "'use random session IDs, bind them to the authenticated user, and never treat an ID as authentication' (R27 §6).",
+        "Integridade de mensagem opcional, mas definida: 'how keys are trusted, what is signed, how replay is rejected, and what happens when verification fails' (R27 §7)."
+      ],
+      "fraquezas": [
+        "A seção de integridade é 'Optional Message-Level Integrity' (R27 §7): implantação parcial deixa endpoints sem assinatura/anti-replay.",
+        "Autentica o canal e a sessão, não a intenção da ação: um agente legítimo autenticado conduzido por injeção passa na autenticação (consequência do desenho)."
+      ],
+      "aplicabilidade": [
+        "MCP"
+      ],
+      "categoria": "Autenticação",
+      "fontes": [
+        {
+          "r": "R27",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D39",
+      "nome": "Telemetria, logging e auditoria de decisões e invocações",
+      "descricao": "Registra decisões de guardrail e invocações de tools (parâmetros, usuário, tempo), dispara alertas em padrões suspeitos e monitora o uso e o comportamento do sistema; serve à detecção, à resposta a incidentes e à reconstrução forense.",
+      "locus": "processo",
+      "fortalezas": [
+        "'Log security-relevant metadata and decisions' e 'Set up alerting for suspicious patterns' (R01 Comprehensive Monitoring).",
+        "'Log all MCP tool invocations with full parameters, user context, and timestamps' (R27 §10).",
+        "Supervisão contínua: 'Oversight of internal and external AI system behaviour by humans and/or automated mechanisms' (R17 #OVERSIGHT); a Microsoft recomenda monitoramento contínuo em runtime (R06)."
+      ],
+      "fraquezas": [
+        "Observa e reage, não bloqueia: a detecção ocorre depois da ação (consequência do desenho).",
+        "O próprio log pode vazar: o OWASP manda registrar metadados 'excluding credentials, secrets' (R01), indicando que gravar parâmetros completos carrega esse risco.",
+        "Detecção depende de haver sinal: ataques lentos ou sem padrão conhecido podem não gerar alerta (inferência lógica; sem medição nas fontes lidas)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Detecção e resposta",
+      "fontes": [
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R27",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R17",
+          "tipo": "survey"
+        },
+        {
+          "r": "R06",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R28",
+          "tipo": "survey"
+        }
+      ]
+    },
+    {
+      "id": "D40",
+      "nome": "Kill switch e controles de emergência",
+      "descricao": "Controle operacional para interromper o sistema ou a funcionalidade comprometida durante um incidente ativo (comportamento indevido, ataque em curso).",
+      "locus": "processo",
+      "fortalezas": [
+        "O OWASP o inclui no checklist de implantação: 'Implement emergency controls and kill switches' (R01 Best Practices Checklist, Deployment Phase)."
+      ],
+      "fraquezas": [
+        "Interrompe, não previne: o dano antes do acionamento já ocorreu (consequência do desenho; fonte lida só o recomenda, sem avaliá-lo).",
+        "Depende de detecção e decisão de acionamento (R01 só lista o controle); a eficácia herda a de D39 (inferência lógica)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Detecção e resposta",
+      "fontes": [
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D41",
+      "nome": "Testes adversariais contínuos e red teaming",
+      "descricao": "Processo de testar a aplicação com padrões de ataque conhecidos, benchmarks, red teaming (humano ou automatizado) e simulações de intrusão, tratando o modelo como usuário não confiável, para medir resistência e detectar regressões.",
+      "locus": "processo",
+      "fortalezas": [
+        "'Conduct regular security testing with known attack patterns' (R01) e 'Perform regular penetration testing and breach simulations, treating the model as an untrusted user' (R28/LLM01).",
+        "Há benchmarks padronizados e abertos para medir robustez: HarmBench, JailbreakBench, AgentDojo, InjecAgent (R75, R76, R77, R78).",
+        "Red teaming multilíngue/holístico é apontado como necessário para salvaguardas robustas (R15)."
+      ],
+      "fraquezas": [
+        "Teste estático superestima robustez: 'the majority of defenses originally reported near-zero attack success rates' mas 12 defesas foram contornadas com ataques adaptativos (R79).",
+        "Resultado de smoke test não generaliza: 'Passing this smoke test does not show resistance to a persistent adversary' (R01).",
+        "'Evaluation characterizes behaviour; it does not prove correctness' (R17)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Validação",
+      "fontes": [
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R28",
+          "tipo": "survey"
+        },
+        {
+          "r": "R79",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R75",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R76",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R77",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R78",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R15",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R17",
+          "tipo": "survey"
+        }
+      ]
+    },
+    {
+      "id": "D42",
+      "nome": "Governança, minimização de dados e separação de segredos",
+      "descricao": "Controles de processo que reduzem o que existe para vazar ou ser abusado: minimizar e limitar os dados processados, remover dados proibidos para a finalidade, reter pouco tempo, ofuscar dados sensíveis e manter segredos fora do system prompt; apoiado por programa de governança de IA e de segurança.",
+      "locus": "processo",
+      "fortalezas": [
+        "#DATA MINIMIZE visa reduzir o impacto de vazamento ou manipulação por 'reducing the amount of data processed by the system' (R17).",
+        "Reduz a superfície de dados: 'limiting the data attack surface, meaning that the amount and the variety of data is reduced as much as possible' (R17).",
+        "'Separate Sensitive Data from System Prompts' (R28/LLM07): o segredo que não está no prompt não pode ser extraído dele."
+      ],
+      "fraquezas": [
+        "É controle de processo: não intercepta nem detecta um ataque em curso (consequência do desenho).",
+        "Dados de que a aplicação precisa para funcionar continuam no sistema; a minimização só remove o 'unnecessary' (R17 #DATA MINIMIZE).",
+        "Depende de classificar corretamente o que é desnecessário/proibido e de manter essa classificação (R17 descreve a lista por objetivo da aplicação; inferência)."
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "Governança",
+      "fontes": [
+        {
+          "r": "R17",
+          "tipo": "survey"
+        },
+        {
+          "r": "R28",
+          "tipo": "survey"
+        }
+      ]
+    }
+  ]
+}

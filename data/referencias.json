@@ -1,0 +1,804 @@
+{
+  "referencias": [
+    {
+      "id": "R01",
+      "titulo": "LLM Prompt Injection Prevention Cheat Sheet",
+      "autores": "OWASP",
+      "ano": "s.d.",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R02",
+      "titulo": "Survey on LLM Safety: Attacks, Defenses, Alignment, Metrics, and Guardrails",
+      "autores": "Jalan et al.",
+      "ano": 2026,
+      "url": "https://link.springer.com/article/10.1007/s10994-026-07060-8",
+      "tipo": "survey"
+    },
+    {
+      "id": "R03",
+      "titulo": "protectai/rebuff — detector de prompt injection em 3 camadas (heurística, embedding, LLM-juiz) + canário (repositório arquivado em 16/05/2025)",
+      "autores": "Protect AI",
+      "ano": 2023,
+      "url": "https://github.com/protectai/rebuff",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R04",
+      "titulo": "Defending Against Indirect Prompt Injection Attacks With Spotlighting",
+      "autores": "Keegan Hines, Gary Lopez, Matthew Hall, Federico Zarfati, Yonatan Zunger, Emre Kiciman (Microsoft)",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2403.14720",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R05",
+      "titulo": "Delimiters won't save you",
+      "autores": "Simon Willison",
+      "ano": 2023,
+      "url": "https://simonwillison.net/2023/May/11/delimiters-wont-save-you/",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R06",
+      "titulo": "Defend against indirect prompt injection attacks (Microsoft Learn, ms.date 2026-03-19)",
+      "autores": "Microsoft",
+      "ano": 2026,
+      "url": "https://learn.microsoft.com/en-us/security/zero-trust/sfi/defend-indirect-prompt-injection",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R07",
+      "titulo": "The Instruction Hierarchy: Training LLMs to Prioritize Privileged Instructions",
+      "autores": "Eric Wallace, Kai Xiao, Reimar Leike, Lilian Weng, Johannes Heidecke, Alex Beutel (OpenAI)",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2404.13208",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R08",
+      "titulo": "Control Illusion: The Failure of Instruction Hierarchies in Large Language Models",
+      "autores": "Yilin Geng et al.",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2502.15851",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R09",
+      "titulo": "Improving instruction hierarchy in frontier LLMs",
+      "autores": "OpenAI",
+      "ano": "s.d.",
+      "url": "https://openai.com/index/instruction-hierarchy-challenge/",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R10",
+      "titulo": "NVIDIA NeMo Guardrails — guardrails de entrada e saída configuráveis como etapas separadas (Colang; repositório criado em 18/04/2023)",
+      "autores": "NVIDIA",
+      "ano": 2023,
+      "url": "https://github.com/NVIDIA-NeMo/Guardrails",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R11",
+      "titulo": "A Systematic Literature Review on LLM Defenses Against Prompt Injection and Jailbreaking: Expanding NIST Taxonomy",
+      "autores": "Pedro H. Barcha Correia, Ryan W. Achjian, Diego E. G. Caetano de Oliveira, Ygor Acacio Maria, Victor Takashi Hayashi, Marcos Lopes, Charles Christian Miers, Marcos A. Simplicio Jr.",
+      "ano": 2026,
+      "url": "https://arxiv.org/abs/2601.22240",
+      "tipo": "survey"
+    },
+    {
+      "id": "R12",
+      "titulo": "LoopTrap: Termination Poisoning Attacks on LLM Agents",
+      "autores": "Huiyu Xu, Zhibo Wang, Wenhui Zhang, Ziqi Zhu, Yaopeng Wang, Kui Ren, Chun Chen",
+      "ano": 2026,
+      "url": "https://arxiv.org/abs/2605.05846",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R13",
+      "titulo": "Great, Now Write an Article About That: The Crescendo Multi-Turn LLM Jailbreak Attack",
+      "autores": "Mark Russinovich, Ahmed Salem, Ronen Eldan",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2404.01833",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R14",
+      "titulo": "Jailbroken: How Does LLM Safety Training Fail?",
+      "autores": "Alexander Wei, Nika Haghtalab, Jacob Steinhardt",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2307.02483",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R15",
+      "titulo": "Low-Resource Languages Jailbreak GPT-4",
+      "autores": "Zheng-Xin Yong, Cristina Menghini, Stephen H. Bach",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2310.02446",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R17",
+      "titulo": "OWASP AI Exchange — controles de monitoramento, detecção e resposta em runtime",
+      "autores": "OWASP",
+      "ano": "s.d.",
+      "url": "https://owaspai.org",
+      "tipo": "survey"
+    },
+    {
+      "id": "R19",
+      "titulo": "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+      "autores": "Xinyue Shen, Zeyuan Chen, Michael Backes, Yun Shen, Yang Zhang",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2308.03825",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R20",
+      "titulo": "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+      "autores": "Yi Zeng, Hongpeng Lin, Jingwen Zhang et al.",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2401.06373",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R21",
+      "titulo": "LLM Defenses Are Not Robust to Multi-Turn Human Jailbreaks Yet",
+      "autores": "Nathaniel Li et al.",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2408.15221",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R22",
+      "titulo": "M2S: Multi-turn to Single-turn jailbreak in Red Teaming for LLMs",
+      "autores": "Junwoo Ha, Hyunjun Kim, Sangyoon Yu, Haon Park, Ashkan Yousefpour, Yuna Park, Suhyun Kim",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2503.04856",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R23",
+      "titulo": "Prompt Injection attack against LLM-integrated Applications (HOUYI)",
+      "autores": "Yi Liu, Gelei Deng, Yuekang Li, Kailong Wang, Zihao Wang, Xiaofeng Wang, Tianwei Zhang, Yepang Liu, Haoyu Wang, Yan Zheng, Leo Yu Zhang, Yang Liu",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2306.05499",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R24",
+      "titulo": "FigStep: Jailbreaking Large Vision-Language Models via Typographic Visual Prompts",
+      "autores": "Yichen Gong, Delong Ran, Jinyuan Liu, Conglei Wang, Tianshuo Cong, Anyu Wang, Sisi Duan, Xiaoyun Wang",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2311.05608",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R25",
+      "titulo": "Safety at Scale: A Comprehensive Survey of Large Model and Agent Safety",
+      "autores": "Xingjun Ma, Yifeng Gao, Yixu Wang et al.",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2502.05206",
+      "tipo": "survey"
+    },
+    {
+      "id": "R26",
+      "titulo": "Parseltongue 4.0 — Text Encoder, Decoder & Steganography Tool (v4.0; repositório sem datas)",
+      "autores": "elder-plinius",
+      "ano": "s.d.",
+      "url": "https://elder-plinius.github.io/P4RS3LT0NGV3/",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R27",
+      "titulo": "MCP Security Cheat Sheet",
+      "autores": "OWASP",
+      "ano": "s.d.",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R28",
+      "titulo": "OWASP Top 10 for LLM Applications 2025",
+      "autores": "OWASP GenAI Security Project",
+      "ano": 2025,
+      "url": "https://genai.owasp.org/llm-top-10/",
+      "tipo": "survey"
+    },
+    {
+      "id": "R29",
+      "titulo": "OWASP Top 10 for Agentic Applications for 2026 (itens ASI01–ASI10; publicado em 09/12/2025)",
+      "autores": "OWASP GenAI Security Project",
+      "ano": 2025,
+      "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+      "tipo": "survey"
+    },
+    {
+      "id": "R30",
+      "titulo": "Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations (NIST AI 100-2 E2025)",
+      "autores": "Apostol Vassilev, Alina Oprea, Alie Fordyce, Hyrum Anderson, Xander Davies, Maia Hamin",
+      "ano": 2025,
+      "url": "https://csrc.nist.gov/pubs/ai/100/2/e2025/final",
+      "tipo": "survey"
+    },
+    {
+      "id": "R31",
+      "titulo": "MITRE ATLAS — base de conhecimento de táticas, técnicas e mitigações para sistemas de IA",
+      "autores": "MITRE",
+      "ano": "s.d.",
+      "url": "https://atlas.mitre.org/",
+      "tipo": "survey"
+    },
+    {
+      "id": "R32",
+      "titulo": "Llama Guard: LLM-based Input-Output Safeguard for Human-AI Conversations",
+      "autores": "Hakan Inan, Kartikeya Upasani, Jianfeng Chi et al. (Meta)",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2312.06674",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R33",
+      "titulo": "Ignore Previous Prompt: Attack Techniques For Language Models",
+      "autores": "Fábio Perez, Ian Ribeiro",
+      "ano": 2022,
+      "url": "https://arxiv.org/abs/2211.09527",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R35",
+      "titulo": "Endless Jailbreaks with Bijection Learning",
+      "autores": "Brian R.Y. Huang, Maximilian Li, Leonard Tang",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2410.01294",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R36",
+      "titulo": "Trojan Source: Invisible Vulnerabilities (CVE-2021-42574)",
+      "autores": "Nicholas Boucher, Ross Anderson",
+      "ano": 2021,
+      "url": "https://arxiv.org/abs/2111.00169",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R37",
+      "titulo": "When Grammar Guides the Attack: Uncovering Control-Plane Vulnerabilities in LLMs with Structured Output (Constrained Decoding Attack)",
+      "autores": "Zhang et al.",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2503.24191",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R38",
+      "titulo": "Memory Injection Attacks on LLM Agents via Query-Only Interaction (MINJA)",
+      "autores": "Dong et al.",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2503.03704",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R39",
+      "titulo": "Jailbreaking is (Mostly) Simpler Than You Think (Context Compliance Attack)",
+      "autores": "Mark Russinovich, Ahmed Salem (Microsoft)",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2503.05264",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R40",
+      "titulo": "Novel Universal Bypass for All Major LLMs (Policy Puppetry)",
+      "autores": "HiddenLayer",
+      "ano": 2025,
+      "url": "https://www.hiddenlayer.com/research/novel-universal-bypass-for-all-major-llms",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R41",
+      "titulo": "Ignore This Title and HackAPrompt: Exposing Systemic Vulnerabilities of LLMs through a Global Scale Prompt Hacking Competition",
+      "autores": "Sander Schulhoff et al.",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2311.16119",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R42",
+      "titulo": "ChatInject: Abusing Chat Templates for Prompt Injection in LLM Agents",
+      "autores": "Hwan Chang, Yonghyun Jun, Hwanhee Lee",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2509.22830",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R43",
+      "titulo": "H-CoT: Hijacking the Chain-of-Thought Safety Reasoning Mechanism to Jailbreak Large Reasoning Models",
+      "autores": "Kuo et al.",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2502.12893",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R44",
+      "titulo": "Strong but Brittle: Simple Attacks Subvert Reasoning-based Safety Guardrails [CANDIDATA — verificar se é a fonte original de R44]",
+      "autores": "Shuo Chen, Zhen Han, Haokun Chen, Bailan He, Shengyun Si, Jingpei Wu, Philip Torr, Volker Tresp, Jindong Gu",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2510.11570",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R45",
+      "titulo": "Imperceptible Jailbreaking against Large Language Models",
+      "autores": "Gao et al.",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2510.05025",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R46",
+      "titulo": "Chain-of-Thought Hijacking",
+      "autores": "Zhao, Fu, Schaeffer, Sharma, Barez",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2510.26418",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R47",
+      "titulo": "Deceptive Delight: Jailbreak LLMs Through Camouflage and Distraction",
+      "autores": "Palo Alto Networks Unit 42",
+      "ano": 2024,
+      "url": "https://unit42.paloaltonetworks.com/jailbreak-llms-through-camouflage-distraction/",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R48",
+      "titulo": "New Vulnerability in GitHub Copilot and Cursor: How Hackers Can Weaponize Code Agents (Rules File Backdoor)",
+      "autores": "Pillar Security",
+      "ano": 2025,
+      "url": "https://www.pillar.security/blog/new-vulnerability-in-github-copilot-and-cursor-how-hackers-can-weaponize-code-agents",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R49",
+      "titulo": "Bad Likert Judge: A Novel Multi-Turn Technique to Jailbreak LLMs",
+      "autores": "Palo Alto Networks Unit 42",
+      "ano": 2024,
+      "url": "https://unit42.paloaltonetworks.com/multi-turn-technique-jailbreaks-llms/",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R50",
+      "titulo": "Don't Say No: Jailbreaking LLM by Suppressing Refusal",
+      "autores": "Zhou et al.",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2404.16369",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R51",
+      "titulo": "Exploiting Programmatic Behavior of LLMs: Dual-Use Through Standard Security Attacks (obfuscação, code injection/payload splitting §3.3.2, virtualização §3.3.3)",
+      "autores": "Daniel Kang, Xuechen Li, Ion Stoica, Carlos Guestrin, Matei Zaharia, Tatsunori Hashimoto",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2302.05733",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R53",
+      "titulo": "Unnatural Error Correction: GPT-4 Can Almost Perfectly Handle Unnatural Scrambled Text",
+      "autores": "Qi Cao, Takeshi Kojima, Yutaka Matsuo, Yusuke Iwasawa",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2311.18805",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R54",
+      "titulo": "AutoDAN: Generating Stealthy Jailbreak Prompts on Aligned Large Language Models",
+      "autores": "Xiaogeng Liu et al.",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2310.04451",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R55",
+      "titulo": "MetaBreak: Jailbreaking Online LLM Services via Special Token Manipulation",
+      "autores": "Wentian Zhu, Zhen Xiang, Wei Niu, Le Guan",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2510.10271",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R56",
+      "titulo": "Fishing for Magikarp: Automatically Detecting Under-trained Tokens in Large Language Models",
+      "autores": "Sander Land, Max Bartolo (Cohere)",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2405.05417",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R57",
+      "titulo": "A Wolf in Sheep's Clothing: Generalized Nested Jailbreak Prompts can Fool Large Language Models Easily (ReNeLLM)",
+      "autores": "Peng Ding, Jun Kuang, Dan Ma et al.",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2311.08268",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R58",
+      "titulo": "Special-Character Adversarial Attacks on Open-Source Language Model",
+      "autores": "Sarabamoun",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2508.14070",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R59",
+      "titulo": "NeMo Guardrails: A Toolkit for Controllable and Safe LLM Applications with Programmable Rails",
+      "autores": "Traian Rebedea, Razvan Dinu, Makesh Sreedhar et al.",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2310.10501",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R60",
+      "titulo": "DARWIN: Evolving Jailbreak Adversary and Guardrail for LLM Safety Evaluation and Protection",
+      "autores": "Weiwei Qi, Zefeng Wu, Zhilin Guo, Tianhang Zheng, Chaochao Lu, Liang He, Zhan Qin, Kui Ren",
+      "ano": 2026,
+      "url": "https://arxiv.org/abs/2607.19829",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R61",
+      "titulo": "Know Your Agent: Reconnaissance-Driven Pentesting of AI Agents",
+      "autores": "Or Zion Eliav, Eyal Lenga, Shir Bernstien, Yisroel Mirsky",
+      "ano": 2026,
+      "url": "https://arxiv.org/abs/2607.19837",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R62",
+      "titulo": "Methodology for Systematic Security Testing of LLM-based Applications",
+      "autores": "Nastaj, Mazurczyk",
+      "ano": 2025,
+      "url": "https://www.ideas.edu.pl/publikacje/methodology-for-systematic-security-testing-of-llm-based-applications/",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R63",
+      "titulo": "Understanding and Mitigating Prompt Leaking Attacks in Real-World LLM-Based Applications",
+      "autores": "Yong Yang, Chong Fu, Tong Zhang, Rui Zeng, Qingming Li, Tianyu Du, Zonghui Wang, Shouling Ji, Wenzhi Chen",
+      "ano": 2026,
+      "url": "https://arxiv.org/abs/2606.18673",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R64",
+      "titulo": "Prompt Leakage effect and defense strategies for multi-turn LLM interactions",
+      "autores": "Agarwal et al.",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2404.16251",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R65",
+      "titulo": "Behind the Refusal: Determining Guardrail Activation via Behavioral Monitoring",
+      "autores": "William Hackett, Peter Garraghan (Mindgard / Lancaster University)",
+      "ano": 2026,
+      "url": "https://arxiv.org/abs/2607.02121",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R67",
+      "titulo": "Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection",
+      "autores": "Kai Greshake, Sahar Abdelnabi, Shailesh Mishra, Christoph Endres, Thorsten Holz, Mario Fritz",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2302.12173",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R68",
+      "titulo": "Universal and Transferable Adversarial Attacks on Aligned Language Models (GCG)",
+      "autores": "Andy Zou, Zifan Wang, Nicholas Carlini, Milad Nasr, J. Zico Kolter, Matt Fredrikson",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2307.15043",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R69",
+      "titulo": "Jailbreaking Black Box Large Language Models in Twenty Queries (PAIR)",
+      "autores": "Patrick Chao, Alexander Robey, Edgar Dobriban, Hamed Hassani, George J. Pappas, Eric Wong",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2310.08419",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R70",
+      "titulo": "Tree of Attacks: Jailbreaking Black-Box LLMs Automatically (TAP)",
+      "autores": "Anay Mehrotra, Manolis Zampetakis, Paul Kassianik, Blaine Nelson, Hyrum Anderson, Yaron Singer, Amin Karbasi",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2312.02119",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R71",
+      "titulo": "Many-shot Jailbreaking (NeurIPS 2024)",
+      "autores": "Cem Anil, Esin Durmus, Nina Panickssery, Mrinank Sharma, Joe Benton, Sandipan Kundu, Joshua Batson, Meg Tong, Jesse Mu, Daniel Ford, Francesco Mosconi, Rajashree Agrawal, Rylan Schaeffer, Naomi Bashkansky, Samuel Svenningsen, Mike Lambert, Ansh Radhakrishnan, Carson Denison, Evan J. Hubinger, Yuntao Bai, Trenton Bricken, Timothy Maxwell, Nicholas Schiefer, James Sully, Alex Tamkin, Tamera Lanham, Karina Nguyen, Tomasz Korbak, Jared Kaplan, Deep Ganguli, Samuel R. Bowman, Ethan Perez, Roger Grosse, David Duvenaud",
+      "ano": 2024,
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/ea456e232efb72d261715e33ce25f208-Abstract.html",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R72",
+      "titulo": "Best-of-N Jailbreaking",
+      "autores": "John Hughes, Sara Price, Aengus Lynch, Rylan Schaeffer, Fazl Barez, Sanmi Koyejo, Henry Sleight, Erik Jones, Ethan Perez, Mrinank Sharma",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2412.03556",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R73",
+      "titulo": "Mitigating Skeleton Key, a new type of generative AI jailbreak technique",
+      "autores": "Mark Russinovich (Microsoft)",
+      "ano": 2024,
+      "url": "https://www.microsoft.com/en-us/security/blog/2024/06/26/mitigating-skeleton-key-a-new-type-of-generative-ai-jailbreak-technique/",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R74",
+      "titulo": "Prefill-level Jailbreak: A Black-Box Risk Analysis of Large Language Models (v1: Prefill-Based Jailbreak: A Novel Approach of Bypassing LLM Safety Boundary)",
+      "autores": "Yakai Li, Jiekang Hu, Weiduan Sang, Luping Ma, Dongsheng Nie, Weijuan Zhang, Aimin Yu, Yi Su, Qingjia Huang, Qihang Zhou",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2504.21038",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R75",
+      "titulo": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal",
+      "autores": "Mantas Mazeika, Long Phan, Xuwang Yin, Andy Zou, Zifan Wang, Norman Mu, Elham Sakhaee, Nathaniel Li, Steven Basart, Bo Li, David Forsyth, Dan Hendrycks",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2402.04249",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R76",
+      "titulo": "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models",
+      "autores": "Patrick Chao, Edoardo Debenedetti, Alexander Robey, Maksym Andriushchenko, Francesco Croce, Vikash Sehwag, Edgar Dobriban, Nicolas Flammarion, George J. Pappas, Florian Tramèr, Hamed Hassani, Eric Wong",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2404.01318",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R77",
+      "titulo": "AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents",
+      "autores": "Edoardo Debenedetti, Jie Zhang, Mislav Balunović, Luca Beurer-Kellner, Marc Fischer, Florian Tramèr",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2406.13352",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R78",
+      "titulo": "InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents",
+      "autores": "Qiusi Zhan, Zhixiang Liang, Zifan Ying, Daniel Kang",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2403.02691",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R79",
+      "titulo": "The Attacker Moves Second: Stronger Adaptive Attacks Bypass Defenses Against LLM Jailbreaks and Prompt Injections",
+      "autores": "Milad Nasr, Nicholas Carlini, Chawin Sitawarin, Sander V. Schulhoff, Jamie Hayes, Michael Ilie, Juliette Pluto, Shuang Song, Harsh Chaudhari, Ilia Shumailov, Abhradeep Thakurta, Kai Yuanqing Xiao, Andreas Terzis, Florian Tramèr",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2510.09023",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R80",
+      "titulo": "StruQ: Defending Against Prompt Injection with Structured Queries",
+      "autores": "Sizhe Chen, Julien Piet, Chawin Sitawarin, David Wagner",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2402.06363",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R81",
+      "titulo": "SecAlign: Defending Against Prompt Injection with Preference Optimization",
+      "autores": "Sizhe Chen, Arman Zharmagambetov, Saeed Mahloujifar, Kamalika Chaudhuri, David Wagner, Chuan Guo",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2410.05451",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R82",
+      "titulo": "Meta SecAlign: Training LLMs against Prompt Injection for Robust Agents",
+      "autores": "Sizhe Chen, Arman Zharmagambetov, David Wagner, Chuan Guo",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2507.02735",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R83",
+      "titulo": "Defeating Prompt Injections by Design (CaMeL)",
+      "autores": "Edoardo Debenedetti, Ilia Shumailov, Tianqi Fan, Jamie Hayes, Nicholas Carlini, Daniel Fabian, Christoph Kern, Chongyang Shi, Andreas Terzis, Florian Tramèr",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2503.18813",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R84",
+      "titulo": "Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming",
+      "autores": "Mrinank Sharma, Meg Tong, Jesse Mu, Jerry Wei et al. (Anthropic)",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2501.18837",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R85",
+      "titulo": "The Task Shield: Enforcing Task Alignment to Defend Against Indirect Prompt Injection in LLM Agents",
+      "autores": "Feiran Jia, Tong Wu, Xin Qin, Anna Squicciarini",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2412.16682",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R86",
+      "titulo": "PromptArmor: Simple yet Effective Prompt Injection Defenses",
+      "autores": "Tianneng Shi, Kaijie Zhu, Zhun Wang, Yuqi Jia, Will Cai, Weida Liang, Haonan Wang, Hend Alzahrani, Joshua Lu, Kenji Kawaguchi, Basel Alomair, Xuandong Zhao, William Yang Wang, Neil Gong, Wenbo Guo, Dawn Song",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2507.15219",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R87",
+      "titulo": "SmoothLLM: Defending Large Language Models Against Jailbreaking Attacks",
+      "autores": "Alexander Robey, Eric Wong, Hamed Hassani, George J. Pappas",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2310.03684",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R88",
+      "titulo": "Improving Alignment and Robustness with Circuit Breakers",
+      "autores": "Andy Zou, Long Phan, Justin Wang, Derek Duenas, Maxwell Lin, Maksym Andriushchenko, Rowan Wang, Zico Kolter, Matt Fredrikson, Dan Hendrycks",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2406.04313",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R89",
+      "titulo": "Design Patterns for Securing LLM Agents against Prompt Injections",
+      "autores": "Luca Beurer-Kellner, Beat Buesser, Ana-Maria Creţu, Edoardo Debenedetti, Daniel Dobos, Daniel Fabian, Marc Fischer, David Froelicher, Kathrin Grosse, Daniel Naeff, Ezinwanne Ozoani, Andrew Paverd, Florian Tramèr, Václav Volhejn",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2506.08837",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R90",
+      "titulo": "Agents Rule of Two: A Practical Approach to AI Agent Security",
+      "autores": "Meta",
+      "ano": 2025,
+      "url": "https://ai.meta.com/blog/practical-ai-agent-security/",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R91",
+      "titulo": "Refusal in Language Models Is Mediated by a Single Direction",
+      "autores": "Andy Arditi, Oscar Obeso, Aaquib Syed, Daniel Paleka, Nina Panickssery, Wes Gurnee, Neel Nanda",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2406.11717",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R92",
+      "titulo": "Safety Alignment Should Be Made More Than Just a Few Tokens Deep",
+      "autores": "Xiangyu Qi, Ashwinee Panda, Kaifeng Lyu, Xiao Ma, Subhrajit Roy, Ahmad Beirami, Prateek Mittal, Peter Henderson",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2406.05946",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R93",
+      "titulo": "Effective Prompt Extraction from Language Models",
+      "autores": "Yiming Zhang, Nicholas Carlini, Daphne Ippolito",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2307.06865",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R94",
+      "titulo": "AutoDAN-Turbo: A Lifelong Agent for Strategy Self-Exploration to Jailbreak LLMs",
+      "autores": "Xiaogeng Liu, Peiran Li, Edward Suh, Yevgeniy Vorobeychik, Zhuoqing Mao, Somesh Jha, Patrick McDaniel, Huan Sun, Bo Li, Chaowei Xiao",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2410.05295",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R95",
+      "titulo": "Rainbow Teaming: Open-Ended Generation of Diverse Adversarial Prompts",
+      "autores": "Mikayel Samvelyan, Sharath Chandra Raparthy, Andrei Lupu, Eric Hambro, Aram H. Markosyan, Manish Bhatt, Yuning Mao, Minqi Jiang, Jack Parker-Holder, Jakob Foerster, Tim Rocktäschel, Roberta Raileanu",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2402.16822",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R96",
+      "titulo": "EchoLeak: The First Real-World Zero-Click Prompt Injection Exploit in a Production LLM System (Microsoft 365 Copilot, CVE-2025-32711)",
+      "autores": "Pavan Reddy, Aditya Sanjay Gujral",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2509.10540",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R97",
+      "titulo": "Prompt Guard 2 — classificador encoder (DeBERTa/mDeBERTa) para detecção de prompt injection e jailbreak em texto de entrada (22M e 86M parâmetros)",
+      "autores": "Meta",
+      "ano": 2025,
+      "url": "https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R98",
+      "titulo": "ShieldGemma — classificadores de segurança de conteúdo abertos, baseados em Gemma 2, para filtragem de entrada e saída (2B, 9B, 27B texto; 4B imagem)",
+      "autores": "Google DeepMind",
+      "ano": 2024,
+      "url": "https://ai.google.dev/responsible/docs/safeguards/shieldgemma",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R99",
+      "titulo": "Azure AI Content Safety — serviço de detecção de conteúdo nocivo com Prompt Shields (injeção direta e indireta), classificação de texto/imagem e detecção de groundedness",
+      "autores": "Microsoft",
+      "ano": 2025,
+      "url": "https://learn.microsoft.com/azure/ai-services/content-safety/overview",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R100",
+      "titulo": "Lakera Guard — API de detecção de prompt injection, PII e moderação de conteúdo para aplicações GenAI (endpoint /v2/guard)",
+      "autores": "Lakera AI",
+      "ano": 2024,
+      "url": "https://lakera.ai/risk/indirect-prompt-injection",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R101",
+      "titulo": "Guardrails AI — framework de validação de entradas e saídas de LLM com hub de validadores (toxicidade, PII, alucinação, schema) e enforcement de formato estruturado",
+      "autores": "Guardrails AI",
+      "ano": 2023,
+      "url": "https://github.com/guardrails-ai/guardrails",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R102",
+      "titulo": "LLM Guard — biblioteca de scanners de entrada e saída para LLMs (anonimização, detecção de injeção, toxicidade, validação de JSON, consistência factual)",
+      "autores": "Protect AI",
+      "ano": 2023,
+      "url": "https://github.com/protectai/llm-guard",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R103",
+      "titulo": "Vigil — scanner de segurança para LLMs com regras YARA, similaridade vetorial, classificação por transformer e canary tokens (repositório experimental, arquivado em 2024)",
+      "autores": "deadbits",
+      "ano": 2023,
+      "url": "https://github.com/deadbits/vigil-llm",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R104",
+      "titulo": "Lasso Security — plataforma de segurança GenAI com proteção de entrada/saída, detecção de prompt injection, proteção de dados sensíveis e logging em tempo real",
+      "autores": "Lasso Security",
+      "ano": 2024,
+      "url": "https://marketplace.microsoft.com/en-us/product/web-apps/lassosecurityinc1718012537226.lasso_security_for_model_protection",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R105",
+      "titulo": "Arthur Shield — firewall para LLMs com regras configuráveis para PII, alucinação, prompt injection e toxicidade (renomeado Arthur Engine)",
+      "autores": "Arthur AI",
+      "ano": 2023,
+      "url": "https://shield.docs.arthur.ai/",
+      "tipo": "primaria"
+    }
+  ]
+}

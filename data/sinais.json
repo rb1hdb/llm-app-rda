@@ -1,0 +1,838 @@
+{
+  "sinais": [
+    {
+      "id": "S01",
+      "texto": "Resposta de bloqueio com status HTTP diferente de 200 (ex.: 403, 422) ou conexão encerrada sem corpo, em vez de uma recusa do LLM (que chega com 200).",
+      "defesas": [
+        "D01",
+        "D02",
+        "D03",
+        "D19",
+        "D20",
+        "D21"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R65",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": []
+    },
+    {
+      "id": "S02",
+      "texto": "Respostas bloqueadas trazem corpo ou cabeçalhos exclusivos (objeto de erro, campo tipo safety_rating, cabeçalho tipo X-Content-Filter) ausentes das respostas normais.",
+      "defesas": [
+        "D01",
+        "D02",
+        "D19",
+        "D20"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R65",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": []
+    },
+    {
+      "id": "S03",
+      "texto": "O texto de bloqueio é verboso: informa motivo, categoria ou nível de confiança (ex.: \"Blocked due to X\", \"Confidence: xx%\").",
+      "defesas": [
+        "D02",
+        "D20"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R65",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": []
+    },
+    {
+      "id": "S04",
+      "texto": "Pedidos maliciosos muito diferentes recebem a mesma resposta quase idêntica (template fixo de bloqueio).",
+      "defesas": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D19",
+        "D20",
+        "D21"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R65",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": []
+    },
+    {
+      "id": "S05",
+      "texto": "O bloqueio volta sem geração: tempo total menor e tempo por token maior que o de uma resposta normal.",
+      "defesas": [
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R65",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": []
+    },
+    {
+      "id": "S06",
+      "texto": "O mesmo prompt de bloqueio é bloqueado de forma idêntica em todas as repetições (decisão determinística).",
+      "defesas": [
+        "D01",
+        "D02",
+        "D04",
+        "D19",
+        "D20"
+      ],
+      "tipo": "passivo",
+      "tecnicas": []
+    },
+    {
+      "id": "S07",
+      "texto": "Bloqueio disparado por termo ou frase específica: trocar uma única palavra desbloqueia o mesmo pedido.",
+      "defesas": [
+        "D01"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R61",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": [
+        "T37"
+      ]
+    },
+    {
+      "id": "S08",
+      "texto": "O bloqueio persiste quando o mesmo pedido é parafraseado ou traduzido (disparo semântico, não por palavra).",
+      "defesas": [
+        "D02",
+        "D03",
+        "D04",
+        "D14",
+        "D15"
+      ],
+      "tipo": "passivo",
+      "tecnicas": []
+    },
+    {
+      "id": "S09",
+      "texto": "Taxas de bloqueio diferem por categoria de conteúdo (injeção, jailbreak, toxicidade): o guardrail só dispara em algumas categorias.",
+      "defesas": [
+        "D02",
+        "D20"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R65",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": []
+    },
+    {
+      "id": "S10",
+      "texto": "Prompts de ataque conhecidos (templates clássicos de jailbreak/injeção, copiados verbatim) são bloqueados enquanto variantes novas de mesma intenção passam.",
+      "defesas": [
+        "D01",
+        "D04"
+      ],
+      "tipo": "ativo",
+      "tecnicas": []
+    },
+    {
+      "id": "S11",
+      "texto": "Latência-base claramente alta e estável, mesmo em pedidos triviais (chamada secundária de classificador, juiz ou múltiplas inferências antes da resposta).",
+      "defesas": [
+        "D02",
+        "D03",
+        "D07",
+        "D15",
+        "D20",
+        "D21"
+      ],
+      "tipo": "passivo",
+      "tecnicas": []
+    },
+    {
+      "id": "S12",
+      "texto": "A geração começa normal e é interrompida (cortada) no meio da resposta.",
+      "defesas": [
+        "D18",
+        "D19",
+        "D20",
+        "D21"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R88",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": []
+    },
+    {
+      "id": "S13",
+      "texto": "Uma resposta já iniciada é apagada e substituída por aviso de política ou recusa genérica.",
+      "defesas": [
+        "D19",
+        "D20",
+        "D21"
+      ],
+      "tipo": "passivo",
+      "tecnicas": []
+    },
+    {
+      "id": "S14",
+      "texto": "Trechos da saída vêm censurados (asteriscos, colchetes) ou removidos, com o resto da resposta intacto.",
+      "defesas": [
+        "D06",
+        "D19"
+      ],
+      "tipo": "passivo",
+      "tecnicas": []
+    },
+    {
+      "id": "S15",
+      "texto": "A saída é bloqueada ou alterada somente quando contém um padrão específico (formato de chave, termo listado); o mesmo conteúdo sem o padrão passa.",
+      "defesas": [
+        "D06",
+        "D19"
+      ],
+      "tipo": "passivo",
+      "tecnicas": []
+    },
+    {
+      "id": "S16",
+      "texto": "Em pedido sensível a que a aplicação resiste, a resposta degenera para texto sem sentido no meio da geração, em vez de uma recusa.",
+      "defesas": [
+        "D18"
+      ],
+      "tipo": "ativo",
+      "fontes": [
+        {
+          "r": "R88",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": [
+        "T48"
+      ]
+    },
+    {
+      "id": "S17",
+      "texto": "Recusas variadas e argumentadas, em linguagem natural, com status 200 e tempo por token semelhante ao de respostas normais (sem template, sem camada externa aparente).",
+      "defesas": [
+        "D12",
+        "D14",
+        "D15",
+        "D16"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R65",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": []
+    },
+    {
+      "id": "S18",
+      "texto": "A recusa abre com prefixo padrão gerado pelo modelo (\"I cannot...\", \"I apologize...\", \"I am unable...\") logo nas primeiras palavras.",
+      "defesas": [
+        "D14"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R92",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": [
+        "T01",
+        "T03",
+        "T50"
+      ]
+    },
+    {
+      "id": "S19",
+      "texto": "O modelo começa a atender, se autocorrige e recua com recusa ou pedido de desculpas no meio da resposta.",
+      "defesas": [
+        "D14",
+        "D15"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R92",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": [
+        "T05",
+        "T06",
+        "T09",
+        "T47"
+      ]
+    },
+    {
+      "id": "S20",
+      "texto": "Em modelos de raciocínio, o trecho de raciocínio visível (ou o tempo de 'pensando') cita justificativas de política antes de recusar ou responder.",
+      "defesas": [
+        "D15"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R44",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": [
+        "T40",
+        "T41"
+      ]
+    },
+    {
+      "id": "S21",
+      "texto": "Ao ser perguntado, em linguagem simples, sobre as próprias instruções, o assistente recusa de forma explícita ou com resposta enlatada (\"não posso compartilhar\").",
+      "defesas": [
+        "D12",
+        "D14",
+        "D19"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R63",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R64",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": [
+        "T01",
+        "T07",
+        "T10",
+        "T13",
+        "T20"
+      ]
+    },
+    {
+      "id": "S22",
+      "texto": "Pedido fora do escopo da aplicação recebe sempre a mesma resposta pronta de redirecionamento, ou a conversa é conduzida por um fluxo predefinido.",
+      "defesas": [
+        "D12",
+        "D13"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R59",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R63",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": [
+        "T01",
+        "T07",
+        "T50"
+      ]
+    },
+    {
+      "id": "S23",
+      "texto": "Um token ou cadeia sem sentido, que o usuário nunca escreveu, reaparece quando se pede que o assistente repita tudo o que vem antes (marcador canário).",
+      "defesas": [
+        "D24"
+      ],
+      "tipo": "ativo",
+      "fontes": [
+        {
+          "r": "R03",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R01",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": [
+        "T01",
+        "T07",
+        "T10",
+        "T20"
+      ]
+    },
+    {
+      "id": "S24",
+      "texto": "Dados sensíveis digitados (e-mail, nome, número) aparecem mascarados quando o assistente os repete (ex.: e***, inicial do nome).",
+      "defesas": [
+        "D06"
+      ],
+      "tipo": "passivo",
+      "tecnicas": []
+    },
+    {
+      "id": "S25",
+      "texto": "Ao pedir que o assistente cite literalmente a pergunta do usuário, ele devolve uma versão reformulada, normalizada ou perturbada.",
+      "defesas": [
+        "D07"
+      ],
+      "tipo": "passivo",
+      "tecnicas": []
+    },
+    {
+      "id": "S26",
+      "texto": "Entrada longa é cortada em comprimento fixo (o assistente cita a pergunta truncada) ou rejeitada acima de um limite de tamanho.",
+      "defesas": [
+        "D08"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R28",
+          "tipo": "survey"
+        }
+      ],
+      "tecnicas": [
+        "T38"
+      ]
+    },
+    {
+      "id": "S27",
+      "texto": "Cabeçalhos de limite de uso (RateLimit/X-RateLimit-*, Retry-After) aparecem nas respostas normais.",
+      "defesas": [
+        "D08"
+      ],
+      "tipo": "passivo",
+      "tecnicas": [
+        "T38"
+      ]
+    },
+    {
+      "id": "S28",
+      "texto": "Limite de uso é atingido, após volume de requisições, com mensagem explícita de quota ou rate limit.",
+      "defesas": [
+        "D08"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T38"
+      ]
+    },
+    {
+      "id": "S29",
+      "texto": "Após rajada de tentativas ou violações repetidas, as respostas degradam, são bloqueadas por um período ou a conta/sessão é restringida.",
+      "defesas": [
+        "D08",
+        "D39"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T38",
+        "T27"
+      ]
+    },
+    {
+      "id": "S30",
+      "texto": "A interface informa que as conversas são registradas, monitoradas ou revisadas.",
+      "defesas": [
+        "D39"
+      ],
+      "tipo": "passivo",
+      "tecnicas": []
+    },
+    {
+      "id": "S31",
+      "texto": "Conteúdo recuperado chega demarcado ou marcado de forma especial na citação (delimitadores, marcador entre palavras, texto codificado).",
+      "defesas": [
+        "D09",
+        "D10"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R04",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": [
+        "T21",
+        "T37"
+      ]
+    },
+    {
+      "id": "S32",
+      "texto": "Texto digitado com delimitadores ou marcadores de papel (</user>, [INST], <|im_start|>) aparece escapado, removido ou neutralizado na resposta ou no eco.",
+      "defesas": [
+        "D01",
+        "D05",
+        "D09"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T21",
+        "T37"
+      ]
+    },
+    {
+      "id": "S33",
+      "texto": "Fonte externa controlada pelo tester, com markup e frases típicas de injeção, chega ao contexto sem esses trechos (padrões removidos, markup filtrado).",
+      "defesas": [
+        "D05"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T35",
+        "T37"
+      ]
+    },
+    {
+      "id": "S34",
+      "texto": "Instrução benigna plantada em conteúdo recuperado ou em retorno de tool (ex.: \"responda PONG\") é ignorada e o assistente retoma a tarefa original.",
+      "defesas": [
+        "D03",
+        "D05",
+        "D09",
+        "D10",
+        "D11",
+        "D16",
+        "D17",
+        "D26",
+        "D27",
+        "D28"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T35",
+        "T44"
+      ]
+    },
+    {
+      "id": "S35",
+      "texto": "O assistente se recusa a reproduzir literalmente o conteúdo recuperado ou de tool e só o resume.",
+      "defesas": [
+        "D27",
+        "D28"
+      ],
+      "tipo": "passivo",
+      "tecnicas": [
+        "T35"
+      ]
+    },
+    {
+      "id": "S36",
+      "texto": "O assistente afirma não ter acesso a dados que a plataforma exibe em outro lugar.",
+      "defesas": [
+        "D31",
+        "D42"
+      ],
+      "tipo": "passivo",
+      "tecnicas": [
+        "T45"
+      ]
+    },
+    {
+      "id": "S37",
+      "texto": "A resposta cita as fontes do contexto e se recusa a afirmar sem apoio nelas (checagem de factualidade).",
+      "defesas": [
+        "D12",
+        "D22"
+      ],
+      "tipo": "passivo",
+      "tecnicas": []
+    },
+    {
+      "id": "S38",
+      "texto": "Links, imagens ou HTML da resposta somem, vêm redigidos ou não carregam, sem aviso (indistinguível de link ou imagem quebrada).",
+      "defesas": [
+        "D23"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R96",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": []
+    },
+    {
+      "id": "S39",
+      "texto": "HTML, script ou Markdown especial na resposta aparece escapado, exibido como texto literal.",
+      "defesas": [
+        "D23"
+      ],
+      "tipo": "passivo",
+      "tecnicas": []
+    },
+    {
+      "id": "S40",
+      "texto": "As respostas vêm sempre num formato estruturado fixo (JSON/schema), mesmo quando se pede outro formato.",
+      "defesas": [
+        "D23"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R64",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": []
+    },
+    {
+      "id": "S41",
+      "texto": "O texto atende o pedido, mas a ação não é executada (\"posso fazer, mas não vou executar\"; nenhum efeito).",
+      "defesas": [
+        "D25",
+        "D26",
+        "D28",
+        "D31",
+        "D33"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T45",
+        "T46"
+      ]
+    },
+    {
+      "id": "S42",
+      "texto": "Ações incongruentes com a tarefa declarada são ignoradas ou bloqueadas, enquanto ações plausíveis para a tarefa são executadas.",
+      "defesas": [
+        "D25",
+        "D26",
+        "D28"
+      ],
+      "tipo": "ativo",
+      "fontes": [
+        {
+          "r": "R61",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": [
+        "T45"
+      ]
+    },
+    {
+      "id": "S43",
+      "texto": "Ação destrutiva, financeira ou de compartilhamento de dados exige confirmação explícita, com os parâmetros completos à vista.",
+      "defesas": [
+        "D12",
+        "D28",
+        "D30",
+        "D32"
+      ],
+      "tipo": "ativo",
+      "fontes": [
+        {
+          "r": "R61",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": [
+        "T45",
+        "T46"
+      ]
+    },
+    {
+      "id": "S44",
+      "texto": "Pedido de ação de alto risco fica 'em análise' por minutos ou horas (aprovação humana assíncrona).",
+      "defesas": [
+        "D32"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T45"
+      ]
+    },
+    {
+      "id": "S45",
+      "texto": "Chamada de tool com parâmetro extra, tipo ou formato inválido é rejeitada com erro de schema, mesmo com intenção inócua.",
+      "defesas": [
+        "D33"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T46"
+      ]
+    },
+    {
+      "id": "S46",
+      "texto": "A tool recusa URL ou domínio fora de uma lista restrita (erro de allowlist) ou não alcança a rede.",
+      "defesas": [
+        "D34",
+        "D35"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T45",
+        "T46"
+      ]
+    },
+    {
+      "id": "S47",
+      "texto": "Efeitos da execução não persistem (arquivos somem entre chamadas, caminhos divergem, rede restrita), como num sandbox efêmero.",
+      "defesas": [
+        "D34"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T45"
+      ]
+    },
+    {
+      "id": "S48",
+      "texto": "A tool nega operações de escrita ou escopo ampliado com erro de permissão (ex.: 403, insufficient scope) enquanto operações de leitura funcionam.",
+      "defesas": [
+        "D31"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T45"
+      ]
+    },
+    {
+      "id": "S49",
+      "texto": "A lista de tools disponíveis muda conforme a tarefa declarada (só o subconjunto necessário aparece para cada tipo de pedido).",
+      "defesas": [
+        "D26",
+        "D31"
+      ],
+      "tipo": "passivo",
+      "tecnicas": [
+        "T45"
+      ]
+    },
+    {
+      "id": "S50",
+      "texto": "Endpoint MCP remoto responde 401/403 a requisição sem credencial ou com Origin inválido.",
+      "defesas": [
+        "D38"
+      ],
+      "tipo": "passivo",
+      "fontes": [
+        {
+          "r": "R27",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": [
+        "T42",
+        "T43"
+      ]
+    },
+    {
+      "id": "S51",
+      "texto": "ID de sessão ou token de outra sessão/usuário é rejeitado (a sessão está vinculada ao usuário autenticado).",
+      "defesas": [
+        "D38"
+      ],
+      "tipo": "ativo",
+      "fontes": [
+        {
+          "r": "R27",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": [
+        "T43"
+      ]
+    },
+    {
+      "id": "S52",
+      "texto": "O cliente/host reabre o diálogo de consentimento ou desativa a tool quando a definição de uma tool controlada pelo tester é alterada.",
+      "defesas": [
+        "D36"
+      ],
+      "tipo": "ativo",
+      "fontes": [
+        {
+          "r": "R27",
+          "tipo": "primaria"
+        }
+      ],
+      "tecnicas": [
+        "T42",
+        "T43"
+      ]
+    },
+    {
+      "id": "S53",
+      "texto": "Instrução embutida na descrição de uma tool de um servidor controlado, que referencia outra tool ou servidor, não é seguida (nenhuma chamada cross-server).",
+      "defesas": [
+        "D37"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T42"
+      ]
+    },
+    {
+      "id": "S54",
+      "texto": "O agente recusa enviar dado derivado de fonte privada a um destinatário não confiável, mas aceita o mesmo envio para destinatário informado pelo usuário.",
+      "defesas": [
+        "D28"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T45"
+      ]
+    },
+    {
+      "id": "S55",
+      "texto": "Em tarefa que combina entrada não confiável, acesso a dados sensíveis e ação externa, o agente pede supervisão ou recusa executar de forma autônoma.",
+      "defesas": [
+        "D30",
+        "D32"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T45"
+      ]
+    },
+    {
+      "id": "S56",
+      "texto": "O agente apresenta um plano fixo antes de executar e não o altera quando resultados de tools trazem instruções novas.",
+      "defesas": [
+        "D26"
+      ],
+      "tipo": "ativo",
+      "tecnicas": [
+        "T45"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+# LLM App RDA — Recon, Defenses and Attacks
+
+<p align="center">
+  <a href="https://rb1hdb.github.io/llm-app-rda/"><img src="https://img.shields.io/badge/Live%20site-llm--app--rda-9966CC?style=for-the-badge&logo=lightning&logoColor=white" alt="Live site"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-CC%20BY%204.0-2ea44f?style=for-the-badge&logo=creative-commons&logoColor=white" alt="License"></a>
+  <img src="https://img.shields.io/badge/version-0.1-1f6feb?style=for-the-badge&logo=git&logoColor=white" alt="Version">
+  <img src="https://img.shields.io/badge/use-educational%20%26%20authorized-d73a4a?style=for-the-badge&logo=law&logoColor=white" alt="Use">
+</p>
+
+<p align="center">
+  <b>Language:</b> <b>English</b> · <a href="README-pt.md">Portugues</a> · <a href="README-es.md">Espanol</a>
+</p>
+
+---
+
+## What is this
+
+Interactive pentest runbook for LLM-based applications. Structured methodology to identify, fingerprint, and exploit defenses — organized in three phases:
+
+| Phase | Content |
+|-------|---------|
+| **R — Recon** | 35 black-box prompts + 56 observable signals |
+| **D — Defenses** | 42 cataloged defenses across 6 locations |
+| **A — Attacks** | 50 prompt injection techniques + 12 evasion transforms |
+
+**Pipeline:** Signal → Defense@locus → Technique/Evasion
+
+Unlike collections of loose jailbreaks, every entry has traced sources (primary or survey) and a reproducible pipeline.
+
+---
+
+## Catalogs
+
+| Catalog | Count | Description |
+|---------|-------|-------------|
+| **Recon** | 35 | Black-box prompts to identify defenses without prior knowledge |
+| **Signals** | 56 | Observable heuristics indicating active defenses |
+| **Defenses** | 42 | Cards with definition, locus, strengths, weaknesses, applicability |
+| **Techniques** | 50 | Attack techniques organized by turn and group |
+| **Evasions** | 12 | Transformations to escape detection |
+| **Products** | 14 | Commercial tools mapped to defenses they implement |
+| **References** | 100 | Sources (92 primary + 8 surveys) |
+| **Wiki** | 7 | Conceptual articles on methodology and schema decisions |
+| **Taxonomy** | 1 | Hierarchical attack tree |
+
+---
+
+## Inspiration
+
+The prompt injection taxonomy structure is inspired by the [Arcanum Prompt Injection Taxonomy](https://arcanum-sec.github.io/arc_pi_taxonomy/) by Jason Haddix (Arcanum Information Security).
+
+The **R-D-A workflow** (Recon → Defenses → Attacks pipeline), the source-traced cards, the signal-based discovery method, and the defense-locus-attack linkage are **original work**.
+
+---
+
+## How to use
+
+### Via GitHub Pages (recommended)
+
+Open **[rb1hdb.github.io/llm-app-rda/](https://rb1hdb.github.io/llm-app-rda/)** — interactive single-file page, no server needed.
+
+### Locally
+
+```bash
+git clone https://github.com/rb1hdb/llm-app-rda.git
+cd llm-app-rda
+# open index.html in your browser
+```
+
+### Rebuild after editing data
+
+```bash
+python build-page/build.py
+```
+
+---
+
+## Languages
+
+PT, EN, ES — toggle in the header. All UI text comes from `labels/{pt,en,es}.json`. Entity data translations live in `translations/{en,es}/`.
+
+---
+
+## Repository structure
+
+```
+llm-app-rda/
+├── index.html              <- Generated interactive page
+├── .nojekyll               <- GitHub Pages config
+├── LICENSE                 <- CC BY 4.0
+├── README.md               <- This file
+├── data/                   <- Source of truth (PT)
+│   ├── defesas.json        <- 42 defenses
+│   ├── sinais.json         <- 56 signals
+│   ├── tecnicas.json       <- 50 techniques
+│   ├── evasoes.json        <- 12 evasions
+│   ├── recon.json          <- 35 recon prompts
+│   ├── produtos.json       <- 14 products
+│   ├── referencias.json    <- 100 references
+│   ├── wiki.json           <- 7 articles
+│   ├── taxonomia.json      <- Taxonomy tree
+│   └── schema.json         <- Validation schema
+├── labels/                 <- UI strings (i18n)
+│   ├── pt.json
+│   ├── en.json
+│   └── es.json
+├── translations/           <- Entity data translations
+│   ├── en/                 <- 8 translated data files
+│   └── es/                 <- 8 translated data files
+└── build-page/
+    ├── template.html       <- HTML/JS template
+    ├── style.css           <- Styles
+    └── build.py            <- Validator + generator
+```
+
+---
+
+## Defense loci
+
+Defenses are classified by where they act in the LLM pipeline:
+
+| Locus | Count | Description |
+|-------|-------|-------------|
+| input | 8 | Filters on user input |
+| output | 6 | Filters on model output |
+| prompt | 5 | System prompt design |
+| modelo | 5 | Model-level controls |
+| acao | 14 | Action/tool gating |
+| processo | 4 | Process-level controls |
+
+---
+
+## Methodological status
+
+This interactive runbook (R-D-A pipeline) was built from anchor sources in LLM security (listed in `data/referencias.json`). Each entry contains the source supporting its content.
+
+### About N:N relations
+
+The relations linking signals → defenses → techniques/evasions were generated by **LLM-automated sweep** (not human). **Out of audit scope**: signals and mechanisms in isolation, recon, references, wiki, taxonomy.
+
+### Selection engine
+
+Mark signals/defenses to filter candidate techniques/evasions. The resulting list is a **shortlist to refine**, not a verdict — combine it with the discriminative-test step (Method tab) before attributing a bypass.
+
+---
+
+## Disclaimer
+
+For **educational and authorized security testing only**. Always obtain proper authorization before testing any system.
+
+---
+
+## Credits
+
+Created by **[Renato Braga](https://www.linkedin.com/in/renato-braga/)** — Base material for the course *"LLM Application Security - Pentest Edition (LLMAS-P)"*
+
+Prompt injection taxonomy inspired by [Arcanum PI Taxonomy](https://arcanum-sec.github.io/arc_pi_taxonomy/) (Jason Haddix, CC BY 4.0).

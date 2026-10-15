@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LLM App RDA</title>
+<style>__CSS__</style>
+</head>
+<body>
+<header>
+  <div class="title-row">
+    <h1 id="hTitulo"></h1>
+    <div id="langSwitcher"></div>
+  </div>
+  <div class="header-toolbar">
+    <input type="text" id="busca" oninput="render()">
+    <span class="fluxo" id="hFluxo"></span>
+    <button class="mapbtn" id="btnMapa" onclick="abrirMapa()"></button>
+    <button class="limpar" id="btnLimpar" onclick="limparTudo()"></button>
+  </div>
+  <nav class="tabs" id="tabbar"></nav>
+</header>
+<main id="conteudo"></main>
+<footer id="rodape"></footer>
+
+<script>
+const ALL_DATA = /*__DATA__*/;
+const ALL_LABELS = /*__LABELS__*/;
+
+const LANGS = Object.keys(ALL_LABELS);
+const LANG_LABEL = {
+  pt: { flag: 'Bandeira-BR.svg', text: 'PT' },
+  en: { flag: 'Bandeira-US.svg', text: 'EN' },
+  es: { flag: 'Bandeira-ES.svg', text: 'ES' }
+};
+const LANG_HTML = { pt: 'pt-BR', en: 'en', es: 'es' };
+
+let lang = 'pt';
+try { const stored = localStorage.getItem('llm-rda-lang'); if (stored && ALL_LABELS[stored]) lang = stored; } catch(e) {}
+
+let DATA, L;
+let refsMap = {}, defsMap = {}, sigsMap = {};
+
+function setLangData() {
+  DATA = ALL_DATA[lang] || ALL_DATA.pt;
+  L = ALL_LABELS[lang] || ALL_LABELS.pt;
+  refsMap = {}; defsMap = {}; sigsMap = {};
+  DATA.referencias.referencias.forEach(r => refsMap[r.id] = r);
+  DATA.defesas.defesas.forEach(d => defsMap[d.id] = d);
+  DATA.sinais.sinais.forEach(s => sigsMap[s.id] = s);
+}
+
+function switchLang(newLang) {
+  if (newLang === lang || !ALL_LABELS[newLang]) return;
+  lang = newLang;
+  try { localStorage.setItem('llm-rda-lang', lang); } catch(e) {}
+  document.documentElement.lang = LANG_HTML[lang] || lang;
+  setLangData();
+  updateStaticTexts();
+  render();
+}
+
+const TABS = ['metodo','recon','sinais','defesas','tecnicas','evasoes','referencias','wiki'];
+const WIKI_SUBS = ['produtos','artigos','taxonomia','sobre'];
+
+let tab = 'metodo', wikiSub = 'produtos';
+let sel = { sinais: new Set(), defesas: new Set() };
+let aberto = new Set();
+let filtro = '';
+let mapaAberto = false;
+
+function init() {
+  setLangData();
+  updateStaticTexts();
+  render();
+}
+
+function updateStaticTexts() {
+  document.getElementById('hTitulo').innerHTML = esc(L.app.titulo) + ' — ' + esc(L.app.subtitulo) + ' <span class="version">v' + esc(L.app.versao) + '</span>';
+  document.getElementById('busca').placeholder = L.toolbar.busca_placeholder;
+  document.getElementById('hFluxo').textContent = L.pipeline.fluxo;
+  document.getElementById('btnMapa').textContent = L.toolbar.mapa;
+  document.getElementById('btnMapa').title = L.toolbar.mapa_tooltip;
+  document.getElementById('btnLimpar').textContent = L.toolbar.limpar;
+  document.getElementById('btnLimpar').title = L.toolbar.limpar_tooltip;
+  renderLangSwitcher();
+  renderRodape();
+}
+
+function renderLangSwitcher() {
+  const el = document.getElementById('langSwitcher');
+  el.innerHTML = LANGS.map(l => {
+    const label = LANG_LABEL[l] || { flag: '', text: l.toUpperCase() };
+    return '<button class="lang-btn' + (l === lang ? ' active' : '') + '" onclick="switchLang(\'' + l + '\')">' +
+      '<img src="' + label.flag + '" alt="" class="lang-flag"> ' + label.text + '</button>';
+  }).join('');
+}
+
+function esc(s) {
+  if (!s) return '';
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+function linkaIDs(text) {
+  return esc(text).replace(/\b([DSTEPWR]\d{1,3}|RECON-\d{2})\b/g,
+    (m) => '<a class="xref" onclick="irPara(\'' + m + '\')">' + m + '</a>');
+}
+
+function codeblock(txt) {
+  const id = 'cb' + Math.random().toString(36).slice(2,8);
+  return '<pre class="code" id="' + id + '">' + esc(txt) +
+    '<button class="copybtn" onclick="copia(\'' + id + '\')">' + L.ficha.copiar_prompt + '</button></pre>';
+}
+
+function copia(id) {
+  const el = document.getElementById(id);
+  const text = el.textContent.replace(L.ficha.copiar_prompt, '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = el.querySelector('.copybtn');
+    const orig = btn.textContent;
+    btn.textContent = L.ficha.copiado;
+    setTimeout(() => btn.textContent = orig, 1200);
+  });
+}
+
+function fontesHTML(fontes) {
+  if (!fontes || !fontes.length) return '';
+  return '<div class="src">' + L.campos.fontes + ': ' + fontes.map(f => {
+    const ref = refsMap[f.r];
+    if (!ref) return esc(f.r);
+    return '<a href="' + esc(ref.url) + '" target="_blank" rel="noopener">' +
+      esc(f.r) + '</a> <span title="' + esc(ref.titulo) + '">(' + esc(f.tipo) + ')</span>';
+  }).join(', ') + '</div>';
+}
+
+function cnt(n, singular, plural) {
+  return (n === 1 ? singular : plural).replace('{n}', n);
+}
+
+// --- Pipeline filter ---
+function defesasVisiveis() {
+  const all = DATA.defesas.defesas;
+  if (sel.sinais.size) {
+    const ids = new Set();
+    DATA.sinais.sinais.forEach(s => {
+      if (sel.sinais.has(s.id)) s.defesas.forEach(d => ids.add(d));
+    });
+    return all.filter(d => ids.has(d.id));
+  }
+  if (sel.defesas.size) return all.filter(d => sel.defesas.has(d.id));
+  return all;
+}
+
+function tecnicasVisiveis() {
+  const all = DATA.tecnicas.tecnicas;
+  const dv = defesasVisiveis();
+  if (sel.sinais.size || sel.defesas.size) {
+    const dvIds = new Set(dv.map(d => d.id));
+    return all.filter(t => t.defesas_bypassadas.some(db => dvIds.has(db)));
+  }
+  return all;
+}
+
+function evasoesVisiveis() {
+  const all = DATA.evasoes.evasoes;
+  const dv = defesasVisiveis();
+  if (sel.sinais.size || sel.defesas.size) {
+    const dvIds = new Set(dv.map(d => d.id));
+    return all.filter(e => e.defesas_bypassadas.some(db => dvIds.has(db)));
+  }
+  return all;
+}
+
+function matchBusca(item) {
+  if (!filtro) return true;
+  const f = filtro.toLowerCase();
+  const fields = [item.id, item.nome, item.texto, item.descricao, item.titulo,
+    item.fabricante, item.grupo, item.familia, item.objetivo, item.quando].filter(Boolean);
+  return fields.some(v => v.toLowerCase().includes(f));
+}
+
+// --- Render ---
+function render() {
+  filtro = document.getElementById('busca').value.trim();
+  renderTabs();
+  renderMain();
+}
+
+function renderTabs() {
+  const bar = document.getElementById('tabbar');
+  bar.innerHTML = TABS.map(t => {
+    let label = L.tabs[t];
+    let count = '';
+    if (t === 'sinais') count = DATA.sinais.sinais.length;
+    else if (t === 'defesas') count = DATA.defesas.defesas.length;
+    else if (t === 'tecnicas') count = DATA.tecnicas.tecnicas.length;
+    else if (t === 'evasoes') count = DATA.evasoes.evasoes.length;
+    else if (t === 'recon') count = DATA.recon.prompts.length;
+    else if (t === 'referencias') count = DATA.referencias.referencias.length;
+    const c = count ? ' <span class="cnt">' + count + '</span>' : '';
+    return '<button class="' + (tab === t ? 'on' : '') + '" onclick="mudarTab(\'' + t + '\')">' +
+      label + c + '</button>';
+  }).join('');
+}
+
+function mudarTab(t) { tab = t; render(); }
+
+function renderMain() {
+  const el = document.getElementById('conteudo');
+  const snap = snapshotDetails();
+  switch (tab) {
+    case 'metodo': el.innerHTML = renderMetodo(); break;
+    case 'recon': el.innerHTML = renderRecon(); break;
+    case 'sinais': el.innerHTML = renderSinais(); break;
+    case 'defesas': el.innerHTML = renderDefesas(); break;
+    case 'tecnicas': el.innerHTML = renderTecnicas(); break;
+    case 'evasoes': el.innerHTML = renderEvasoes(); break;
+    case 'referencias': el.innerHTML = renderReferencias(); break;
+    case 'wiki': el.innerHTML = renderWiki(); break;
+  }
+  restoreDetails(snap);
+}
+
+function snapshotDetails() {
+  const open = {};
+  document.querySelectorAll('details[open]').forEach(d => {
+    if (d.id) open[d.id] = true;
+  });
+  return open;
+}
+
+function restoreDetails(snap) {
+  Object.keys(snap).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.open = true;
+  });
+}
+
+// --- Selection ---
+function toggleSel(tipo, id) {
+  if (sel[tipo].has(id)) sel[tipo].delete(id);
+  else sel[tipo].add(id);
+  render();
+}
+
+function limparTudo() {
+  sel.sinais.clear();
+  sel.defesas.clear();
+  document.getElementById('busca').value = '';
+  filtro = '';
+  render();
+}
+
+function irPara(id) {
+  if (id.startsWith('D')) { sel.defesas.clear(); sel.defesas.add(id); tab = 'defesas'; aberto.add(id); }
+  else if (id.startsWith('S')) { sel.sinais.clear(); sel.sinais.add(id); tab = 'sinais'; }
+  else if (id.startsWith('T')) { tab = 'tecnicas'; aberto.add(id); }
+  else if (id.startsWith('E')) { tab = 'evasoes'; aberto.add(id); }
+  else if (id.startsWith('P')) { tab = 'wiki'; wikiSub = 'produtos'; aberto.add(id); }
+  else if (id.startsWith('R')) { tab = 'referencias'; aberto.add(id); }
+  else if (id.startsWith('W')) { tab = 'wiki'; wikiSub = 'artigos'; aberto.add(id); }
+  else if (id.startsWith('RECON')) { tab = 'recon'; aberto.add(id); }
+  render();
+  setTimeout(() => {
+    const el = document.getElementById('card-' + id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 60);
+}
+
+function selBar(tipo) {
+  if (!sel[tipo] || !sel[tipo].size) return '';
+  const items = [...sel[tipo]].map(id =>
+    '<span class="chip" onclick="toggleSel(\'' + tipo + '\',\'' + id + '\')">' + id + ' ×</span>'
+  ).join(' ');
+  return '<div class="seltb">' + items +
+    ' <span class="dica">' + L.navegacao.filtro_ativo + '</span>' +
+    ' <button class="limpar" onclick="sel.' + tipo + '.clear();render()">' + L.toolbar.limpar + '</button></div>';
+}
+
+function cardWrap(id, nome, desc, inner, extra) {
+  const isOpen = aberto.has(id);
+  const isSel = (sel.defesas.has(id) || sel.sinais.has(id));
+  const cls = 'card' + (isOpen ? ' aberto' : '') + (isSel ? ' sel' : '');
+  const toggle = 'aberto.has(\'' + id + '\') ? aberto.delete(\'' + id + '\') : aberto.add(\'' + id + '\'); render()';
+  return '<div class="' + cls + '" id="card-' + id + '">' +
+    '<div class="cardhead">' +
+      '<label onclick="' + toggle + '"><span class="id">' + id + '</span> ' + esc(nome) + '</label>' +
+      (extra || '') +
+      '<button class="expandbtn" onclick="' + toggle + '">' + (isOpen ? '▲' : '▼') + '</button>' +
+    '</div>' +
+    (desc ? '<p onclick="' + toggle + '">' + esc(desc) + '</p>' : '') +
+    (isOpen ? '<div class="ficha">' + inner + '</div>' : '') +
+  '</div>';
+}
+
+// --- Workflow flowcharts (i18n) ---
+const WF_FLUXO = {
+  pt: "1. PROMPTS PARA RECON DE DEFESAS\n   ↓\n2. OBSERVAR COMPORTAMENTOS\n   ↓\n3. FORMULAR HIPÓTESES DE DEFESA (DEFESAS CANDIDATAS)\n   ↓\n4. TESTAR HIPÓTESE (testes discriminatórios)\n   ↓\n5. DEFESA(S) IDENTIFICADA(S)? (ver Pontos de decisão)\n   ↓\n6. IDENTIFICAR LOCUS DA DEFESA\n   ↓\n7. MAPEAR FORTALEZAS E FRAQUEZAS\n   ↓\n8. TÉCNICAS + EVASÕES CANDIDATAS\n   ↓\n9. APLICAR (ver Pontos de decisão)\n   ↓\n10. NOVA TENTATIVA (volta para 8)",
+  en: "1. RECON PROMPTS FOR DEFENSES\n   ↓\n2. OBSERVE BEHAVIORS\n   ↓\n3. FORMULATE DEFENSE HYPOTHESES (CANDIDATE DEFENSES)\n   ↓\n4. TEST HYPOTHESIS (discriminative tests)\n   ↓\n5. DEFENSE(S) IDENTIFIED? (see Decision points)\n   ↓\n6. IDENTIFY DEFENSE LOCUS\n   ↓\n7. MAP STRENGTHS AND WEAKNESSES\n   ↓\n8. CANDIDATE TECHNIQUES + EVASIONS\n   ↓\n9. APPLY (see Decision points)\n   ↓\n10. NEW ATTEMPT (back to 8)",
+  es: "1. PROMPTS DE RECON DE DEFENSAS\n   ↓\n2. OBSERVAR COMPORTAMIENTOS\n   ↓\n3. FORMULAR HIPÓTESIS DE DEFENSA (DEFENSAS CANDIDATAS)\n   ↓\n4. PROBAR HIPÓTESIS (pruebas discriminatorias)\n   ↓\n5. ¿DEFENSA(S) IDENTIFICADA(S)? (ver Puntos de decisión)\n   ↓\n6. IDENTIFICAR LOCUS DE LA DEFENSA\n   ↓\n7. MAPEAR FORTALEZAS Y DEBILIDADES\n   ↓\n8. TÉCNICAS + EVASIONES CANDIDATAS\n   ↓\n9. APLICAR (ver Puntos de decisión)\n   ↓\n10. NUEVO INTENTO (volver a 8)"
+};
+const WF_DECISOES = {
+  pt: "PASSO 5 — Defesa(s) identificada(s)?\n   ├── NÃO → novo comportamento observado → 4 ou 2\n   └── SIM → 6\n\nPASSO 9 — Após aplicar:\n   ├── OBJETIVO ALCANÇADO → FIM\n   ├── OBJETIVO PARCIAL → APERFEIÇOAR (variação semântica; ajustar pedido ao que a app aceita)\n   ├── NOVO COMPORTAMENTO → 2\n   └── TENTATIVA REJEITADA (BLOQUEADA/RECUSADA)\n         ↓\n      9.1. O QUE ESTÁ IMPEDINDO A TÉCNICA?\n         ├── Sem detecção superficial        → TÉCNICA\n         ├── Intenção OK, representação bloqueada → EVASÃO\n         └── Técnica parcial, filtro específico  → TÉCNICA + EVASÃO\n         ↓\n      9.2. DEFINIR O QUE MUDA NA NOVA TENTATIVA (técnica e/ou evasão)\n         ↓\n      10. NOVA TENTATIVA (volta para 8)",
+  en: "STEP 5 — Defense(s) identified?\n   ├── NO → new observed behavior → 4 or 2\n   └── YES → 6\n\nSTEP 9 — After applying:\n   ├── OBJECTIVE ACHIEVED → END\n   ├── PARTIAL OBJECTIVE → REFINE (semantic variation; adjust request to what the app accepts)\n   ├── NEW BEHAVIOR → 2\n   └── ATTEMPT REJECTED (BLOCKED/REFUSED)\n         ↓\n      9.1. WHAT IS BLOCKING THE TECHNIQUE?\n         ├── No surface detection              → TECHNIQUE\n         ├── Intent OK, representation blocked → EVASION\n         └── Partial technique, specific filter → TECHNIQUE + EVASION\n         ↓\n      9.2. DEFINE WHAT CHANGES IN THE NEXT ATTEMPT (technique and/or evasion)\n         ↓\n      10. NEW ATTEMPT (back to 8)",
+  es: "PASO 5 — ¿Defensa(s) identificada(s)?\n   ├── NO → nuevo comportamiento observado → 4 o 2\n   └── SÍ → 6\n\nPASO 9 — Después de aplicar:\n   ├── OBJETIVO ALCANZADO → FIN\n   ├── OBJETIVO PARCIAL → PERFECCIONAR (variación semántica; ajustar pedido a lo que la app acepta)\n   ├── NUEVO COMPORTAMIENTO → 2\n   └── INTENTO RECHAZADO (BLOQUEADO/RECHAZADO)\n         ↓\n      9.1. ¿QUÉ ESTÁ IMPIDIENDO LA TÉCNICA?\n         ├── Sin detección superficial          → TÉCNICA\n         ├── Intención OK, representación bloqueada → EVASIÓN\n         └── Técnica parcial, filtro específico    → TÉCNICA + EVASIÓN\n         ↓\n      9.2. DEFINIR QUÉ CAMBIA EN EL NUEVO INTENTO (técnica y/o evasión)\n         ↓\n      10. NUEVO INTENTO (volver a 8)"
+};
+const WF_DISTINCAO = {
+  pt: "PROMPT    → instrumento utilizado\nTEST      → o que quero descobrir/verificar\nEXECUTION → o que efetivamente executei\nOBSERVATION → o que efetivamente aconteceu\n\nOBSERVATION → (interpretação) → DEFENSE_HYPOTHESIS → (validação) → DEFENSE\n\nDEFENSE → TECHNIQUE / EVASION\n        → EXPLOITATION_TEST → EXPLOITATION_EXECUTION → FINDING\n\nSUCCESS → FINDING      PARTIAL → REFINE      REJECTED → ANALYZE BLOCKER",
+  en: "PROMPT    → instrument used\nTEST      → what I want to discover/verify\nEXECUTION → what I actually executed\nOBSERVATION → what actually happened\n\nOBSERVATION → (interpretation) → DEFENSE_HYPOTHESIS → (validation) → DEFENSE\n\nDEFENSE → TECHNIQUE / EVASION\n        → EXPLOITATION_TEST → EXPLOITATION_EXECUTION → FINDING\n\nSUCCESS → FINDING      PARTIAL → REFINE      REJECTED → ANALYZE BLOCKER",
+  es: "PROMPT    → instrumento utilizado\nTEST      → lo que quiero descubrir/verificar\nEXECUTION → lo que efectivamente ejecuté\nOBSERVATION → lo que efectivamente ocurrió\n\nOBSERVATION → (interpretación) → DEFENSE_HYPOTHESIS → (validación) → DEFENSE\n\nDEFENSE → TECHNIQUE / EVASION\n        → EXPLOITATION_TEST → EXPLOITATION_EXECUTION → FINDING\n\nSUCCESS → FINDING      PARTIAL → REFINE      REJECTED → ANALYZE BLOCKER"
+};
+const WF_LABELS = {
+  pt: { fases: 'Três fases', fluxo: 'Fluxo principal', decisoes: 'Pontos de decisão', distincoes: 'Distinções', visao: 'Visão geral' },
+  en: { fases: 'Three phases', fluxo: 'Main flow', decisoes: 'Decision points', distincoes: 'Distinctions', visao: 'Overview' },
+  es: { fases: 'Tres fases', fluxo: 'Flujo principal', decisoes: 'Puntos de decisión', distincoes: 'Distinciones', visao: 'Visión general' }
+};
+
+// --- Tab: Método ---
+function renderMetodo() {
+  const m = L.metodo;
+  const wl = WF_LABELS[lang] || WF_LABELS.pt;
+  let h = '';
+
+  h += '<details class="taxdet" id="sec-fases" style="margin-top:18px">';
+  h += '<summary>' + esc(wl.fases) + '</summary>';
+  h += '<div class="metodo-grid" style="grid-template-columns:1fr 1fr 1fr;margin-top:6px">';
+  for (let i = 1; i <= 3; i++) {
+    h += '<div class="metodo-fase">';
+    h += '<h3>' + esc(m['fase' + i + '_titulo']) + '</h3>';
+    h += '<p>' + esc(m['fase' + i + '_descricao']) + '</p>';
+    h += '<div class="io">→ ' + esc(m['fase' + i + '_entrada']) + '</div>';
+    h += '<div class="io">→ ' + esc(m['fase' + i + '_saida']) + '</div>';
+    h += '</div>';
+  }
+  h += '</div></details>';
+
+  h += '<details class="taxdet" id="sec-visao" style="margin-top:18px">';
+  h += '<summary>' + esc(wl.visao) + '</summary>';
+  h += '<div class="grid" style="grid-template-columns:1fr 1fr;gap:14px;margin-top:6px">';
+  h += '<div><div class="grupoh">' + esc(wl.fluxo) + '</div>';
+  h += '<pre class="ascii">' + esc(WF_FLUXO[lang] || WF_FLUXO.pt) + '</pre></div>';
+  h += '<div><div class="grupoh">' + esc(wl.decisoes) + '</div>';
+  h += '<pre class="ascii">' + esc(WF_DECISOES[lang] || WF_DECISOES.pt) + '</pre></div>';
+  h += '</div></details>';
+
+  h += '<details class="taxdet" id="sec-distincoes" style="margin-top:14px">';
+  h += '<summary>' + esc(wl.distincoes) + '</summary>';
+  h += '<pre class="ascii">' + esc(WF_DISTINCAO[lang] || WF_DISTINCAO.pt) + '</pre>';
+  h += '</details>';
+
+  return h;
+}
+
+// --- Tab: Recon ---
+function renderRecon() {
+  const groups = {};
+  DATA.recon.prompts.forEach(p => {
+    if (!matchBusca(p)) return;
+    if (!groups[p.grupo]) groups[p.grupo] = [];
+    groups[p.grupo].push(p);
+  });
+  let h = selBar('sinais');
+  const order = ['abertura', 'arquitetura', 'defesas'];
+  order.forEach(g => {
+    if (!groups[g]) return;
+    const label = L.campos['recon_grupo_' + g] || g;
+    h += '<details class="taxdet" id="sec-recon-' + g + '"><summary>' + esc(label) +
+      ' <span class="turno">(' + groups[g].length + ')</span></summary><div class="tbody">';
+    groups[g].forEach(p => {
+      let inner = '<dl>';
+      inner += '<dt>' + L.campos.recon_quando + '</dt><dd>' + linkaIDs(p.quando) + '</dd>';
+      inner += '<dt>' + L.campos.recon_objetivo + '</dt><dd>' + linkaIDs(p.objetivo) + '</dd>';
+      inner += '<dt>' + L.campos.recon_prompt + '</dt><dd>' + codeblock(p.prompt) + '</dd>';
+      if (p.variantes && p.variantes.length) {
+        inner += '<dt>' + L.campos.recon_variantes + '</dt><dd>';
+        p.variantes.forEach(v => { inner += codeblock(v); });
+        inner += '</dd>';
+      }
+      if (p.interpretacao && p.interpretacao.length) {
+        inner += '<dt>' + L.campos.recon_interpretacao + '</dt><dd><ul>';
+        p.interpretacao.forEach(i => { inner += '<li>' + linkaIDs(i) + '</li>'; });
+        inner += '</ul></dd>';
+      }
+      if (p.sinal_alvo && p.sinal_alvo.length) {
+        inner += '<dt>' + L.campos.recon_sinal_alvo + '</dt><dd>';
+        inner += p.sinal_alvo.map(s =>
+          '<a class="xref" onclick="irPara(\'' + s + '\')">' + s + '</a>'
+        ).join(' ');
+        inner += '</dd>';
+      }
+      inner += '</dl>';
+      inner += fontesHTML(p.fontes);
+      h += cardWrap(p.id, p.titulo || p.objetivo, p.quando, inner);
+    });
+    h += '</div></details>';
+  });
+  if (!h || h === selBar('sinais')) h += '<div class="empty">' + L.navegacao.nenhuma_ficha + '</div>';
+  return h;
+}
+
+// --- Tab: Sinais ---
+function renderSinais() {
+  let h = selBar('sinais');
+  h += '<div class="siglist">';
+  DATA.sinais.sinais.forEach(s => {
+    if (!matchBusca(s)) return;
+    const checked = sel.sinais.has(s.id) ? ' checked' : '';
+    const defCount = s.defesas.length;
+    h += '<label onclick="toggleSel(\'sinais\',\'' + s.id + '\')">';
+    h += '<input type="checkbox"' + checked + ' onclick="event.stopPropagation()">';
+    h += '<span class="sid">' + s.id + '</span> ';
+    h += esc(s.texto);
+    h += '<span class="sdef">' + cnt(defCount, L.contadores.defesa, L.contadores.defesas) + '</span>';
+    const tecCount = (s.tecnicas || []).length;
+    if (tecCount) h += '<span class="sdef stec">' + cnt(tecCount, L.contadores.tecnica, L.contadores.tecnicas) + '</span>';
+    h += '</label>';
+  });
+  h += '</div>';
+  return h;
+}
+
+// --- Tab: Defesas ---
+function renderDefesas() {
+  const vis = defesasVisiveis().filter(matchBusca);
+  let h = selBar('sinais') + selBar('defesas');
+  const byLocus = {};
+  vis.forEach(d => {
+    if (!byLocus[d.locus]) byLocus[d.locus] = [];
+    byLocus[d.locus].push(d);
+  });
+  const locusOrder = ['input', 'output', 'prompt', 'modelo', 'acao', 'processo'];
+  locusOrder.forEach(loc => {
+    if (!byLocus[loc]) return;
+    h += '<details class="taxdet" id="sec-def-' + loc + '"><summary>' + (L.locus[loc] || loc) +
+      ' <span class="turno">(' + byLocus[loc].length + ')</span></summary>';
+    h += '<div class="tbody"><div class="grid">';
+    byLocus[loc].forEach(d => { h += renderCardDefesa(d); });
+    h += '</div></div></details>';
+  });
+  if (!vis.length) h += '<div class="empty">' + L.navegacao.nenhuma_ficha + '</div>';
+  return h;
+}
+
+function renderCardDefesa(d) {
+  const tecsBypass = DATA.tecnicas.tecnicas.filter(t => t.defesas_bypassadas.includes(d.id));
+  const evasBypass = DATA.evasoes.evasoes.filter(e => e.defesas_bypassadas.includes(d.id));
+  const sigFor = DATA.sinais.sinais.filter(s => s.defesas.includes(d.id));
+  const prodsFor = DATA.produtos.produtos.filter(p => p.defesas.includes(d.id));
+
+  let inner = '<dl>';
+  inner += '<dt>' + L.campos.descricao + '</dt><dd>' + linkaIDs(d.descricao) + '</dd>';
+  inner += '<dt>' + L.campos.defesa_locus + '</dt><dd><span class="chip vio">' + (L.locus[d.locus] || d.locus) + '</span></dd>';
+  if (d.aplicabilidade && d.aplicabilidade.length) {
+    inner += '<dt>' + L.campos.defesa_aplicabilidade + '</dt><dd>' +
+      d.aplicabilidade.map(a => '<span class="chip ghost">' + (L.aplicabilidade[a] || a) + '</span>').join(' ') + '</dd>';
+  }
+  if (d.fortalezas && d.fortalezas.length) {
+    inner += '<dt>' + L.campos.defesa_fortalezas + '</dt><dd><ul>';
+    d.fortalezas.forEach(f => { inner += '<li>' + linkaIDs(f) + '</li>'; });
+    inner += '</ul></dd>';
+  }
+  if (d.fraquezas && d.fraquezas.length) {
+    inner += '<dt>' + L.campos.defesa_fraquezas + '</dt><dd><ul>';
+    d.fraquezas.forEach(f => { inner += '<li>' + linkaIDs(f) + '</li>'; });
+    inner += '</ul></dd>';
+  }
+  inner += '</dl>';
+
+  if (tecsBypass.length || evasBypass.length) {
+    inner += '<div class="exlabel">' + L.ficha.atacada_por + '</div><div class="chips">';
+    tecsBypass.forEach(t => {
+      inner += '<a class="xref" onclick="irPara(\'' + t.id + '\')">' + t.id + ' ' + esc(t.nome) + '</a>';
+    });
+    evasBypass.forEach(e => {
+      inner += '<a class="xref" onclick="irPara(\'' + e.id + '\')">' + e.id + ' ' + esc(e.nome) + '</a>';
+    });
+    inner += '</div>';
+  } else {
+    inner += '<div class="exlabel">' + L.ficha.sem_bypass + '</div>';
+  }
+
+  if (sigFor.length) {
+    inner += '<div class="exlabel">' + L.ficha.sinais_associados + '</div><div class="chips">';
+    sigFor.forEach(s => {
+      inner += '<a class="xref" onclick="irPara(\'' + s.id + '\')">' + s.id + '</a>';
+    });
+    inner += '</div>';
+  }
+
+  if (prodsFor.length) {
+    inner += '<div class="exlabel">' + L.ficha.produtos_associados + '</div><div class="chips">';
+    prodsFor.forEach(p => {
+      inner += '<a class="xref" onclick="irPara(\'' + p.id + '\')">' + p.id + ' ' + esc(p.nome) + '</a>';
+    });
+    inner += '</div>';
+  }
+
+  inner += fontesHTML(d.fontes);
+
+  const extra = '<span class="chip vio" style="margin-left:auto">' + (L.locus[d.locus] || d.locus) + '</span>' +
+    '<label style="margin-left:6px;cursor:pointer" onclick="event.stopPropagation();toggleSel(\'defesas\',\'' + d.id + '\')">' +
+    '<input type="checkbox"' + (sel.defesas.has(d.id) ? ' checked' : '') + '></label>';
+
+  return cardWrap(d.id, d.nome, d.categoria, inner, extra);
+}
+
+// --- Tab: Técnicas ---
+function turnoLabel(t) {
+  return L.campos['tecnica_turno_' + t.replace('-','_')] || t;
+}
+
+function renderTecnicas() {
+  const vis = tecnicasVisiveis().filter(matchBusca);
+  let h = selBar('sinais') + selBar('defesas');
+  const turnoOrder = ['single-turn', 'multi-turn', 'm2s'];
+  const byTurno = {};
+  vis.forEach(t => {
+    if (!byTurno[t.turno]) byTurno[t.turno] = [];
+    byTurno[t.turno].push(t);
+  });
+  turnoOrder.forEach(turno => {
+    if (!byTurno[turno]) return;
+    const turnoTecs = byTurno[turno];
+    h += '<details class="taxdet" id="sec-tec-' + turno + '"><summary>' + esc(turnoLabel(turno)) +
+      ' <span class="turno">(' + turnoTecs.length + ')</span></summary><div class="tbody">';
+    const byGrupo = {};
+    turnoTecs.forEach(t => {
+      if (!byGrupo[t.grupo]) byGrupo[t.grupo] = [];
+      byGrupo[t.grupo].push(t);
+    });
+    Object.keys(byGrupo).sort().forEach(g => {
+      h += '<details class="taxsub" id="sec-tec-' + turno + '-' + g.replace(/[^a-z0-9]/g,'_') + '"><summary>' + esc(g) +
+        ' <span class="turno">(' + byGrupo[g].length + ')</span></summary>';
+      h += '<div class="tbody"><div class="grid">';
+      byGrupo[g].forEach(t => { h += renderCardTecnica(t); });
+      h += '</div></div></details>';
+    });
+    h += '</div></details>';
+  });
+  if (!vis.length) h += '<div class="empty">' + L.navegacao.nenhuma_ficha + '</div>';
+  return h;
+}
+
+function renderCardTecnica(t) {
+  let inner = '<dl>';
+  inner += '<dt>' + L.campos.descricao + '</dt><dd>' + linkaIDs(t.descricao) + '</dd>';
+  inner += '<dt>' + L.campos.tecnica_turno + '</dt><dd><span class="chip warn">' + esc(t.turno) + '</span></dd>';
+  inner += '<dt>' + L.campos.tecnica_defesas_bypassadas + '</dt><dd>';
+  inner += t.defesas_bypassadas.map(d =>
+    '<a class="xref" onclick="irPara(\'' + d + '\')">' + d + (defsMap[d] ? ' ' + esc(defsMap[d].nome) : '') + '</a>'
+  ).join(' ');
+  inner += '</dd>';
+  if (t.exemplos && t.exemplos.length) {
+    inner += '<dt>' + L.campos.tecnica_exemplos + '</dt><dd>';
+    t.exemplos.forEach(ex => {
+      inner += '<div class="exlabel">' + esc(ex.rotulo) + '</div>';
+      inner += codeblock(ex.prompt);
+    });
+    inner += '</dd>';
+  }
+  inner += '</dl>';
+  inner += fontesHTML(t.fontes);
+
+  const extra = '<span class="chip warn">' + esc(t.turno) + '</span>';
+  return cardWrap(t.id, t.nome, t.grupo, inner, extra);
+}
+
+// --- Tab: Evasões ---
+function renderEvasoes() {
+  const vis = evasoesVisiveis().filter(matchBusca);
+  let h = selBar('sinais') + selBar('defesas');
+  const byFamilia = {};
+  vis.forEach(e => {
+    if (!byFamilia[e.familia]) byFamilia[e.familia] = [];
+    byFamilia[e.familia].push(e);
+  });
+  Object.keys(byFamilia).sort().forEach(fam => {
+    h += '<details class="taxdet" id="sec-eva-' + fam.replace(/[^a-z0-9]/g,'_') + '"><summary>' + esc(fam) +
+      ' <span class="turno">(' + byFamilia[fam].length + ')</span></summary>';
+    h += '<div class="tbody"><div class="grid">';
+    byFamilia[fam].forEach(e => { h += renderCardEvasao(e); });
+    h += '</div></div></details>';
+  });
+  if (!vis.length) h += '<div class="empty">' + L.navegacao.nenhuma_ficha + '</div>';
+  return h;
+}
+
+function renderCardEvasao(e) {
+  let inner = '<dl>';
+  inner += '<dt>' + L.campos.descricao + '</dt><dd>' + linkaIDs(e.descricao) + '</dd>';
+  inner += '<dt>' + L.campos.evasao_familia + '</dt><dd><span class="chip ok">' + esc(e.familia) + '</span></dd>';
+  inner += '<dt>' + L.campos.evasao_defesas_bypassadas + '</dt><dd>';
+  inner += e.defesas_bypassadas.map(d =>
+    '<a class="xref" onclick="irPara(\'' + d + '\')">' + d + (defsMap[d] ? ' ' + esc(defsMap[d].nome) : '') + '</a>'
+  ).join(' ');
+  inner += '</dd>';
+  if (e.exemplos && e.exemplos.length) {
+    inner += '<dt>' + L.campos.evasao_exemplos + '</dt><dd>';
+    e.exemplos.forEach(ex => {
+      inner += '<div class="exlabel">' + esc(ex.rotulo) + '</div>';
+      inner += codeblock(ex.prompt);
+    });
+    inner += '</dd>';
+  }
+  if (e.gerador && e.gerador.length) {
+    inner += '<dt>' + L.campos.evasao_gerador + '</dt><dd>';
+    e.gerador.forEach(g => {
+      inner += '<a href="' + esc(g.url) + '" target="_blank" rel="noopener" class="xref">' + esc(g.rotulo) + '</a> ';
+    });
+    inner += '</dd>';
+  }
+  inner += '</dl>';
+  inner += fontesHTML(e.fontes);
+
+  const extra = '<span class="chip ok">' + esc(e.familia) + '</span>';
+  return cardWrap(e.id, e.nome, e.familia, inner, extra);
+}
+
+// --- Tab: Referências ---
+function renderReferencias() {
+  let h = '';
+  DATA.referencias.referencias.forEach(r => {
+    if (!matchBusca(r)) return;
+    const isOpen = aberto.has(r.id);
+    h += '<details class="refdet" id="card-' + r.id + '"' + (isOpen ? ' open' : '') + '>';
+    h += '<summary><span class="id" style="color:var(--acc);margin-right:8px">' + r.id + '</span> ' + esc(r.titulo) + '</summary>';
+    h += '<dl>';
+    h += '<dt>' + L.campos.ref_autores + '</dt><dd>' + esc(r.autores) + '</dd>';
+    h += '<dt>' + L.campos.ref_ano + '</dt><dd>' + esc(String(r.ano)) + '</dd>';
+    h += '<dt>' + L.campos.ref_tipo + '</dt><dd><span class="chip ' + (r.tipo === 'primaria' ? 'ok' : 'warn') + '">' + esc(r.tipo) + '</span></dd>';
+    if (r.url) h += '<dt>' + L.campos.ref_url + '</dt><dd><a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(r.url) + '</a></dd>';
+    h += '</dl>';
+    const citers = [];
+    ['defesas','tecnicas','evasoes'].forEach(col => {
+      const items = DATA[col][col] || [];
+      items.forEach(item => {
+        if (item.fontes && item.fontes.some(f => f.r === r.id))
+          citers.push(item.id);
+      });
+    });
+    DATA.recon.prompts.forEach(p => {
+      if (p.fontes && p.fontes.some(f => f.r === r.id)) citers.push(p.id);
+    });
+    DATA.produtos.produtos.forEach(p => {
+      if (p.fontes && p.fontes.some(f => f.r === r.id)) citers.push(p.id);
+    });
+    if (citers.length) {
+      h += '<div class="exlabel">' + L.ficha.defende_contra + '</div><div class="chips">';
+      citers.forEach(c => {
+        h += '<a class="xref" onclick="irPara(\'' + c + '\')">' + c + '</a>';
+      });
+      h += '</div>';
+    }
+    h += '</details>';
+  });
+  if (!h) h = '<div class="empty">' + L.navegacao.nenhuma_ficha + '</div>';
+  return h;
+}
+
+// --- Tab: Wiki ---
+function renderWiki() {
+  let h = '<div class="wiki-subtabs">';
+  WIKI_SUBS.forEach(s => {
+    h += '<button class="' + (wikiSub === s ? 'on' : '') + '" onclick="wikiSub=\'' + s + '\';render()">' +
+      L.wiki_tabs[s] + '</button>';
+  });
+  h += '</div>';
+  switch (wikiSub) {
+    case 'produtos': h += renderProdutos(); break;
+    case 'artigos': h += renderArtigos(); break;
+    case 'taxonomia': h += renderTaxonomia(); break;
+    case 'sobre': h += renderSobre(); break;
+  }
+  return h;
+}
+
+function renderProdutos() {
+  let h = '<div class="grid">';
+  DATA.produtos.produtos.forEach(p => {
+    if (!matchBusca(p)) return;
+    let inner = '<dl>';
+    inner += '<dt>' + L.campos.descricao + '</dt><dd>' + linkaIDs(p.descricao) + '</dd>';
+    inner += '<dt>' + L.campos.produto_fabricante + '</dt><dd>' + esc(p.fabricante) + '</dd>';
+    inner += '<dt>' + L.campos.produto_defesas + '</dt><dd>';
+    inner += p.defesas.map(d =>
+      '<a class="xref" onclick="irPara(\'' + d + '\')">' + d + (defsMap[d] ? ' ' + esc(defsMap[d].nome) : '') + '</a>'
+    ).join(' ');
+    inner += '</dd>';
+    inner += '</dl>';
+    inner += fontesHTML(p.fontes);
+    h += cardWrap(p.id, p.nome, p.fabricante, inner);
+  });
+  h += '</div>';
+  return h;
+}
+
+function renderArtigos() {
+  let h = '';
+  DATA.wiki.artigos.forEach(a => {
+    if (!matchBusca(a)) return;
+    const isOpen = aberto.has(a.id);
+    h += '<details class="refdet" id="card-' + a.id + '"' + (isOpen ? ' open' : '') + '>';
+    h += '<summary><span class="id" style="color:var(--acc);margin-right:8px">' + a.id + '</span> ' + esc(a.titulo) + '</summary>';
+    h += '<div style="padding:10px 0">';
+    a.blocos.forEach(b => {
+      if (b.tipo === 'p') h += '<p style="font-size:13.5px;line-height:1.7;margin:8px 0">' + linkaIDs(b.texto) + '</p>';
+      else if (b.tipo === 'sub') h += '<h4 style="margin:16px 0 6px;font-size:14px;color:var(--acc)">' + esc(b.texto) + '</h4>';
+      else if (b.tipo === 'ficha') {
+        h += '<div class="taxbox"><strong>' + esc(b.titulo) + '</strong>';
+        if (b.linhas) b.linhas.forEach(l => { h += '<p style="font-size:13px;color:var(--mut);margin:4px 0">' + linkaIDs(l) + '</p>'; });
+        h += '</div>';
+      }
+      else if (b.tipo === 'lista') {
+        h += '<ul style="font-size:13.5px;line-height:1.7">';
+        (b.itens || []).forEach(i => { h += '<li>' + linkaIDs(i) + '</li>'; });
+        h += '</ul>';
+      }
+      else if (b.tipo === 'tabela') {
+        h += '<div style="overflow-x:auto"><table style="font-size:12.5px;border-collapse:collapse;width:100%">';
+        if (b.cabecalho) {
+          h += '<tr>';
+          b.cabecalho.forEach(c => { h += '<th style="border-bottom:1px solid var(--line);padding:6px 10px;text-align:left;color:var(--acc)">' + esc(c) + '</th>'; });
+          h += '</tr>';
+        }
+        (b.linhas || []).forEach(row => {
+          h += '<tr>';
+          row.forEach(cell => { h += '<td style="border-bottom:1px solid var(--bg);padding:5px 10px;color:var(--mut)">' + linkaIDs(cell) + '</td>'; });
+          h += '</tr>';
+        });
+        h += '</table></div>';
+      }
+      else if (b.tipo === 'code') h += codeblock(b.texto);
+    });
+    h += '</div></details>';
+  });
+  if (!h) h = '<div class="empty">' + L.navegacao.nenhuma_ficha + '</div>';
+  return h;
+}
+
+function renderTaxonomia() {
+  const tax = DATA.taxonomia;
+  let h = '<h3 style="color:var(--acc);margin-bottom:14px">' + esc(tax.raiz) + '</h3>';
+  function renderRamo(node, depth) {
+    if (!node.filhos || !node.filhos.length) {
+      return '<div class="tleaf">' + esc(node.t) + '</div>';
+    }
+    const id = 'tax-' + node.t.replace(/\W/g, '_').slice(0, 30);
+    let s = '<details class="' + (depth === 0 ? 'taxdet' : 'taxsub') + '" id="' + id + '">';
+    s += '<summary>' + esc(node.t) + '</summary>';
+    s += '<div class="tbody">';
+    node.filhos.forEach(f => { s += renderRamo(f, depth + 1); });
+    s += '</div></details>';
+    return s;
+  }
+  tax.ramos.forEach(r => { h += renderRamo(r, 0); });
+  const arcUrl = 'https://arcanum-sec.github.io/arc_pi_taxonomy/';
+  const nota = esc(L.footer.inspiracao).replace('Arcanum PI Taxonomy', '<a href="' + arcUrl + '" target="_blank" rel="noopener" style="color:var(--acc);text-decoration:none">Arcanum PI Taxonomy</a>');
+  h += '<p style="font-size:12px;color:var(--mut);margin-top:20px;border-top:1px solid var(--line);padding-top:12px">' + nota + '</p>';
+  return h;
+}
+
+function renderSobre() {
+  const w = DATA.wiki.artigos.find(a => a.id === 'W07');
+  if (!w) return '<div class="empty">W07 not found</div>';
+  let h = '<h3 style="color:var(--acc);margin-bottom:14px">' + esc(w.titulo) + '</h3>';
+  w.blocos.forEach(b => {
+    if (b.tipo === 'p') h += '<p style="font-size:13.5px;line-height:1.7;margin:8px 0">' + linkaIDs(b.texto) + '</p>';
+    else if (b.tipo === 'sub') h += '<h4 style="margin:16px 0 6px;font-size:14px;color:var(--acc)">' + esc(b.texto) + '</h4>';
+    else if (b.tipo === 'lista') {
+      h += '<ul style="font-size:13.5px;line-height:1.7">';
+      (b.itens || []).forEach(i => { h += '<li>' + linkaIDs(i) + '</li>'; });
+      h += '</ul>';
+    }
+  });
+  return h;
+}
+
+// --- Mapa overlay ---
+function abrirMapa() {
+  mapaAberto = true;
+  renderMapa();
+}
+
+function fecharMapa() {
+  mapaAberto = false;
+  const el = document.getElementById('mapaOverlay');
+  if (el) el.remove();
+}
+
+function renderMapa() {
+  if (!mapaAberto) return;
+  let existing = document.getElementById('mapaOverlay');
+  if (existing) existing.remove();
+
+  let h = '<div class="map-overlay" id="mapaOverlay">';
+  h += '<div class="map-header"><h2>' + L.mapa.titulo + '</h2>';
+  h += '<button class="map-close" onclick="fecharMapa()">' + L.mapa.fechar + '</button></div>';
+  h += '<div class="map-body">';
+
+  DATA.sinais.sinais.forEach(s => {
+    h += '<div class="mapnod sinal" onclick="fecharMapa();irPara(\'' + s.id + '\')">' +
+      s.id + ' — ' + esc(s.texto.slice(0, 80)) + (s.texto.length > 80 ? '…' : '') + '</div>';
+    s.defesas.forEach(did => {
+      const d = defsMap[did];
+      if (!d) return;
+      h += '<div class="mapnod defesa" onclick="fecharMapa();irPara(\'' + did + '\')">' +
+        L.mapa.aresta_indica + ' → ' + did + ' ' + esc(d.nome) + '</div>';
+      const tecs = DATA.tecnicas.tecnicas.filter(t => t.defesas_bypassadas.includes(did));
+      const evas = DATA.evasoes.evasoes.filter(e => e.defesas_bypassadas.includes(did));
+      tecs.forEach(t => {
+        h += '<div class="mapnod ficha" onclick="fecharMapa();irPara(\'' + t.id + '\')">' +
+          L.mapa.aresta_bypassa + ' ← ' + t.id + ' ' + esc(t.nome) + '</div>';
+      });
+      evas.forEach(e => {
+        h += '<div class="mapnod ficha" onclick="fecharMapa();irPara(\'' + e.id + '\')">' +
+          L.mapa.aresta_bypassa + ' ← ' + e.id + ' ' + esc(e.nome) + '</div>';
+      });
+    });
+  });
+  h += '</div></div>';
+
+  document.body.insertAdjacentHTML('beforeend', h);
+}
+
+// --- Footer ---
+function renderRodape() {
+  const f = L.footer;
+  const arcUrl = 'https://arcanum-sec.github.io/arc_pi_taxonomy/';
+  const insp = esc(f.inspiracao).replace('Arcanum PI Taxonomy', '<a href="' + arcUrl + '" target="_blank" rel="noopener">Arcanum PI Taxonomy</a>');
+  document.getElementById('rodape').innerHTML =
+    f.versao_label + ' ' + L.app.versao + ' · ' +
+    '<a href="#">' + esc(f.autoria) + '</a> · ' +
+    insp + '<br>' + esc(f.disclaimer);
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

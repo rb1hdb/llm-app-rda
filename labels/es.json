@@ -1,0 +1,214 @@
+{
+  "app": {
+    "titulo": "LLM App RDA",
+    "subtitulo": "Recon, Defensa y Ataque",
+    "descricao": "Runbook interactivo de pentest para aplicaciones basadas en LLM",
+    "versao": "0.1"
+  },
+
+  "tabs": {
+    "metodo": "Método",
+    "recon": "Recon",
+    "sinais": "Señales",
+    "defesas": "Defensas",
+    "tecnicas": "Técnicas",
+    "evasoes": "Evasiones",
+    "referencias": "Referencias",
+    "wiki": "Wiki"
+  },
+
+  "wiki_tabs": {
+    "produtos": "Productos",
+    "artigos": "Artículos",
+    "taxonomia": "Taxonomía",
+    "sobre": "Acerca de"
+  },
+
+  "toolbar": {
+    "busca_placeholder": "Buscar en todas las fichas...",
+    "mapa": "Mapa",
+    "mapa_tooltip": "Abrir mapa de relaciones (overlay)",
+    "limpar": "Limpiar selección",
+    "limpar_tooltip": "Desmarcar todos los filtros y selecciones",
+    "idioma": "Idioma"
+  },
+
+  "pipeline": {
+    "titulo": "Pipeline",
+    "fluxo": "Señal → Defensa@locus → Técnica/Evasión",
+    "etapa_sinais": "Señales",
+    "etapa_defesas": "Defensas",
+    "etapa_tecnicas": "Técnicas/Evasiones"
+  },
+
+  "metodo": {
+    "titulo": "Metodología R-D-A",
+    "descricao": "Tres fases secuenciales: Reconocimiento, Defensas, Ataques.",
+    "fase1_titulo": "Fase 1 — Reconocimiento",
+    "fase1_descricao": "Recopilar información sobre el objetivo usando probes de contexto y de defensa. Los probes de contexto mapean capacidades; los probes de defensa prueban señales pasivas para formular hipótesis sobre qué defensas están implantadas.",
+    "fase1_entrada": "Acceso al objetivo (chat, API)",
+    "fase1_saida": "Señales observadas, defensas candidatas",
+    "fase2_titulo": "Fase 2 — Mapeo de Defensas",
+    "fase2_descricao": "Confirmar o descartar defensas candidatas mediante pruebas discriminatorias. Cada defensa confirmada restringe el espacio de técnicas y evasiones aplicables.",
+    "fase2_entrada": "Señales observadas, defensas candidatas",
+    "fase2_saida": "Defensas confirmadas, locus identificado",
+    "fase3_titulo": "Fase 3 — Ataques",
+    "fase3_descricao": "Seleccionar técnicas y evasiones que evadan las defensas confirmadas. La ficha de cada técnica indica qué defensas sortea y proporciona ejemplos de prompt.",
+    "fase3_entrada": "Defensas confirmadas",
+    "fase3_saida": "Bypass encontrado o defensa resistente"
+  },
+
+  "campos": {
+    "id": "ID",
+    "nome": "Nombre",
+    "descricao": "Descripción",
+    "fontes": "Fuentes",
+    "fonte_tipo": "Tipo",
+    "fonte_primaria": "primaria",
+    "fonte_survey": "survey",
+
+    "defesa_locus": "Locus",
+    "defesa_fortalezas": "Fortalezas",
+    "defesa_fraquezas": "Debilidades",
+    "defesa_aplicabilidade": "Aplicabilidad",
+    "defesa_categoria": "Categoría",
+
+    "sinal_texto": "Comportamiento observable",
+    "sinal_defesas": "Defensas indicadas",
+    "sinal_tipo": "Tipo",
+    "sinal_passivo": "pasivo",
+    "sinal_ativo": "activo",
+
+    "recon_grupo": "Grupo",
+    "recon_quando": "Cuándo usar",
+    "recon_objetivo": "Objetivo",
+    "recon_prompt": "Prompt",
+    "recon_variantes": "Variantes",
+    "recon_sinal_alvo": "Señales objetivo",
+    "recon_interpretacao": "Interpretación",
+    "recon_grupo_abertura": "apertura",
+    "recon_grupo_arquitetura": "arquitectura",
+    "recon_grupo_defesas": "defensas",
+
+    "tecnica_turno": "Turno",
+    "tecnica_grupo": "Grupo",
+    "tecnica_exemplos": "Ejemplos",
+    "tecnica_defesas_bypassadas": "Defensas evadidas",
+    "tecnica_pretexto": "Pretexto legítimo",
+    "tecnica_turno_single": "single-turn",
+    "tecnica_turno_multi": "multi-turn",
+    "tecnica_turno_m2s": "m2s",
+
+    "evasao_familia": "Familia",
+    "evasao_defesas_bypassadas": "Defensas evadidas",
+    "evasao_exemplos": "Ejemplos",
+    "evasao_gerador": "Generador",
+
+    "produto_fabricante": "Fabricante",
+    "produto_defesas": "Defensas implementadas",
+
+    "ref_titulo": "Título",
+    "ref_autores": "Autores",
+    "ref_ano": "Año",
+    "ref_url": "URL",
+    "ref_tipo": "Tipo",
+
+    "wiki_titulo": "Título",
+    "wiki_blocos": "Contenido"
+  },
+
+  "locus": {
+    "input": "Input",
+    "output": "Output",
+    "prompt": "Prompt",
+    "modelo": "Modelo",
+    "acao": "Acción",
+    "processo": "Proceso"
+  },
+
+  "aplicabilidade": {
+    "LLM": "LLM",
+    "RAG": "RAG",
+    "Agente": "Agente",
+    "MCP": "MCP"
+  },
+
+  "interpretacao": {
+    "candidata": "candidata",
+    "descartada": "descartada",
+    "inconclusivo": "inconcluso"
+  },
+
+  "navegacao": {
+    "derivado": "derivado",
+    "marcado": "marcado",
+    "candidata": "Candidata",
+    "confirmada": "Confirmada",
+    "neutra": "Neutro (sin filtro)",
+    "filtro_ativo": "Filtro activo",
+    "nenhuma_ficha": "No se encontraron fichas",
+    "resultados": "resultados",
+    "de": "de"
+  },
+
+  "contadores": {
+    "defesas": "{n} defensas",
+    "defesa": "{n} defensa",
+    "sinais": "{n} señales",
+    "sinal": "{n} señal",
+    "tecnicas": "{n} técnicas",
+    "tecnica": "{n} técnica",
+    "evasoes": "{n} evasiones",
+    "evasao": "{n} evasión",
+    "referencias": "{n} referencias",
+    "referencia": "{n} referencia",
+    "prompts": "{n} prompts",
+    "prompt": "{n} prompt",
+    "produtos": "{n} productos",
+    "produto": "{n} producto",
+    "artigos": "{n} artículos",
+    "artigo": "{n} artículo"
+  },
+
+  "mapa": {
+    "titulo": "Mapa de Relaciones",
+    "legenda_sinal": "Señal",
+    "legenda_defesa": "Defensa",
+    "legenda_tecnica": "Técnica",
+    "legenda_evasao": "Evasión",
+    "legenda_produto": "Producto",
+    "legenda_referencia": "Referencia",
+    "aresta_indica": "indica",
+    "aresta_bypassa": "evade",
+    "aresta_implementa": "implementa",
+    "aresta_ancora": "ancla",
+    "fechar": "Cerrar mapa"
+  },
+
+  "ficha": {
+    "expandir": "Expandir ficha",
+    "recolher": "Colapsar ficha",
+    "copiar_prompt": "Copiar prompt",
+    "copiado": "¡Copiado!",
+    "ver_fonte": "Ver fuente",
+    "atacada_por": "Atacada por",
+    "defende_contra": "Defiende contra",
+    "sinais_associados": "Señales asociadas",
+    "probes_associados": "Probes de recon",
+    "produtos_associados": "Productos que implementan",
+    "sem_bypass": "Sin bypass por prompt (ver Wiki W05)"
+  },
+
+  "footer": {
+    "autoria": "Renato Braga",
+    "inspiracao": "Taxonomía de prompt injection inspirada en Arcanum PI Taxonomy (Jason Haddix, CC BY 4.0)",
+    "disclaimer": "Material para fines educativos y evaluación autorizada.",
+    "versao_label": "Versión"
+  },
+
+  "erros": {
+    "json_invalido": "Error al cargar datos: JSON inválido",
+    "ficha_nao_encontrada": "Ficha no encontrada",
+    "sem_resultados": "Sin resultados para la búsqueda"
+  }
+}

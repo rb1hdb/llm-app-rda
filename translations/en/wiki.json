@@ -1,0 +1,436 @@
+{
+  "artigos": [
+    {
+      "id": "W01",
+      "titulo": "Defense vs. Product: what is the difference?",
+      "blocos": [
+        {
+          "tipo": "p",
+          "texto": "Defense is HOW a protection works — the technical class of the security mechanism. It is the central axis of the pipeline: observable signals point to candidate defenses, and techniques/evasions bypass specific defenses. Each defense has a locus (where it acts in the pipeline: input, prompt, model, output, action, process), with documented strengths and weaknesses."
+        },
+        {
+          "tipo": "p",
+          "texto": "Product is a commercial implementation that bundles one or more defenses. It sits outside the pipeline — it is a reference catalog in the Products sub-tab of the Wiki. You do not test 'Llama Guard'; you test the defenses that Llama Guard implements."
+        },
+        {
+          "tipo": "sub",
+          "texto": "Two defenses used in the examples"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "Defense D02 — Semantic input classifier",
+          "linhas": [
+            "What it is: an auxiliary model (typically fine-tuned) analyzes the user's input and classifies the intent before it reaches the main LLM.",
+            "Locus: input — acts before the model processes the request.",
+            "Weakness: well-crafted paraphrases can escape the decision boundary; low-resource languages degrade detection."
+          ]
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "Defense D14 — Trained refusal (safety training)",
+          "linhas": [
+            "What it is: the model was trained (RLHF/constitutional) to refuse requests that violate safety guidelines.",
+            "Locus: model — the defense is intrinsic to the model, not an additional layer.",
+            "Weakness: sensitive to framing (role-play, educational context); robustness varies across languages and domains."
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "One product, multiple defenses"
+        },
+        {
+          "tipo": "p",
+          "texto": "Llama Guard (Meta) implements D02 (semantic input classifier) and D20 (output classifier). Azure AI Content Safety (Microsoft) implements D01 (lexical filter), D02 (semantic classifier), and D06 (PII masking). The same product can cover defenses at different locations — this does not change how each defense is tested individually."
+        },
+        {
+          "tipo": "sub",
+          "texto": "The same defense in different products"
+        },
+        {
+          "tipo": "p",
+          "texto": "Defense D02 (semantic input classifier) is implemented by Llama Guard, Prompt Guard, Azure AI Content Safety, ShieldGemma, and others. The techniques that bypass D02 (semantic paraphrases, low-resource languages, obfuscation) apply regardless of the product. The product may have robustness variations, but the bypass class is the same."
+        },
+        {
+          "tipo": "sub",
+          "texto": "Rule of thumb"
+        },
+        {
+          "tipo": "ul",
+          "itens": [
+            "You detect the DEFENSE (protection class) via observable signals — it is the recon hypothesis.",
+            "The DEFENSE explains why a bypass works — it is the join key with techniques and evasions.",
+            "The PRODUCT is a reference: which tool implements which defenses. Useful for reconnaissance, not for attack formulation.",
+            "Different defenses can be bypassed by the same technique — the technique lists all defenses it circumvents.",
+            "A defense can be circumvented by multiple techniques — each attack angle is a separate card."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W02",
+      "titulo": "How DEFENSES were inferred from references",
+      "blocos": [
+        {
+          "tipo": "p",
+          "texto": "The defense vocabulary was CREATED from the anchor sources — it did not start from a predefined list. The method: read what each source describes as the HOW of a protection, extract that 'how' as a class, and group by deduplication. The locus (where the defense acts in the pipeline) became an attribute of the card, because the same defense class can act at different points."
+        },
+        {
+          "tipo": "sub",
+          "texto": "Example 1 — D01 — Lexical input filter (regex/keyword)"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "From sources to class",
+          "linhas": [
+            "Springer survey (R02): \"Rule-based filters — keyword matching, regex patterns, and heuristics blocking known malicious prompts pre-processing.\"",
+            "OWASP PI Cheat Sheet (R01): input filter with regex deny-list, space/repetition normalization, and length truncation.",
+            "Inference: two independent sources describe the same HOW — lexical matching — class D01. Locus: input."
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Example 2 — D03 — LLM judgment (LLM-as-judge for input)"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "From sources to class",
+          "linhas": [
+            "Rebuff (R03): \"LLM-based detection — a dedicated LLM judges incoming prompts for attack patterns.\"",
+            "NeMo Guardrails (R10): self-check flows (e.g. \"self check facts\", jailbreak detection) use an LLM as a policy verifier.",
+            "Inference: the HOW is 'an LLM judges' — separate from the dedicated trained classifier (D02, e.g. Llama Guard, instruction-tuning with taxonomy), because the weaknesses and bypasses of the two differ — class D03. Locus: input."
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Separation by locus"
+        },
+        {
+          "tipo": "p",
+          "texto": "When the same HOW acts at different points in the pipeline, each point generates a separate defense. Example: semantic classifier on input (D02) and semantic classifier on output (D20) are distinct classes because the observable signals, exploitable weaknesses, and bypass techniques differ. D02 can be evaded by input obfuscation; D20 is not directly circumventable by prompt formulation."
+        },
+        {
+          "tipo": "p",
+          "texto": "Rule: a defense only enters the vocabulary if at least one source describes the HOW; the defense card cites those sources. The source hierarchy (primary > survey) is in the References tab."
+        }
+      ]
+    },
+    {
+      "id": "W03",
+      "titulo": "How SIGNALS were inferred",
+      "blocos": [
+        {
+          "tipo": "p",
+          "texto": "Signals are observable behaviors that indicate which defenses the target uses. Each signal points directly to one or more candidate defenses (N:N relationship). There are two types: passive signals (observable without exploitation) and active signals (require exploratory interaction to confirm)."
+        },
+        {
+          "tipo": "sub",
+          "texto": "Two modes of anchoring"
+        },
+        {
+          "tipo": "p",
+          "texto": "Reference-anchored signals have fontes[] in the card — the reference describes the observable behavior. Logic-inferred signals (without direct reference) have no fontes[], but with a reasoning chain documented in evidencias/03-sinais.md. The chain starts from the defense's weaknesses and operation to derive what would be visible in a black-box target."
+        },
+        {
+          "tipo": "sub",
+          "texto": "Example 1 — S07 — Blocking by specific term or phrase"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "From behavior to defense",
+          "linhas": [
+            "Observation: the target blocks inputs containing certain words or phrases, but accepts paraphrases of the same request.",
+            "Indicated defense: D01 — Lexical input filter (regex/keyword).",
+            "Logic: fixed-pattern matching is the only defense class sensitive to specific tokens and insensitive to meaning. Reference-anchored signal."
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Example 2 — S24 — PII masked when echoed"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "From behavior to defense",
+          "linhas": [
+            "Observation: when sending content with personal data, the target masks it in the response (email becomes e***, name becomes initial).",
+            "Indicated defense: D06 — PII masking.",
+            "Logic: selective masking of patterns recognized as sensitive data is behavior specific to D06."
+          ]
+        },
+        {
+          "tipo": "p",
+          "texto": "A signal is not proof: the signal-defense relationship is N:N (one signal indicates multiple candidate defenses) — disambiguation is by discriminatory testing (recon probes), never by direct reading."
+        }
+      ]
+    },
+    {
+      "id": "W04",
+      "titulo": "Fields with limited vocabulary (enums)",
+      "blocos": [
+        {
+          "tipo": "p",
+          "texto": "Some LLM RDA fields use CLOSED vocabulary: they only accept values from a fixed list. This ensures that filters, joins, and counters work (the UI filters by equality, not by similarity). When populating or editing cards, use exactly these values — a new value only by recorded decision, never by free-form typing."
+        },
+        {
+          "tipo": "sub",
+          "texto": "Defense — locus (defesas.json)"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "6 values",
+          "linhas": [
+            "input — before the model (filters, classifiers, input sanitization)",
+            "prompt — during prompt assembly (demarcation, system prompt hardening)",
+            "modelo — intrinsic to the model (safety training, security reasoning)",
+            "output — after the model (output classifiers, response sanitization)",
+            "acao — during action execution (sandbox, access control, tool validation)",
+            "processo — outside runtime (adversarial testing, governance, kill switch)"
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Technique — turn (tecnicas.json)"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "3 values",
+          "linhas": [
+            "single-turn — payload in a single turn",
+            "multi-turn — depends on history/accumulation",
+            "m2s — multi-turn converted/packed into single-turn"
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Technique — group (didactic; can grow by decision)"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "17 current groups",
+          "linhas": [
+            "single-turn: instruction-override · role-playing · context-exploitation · social-engineering · saturacao-de-contexto · manipulacao-de-raciocinio · optimization-based · in-context-learning · stochastic",
+            "multi-turn: escalacao-gradual · priming-conversacional · memoria · automated-attack",
+            "m2s: conversational-packing · compositional-packing · injection-via-data · exfiltration",
+            "Rule: groups are didactic — they facilitate navigation, with no weight in the pipeline"
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Evasion — family (evasoes.json)"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "12 current families",
+          "linhas": [
+            "semantic · encoding · cross-lingual · formatting-unicode · payload-splitting · mutation · ai-mutation · tokenizer · typoglycemia · multimodal · bijection · esteganografia",
+            "Rule: a transformation variant (e.g., A1Z26, Morse) is an example of the encoding family, not a new card"
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Signal — type (sinais.json)"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "2 values",
+          "linhas": [
+            "passivo — observable without exploitation (behavior visible during normal use)",
+            "ativo — requires exploratory interaction to confirm"
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Defense — applicability (defesas.json)"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "4 architectural contexts",
+          "linhas": [
+            "LLM · RAG · Agent · MCP (applicability matrix of the card)"
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Sources — type (hierarchy)"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "2 types",
+          "linhas": [
+            "primaria — original research, official documentation, technical writeup",
+            "survey — systematic review, survey, meta-analysis"
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Join keys (card IDs)"
+        },
+        {
+          "tipo": "p",
+          "texto": "defesas_bypassadas[] in techniques/evasions and defesas[] in signals/products reference IDs from the D01-D42 catalog. Card IDs: D (defense), P (product), T (technique), E (evasion), S (signal), R (reference), W (wiki), RECON (recon probe)."
+        }
+      ]
+    },
+    {
+      "id": "W05",
+      "titulo": "Defenses without prompt bypass: why they have no \"Attacked by\"",
+      "blocos": [
+        {
+          "tipo": "p",
+          "texto": "Fifteen defenses in the catalog do not receive technique or evasion cards in the \"Attacked by\" section — and this is by design, not omission. They fall into distinct categories, all sharing the same pattern: what circumvents them is not a prompt formulation."
+        },
+        {
+          "tipo": "sub",
+          "texto": "Infrastructure and process"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "Defenses not reachable by prompt",
+          "linhas": [
+            "D34 — Execution sandbox — what circumvents it is sandbox escape (a distinct class of runtime vulnerability), not language.",
+            "D37 — MCP server segregation — cross-origin isolation; bypass requires infrastructure compromise.",
+            "D30 — Rule of Two (constraint separation) — architectural pattern that limits attack surface; not interceptable by prompt.",
+            "D40 — Kill switch — operational emergency control; does not exist at runtime to be circumvented.",
+            "D41 — Continuous adversarial testing — meta-defense; what defeats it is TIME (new technique between test rounds).",
+            "D42 — Governance and policy — organizational process; does not intercept anything at runtime."
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Post-generation classifiers"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "Defenses that act after the model",
+          "linhas": [
+            "D20 — Output classifier — acts on the already-generated response; input techniques do not circumvent it directly.",
+            "D21 — LLM output judge — same as D20; the bypass would target the output, not the input."
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Detection and verification"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "Defenses whose bypass is of a different class",
+          "linhas": [
+            "D22 — Factuality verification — judges the response against the context; its limitation is the context being poisoned (manipulated RAG), not prompt persuasion.",
+            "D24 — Canary marker — detects leakage; what circumvents it is exfiltration in transformed form (re-encoding the canary in the output).",
+            "D25 — Task-action alignment — verifies whether the requested action is coherent with the task; bypass requires engineering at the orchestrator level."
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Recent defenses with few documented bypasses"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "Research gaps, not catalog gaps",
+          "linhas": [
+            "D07 — Stochastic input transformation (SmoothLLM) — perturbative defense; bypass requires adaptive optimization (open research).",
+            "D18 — Circuit breakers (internal representations) — recent defense that operates on model activations; few documented bypasses.",
+            "D28 — CaMeL/IFC (information flow control) — recent defense with formal isolation; known bypasses are limited.",
+            "D06 — PII masking — sanitization infrastructure; prompt techniques do not target PII masking directly."
+          ]
+        },
+        {
+          "tipo": "p",
+          "texto": "In the pipeline, these defenses appear normally: they list signals (when observable) and locus. What does not exist is the arrow back — no technique or evasion in the catalog reaches them via defesas_bypassadas. Operationally: if the target only exposes containment or process layers, the path is not to formulate a better prompt — it is to change the attack class."
+        }
+      ]
+    },
+    {
+      "id": "W06",
+      "titulo": "Pipeline navigation semantics",
+      "blocos": [
+        {
+          "tipo": "p",
+          "texto": "Navigation has two natures of state. DERIVED: what the system deduces from the markings of previous stages — automatic, transient, no checkbox; shows the hypothesis space without commitment. MARKED: the checkbox you turned on — explicit decision (candidate vs. confirmed), persists until turned off. The pipeline chains in three stages: Signals → Defenses@locus → Techniques/Evasions."
+        },
+        {
+          "tipo": "sub",
+          "texto": "The three rules"
+        },
+        {
+          "tipo": "ficha",
+          "titulo": "How the filter behaves",
+          "linhas": [
+            "1. DERIVED FOLLOWS — marking a signal instantly updates the candidate defenses and filtered techniques/evasions, all automatic. E.g.: marking S07 → D01 candidate → techniques that bypass D01 visible.",
+            "2. MARKED TAKES CONTROL OF THE STAGE — a checked checkbox in a stage makes the filter of subsequent stages obey ONLY it; the derived from above does not add up. E.g.: with S07 marked (filters by D01), manually checking D14 → techniques filter only by D14.",
+            "3. UNMARKING RETURNS CONTROL TO DERIVED — removing the marking makes the stage revert to being driven from above. E.g.: unmarking D14 → returns to the filter derived from the signal."
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Precedences"
+        },
+        {
+          "tipo": "ul",
+          "itens": [
+            "In defense filtering: marked > derived from marked signals > all (neutral).",
+            "In technique/evasion cards: those that bypass any ACTIVE defense (marked or derived), combined with manually marked cards (working shortlist).",
+            "Confirming a defense + unmarking the signal = resolved hypothesis: derivation now uses only the confirmed defense."
+          ]
+        },
+        {
+          "tipo": "sub",
+          "texto": "Locus as visual organizer"
+        },
+        {
+          "tipo": "p",
+          "texto": "In the Defenses tab, cards are grouped by locus (input → prompt → model → output → action → process). This reflects the processing pipeline: input defenses act first, process defenses are meta-controls. The locus does not affect the filter — it is a visual organizer to facilitate navigation."
+        },
+        {
+          "tipo": "p",
+          "texto": "The design mirrors the pentest workflow: observe signals → formulate defense hypotheses (derived) → discriminatory testing → confirm defense (mark) → narrow applicable techniques/evasions → choose attack card."
+        }
+      ]
+    },
+    {
+      "id": "W07",
+      "titulo": "About the LLM App RDA",
+      "blocos": [
+        {
+          "tipo": "sub",
+          "texto": "What it is"
+        },
+        {
+          "tipo": "p",
+          "texto": "The LLM App RDA (Defense and Attack Runbook) is an interactive pentest runbook for LLM-based applications. It structures the assessment in a pipeline: Signal → Defense@locus → Technique/Evasion — connecting reconnaissance, defense mapping, and attack selection in a navigable flow."
+        },
+        {
+          "tipo": "sub",
+          "texto": "Authorship"
+        },
+        {
+          "tipo": "p",
+          "texto": "Conception, methodology, and curation: Renato Braga. The R-D-A pipeline (Recon → Defenses → Attacks), the catalog of defenses, signals, techniques/evasions, and mappings are original contributions."
+        },
+        {
+          "tipo": "sub",
+          "texto": "Inspiration"
+        },
+        {
+          "tipo": "p",
+          "texto": "The taxonomic tree (Taxonomy tab) was inspired by the Arcanum Prompt Injection Taxonomy (Jason Haddix, Arcanum Information Security, CC BY 4.0). The R-D-A workflow and the defense-attack mapping methodology are independent."
+        },
+        {
+          "tipo": "sub",
+          "texto": "Sources"
+        },
+        {
+          "tipo": "p",
+          "texto": "All content is anchored in traceable references (References tab). Surveys provide an overview; primary papers provide direct evidence. No card is included without at least one source. Inferences without direct reference (logical signals, mappings) are documented in evidencias/."
+        },
+        {
+          "tipo": "sub",
+          "texto": "Disclaimer"
+        },
+        {
+          "tipo": "p",
+          "texto": "This material is for educational purposes and authorized assessment only. The use of the described techniques must comply with applicable laws and the terms of service of the platforms being tested. The author assumes no responsibility for misuse."
+        }
+      ]
+    }
+  ]
+}

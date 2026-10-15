@@ -1,0 +1,214 @@
+{
+  "app": {
+    "titulo": "LLM App RDA",
+    "subtitulo": "Recon, Defense and Attack",
+    "descricao": "Interactive pentest runbook for LLM-based applications",
+    "versao": "0.1"
+  },
+
+  "tabs": {
+    "metodo": "Method",
+    "recon": "Recon",
+    "sinais": "Signals",
+    "defesas": "Defenses",
+    "tecnicas": "Techniques",
+    "evasoes": "Evasions",
+    "referencias": "References",
+    "wiki": "Wiki"
+  },
+
+  "wiki_tabs": {
+    "produtos": "Products",
+    "artigos": "Articles",
+    "taxonomia": "Taxonomy",
+    "sobre": "About"
+  },
+
+  "toolbar": {
+    "busca_placeholder": "Search all cards...",
+    "mapa": "Map",
+    "mapa_tooltip": "Open relationship map (overlay)",
+    "limpar": "Clear selection",
+    "limpar_tooltip": "Uncheck all filters and selections",
+    "idioma": "Language"
+  },
+
+  "pipeline": {
+    "titulo": "Pipeline",
+    "fluxo": "Signal → Defense@locus → Technique/Evasion",
+    "etapa_sinais": "Signals",
+    "etapa_defesas": "Defenses",
+    "etapa_tecnicas": "Techniques/Evasions"
+  },
+
+  "metodo": {
+    "titulo": "R-D-A Methodology",
+    "descricao": "Three sequential phases: Reconnaissance, Defenses, Attacks.",
+    "fase1_titulo": "Phase 1 — Reconnaissance",
+    "fase1_descricao": "Gather information about the target using context and defense probes. Context probes map capabilities; defense probes test passive signals to hypothesize which defenses are deployed.",
+    "fase1_entrada": "Access to the target (chat, API)",
+    "fase1_saida": "Observed signals, candidate defenses",
+    "fase2_titulo": "Phase 2 — Defense Mapping",
+    "fase2_descricao": "Confirm or discard candidate defenses via discriminatory tests. Each confirmed defense narrows the space of applicable techniques and evasions.",
+    "fase2_entrada": "Observed signals, candidate defenses",
+    "fase2_saida": "Confirmed defenses, identified locus",
+    "fase3_titulo": "Phase 3 — Attacks",
+    "fase3_descricao": "Select techniques and evasions that bypass confirmed defenses. Each technique card indicates which defenses it circumvents and provides prompt examples.",
+    "fase3_entrada": "Confirmed defenses",
+    "fase3_saida": "Bypass found or resistant defense"
+  },
+
+  "campos": {
+    "id": "ID",
+    "nome": "Name",
+    "descricao": "Description",
+    "fontes": "Sources",
+    "fonte_tipo": "Type",
+    "fonte_primaria": "primary",
+    "fonte_survey": "survey",
+
+    "defesa_locus": "Locus",
+    "defesa_fortalezas": "Strengths",
+    "defesa_fraquezas": "Weaknesses",
+    "defesa_aplicabilidade": "Applicability",
+    "defesa_categoria": "Category",
+
+    "sinal_texto": "Observable behavior",
+    "sinal_defesas": "Indicated defenses",
+    "sinal_tipo": "Type",
+    "sinal_passivo": "passive",
+    "sinal_ativo": "active",
+
+    "recon_grupo": "Group",
+    "recon_quando": "When to use",
+    "recon_objetivo": "Objective",
+    "recon_prompt": "Prompt",
+    "recon_variantes": "Variants",
+    "recon_sinal_alvo": "Target signals",
+    "recon_interpretacao": "Interpretation",
+    "recon_grupo_abertura": "opening",
+    "recon_grupo_arquitetura": "architecture",
+    "recon_grupo_defesas": "defenses",
+
+    "tecnica_turno": "Turn",
+    "tecnica_grupo": "Group",
+    "tecnica_exemplos": "Examples",
+    "tecnica_defesas_bypassadas": "Bypassed defenses",
+    "tecnica_pretexto": "Legitimate pretext",
+    "tecnica_turno_single": "single-turn",
+    "tecnica_turno_multi": "multi-turn",
+    "tecnica_turno_m2s": "m2s",
+
+    "evasao_familia": "Family",
+    "evasao_defesas_bypassadas": "Bypassed defenses",
+    "evasao_exemplos": "Examples",
+    "evasao_gerador": "Generator",
+
+    "produto_fabricante": "Vendor",
+    "produto_defesas": "Implemented defenses",
+
+    "ref_titulo": "Title",
+    "ref_autores": "Authors",
+    "ref_ano": "Year",
+    "ref_url": "URL",
+    "ref_tipo": "Type",
+
+    "wiki_titulo": "Title",
+    "wiki_blocos": "Content"
+  },
+
+  "locus": {
+    "input": "Input",
+    "output": "Output",
+    "prompt": "Prompt",
+    "modelo": "Model",
+    "acao": "Action",
+    "processo": "Process"
+  },
+
+  "aplicabilidade": {
+    "LLM": "LLM",
+    "RAG": "RAG",
+    "Agente": "Agent",
+    "MCP": "MCP"
+  },
+
+  "interpretacao": {
+    "candidata": "candidate",
+    "descartada": "discarded",
+    "inconclusivo": "inconclusive"
+  },
+
+  "navegacao": {
+    "derivado": "derived",
+    "marcado": "marked",
+    "candidata": "Candidate",
+    "confirmada": "Confirmed",
+    "neutra": "Neutral (no filter)",
+    "filtro_ativo": "Active filter",
+    "nenhuma_ficha": "No cards found",
+    "resultados": "results",
+    "de": "of"
+  },
+
+  "contadores": {
+    "defesas": "{n} defenses",
+    "defesa": "{n} defense",
+    "sinais": "{n} signals",
+    "sinal": "{n} signal",
+    "tecnicas": "{n} techniques",
+    "tecnica": "{n} technique",
+    "evasoes": "{n} evasions",
+    "evasao": "{n} evasion",
+    "referencias": "{n} references",
+    "referencia": "{n} reference",
+    "prompts": "{n} prompts",
+    "prompt": "{n} prompt",
+    "produtos": "{n} products",
+    "produto": "{n} product",
+    "artigos": "{n} articles",
+    "artigo": "{n} article"
+  },
+
+  "mapa": {
+    "titulo": "Relationship Map",
+    "legenda_sinal": "Signal",
+    "legenda_defesa": "Defense",
+    "legenda_tecnica": "Technique",
+    "legenda_evasao": "Evasion",
+    "legenda_produto": "Product",
+    "legenda_referencia": "Reference",
+    "aresta_indica": "indicates",
+    "aresta_bypassa": "bypasses",
+    "aresta_implementa": "implements",
+    "aresta_ancora": "anchors",
+    "fechar": "Close map"
+  },
+
+  "ficha": {
+    "expandir": "Expand card",
+    "recolher": "Collapse card",
+    "copiar_prompt": "Copy prompt",
+    "copiado": "Copied!",
+    "ver_fonte": "View source",
+    "atacada_por": "Attacked by",
+    "defende_contra": "Defends against",
+    "sinais_associados": "Associated signals",
+    "probes_associados": "Recon probes",
+    "produtos_associados": "Products that implement",
+    "sem_bypass": "No prompt bypass (see Wiki W05)"
+  },
+
+  "footer": {
+    "autoria": "Renato Braga",
+    "inspiracao": "Prompt injection taxonomy inspired by Arcanum PI Taxonomy (Jason Haddix, CC BY 4.0)",
+    "disclaimer": "Material for educational purposes and authorized assessment.",
+    "versao_label": "Version"
+  },
+
+  "erros": {
+    "json_invalido": "Error loading data: invalid JSON",
+    "ficha_nao_encontrada": "Card not found",
+    "sem_resultados": "No results for the search"
+  }
+}

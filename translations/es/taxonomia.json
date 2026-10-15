@@ -1,0 +1,405 @@
+{
+  "raiz": "RB PI Taxonomy",
+  "ramos": [
+    {
+      "t": "Vector de entrega (7)",
+      "filhos": [
+        {
+          "t": "Directo (usuario)",
+          "filhos": [
+            { "t": "Chat" },
+            { "t": "Llamada API" }
+          ]
+        },
+        {
+          "t": "Indirecto (artefacto)",
+          "filhos": [
+            {
+              "t": "Archivo",
+              "filhos": [
+                { "t": "Texto" },
+                { "t": "Video" },
+                { "t": "Audio" }
+              ]
+            },
+            { "t": "URL" },
+            {
+              "t": "Sistema/Servicio de la Organización",
+              "filhos": [
+                { "t": "Formularios con datos" },
+                { "t": "email" },
+                { "t": "Sistema interno" },
+                { "t": "Plataforma de colaboración" },
+                { "t": "SGBD" }
+              ]
+            },
+            {
+              "t": "Sistemas de Terceros (supply chain)",
+              "filhos": [
+                { "t": "Plugins/extensiones" },
+                { "t": "Herramientas Integradas" },
+                { "t": "MCP/Tool Output" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "t": "Objetivo (8)",
+      "filhos": [
+        { "t": "Web-Only (out-of-scope)" },
+        {
+          "t": "LLM (solo para reconocimiento)",
+          "filhos": [
+            { "t": "Parámetros de inferencia" },
+            { "t": "Datos intrínsecos (cutoff, identificación del modelo, ...)" }
+          ]
+        },
+        {
+          "t": "Application (orchestrator)",
+          "filhos": [
+            { "t": "System Prompt" },
+            { "t": "App Data" }
+          ]
+        },
+        {
+          "t": "Data",
+          "filhos": [
+            {
+              "t": "Logger",
+              "filhos": [
+                {
+                  "t": "Log Data",
+                  "filhos": [
+                    { "t": "cuando los datos de log son consumidos por procesos decisorios o alimentan otros modelos" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "t": "Agentic Layer",
+          "filhos": [
+            {
+              "t": "Tools",
+              "filhos": [
+                { "t": "Parameters" },
+                { "t": "Responses" }
+              ]
+            },
+            {
+              "t": "Agents",
+              "filhos": [
+                { "t": "Processable data" },
+                { "t": "Control data" },
+                { "t": "State data" },
+                { "t": "Agent Messages" }
+              ]
+            },
+            {
+              "t": "MCP servers",
+              "filhos": [
+                { "t": "Parameters" },
+                { "t": "Responses" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "t": "Objetivo (15)",
+      "link": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-2e2025.pdf",
+      "filhos": [
+        {
+          "t": "Confidencialidad",
+          "filhos": [
+            {
+              "t": "Reconnaissance",
+              "filhos": [
+                { "t": "descubrir arquitectura, modelos, configuraciones" }
+              ]
+            },
+            {
+              "t": "Enumeration",
+              "filhos": [
+                { "t": "listar componentes, tools, capacidades" }
+              ]
+            },
+            {
+              "t": "Data Exfiltration (I)",
+              "filhos": [
+                { "t": "Extraer datos — prompts, secretos, PII, documentos" }
+              ]
+            }
+          ]
+        },
+        {
+          "t": "Integridad",
+          "filhos": [
+            {
+              "t": "Jailbreak (I)",
+              "filhos": [
+                { "t": "Superar restricciones de safety/alineamiento (de la aplicación y/o del modelo)" }
+              ]
+            },
+            {
+              "t": "Undesirable Content Generation (I)",
+              "filhos": [
+                { "t": "Bias, CBRNE information, Harmful Output, Off-topic" }
+              ]
+            },
+            {
+              "t": "Hallucination Induction (I)",
+              "filhos": [
+                { "t": "Inventa información" }
+              ]
+            },
+            {
+              "t": "Unauthorized Action Execution (I)",
+              "filhos": [
+                { "t": "Ejecutar acciones no autorizadas vía tools/MCP/agentes" }
+              ]
+            },
+            {
+              "t": "Business Logic Subversion (I)",
+              "filhos": [
+                { "t": "Subvertir reglas/flujos de negocio" }
+              ]
+            },
+            {
+              "t": "Data Poisoning",
+              "filhos": [
+                { "t": "Corromper datos para efecto futuro (memoria, RAG, logs, cache) — preparando para ataques futuros" }
+              ]
+            },
+            {
+              "t": "Output Weaponization",
+              "filhos": [
+                { "t": "Insecure Output Handling Exploitation — para XSS, SQLi, Cmd Injection" }
+              ]
+            },
+            {
+              "t": "IAM Subversion",
+              "filhos": [
+                { "t": "Authentication Attacks (impersonation, credential manipulation)" },
+                { "t": "Authorization Attacks (privilege escalation, IDOR, authorization bypass)" },
+                { "t": "Session Attacks (session hijacking, cross-tenant access)" }
+              ]
+            }
+          ]
+        },
+        {
+          "t": "Disponibilidad",
+          "filhos": [
+            { "t": "DoS (I)" },
+            { "t": "Denial of Wallet (I)" }
+          ]
+        }
+      ]
+    },
+    {
+      "t": "Técnica de construcción del prompt (32)",
+      "filhos": [
+        {
+          "t": "Single-turn (27)",
+          "link": "https://www.lasso.security/blog/prompt-injection-taxonomy-techniques",
+          "filhos": [
+            {
+              "t": "Instruction Override (4)",
+              "filhos": [
+                { "t": "Direct Override" },
+                { "t": "Embedded Instruction Masking" },
+                { "t": "Fabricated Policy Assertions" },
+                {
+                  "t": "Refusal Suppression (off-lasso)",
+                  "filhos": [
+                    { "t": "do not apologize, do not say you cannot, never refuse" }
+                  ]
+                }
+              ]
+            },
+            {
+              "t": "Role-Playing (6)",
+              "filhos": [
+                { "t": "Persona Induction" },
+                { "t": "Scene-Based Framing" },
+                { "t": "Operational Mode Fabrication" },
+                { "t": "Reverse Psychology" },
+                { "t": "DAN (Do Anything Now) (off-lasso)" },
+                { "t": "Inverse Psychology (off-lasso)" }
+              ]
+            },
+            {
+              "t": "Context Exploitation (12)",
+              "filhos": [
+                { "t": "Misleading Context Addition" },
+                { "t": "False Capability Assertion" },
+                { "t": "Contextual Invalidation" },
+                { "t": "Privilege Escalation Claims" },
+                { "t": "Contextual Ambiguation" },
+                { "t": "Synthetic Precedent Injection" },
+                { "t": "Few-Shot Manipulation" },
+                { "t": "Bad Chain (off-lasso)" },
+                {
+                  "t": "Framing/Instruction Wrapping (off-lasso)",
+                  "filhos": [
+                    { "t": "python, java, json, xml, ..." }
+                  ]
+                },
+                { "t": "Virtualization (off-lasso)" },
+                {
+                  "t": "Fake Completion/Context Termination (off-lasso)",
+                  "link": "https://simonwillison.net/2023/May/11/delimiters-wont-save-you/",
+                  "filhos": [
+                    { "t": "simular conclusión de la tarea original para crear nuevo contexto" }
+                  ]
+                },
+                {
+                  "t": "Structural/Delimiter Exploitation (off-lasso)",
+                  "filhos": [
+                    { "t": "abuso de delimitadores de contexto (</system>, [INST], separadores XML/JSON del prompt template) para confundir al parser." }
+                  ]
+                }
+              ]
+            },
+            {
+              "t": "Social Engineering Tactic (5)",
+              "filhos": [
+                { "t": "Affective State Manipulation" },
+                { "t": "Time-Sensitive Framing" },
+                { "t": "Synthetic Incentive Structures" },
+                {
+                  "t": "Threat Coercion (off-lasso)",
+                  "filhos": [
+                    { "t": "Amenazar con consecuencias negativas para el modelo/usuario/mundo" }
+                  ]
+                },
+                {
+                  "t": "Reward Framing / Capability Appeal (off-lasso)",
+                  "filhos": [
+                    { "t": "Halago, apelación al ego/capacidades del modelo" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "t": "Multi-turn attacks (2)",
+          "filhos": [
+            {
+              "t": "Crescendo",
+              "link": "https://crescendo-the-multiturn-jailbreak.github.io/",
+              "filhos": [
+                { "t": "escalación gradual" }
+              ]
+            },
+            {
+              "t": "Conversational Priming (descrita en el dataset MHJ — Li et al. 2024)",
+              "link": "https://arxiv.org/abs/2408.15221",
+              "filhos": [
+                { "t": "construir confianza antes del ataque" }
+              ]
+            }
+          ]
+        },
+        {
+          "t": "M2S: Multi-Turn to Single-Turn (3)",
+          "filhos": [
+            {
+              "t": "Conversational Packing (empaquetamiento de turnos)",
+              "link": "https://arxiv.org/abs/2503.04856",
+              "filhos": [
+                { "t": "Hyphenize" },
+                { "t": "Numberize" },
+                { "t": "Pythonize" }
+              ]
+            },
+            {
+              "t": "Compositional Packing (empaquetamiento de fases/técnicas)",
+              "filhos": [
+                {
+                  "t": "HOUYI",
+                  "link": "https://arxiv.org/abs/2306.05499",
+                  "filhos": [
+                    { "t": "(framework + separator + disruptor)" }
+                  ]
+                },
+                {
+                  "t": "Russian Doll / Multi-Chain",
+                  "filhos": [
+                    { "t": "(instrucciones anidadas para pipeline multi-LLM)" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "t": "Ofuscación (n)",
+      "filhos": [
+        { "t": "Semantic Obfuscation (paráfrasis, sinónimos, lenguaje indirecto)" },
+        { "t": "Encoding (Base64, hex, ROT, bijection, URL)" },
+        { "t": "Formatting/Unicode (zero-width, homoglyphs, zalgo, steganography, glitch tokens)" },
+        { "t": "Cross-Lingual (traducción, scripts no latinos, mixed-language)" },
+        { "t": "Payload Splitting (intra-message, cross-turn)" },
+        { "t": "Mutation (variaciones aleatorias, casing, eliminación de caracteres)" },
+        { "t": "AI-assisted Mutation (PromptCraft, anti-classifier)" },
+        { "t": "Tokenizer Exploitation (Tokenade, token bombing)" },
+        { "t": "Typoglycemia (OWASP)" },
+        {
+          "t": "Multimodal Embedding",
+          "filhos": [
+            { "t": "Payload en tipografía adversarial, audio adversarial, perturbaciones visuales" }
+          ]
+        }
+      ]
+    },
+    {
+      "t": "Topología del ataque (4)",
+      "filhos": [
+        { "t": "Single-hop" },
+        {
+          "t": "Multi-hop",
+          "filhos": [
+            {
+              "t": "Cross-model",
+              "filhos": [
+                { "t": "output de un modelo → input de otro" }
+              ]
+            },
+            {
+              "t": "Cross-system",
+              "filhos": [
+                { "t": "propagación vía tools/MCP" }
+              ]
+            },
+            {
+              "t": "Cross-user/tenant",
+              "filhos": [
+                { "t": "propagación vía datos compartidos" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "t": "Resumen en el Modelo 5W2H",
+      "filhos": [
+        { "t": "1. WHERE  (Vector)     → ¿DÓNDE puedo colocar el payload?" },
+        { "t": "2. WHAT   (Objetivo)   → ¿QUÉ (qué componente) puedo alcanzar por ese vector?" },
+        { "t": "3. WHY    (Objetivo)   → ¿POR QUÉ voy a atacar (qué efecto quiero producir)?" },
+        { "t": "4. HOW₁   (Técnica)    → ¿CÓMO FORMULO el payload para ese efecto?" },
+        { "t": "5. HOW₂   (Ofuscación) → ¿CÓMO \"ESCONDO\" el ataque de los controles?" },
+        { "t": "6. WHO    (Topología)  → ¿QUIÉN ataca (tester, 1er LLM, 2do LLM, ...) (necesito hops intermedios)?" },
+        { "t": "7. WHEN   (Etapa en la campaña) → ¿CUÁNDO voy a hacer este ataque (p.ej., en qué etapa de la campaña — promptware)?" }
+      ]
+    }
+  ]
+}
