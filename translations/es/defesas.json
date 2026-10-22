@@ -26,10 +26,6 @@
         {
           "r": "R01",
           "tipo": "primaria"
-        },
-        {
-          "r": "R03",
-          "tipo": "primaria"
         }
       ]
     },
@@ -59,35 +55,7 @@
       "categoria": "Clasificadores",
       "fontes": [
         {
-          "r": "R32",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R84",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R60",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R77",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R96",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R65",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -117,27 +85,11 @@
       "categoria": "Juicio por LLM",
       "fontes": [
         {
-          "r": "R03",
+          "r": "R147",
           "tipo": "primaria"
         },
         {
-          "r": "R10",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R86",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R01",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -164,11 +116,7 @@
       "categoria": "Filtrado de entrada",
       "fontes": [
         {
-          "r": "R03",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -196,18 +144,6 @@
       "fontes": [
         {
           "r": "R01",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R96",
           "tipo": "primaria"
         }
       ]
@@ -260,11 +196,11 @@
       "categoria": "Transformación",
       "fontes": [
         {
-          "r": "R87",
+          "r": "R31",
           "tipo": "primaria"
         },
         {
-          "r": "R64",
+          "r": "R01",
           "tipo": "primaria"
         }
       ]
@@ -294,14 +230,6 @@
         {
           "r": "R01",
           "tipo": "primaria"
-        },
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
         }
       ]
     },
@@ -331,18 +259,6 @@
         {
           "r": "R01",
           "tipo": "primaria"
-        },
-        {
-          "r": "R05",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R64",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R77",
-          "tipo": "primaria"
         }
       ]
     },
@@ -368,15 +284,11 @@
       "categoria": "Estructuración del prompt",
       "fontes": [
         {
-          "r": "R04",
+          "r": "R175",
           "tipo": "primaria"
         },
         {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -403,15 +315,11 @@
       "categoria": "Estructuración del prompt",
       "fontes": [
         {
-          "r": "R77",
+          "r": "R145",
           "tipo": "primaria"
         },
         {
-          "r": "R79",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R64",
+          "r": "R01",
           "tipo": "primaria"
         }
       ]
@@ -443,22 +351,6 @@
         {
           "r": "R01",
           "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
-        },
-        {
-          "r": "R63",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R64",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R93",
-          "tipo": "primaria"
         }
       ]
     },
@@ -485,14 +377,6 @@
         {
           "r": "R10",
           "tipo": "primaria"
-        },
-        {
-          "r": "R59",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
         }
       ]
     },
@@ -521,27 +405,7 @@
       "categoria": "Alineamiento",
       "fontes": [
         {
-          "r": "R14",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R15",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R92",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R91",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R88",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R21",
+          "r": "R97",
           "tipo": "primaria"
         }
       ]
@@ -570,14 +434,6 @@
         {
           "r": "R44",
           "tipo": "primaria"
-        },
-        {
-          "r": "R43",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R46",
-          "tipo": "primaria"
         }
       ]
     },
@@ -604,12 +460,12 @@
       "categoria": "Alineamiento",
       "fontes": [
         {
-          "r": "R07",
+          "r": "R148",
           "tipo": "primaria"
         },
         {
-          "r": "R08",
-          "tipo": "primaria"
+          "r": "R09",
+          "tipo": "survey"
         }
       ]
     },
@@ -636,19 +492,19 @@
       "categoria": "Entrenamiento anti-inyección",
       "fontes": [
         {
-          "r": "R80",
+          "r": "R163",
           "tipo": "primaria"
         },
         {
-          "r": "R81",
+          "r": "R164",
           "tipo": "primaria"
         },
         {
-          "r": "R82",
+          "r": "R135",
           "tipo": "primaria"
         },
         {
-          "r": "R79",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -673,11 +529,7 @@
       "categoria": "Alineamiento",
       "fontes": [
         {
-          "r": "R88",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -707,18 +559,6 @@
         {
           "r": "R01",
           "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
-        },
-        {
-          "r": "R63",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R93",
-          "tipo": "primaria"
         }
       ]
     },
@@ -746,23 +586,7 @@
       "categoria": "Clasificadores",
       "fontes": [
         {
-          "r": "R32",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R84",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R96",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R21",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -790,19 +614,7 @@
       "categoria": "Juicio por LLM",
       "fontes": [
         {
-          "r": "R10",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R01",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -857,19 +669,11 @@
       "categoria": "Tratamiento de salida",
       "fontes": [
         {
-          "r": "R28",
-          "tipo": "survey"
-        },
-        {
-          "r": "R96",
+          "r": "R151",
           "tipo": "primaria"
         },
         {
-          "r": "R37",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R64",
+          "r": "R01",
           "tipo": "primaria"
         }
       ]
@@ -898,10 +702,6 @@
         {
           "r": "R03",
           "tipo": "primaria"
-        },
-        {
-          "r": "R01",
-          "tipo": "primaria"
         }
       ]
     },
@@ -927,15 +727,11 @@
       "categoria": "Control de acciones",
       "fontes": [
         {
-          "r": "R85",
+          "r": "R179",
           "tipo": "primaria"
         },
         {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -964,10 +760,6 @@
         {
           "r": "R89",
           "tipo": "primaria"
-        },
-        {
-          "r": "R77",
-          "tipo": "primaria"
         }
       ]
     },
@@ -994,15 +786,7 @@
       "categoria": "Patrones de diseño",
       "fontes": [
         {
-          "r": "R89",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R01",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R83",
+          "r": "R139",
           "tipo": "primaria"
         }
       ]
@@ -1030,15 +814,7 @@
       "categoria": "Patrones de diseño",
       "fontes": [
         {
-          "r": "R83",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R96",
+          "r": "R139",
           "tipo": "primaria"
         }
       ]
@@ -1119,26 +895,6 @@
         {
           "r": "R01",
           "tipo": "primaria"
-        },
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R17",
-          "tipo": "survey"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
-        },
-        {
-          "r": "R90",
-          "tipo": "primaria"
         }
       ]
     },
@@ -1165,27 +921,7 @@
       "categoria": "Control de acciones",
       "fontes": [
         {
-          "r": "R01",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R83",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R90",
+          "r": "R139",
           "tipo": "primaria"
         }
       ]
@@ -1214,10 +950,6 @@
         {
           "r": "R27",
           "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
         }
       ]
     },
@@ -1244,14 +976,6 @@
         {
           "r": "R27",
           "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
-        },
-        {
-          "r": "R96",
-          "tipo": "primaria"
         }
       ]
     },
@@ -1277,10 +1001,6 @@
       "fontes": [
         {
           "r": "R27",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R96",
           "tipo": "primaria"
         }
       ]
@@ -1387,22 +1107,6 @@
         {
           "r": "R01",
           "tipo": "primaria"
-        },
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R17",
-          "tipo": "survey"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
         }
       ]
     },
@@ -1456,40 +1160,16 @@
       "categoria": "Validación",
       "fontes": [
         {
-          "r": "R01",
+          "r": "R145",
           "tipo": "primaria"
         },
         {
-          "r": "R28",
-          "tipo": "survey"
-        },
-        {
-          "r": "R79",
+          "r": "R158",
           "tipo": "primaria"
         },
         {
-          "r": "R75",
+          "r": "R97",
           "tipo": "primaria"
-        },
-        {
-          "r": "R76",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R77",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R78",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R15",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R17",
-          "tipo": "survey"
         }
       ]
     },
@@ -1518,11 +1198,263 @@
       "fontes": [
         {
           "r": "R17",
-          "tipo": "survey"
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D43",
+      "nome": "Detección por features intrínsecas del modelo (PIShield)",
+      "descricao": "Usa representaciones internas del modelo (capas de atención, hidden states) para detectar entradas inyectadas identificando patrones de activación anómalos, sin requerir clasificador externo.",
+      "locus": "modelo",
+      "fortalezas": [
+        "No requiere modelo secundario; opera con features ya disponibles en el forward pass",
+        "Puede detectar patrones de ataque novedosos identificando cambios distribucionales en activaciones"
+      ],
+      "fraquezas": [
+        "Requiere acceso white-box al modelo (pesos y activaciones de capas internas)",
+        "La efectividad puede degradarse con cambios de arquitectura o fine-tuning"
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG"
+      ],
+      "categoria": "detección",
+      "fontes": [
+        {
+          "r": "R209",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D44",
+      "nome": "Localización de segmentos inyectados (PromptLocate)",
+      "descricao": "Identifica y localiza el trecho exacto del prompt que contiene la instrucción inyectada, permitiendo remoción dirigida sin afectar el contexto legítimo.",
+      "locus": "input",
+      "fortalezas": [
+        "Remueve solo el segmento malicioso, preservando contexto legítimo",
+        "Permite remediación quirúrgica en vez de rechazo total del prompt"
+      ],
+      "fraquezas": [
+        "Depende de modelo de localización que puede fallar con ataques multipart dispersos",
+        "Detección de fronteras entre texto legítimo e inyectado puede ser imprecisa"
+      ],
+      "aplicabilidade": [
+        "RAG",
+        "Agente"
+      ],
+      "categoria": "detección",
+      "fontes": [
+        {
+          "r": "R180",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D45",
+      "nome": "Tokens defensivos antepuestos al prompt",
+      "descricao": "Antepone al prompt un conjunto pequeño de tokens especiales entrenados vía optimización adversarial para inocular el prompt contra intentos de inyección.",
+      "locus": "prompt",
+      "fortalezas": [
+        "Ligero en runtime — pocos tokens adicionales sin latencia perceptible",
+        "No requiere cambios en el modelo base"
+      ],
+      "fraquezas": [
+        "Requiere fine-tuning u optimización adversarial para derivar tokens eficaces",
+        "Los tokens pueden perder efectividad contra estrategias de ataque no vistas durante entrenamiento"
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente"
+      ],
+      "categoria": "prevención",
+      "fontes": [
+        {
+          "r": "R133",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D46",
+      "nome": "Grafo de dependencia de tools (IPIGuard)",
+      "descricao": "Construye un grafo de dependencia entre las tools disponibles al agente y verifica en runtime si cada invocación de tool respeta las dependencias autorizadas, bloqueando transiciones laterales no autorizadas.",
+      "locus": "acao",
+      "fortalezas": [
+        "Determinístico y auditable — grafo definido a priori",
+        "Previene escalación de privilegios vía encadenamiento no autorizado de tools"
+      ],
+      "fraquezas": [
+        "Requiere definición previa del grafo de tools para cada tarea (manual o derivada)",
+        "Puede ser excesivamente restrictivo para workflows dinámicos"
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "control de acceso",
+      "fontes": [
+        {
+          "r": "R131",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D47",
+      "nome": "Re-ejecución enmascarada (MELON)",
+      "descricao": "Ejecuta el agente dos veces: una con contexto completo y otra con prompt enmascarado (datos externos redactados), comparando resultados para detectar si la respuesta fue influenciada por contenido inyectado.",
+      "locus": "acao",
+      "fortalezas": [
+        "Prueba formal de robustez contra inyección indirecta bajo ciertas condiciones",
+        "Detección independiente del tipo de ataque — compara divergencia de comportamiento"
+      ],
+      "fraquezas": [
+        "Duplica el costo computacional al requerir dos ejecuciones por acción",
+        "El enmascaramiento puede eliminar información contextual legítima"
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "verificación",
+      "fontes": [
+        {
+          "r": "R160",
+          "tipo": "primaria"
         },
         {
-          "r": "R28",
-          "tipo": "survey"
+          "r": "R119",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D48",
+      "nome": "Control de privilegios programable (Progent)",
+      "descricao": "Permite al desarrollador especificar políticas de autorización fine-grained — qué tools, qué parámetros y bajo qué condiciones pueden ser invocados — aplicadas determinísticamente en runtime.",
+      "locus": "acao",
+      "fortalezas": [
+        "Políticas explícitas, versionables y auditables",
+        "Enforcement determinístico independiente del comportamiento del LLM"
+      ],
+      "fraquezas": [
+        "Requiere esfuerzo de configuración para cada aplicación o workflow",
+        "Políticas excesivamente restrictivas pueden bloquear acciones legítimas"
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "control de acceso",
+      "fontes": [
+        {
+          "r": "R146",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D49",
+      "nome": "Guardrail adaptativo con detección de seguridad (AGrail)",
+      "descricao": "Sistema de guardrail que detecta acciones inseguras del agente usando verificación adaptativa a lo largo del trace de ejecución, ajustando umbrales de detección dinámicamente.",
+      "locus": "acao",
+      "fortalezas": [
+        "Se adapta automáticamente a cada tarea sin configuración manual fija",
+        "Mejora la precisión de detección a medida que acumula datos de ejecución"
+      ],
+      "fraquezas": [
+        "Fase de calentamiento con menor cobertura hasta acumular datos suficientes",
+        "Umbrales adaptativos pueden ser explotados por ataques con escalación gradual"
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "detección",
+      "fontes": [
+        {
+          "r": "R189",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D50",
+      "nome": "Referenciamiento de la instrucción original (self-referencing)",
+      "descricao": "Instruye al modelo a citar o repetir la instrucción original del usuario antes de ejecutar cualquier acción, anclando la atención a la directiva legítima.",
+      "locus": "prompt",
+      "fortalezas": [
+        "Simple de implementar como instrucción de sistema sin alterar el modelo",
+        "Hace visible y auditable la adherencia a instrucciones"
+      ],
+      "fraquezas": [
+        "Atacantes adaptativos pueden inyectar instrucciones que imitan el formato de referenciamiento",
+        "Añade overhead de tokens a cada respuesta"
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente"
+      ],
+      "categoria": "prevención",
+      "fontes": [
+        {
+          "r": "R165",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D51",
+      "nome": "LlamaFirewall (guardrail multicapa para agentes)",
+      "descricao": "Sistema open source que combina múltiples capas de protección para agentes LLM: detección de prompt injection, escaneo de código inseguro y verificación de alineamiento de ejecución.",
+      "locus": "acao",
+      "fortalezas": [
+        "Open source y extensible con nuevos scanners",
+        "Enfoque multicapa cubre diferentes vectores de ataque simultáneamente"
+      ],
+      "fraquezas": [
+        "Latencia adicional proporcional al número de scanners activos",
+        "La efectividad depende de la calidad de cada scanner individual"
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "detección",
+      "fontes": [
+        {
+          "r": "R137",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D52",
+      "nome": "Enforcement de trace de ejecución (AgentArmor)",
+      "descricao": "Analiza el trace de ejecución del agente (secuencia de acciones, tool calls y sus parámetros) vía análisis estático y dinámico para detectar desviaciones de patrones de comportamiento esperados.",
+      "locus": "acao",
+      "fortalezas": [
+        "Análisis basado en trace real, no en intención declarada",
+        "Puede detectar ataques multi-paso que parecen benignos individualmente"
+      ],
+      "fraquezas": [
+        "Requiere definición de patrones de trace normal para cada tipo de tarea",
+        "Puede generar falsos positivos para secuencias de acciones novedosas pero legítimas"
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "detección",
+      "fontes": [
+        {
+          "r": "R150",
+          "tipo": "primaria"
         }
       ]
     }

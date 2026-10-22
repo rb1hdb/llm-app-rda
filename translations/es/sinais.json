@@ -104,6 +104,7 @@
         "D20"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -134,6 +135,7 @@
         "D15"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -160,6 +162,7 @@
         "D04"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -174,6 +177,7 @@
         "D21"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -203,6 +207,7 @@
         "D21"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -213,6 +218,7 @@
         "D19"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -223,6 +229,7 @@
         "D19"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -329,11 +336,7 @@
       "tipo": "passivo",
       "fontes": [
         {
-          "r": "R63",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R64",
+          "r": "R01",
           "tipo": "primaria"
         }
       ],
@@ -400,6 +403,7 @@
         "D06"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -409,6 +413,7 @@
         "D07"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -435,6 +440,7 @@
         "D08"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": [
         "T38"
       ]
@@ -446,6 +452,7 @@
         "D08"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T38"
       ]
@@ -458,6 +465,7 @@
         "D39"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T38",
         "T27"
@@ -470,6 +478,7 @@
         "D39"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -482,7 +491,7 @@
       "tipo": "passivo",
       "fontes": [
         {
-          "r": "R04",
+          "r": "R175",
           "tipo": "primaria"
         }
       ],
@@ -500,6 +509,7 @@
         "D09"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T21",
         "T37"
@@ -512,6 +522,7 @@
         "D05"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T35",
         "T37"
@@ -533,6 +544,7 @@
         "D28"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T35",
         "T44"
@@ -546,6 +558,7 @@
         "D28"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": [
         "T35"
       ]
@@ -558,6 +571,7 @@
         "D42"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": [
         "T45"
       ]
@@ -570,6 +584,7 @@
         "D22"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -594,6 +609,7 @@
         "D23"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -605,7 +621,7 @@
       "tipo": "passivo",
       "fontes": [
         {
-          "r": "R64",
+          "r": "R01",
           "tipo": "primaria"
         }
       ],
@@ -622,6 +638,7 @@
         "D33"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T45",
         "T46"
@@ -674,6 +691,7 @@
         "D32"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T45"
       ]
@@ -685,6 +703,7 @@
         "D33"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T46"
       ]
@@ -697,6 +716,7 @@
         "D35"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T45",
         "T46"
@@ -709,6 +729,7 @@
         "D34"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T45"
       ]
@@ -720,6 +741,7 @@
         "D31"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T45"
       ]
@@ -732,6 +754,7 @@
         "D31"
       ],
       "tipo": "passivo",
+      "fontes": [],
       "tecnicas": [
         "T45"
       ]
@@ -796,6 +819,7 @@
         "D37"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T42"
       ]
@@ -807,6 +831,7 @@
         "D28"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T45"
       ]
@@ -819,6 +844,7 @@
         "D32"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T45"
       ]
@@ -830,9 +856,116 @@
         "D26"
       ],
       "tipo": "ativo",
+      "fontes": [],
       "tecnicas": [
         "T45"
       ]
+    },
+    {
+      "id": "S57",
+      "texto": "Prompt malicioso es bloqueado sin que haya filtro externo visible (sin latencia extra, sin template de error de guardrail): el modelo simplemente rechaza, sugiriendo que la detección ocurre internamente vía features del propio modelo.",
+      "defesas": [
+        "D43"
+      ],
+      "tipo": "ativo",
+      "fontes": [],
+      "tecnicas": []
+    },
+    {
+      "id": "S58",
+      "texto": "Parte del contenido recuperado de fuente externa es removida quirúrgicamente (la respuesta cita el documento sin el trecho que contenía la instrucción inyectada), mientras el restante del contexto se preserva.",
+      "defesas": [
+        "D44"
+      ],
+      "tipo": "ativo",
+      "fontes": [],
+      "tecnicas": []
+    },
+    {
+      "id": "S59",
+      "texto": "Instrucción inyectada en contenido recuperado es ignorada incluso cuando no está separada por delimitadores visibles: el modelo trata el contenido externo como dato incluso sin marcado explícito.",
+      "defesas": [
+        "D45",
+        "D17"
+      ],
+      "tipo": "ativo",
+      "fontes": [],
+      "tecnicas": []
+    },
+    {
+      "id": "S60",
+      "texto": "El agente ejecuta tools previstas para la tarea normalmente, pero rechaza tools fuera del alcance esperado (aunque estén disponibles), con error que menciona grafo de dependencia o política de tools.",
+      "defesas": [
+        "D46",
+        "D48"
+      ],
+      "tipo": "ativo",
+      "fontes": [],
+      "tecnicas": []
+    },
+    {
+      "id": "S61",
+      "texto": "Acción solicitada vía contenido externo es rechazada, pero la misma acción solicitada directamente por el usuario es aceptada: el agente distingue el origen de la instrucción y bloquea solo las inducidas por datos.",
+      "defesas": [
+        "D47",
+        "D25",
+        "D28"
+      ],
+      "tipo": "ativo",
+      "fontes": [],
+      "tecnicas": []
+    },
+    {
+      "id": "S62",
+      "texto": "Error de política explícito al intentar invocar tool con parámetros fuera del rango permitido (ej.: destino de red no listado, operación de escritura no autorizada), con mensaje que cita la regla violada.",
+      "defesas": [
+        "D48",
+        "D33",
+        "D35"
+      ],
+      "tipo": "ativo",
+      "fontes": [],
+      "tecnicas": []
+    },
+    {
+      "id": "S63",
+      "texto": "Acción del agente es bloqueada con referencia a violación de guardrail adaptativo o score de seguridad por debajo del umbral, indicando sistema de detección que aprende patrones a lo largo del uso.",
+      "defesas": [
+        "D49"
+      ],
+      "tipo": "ativo",
+      "fontes": [],
+      "tecnicas": []
+    },
+    {
+      "id": "S64",
+      "texto": "La respuesta del modelo repite o cita explícitamente la instrucción original del usuario antes de responder, forzando anclaje en la tarea declarada.",
+      "defesas": [
+        "D50"
+      ],
+      "tipo": "passivo",
+      "fontes": [],
+      "tecnicas": []
+    },
+    {
+      "id": "S65",
+      "texto": "Errores de guardrail multicapa: bloqueo cita scanner específico (PromptGuard, AlignmentCheck, CodeShield) o pipeline de verificación con múltiples etapas.",
+      "defesas": [
+        "D51"
+      ],
+      "tipo": "ativo",
+      "fontes": [],
+      "tecnicas": []
+    },
+    {
+      "id": "S66",
+      "texto": "Secuencia de acciones que individualmente serían permitidas es bloqueada cuando se ejecuta en cadena, con error que referencia trace de ejecución o patrón comportamental anómalo.",
+      "defesas": [
+        "D52"
+      ],
+      "tipo": "ativo",
+      "fontes": [],
+      "tecnicas": []
     }
   ]
 }

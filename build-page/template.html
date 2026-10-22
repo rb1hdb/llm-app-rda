@@ -61,7 +61,7 @@ function switchLang(newLang) {
 }
 
 const TABS = ['metodo','recon','sinais','defesas','tecnicas','evasoes','referencias','wiki'];
-const WIKI_SUBS = ['produtos','artigos','taxonomia','sobre'];
+const WIKI_SUBS = ['produtos','faq','taxonomia'];
 
 let tab = 'metodo', wikiSub = 'produtos';
 let sel = { sinais: new Set(), defesas: new Set() };
@@ -109,9 +109,36 @@ function linkaIDs(text) {
 }
 
 function codeblock(txt) {
+  const turnPattern = /^(Turn\s+\d+[:\s]*)/im;
+  const parts = txt.split(/(?=^Turn\s+\d+[:\s]*)/im).filter(p => p.trim());
+  if (parts.length > 1 && turnPattern.test(parts[0])) {
+    let result = '';
+    parts.forEach(part => {
+      const match = part.match(/^(Turn\s+\d+[:\s]*)([\s\S]*)$/i);
+      if (match) {
+        const turnLabel = match[1].trim().replace(/:$/, '');
+        let body = match[2].trim();
+        result += '<div class="turn-label">' + esc(turnLabel) + '</div>';
+        body = body.replace(/^(Cole o seguinte|Paste the following|Copy and paste)[:\s]*/i, '');
+        const id = 'cb' + Math.random().toString(36).slice(2,8);
+        result += '<pre class="code" id="' + id + '">' + esc(body) +
+          '<button class="copybtn" onclick="copia(\'' + id + '\')">' + L.ficha.copiar_prompt + '</button></pre>';
+      } else {
+        const id = 'cb' + Math.random().toString(36).slice(2,8);
+        result += '<pre class="code" id="' + id + '">' + esc(part.trim()) +
+          '<button class="copybtn" onclick="copia(\'' + id + '\')">' + L.ficha.copiar_prompt + '</button></pre>';
+      }
+    });
+    return result;
+  }
+  let cleaned = txt.replace(/^(Cole o seguinte|Paste the following|Copy and paste)[:\s]*/i, '');
+  const prefix = txt.slice(0, txt.length - cleaned.length).trim();
+  let result = '';
+  if (prefix) result += '<div class="turn-label">' + esc(prefix) + '</div>';
   const id = 'cb' + Math.random().toString(36).slice(2,8);
-  return '<pre class="code" id="' + id + '">' + esc(txt) +
+  result += '<pre class="code" id="' + id + '">' + esc(cleaned.trim()) +
     '<button class="copybtn" onclick="copia(\'' + id + '\')">' + L.ficha.copiar_prompt + '</button></pre>';
+  return result;
 }
 
 function copia(id) {
@@ -177,7 +204,7 @@ function matchBusca(item) {
   if (!filtro) return true;
   const f = filtro.toLowerCase();
   const fields = [item.id, item.nome, item.texto, item.descricao, item.titulo,
-    item.fabricante, item.grupo, item.familia, item.objetivo, item.quando].filter(Boolean);
+    item.fabricante, item.grupo, item.objetivo, item.quando].filter(Boolean);
   return fields.some(v => v.toLowerCase().includes(f));
 }
 
@@ -260,7 +287,7 @@ function irPara(id) {
   else if (id.startsWith('E')) { tab = 'evasoes'; aberto.add(id); }
   else if (id.startsWith('P')) { tab = 'wiki'; wikiSub = 'produtos'; aberto.add(id); }
   else if (id.startsWith('R')) { tab = 'referencias'; aberto.add(id); }
-  else if (id.startsWith('W')) { tab = 'wiki'; wikiSub = 'artigos'; aberto.add(id); }
+  else if (id.startsWith('W')) { tab = 'wiki'; wikiSub = 'faq'; aberto.add(id); }
   else if (id.startsWith('RECON')) { tab = 'recon'; aberto.add(id); }
   render();
   setTimeout(() => {
@@ -370,12 +397,17 @@ function renderRecon() {
       ' <span class="turno">(' + groups[g].length + ')</span></summary><div class="tbody">';
     groups[g].forEach(p => {
       let inner = '<dl>';
-      inner += '<dt>' + L.campos.recon_quando + '</dt><dd>' + linkaIDs(p.quando) + '</dd>';
-      inner += '<dt>' + L.campos.recon_objetivo + '</dt><dd>' + linkaIDs(p.objetivo) + '</dd>';
       inner += '<dt>' + L.campos.recon_prompt + '</dt><dd>' + codeblock(p.prompt) + '</dd>';
       if (p.variantes && p.variantes.length) {
         inner += '<dt>' + L.campos.recon_variantes + '</dt><dd>';
-        p.variantes.forEach(v => { inner += codeblock(v); });
+        p.variantes.forEach(v => {
+          if (typeof v === 'object' && v.prompt) {
+            if (v.rotulo) inner += '<div class="turn-label">' + esc(v.rotulo) + '</div>';
+            inner += codeblock(v.prompt);
+          } else {
+            inner += codeblock(v);
+          }
+        });
         inner += '</dd>';
       }
       if (p.interpretacao && p.interpretacao.length) {
@@ -451,11 +483,6 @@ function renderCardDefesa(d) {
 
   let inner = '<dl>';
   inner += '<dt>' + L.campos.descricao + '</dt><dd>' + linkaIDs(d.descricao) + '</dd>';
-  inner += '<dt>' + L.campos.defesa_locus + '</dt><dd><span class="chip vio">' + (L.locus[d.locus] || d.locus) + '</span></dd>';
-  if (d.aplicabilidade && d.aplicabilidade.length) {
-    inner += '<dt>' + L.campos.defesa_aplicabilidade + '</dt><dd>' +
-      d.aplicabilidade.map(a => '<span class="chip ghost">' + (L.aplicabilidade[a] || a) + '</span>').join(' ') + '</dd>';
-  }
   if (d.fortalezas && d.fortalezas.length) {
     inner += '<dt>' + L.campos.defesa_fortalezas + '</dt><dd><ul>';
     d.fortalezas.forEach(f => { inner += '<li>' + linkaIDs(f) + '</li>'; });
@@ -499,7 +526,9 @@ function renderCardDefesa(d) {
 
   inner += fontesHTML(d.fontes);
 
+  const aplicBadges = (d.aplicabilidade || []).map(a => '<span class="chip ghost">' + (L.aplicabilidade[a] || a) + '</span>').join(' ');
   const extra = '<span class="chip vio" style="margin-left:auto">' + (L.locus[d.locus] || d.locus) + '</span>' +
+    (aplicBadges ? ' ' + aplicBadges : '') +
     '<label style="margin-left:6px;cursor:pointer" onclick="event.stopPropagation();toggleSel(\'defesas\',\'' + d.id + '\')">' +
     '<input type="checkbox"' + (sel.defesas.has(d.id) ? ' checked' : '') + '></label>';
 
@@ -530,7 +559,16 @@ function renderTecnicas() {
       if (!byGrupo[t.grupo]) byGrupo[t.grupo] = [];
       byGrupo[t.grupo].push(t);
     });
-    Object.keys(byGrupo).sort().forEach(g => {
+    const grupoOrder = {
+      'single-turn': ['instruction-override','role-playing','social-engineering',
+        'context-exploitation','in-context-learning','manipulacao-de-raciocinio',
+        'saturacao-de-contexto','optimization-based','agentic-mcp'],
+      'multi-turn': ['memoria','priming-conversacional','escalacao-gradual'],
+      'm2s': ['conversational-packing','compositional-packing']
+    };
+    const ordered = (grupoOrder[turno] || []).filter(g => byGrupo[g]);
+    Object.keys(byGrupo).forEach(g => { if (!ordered.includes(g)) ordered.push(g); });
+    ordered.forEach(g => {
       h += '<details class="taxsub" id="sec-tec-' + turno + '-' + g.replace(/[^a-z0-9]/g,'_') + '"><summary>' + esc(g) +
         ' <span class="turno">(' + byGrupo[g].length + ')</span></summary>';
       h += '<div class="tbody"><div class="grid">';
@@ -546,7 +584,6 @@ function renderTecnicas() {
 function renderCardTecnica(t) {
   let inner = '<dl>';
   inner += '<dt>' + L.campos.descricao + '</dt><dd>' + linkaIDs(t.descricao) + '</dd>';
-  inner += '<dt>' + L.campos.tecnica_turno + '</dt><dd><span class="chip warn">' + esc(t.turno) + '</span></dd>';
   inner += '<dt>' + L.campos.tecnica_defesas_bypassadas + '</dt><dd>';
   inner += t.defesas_bypassadas.map(d =>
     '<a class="xref" onclick="irPara(\'' + d + '\')">' + d + (defsMap[d] ? ' ' + esc(defsMap[d].nome) : '') + '</a>'
@@ -571,18 +608,13 @@ function renderCardTecnica(t) {
 function renderEvasoes() {
   const vis = evasoesVisiveis().filter(matchBusca);
   let h = selBar('sinais') + selBar('defesas');
-  const byFamilia = {};
-  vis.forEach(e => {
-    if (!byFamilia[e.familia]) byFamilia[e.familia] = [];
-    byFamilia[e.familia].push(e);
-  });
-  Object.keys(byFamilia).sort().forEach(fam => {
-    h += '<details class="taxdet" id="sec-eva-' + fam.replace(/[^a-z0-9]/g,'_') + '"><summary>' + esc(fam) +
-      ' <span class="turno">(' + byFamilia[fam].length + ')</span></summary>';
-    h += '<div class="tbody"><div class="grid">';
-    byFamilia[fam].forEach(e => { h += renderCardEvasao(e); });
-    h += '</div></div></details>';
-  });
+  h += '<div class="grid">';
+  vis.forEach(e => { h += renderCardEvasao(e); });
+  h += '</div>';
+  h += '<div style="margin-top:20px;padding:12px 16px;border:1px solid var(--line);border-radius:8px;font-size:13px;color:var(--mut);background:var(--bg)">' +
+    '🔧 <strong>Ferramenta operacional:</strong> ' +
+    '<a href="https://elder-plinius.github.io/P4RS3LT0NGV3/" target="_blank" rel="noopener" style="color:var(--acc)">P4RS3LT0NGV3</a>' +
+    ' — gerador de payloads obfuscados. Pode ser usado como atalho para gerar variações de qualquer evasão acima.</div>';
   if (!vis.length) h += '<div class="empty">' + L.navegacao.nenhuma_ficha + '</div>';
   return h;
 }
@@ -590,12 +622,18 @@ function renderEvasoes() {
 function renderCardEvasao(e) {
   let inner = '<dl>';
   inner += '<dt>' + L.campos.descricao + '</dt><dd>' + linkaIDs(e.descricao) + '</dd>';
-  inner += '<dt>' + L.campos.evasao_familia + '</dt><dd><span class="chip ok">' + esc(e.familia) + '</span></dd>';
   inner += '<dt>' + L.campos.evasao_defesas_bypassadas + '</dt><dd>';
   inner += e.defesas_bypassadas.map(d =>
     '<a class="xref" onclick="irPara(\'' + d + '\')">' + d + (defsMap[d] ? ' ' + esc(defsMap[d].nome) : '') + '</a>'
   ).join(' ');
   inner += '</dd>';
+  if (e.prompt_base) {
+    inner += '<dt>' + L.campos.evasao_prompt_base + '</dt><dd>';
+    const pbId = 'cb' + Math.random().toString(36).slice(2,8);
+    inner += '<pre class="code prompt-base" id="' + pbId + '">' + esc(e.prompt_base) +
+      '<button class="copybtn" onclick="copia(\'' + pbId + '\')">' + L.ficha.copiar_prompt + '</button></pre>';
+    inner += '</dd>';
+  }
   if (e.exemplos && e.exemplos.length) {
     inner += '<dt>' + L.campos.evasao_exemplos + '</dt><dd>';
     e.exemplos.forEach(ex => {
@@ -614,8 +652,7 @@ function renderCardEvasao(e) {
   inner += '</dl>';
   inner += fontesHTML(e.fontes);
 
-  const extra = '<span class="chip ok">' + esc(e.familia) + '</span>';
-  return cardWrap(e.id, e.nome, e.familia, inner, extra);
+  return cardWrap(e.id, e.nome, e.descricao, inner);
 }
 
 // --- Tab: Referências ---
@@ -629,7 +666,7 @@ function renderReferencias() {
     h += '<dl>';
     h += '<dt>' + L.campos.ref_autores + '</dt><dd>' + esc(r.autores) + '</dd>';
     h += '<dt>' + L.campos.ref_ano + '</dt><dd>' + esc(String(r.ano)) + '</dd>';
-    h += '<dt>' + L.campos.ref_tipo + '</dt><dd><span class="chip ' + (r.tipo === 'primaria' ? 'ok' : 'warn') + '">' + esc(r.tipo) + '</span></dd>';
+    h += '<dt>' + L.campos.ref_tipo + '</dt><dd><span class="chip ' + (r.tipo === 'primaria' ? 'ok' : r.tipo === 'operacional' ? 'ghost' : 'warn') + '">' + esc(r.tipo) + '</span></dd>';
     if (r.url) h += '<dt>' + L.campos.ref_url + '</dt><dd><a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(r.url) + '</a></dd>';
     h += '</dl>';
     const citers = [];
@@ -669,9 +706,8 @@ function renderWiki() {
   h += '</div>';
   switch (wikiSub) {
     case 'produtos': h += renderProdutos(); break;
-    case 'artigos': h += renderArtigos(); break;
+    case 'faq': h += renderArtigos(); break;
     case 'taxonomia': h += renderTaxonomia(); break;
-    case 'sobre': h += renderSobre(); break;
   }
   return h;
 }
@@ -742,6 +778,9 @@ function renderArtigos() {
 function renderTaxonomia() {
   const tax = DATA.taxonomia;
   let h = '<h3 style="color:var(--acc);margin-bottom:14px">' + esc(tax.raiz) + '</h3>';
+  const arcUrl = 'https://arcanum-sec.github.io/arc_pi_taxonomy/';
+  const nota = esc(L.footer.inspiracao).replace('Arcanum PI Taxonomy', '<a href="' + arcUrl + '" target="_blank" rel="noopener" style="color:var(--acc);text-decoration:none">Arcanum PI Taxonomy</a>');
+  h += '<div style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px 0;margin-bottom:16px;font-size:12px;color:var(--mut)">' + nota + '</div>';
   function renderRamo(node, depth) {
     if (!node.filhos || !node.filhos.length) {
       return '<div class="tleaf">' + esc(node.t) + '</div>';
@@ -755,25 +794,6 @@ function renderTaxonomia() {
     return s;
   }
   tax.ramos.forEach(r => { h += renderRamo(r, 0); });
-  const arcUrl = 'https://arcanum-sec.github.io/arc_pi_taxonomy/';
-  const nota = esc(L.footer.inspiracao).replace('Arcanum PI Taxonomy', '<a href="' + arcUrl + '" target="_blank" rel="noopener" style="color:var(--acc);text-decoration:none">Arcanum PI Taxonomy</a>');
-  h += '<p style="font-size:12px;color:var(--mut);margin-top:20px;border-top:1px solid var(--line);padding-top:12px">' + nota + '</p>';
-  return h;
-}
-
-function renderSobre() {
-  const w = DATA.wiki.artigos.find(a => a.id === 'W07');
-  if (!w) return '<div class="empty">W07 not found</div>';
-  let h = '<h3 style="color:var(--acc);margin-bottom:14px">' + esc(w.titulo) + '</h3>';
-  w.blocos.forEach(b => {
-    if (b.tipo === 'p') h += '<p style="font-size:13.5px;line-height:1.7;margin:8px 0">' + linkaIDs(b.texto) + '</p>';
-    else if (b.tipo === 'sub') h += '<h4 style="margin:16px 0 6px;font-size:14px;color:var(--acc)">' + esc(b.texto) + '</h4>';
-    else if (b.tipo === 'lista') {
-      h += '<ul style="font-size:13.5px;line-height:1.7">';
-      (b.itens || []).forEach(i => { h += '<li>' + linkaIDs(i) + '</li>'; });
-      h += '</ul>';
-    }
-  });
   return h;
 }
 
@@ -827,12 +847,9 @@ function renderMapa() {
 // --- Footer ---
 function renderRodape() {
   const f = L.footer;
-  const arcUrl = 'https://arcanum-sec.github.io/arc_pi_taxonomy/';
-  const insp = esc(f.inspiracao).replace('Arcanum PI Taxonomy', '<a href="' + arcUrl + '" target="_blank" rel="noopener">Arcanum PI Taxonomy</a>');
   document.getElementById('rodape').innerHTML =
     f.versao_label + ' ' + L.app.versao + ' · ' +
-    '<a href="#">' + esc(f.autoria) + '</a> · ' +
-    insp + '<br>' + esc(f.disclaimer);
+    '<a href="#">' + esc(f.autoria) + '</a><br>' + esc(f.disclaimer);
 }
 
 window.addEventListener('DOMContentLoaded', init);

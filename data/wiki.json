@@ -215,18 +215,6 @@
         },
         {
           "tipo": "sub",
-          "texto": "Evasão — familia (evasoes.json)"
-        },
-        {
-          "tipo": "ficha",
-          "titulo": "12 famílias atuais",
-          "linhas": [
-            "semantic · encoding · cross-lingual · formatting-unicode · payload-splitting · mutation · ai-mutation · tokenizer · typoglycemia · multimodal · bijection · esteganografia",
-            "Regra: variante de transformação (ex.: A1Z26, Morse) é exemplo da família encoding, não ficha nova"
-          ]
-        },
-        {
-          "tipo": "sub",
           "texto": "Sinal — tipo (sinais.json)"
         },
         {
@@ -254,10 +242,11 @@
         },
         {
           "tipo": "ficha",
-          "titulo": "2 tipos",
+          "titulo": "3 tipos",
           "linhas": [
             "primaria — pesquisa original, documentação oficial, writeup técnico",
-            "survey — revisão sistemática, levantamento, meta-análise"
+            "survey — revisão sistemática, levantamento, meta-análise",
+            "operacional — referência de ferramenta de red-team (garak, pyrit, promptfoo)"
           ]
         },
         {
@@ -388,47 +377,19 @@
     },
     {
       "id": "W07",
-      "titulo": "Sobre o LLM App RDA",
+      "titulo": "Repositório e contribuição",
       "blocos": [
         {
-          "tipo": "sub",
-          "texto": "O que é"
-        },
-        {
           "tipo": "p",
-          "texto": "O LLM App RDA (Roteiro de Defesa e Ataque) é um runbook interativo de pentest para aplicações baseadas em LLM. Ele estrutura o assessment em um pipeline: Sinal → Defesa@locus → Técnica/Evasão — conectando reconhecimento, mapeamento de defesas e seleção de ataques em um fluxo navegável."
+          "texto": "O código-fonte, dados e histórico de versões do LLM App RDA estão no GitHub."
         },
         {
-          "tipo": "sub",
-          "texto": "Autoria"
-        },
-        {
-          "tipo": "p",
-          "texto": "Concepção, metodologia e curadoria: Renato Braga. Pipeline R-D-A (Recon → Defesas → Ataques), catálogo de defesas, sinais, técnicas/evasões e mapeamentos são contribuição original."
-        },
-        {
-          "tipo": "sub",
-          "texto": "Inspiração"
-        },
-        {
-          "tipo": "p",
-          "texto": "A árvore taxonômica (aba Taxonomia) foi inspirada na Arcanum Prompt Injection Taxonomy (Jason Haddix, Arcanum Information Security, CC BY 4.0). O workflow R-D-A e a metodologia de mapeamento defesa↔ataque são independentes."
-        },
-        {
-          "tipo": "sub",
-          "texto": "Fontes"
-        },
-        {
-          "tipo": "p",
-          "texto": "Todo conteúdo é ancorado em referências rastreáveis (aba Referências). Surveys fornecem panorama; papers primários fornecem evidência direta. Nenhuma ficha é incluída sem pelo menos uma fonte. Inferências sem referência direta (sinais lógicos, mapeamentos) são documentadas em evidencias/."
-        },
-        {
-          "tipo": "sub",
-          "texto": "Disclaimer"
-        },
-        {
-          "tipo": "p",
-          "texto": "Este material é para fins educacionais e de assessment autorizado. O uso das técnicas descritas deve respeitar as leis aplicáveis e os termos de serviço das plataformas testadas. O autor não se responsabiliza pelo uso indevido."
+          "tipo": "ul",
+          "itens": [
+            "Repositório: https://github.com/rb1hdb/llm-app-rda",
+            "Issues e sugestões são bem-vindas via GitHub Issues.",
+            "Material para fins educacionais e assessment autorizado."
+          ]
         }
       ]
     }

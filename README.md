@@ -3,12 +3,12 @@
 <p align="center">
   <a href="https://rb1hdb.github.io/llm-app-rda/"><img src="https://img.shields.io/badge/Live%20site-llm--app--rda-9966CC?style=for-the-badge&logo=lightning&logoColor=white" alt="Live site"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-CC%20BY%204.0-2ea44f?style=for-the-badge&logo=creative-commons&logoColor=white" alt="License"></a>
-  <img src="https://img.shields.io/badge/version-0.1-1f6feb?style=for-the-badge&logo=git&logoColor=white" alt="Version">
+  <img src="https://img.shields.io/badge/version-0.2-1f6feb?style=for-the-badge&logo=git&logoColor=white" alt="Version">
   <img src="https://img.shields.io/badge/use-educational%20%26%20authorized-d73a4a?style=for-the-badge&logo=law&logoColor=white" alt="Use">
 </p>
 
 <p align="center">
-  <b>Language:</b> <b>English</b> · <a href="README-pt.md">Portugues</a> · <a href="README-es.md">Espanol</a>
+  <b>Language:</b> <b>English</b> · <a href="README-pt.md">Português</a> · <a href="README-es.md">Español</a>
 </p>
 
 ---
@@ -19,13 +19,13 @@ Interactive pentest runbook for LLM-based applications. Structured methodology t
 
 | Phase | Content |
 |-------|---------|
-| **R — Recon** | 35 black-box prompts + 56 observable signals |
-| **D — Defenses** | 42 cataloged defenses across 6 locations |
+| **R — Recon** | 36 black-box prompts + 66 observable signals |
+| **D — Defenses** | 52 cataloged defenses across 6 loci |
 | **A — Attacks** | 50 prompt injection techniques + 12 evasion transforms |
 
 **Pipeline:** Signal → Defense@locus → Technique/Evasion
 
-Unlike collections of loose jailbreaks, every entry has traced sources (primary or survey) and a reproducible pipeline.
+Unlike collections of loose jailbreaks, every entry has traced sources (primary, survey, or operational) and a reproducible pipeline.
 
 ---
 
@@ -33,23 +33,15 @@ Unlike collections of loose jailbreaks, every entry has traced sources (primary 
 
 | Catalog | Count | Description |
 |---------|-------|-------------|
-| **Recon** | 35 | Black-box prompts to identify defenses without prior knowledge |
-| **Signals** | 56 | Observable heuristics indicating active defenses |
-| **Defenses** | 42 | Cards with definition, locus, strengths, weaknesses, applicability |
+| **Recon** | 36 | Black-box prompts to identify defenses without prior knowledge |
+| **Signals** | 66 | Observable heuristics indicating active defenses |
+| **Defenses** | 52 | Cards with definition, locus, strengths, weaknesses, applicability |
 | **Techniques** | 50 | Attack techniques organized by turn and group |
 | **Evasions** | 12 | Transformations to escape detection |
 | **Products** | 14 | Commercial tools mapped to defenses they implement |
-| **References** | 100 | Sources (92 primary + 8 surveys) |
+| **References** | 231 | Sources (224 primary + 4 surveys + 3 operational) |
 | **Wiki** | 7 | Conceptual articles on methodology and schema decisions |
 | **Taxonomy** | 1 | Hierarchical attack tree |
-
----
-
-## Inspiration
-
-The prompt injection taxonomy structure is inspired by the [Arcanum Prompt Injection Taxonomy](https://arcanum-sec.github.io/arc_pi_taxonomy/) by Jason Haddix (Arcanum Information Security).
-
-The **R-D-A workflow** (Recon → Defenses → Attacks pipeline), the source-traced cards, the signal-based discovery method, and the defense-locus-attack linkage are **original work**.
 
 ---
 
@@ -70,7 +62,8 @@ cd llm-app-rda
 ### Rebuild after editing data
 
 ```bash
-python build-page/build.py
+python build-page/build.py            # generate index.html
+python build-page/build.py --validate # validate integrity only
 ```
 
 ---
@@ -88,15 +81,17 @@ llm-app-rda/
 ├── index.html              <- Generated interactive page
 ├── .nojekyll               <- GitHub Pages config
 ├── LICENSE                 <- CC BY 4.0
-├── README.md               <- This file
+├── README.md               <- This file (EN)
+├── README-pt.md            <- README (PT)
+├── README-es.md            <- README (ES)
 ├── data/                   <- Source of truth (PT)
-│   ├── defesas.json        <- 42 defenses
-│   ├── sinais.json         <- 56 signals
+│   ├── defesas.json        <- 52 defenses
+│   ├── sinais.json         <- 66 signals
 │   ├── tecnicas.json       <- 50 techniques
 │   ├── evasoes.json        <- 12 evasions
-│   ├── recon.json          <- 35 recon prompts
+│   ├── recon.json          <- 36 recon prompts
 │   ├── produtos.json       <- 14 products
-│   ├── referencias.json    <- 100 references
+│   ├── referencias.json    <- 231 references
 │   ├── wiki.json           <- 7 articles
 │   ├── taxonomia.json      <- Taxonomy tree
 │   └── schema.json         <- Validation schema
@@ -105,8 +100,8 @@ llm-app-rda/
 │   ├── en.json
 │   └── es.json
 ├── translations/           <- Entity data translations
-│   ├── en/                 <- 8 translated data files
-│   └── es/                 <- 8 translated data files
+│   ├── en/                 <- Translated data files
+│   └── es/                 <- Translated data files
 └── build-page/
     ├── template.html       <- HTML/JS template
     ├── style.css           <- Styles
@@ -121,26 +116,46 @@ Defenses are classified by where they act in the LLM pipeline:
 
 | Locus | Count | Description |
 |-------|-------|-------------|
-| input | 8 | Filters on user input |
+| input | 9 | Filters on user input |
 | output | 6 | Filters on model output |
-| prompt | 5 | System prompt design |
-| modelo | 5 | Model-level controls |
-| acao | 14 | Action/tool gating |
+| prompt | 7 | System prompt design |
+| modelo | 6 | Model-level controls |
+| acao | 20 | Action/tool gating |
 | processo | 4 | Process-level controls |
 
 ---
 
-## Methodological status
+## Methodology
 
-This interactive runbook (R-D-A pipeline) was built from anchor sources in LLM security (listed in `data/referencias.json`). Each entry contains the source supporting its content.
+This interactive runbook (R-D-A pipeline) was built from anchor sources in LLM security (listed in `data/referencias.json`).
+
+**Source hierarchy:** each entry's source carries a type — *primary* (direct textual evidence), *survey* (systematic review), *operational* (tool documentation), or *inference* (logical inference, always documented with rationale).
 
 ### About N:N relations
 
-The relations linking signals → defenses → techniques/evasions were generated by **LLM-automated sweep** (not human). **Out of audit scope**: signals and mechanisms in isolation, recon, references, wiki, taxonomy.
+The relations linking signals → defenses → techniques/evasions were generated by **LLM-automated sweep** (not human-curated one by one). A subsequent audit corrected defense-evasion connections based on detection mechanism analysis (regex/lexical, trained classifier, LLM judge, semantic/embedding, structural, process). **Out of audit scope**: signals and mechanisms in isolation, recon, references, wiki, taxonomy.
 
 ### Selection engine
 
 Mark signals/defenses to filter candidate techniques/evasions. The resulting list is a **shortlist to refine**, not a verdict — combine it with the discriminative-test step (Method tab) before attributing a bypass.
+
+---
+
+## Inspiration
+
+The prompt injection taxonomy structure is inspired by the [Arcanum Prompt Injection Taxonomy](https://arcanum-sec.github.io/arc_pi_taxonomy/) by Jason Haddix (Arcanum Information Security).
+
+The **R-D-A workflow** (Recon → Defenses → Attacks pipeline), the source-traced cards, the signal-based discovery method, and the defense-locus-attack linkage are **original work**.
+
+---
+
+## Roadmap
+
+- **Evidence JSONL per product** — structured records from real engagements (kept separate from this repo; evidence belongs to each engagement, not the public runbook)
+- **Signal-defense coverage audit** — systematic review of the 66×52 signal-defense matrix with the same mechanism-based rigor applied to evasion-defense connections
+- **Technique-defense connection audit** — validate the 50×52 technique-defense matrix against detection mechanisms
+- **Catalog expansion** — new defenses, techniques, and evasions as the field evolves; new product mappings as vendors ship guardrails
+- **Automated regression** — CI pipeline to run `build.py --validate` on every commit
 
 ---
 
