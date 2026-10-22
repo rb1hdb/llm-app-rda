@@ -6,62 +6,62 @@
       "blocos": [
         {
           "tipo": "p",
-          "texto": "Defense is HOW a protection works — the technical class of the security mechanism. It is the central axis of the pipeline: observable signals point to candidate defenses, and techniques/evasions bypass specific defenses. Each defense has a locus (where it acts in the pipeline: input, prompt, model, output, action, process), with documented strengths and weaknesses."
+          "texto": "Defesa é COMO uma proteção funciona — a classe técnica do mecanismo de segurança. Ela é o eixo central do pipeline: sinais observáveis apontam para defesas candidatas, e técnicas/evasões bypassam defesas específicas. Cada defesa tem um locus (onde atua no pipeline: input, prompt, modelo, output, ação, processo), fortalezas e fraquezas documentadas."
         },
         {
           "tipo": "p",
-          "texto": "Product is a commercial implementation that bundles one or more defenses. It sits outside the pipeline — it is a reference catalog in the Products sub-tab of the Wiki. You do not test 'Llama Guard'; you test the defenses that Llama Guard implements."
+          "texto": "Produto é uma implementação comercial que agrupa uma ou mais defesas. Ele fica fora do pipeline — é catálogo de referência na sub-aba Produtos da Wiki. Você não testa 'Llama Guard'; você testa as defesas que Llama Guard implementa."
         },
         {
           "tipo": "sub",
-          "texto": "Two defenses used in the examples"
+          "texto": "Duas defesas usadas nos exemplos"
         },
         {
           "tipo": "ficha",
-          "titulo": "Defense D02 — Semantic input classifier",
+          "titulo": "Defesa D02 — Classificador semântico de input",
           "linhas": [
-            "What it is: an auxiliary model (typically fine-tuned) analyzes the user's input and classifies the intent before it reaches the main LLM.",
-            "Locus: input — acts before the model processes the request.",
-            "Weakness: well-crafted paraphrases can escape the decision boundary; low-resource languages degrade detection."
+            "O que é: um modelo auxiliar (tipicamente fine-tuned) analisa o input do usuário e classifica a intenção antes de chegar ao LLM principal.",
+            "Locus: input — atua antes do modelo processar o pedido.",
+            "Fraqueza: paráfrases bem construídas podem escapar a fronteira de decisão; idiomas de baixo recurso degradam a detecção."
           ]
         },
         {
           "tipo": "ficha",
-          "titulo": "Defense D14 — Trained refusal (safety training)",
+          "titulo": "Defesa D14 — Recusa treinada (safety training)",
           "linhas": [
-            "What it is: the model was trained (RLHF/constitutional) to refuse requests that violate safety guidelines.",
-            "Locus: model — the defense is intrinsic to the model, not an additional layer.",
-            "Weakness: sensitive to framing (role-play, educational context); robustness varies across languages and domains."
+            "O que é: o modelo foi treinado (RLHF/constitutional) para recusar pedidos que violem diretrizes de segurança.",
+            "Locus: modelo — a defesa é intrínseca ao modelo, não uma camada adicional.",
+            "Fraqueza: sensível a enquadramento (role-play, contexto educacional); robustez varia entre idiomas e domínios."
           ]
         },
         {
           "tipo": "sub",
-          "texto": "One product, multiple defenses"
+          "texto": "Um produto, múltiplas defesas"
         },
         {
           "tipo": "p",
-          "texto": "Llama Guard (Meta) implements D02 (semantic input classifier) and D20 (output classifier). Azure AI Content Safety (Microsoft) implements D01 (lexical filter), D02 (semantic classifier), and D06 (PII masking). The same product can cover defenses at different locations — this does not change how each defense is tested individually."
+          "texto": "Llama Guard (Meta) implementa D02 (classificador semântico de input) e D20 (classificador de output). Azure AI Content Safety (Microsoft) implementa D01 (filtro lexical), D02 (classificador semântico) e D06 (mascaramento de PII). O mesmo produto pode cobrir defesas em locus diferentes — isso não muda como cada defesa é testada individualmente."
         },
         {
           "tipo": "sub",
-          "texto": "The same defense in different products"
+          "texto": "A mesma defesa em produtos diferentes"
         },
         {
           "tipo": "p",
-          "texto": "Defense D02 (semantic input classifier) is implemented by Llama Guard, Prompt Guard, Azure AI Content Safety, ShieldGemma, and others. The techniques that bypass D02 (semantic paraphrases, low-resource languages, obfuscation) apply regardless of the product. The product may have robustness variations, but the bypass class is the same."
+          "texto": "A defesa D02 (classificador semântico de input) é implementada por Llama Guard, Prompt Guard, Azure AI Content Safety, ShieldGemma e outros. As técnicas que bypassam D02 (paráfrases semânticas, idiomas de baixo recurso, ofuscação) se aplicam independente do produto. O produto pode ter variações de robustez, mas a classe de bypass é a mesma."
         },
         {
           "tipo": "sub",
-          "texto": "Rule of thumb"
+          "texto": "Regra prática"
         },
         {
           "tipo": "ul",
           "itens": [
-            "You detect the DEFENSE (protection class) via observable signals — it is the recon hypothesis.",
-            "The DEFENSE explains why a bypass works — it is the join key with techniques and evasions.",
-            "The PRODUCT is a reference: which tool implements which defenses. Useful for reconnaissance, not for attack formulation.",
-            "Different defenses can be bypassed by the same technique — the technique lists all defenses it circumvents.",
-            "A defense can be circumvented by multiple techniques — each attack angle is a separate card."
+            "Você detecta a DEFESA (classe de proteção) via sinais observáveis — é a hipótese do recon.",
+            "A DEFESA explica por que um bypass funciona — é a chave de junção com técnicas e evasões.",
+            "O PRODUTO é referência: qual ferramenta implementa quais defesas. Útil para reconhecimento, não para formulação de ataque.",
+            "Defesas diferentes podem ser bypassadas pela mesma técnica → a técnica lista todas as defesas que contorna.",
+            "Uma defesa pode ser contornada por múltiplas técnicas → cada ângulo de ataque é uma ficha separada."
           ]
         }
       ]
@@ -72,45 +72,45 @@
       "blocos": [
         {
           "tipo": "p",
-          "texto": "The defense vocabulary was CREATED from the anchor sources — it did not start from a predefined list. The method: read what each source describes as the HOW of a protection, extract that 'how' as a class, and group by deduplication. The locus (where the defense acts in the pipeline) became an attribute of the card, because the same defense class can act at different points."
+          "texto": "O vocabulário de defesas foi CRIADO a partir das fontes-âncora — não partiu de lista pré-definida. O método: ler o que cada fonte descreve como o COMO uma proteção funciona, extrair esse 'como' em forma de classe e agrupar por dedup. O locus (onde a defesa atua no pipeline) ficou como atributo da ficha, porque a mesma classe de defesa pode atuar em pontos diferentes."
         },
         {
           "tipo": "sub",
-          "texto": "Example 1 — D01 — Lexical input filter (regex/keyword)"
+          "texto": "Exemplo 1 — D01 · Filtro lexical de input (regex/keyword)"
         },
         {
           "tipo": "ficha",
-          "titulo": "From sources to class",
+          "titulo": "Das fontes à classe",
           "linhas": [
             "Springer survey (R02): \"Rule-based filters — keyword matching, regex patterns, and heuristics blocking known malicious prompts pre-processing.\"",
-            "OWASP PI Cheat Sheet (R01): input filter with regex deny-list, space/repetition normalization, and length truncation.",
-            "Inference: two independent sources describe the same HOW — lexical matching — class D01. Locus: input."
+            "OWASP PI Cheat Sheet (R01): filtro de entrada com regex deny-list, normalização de espaços/repetição e truncamento de comprimento.",
+            "Inferência: duas fontes independentes descrevem o mesmo COMO — casamento lexical — → classe D01. Locus: input."
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Example 2 — D03 — LLM judgment (LLM-as-judge for input)"
+          "texto": "Exemplo 2 — D03 · Julgamento por LLM (LLM-as-judge de input)"
         },
         {
           "tipo": "ficha",
-          "titulo": "From sources to class",
+          "titulo": "Das fontes à classe",
           "linhas": [
             "Rebuff (R03): \"LLM-based detection — a dedicated LLM judges incoming prompts for attack patterns.\"",
-            "NeMo Guardrails (R10): self-check flows (e.g. \"self check facts\", jailbreak detection) use an LLM as a policy verifier.",
-            "Inference: the HOW is 'an LLM judges' — separate from the dedicated trained classifier (D02, e.g. Llama Guard, instruction-tuning with taxonomy), because the weaknesses and bypasses of the two differ — class D03. Locus: input."
+            "NeMo Guardrails (R10): fluxos de self-check (ex. \"self check facts\", detecção de jailbreak) usam um LLM como verificador de política.",
+            "Inferência: o COMO é 'um LLM julga' — separado do classificador treinado dedicado (D02, ex. Llama Guard, instruction-tuning com taxonomia), porque as fraquezas e os bypasses dos dois são diferentes → classe D03. Locus: input."
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Separation by locus"
+          "texto": "Separação por locus"
         },
         {
           "tipo": "p",
-          "texto": "When the same HOW acts at different points in the pipeline, each point generates a separate defense. Example: semantic classifier on input (D02) and semantic classifier on output (D20) are distinct classes because the observable signals, exploitable weaknesses, and bypass techniques differ. D02 can be evaded by input obfuscation; D20 is not directly circumventable by prompt formulation."
+          "texto": "Quando o mesmo COMO atua em pontos diferentes do pipeline, cada ponto gera uma defesa separada. Exemplo: classificador semântico no input (D02) e classificador semântico no output (D20) são classes distintas porque os sinais observáveis, as fraquezas exploráveis e as técnicas de bypass diferem. D02 é evitável por ofuscação do input; D20 não é diretamente contornável por formulação de prompt."
         },
         {
           "tipo": "p",
-          "texto": "Rule: a defense only enters the vocabulary if at least one source describes the HOW; the defense card cites those sources. The source hierarchy (primary > survey) is in the References tab."
+          "texto": "Regra: uma defesa só entra no vocabulário se ao menos uma fonte descrever o COMO; a ficha da defesa cita essas fontes. A hierarquia de fontes (primária > survey) está na aba Referências."
         }
       ]
     },
@@ -120,45 +120,45 @@
       "blocos": [
         {
           "tipo": "p",
-          "texto": "Signals are observable behaviors that indicate which defenses the target uses. Each signal points directly to one or more candidate defenses (N:N relationship). There are two types: passive signals (observable without exploitation) and active signals (require exploratory interaction to confirm)."
+          "texto": "Sinais são comportamentos observáveis que indicam quais defesas o alvo utiliza. Cada sinal aponta diretamente para uma ou mais defesas candidatas (relação N:N). Existem dois tipos: sinais passivos (observáveis sem exploração) e sinais ativos (requerem interação exploratória para confirmar)."
         },
         {
           "tipo": "sub",
-          "texto": "Two modes of anchoring"
+          "texto": "Dois modos de ancoragem"
         },
         {
           "tipo": "p",
-          "texto": "Reference-anchored signals have fontes[] in the card — the reference describes the observable behavior. Logic-inferred signals (without direct reference) have no fontes[], but with a reasoning chain documented in evidencias/03-sinais.md. The chain starts from the defense's weaknesses and operation to derive what would be visible in a black-box target."
+          "texto": "Sinais ancorados em referência têm fontes[] na ficha — a referência descreve o comportamento observável. Sinais inferidos por lógica (sem referência direta) ficam sem fontes[], mas com cadeia de raciocínio documentada em evidencias/03-sinais.md. A cadeia parte das fraquezas e do funcionamento da defesa para derivar o que seria visível num alvo black-box."
         },
         {
           "tipo": "sub",
-          "texto": "Example 1 — S07 — Blocking by specific term or phrase"
+          "texto": "Exemplo 1 — S07 · Bloqueio por termo ou frase específica"
         },
         {
           "tipo": "ficha",
-          "titulo": "From behavior to defense",
+          "titulo": "Do comportamento à defesa",
           "linhas": [
-            "Observation: the target blocks inputs containing certain words or phrases, but accepts paraphrases of the same request.",
-            "Indicated defense: D01 — Lexical input filter (regex/keyword).",
-            "Logic: fixed-pattern matching is the only defense class sensitive to specific tokens and insensitive to meaning. Reference-anchored signal."
+            "Observação: o alvo bloqueia inputs que contêm certas palavras ou frases, mas aceita paráfrases do mesmo pedido.",
+            "Defesa indicada: D01 — Filtro lexical de input (regex/keyword).",
+            "Lógica: casamento por padrão fixo é a única classe de defesa sensível a tokens específicos e insensível a significado. Sinal ancorado em referência."
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Example 2 — S24 — PII masked when echoed"
+          "texto": "Exemplo 2 — S24 · PII mascarada quando ecoada"
         },
         {
           "tipo": "ficha",
-          "titulo": "From behavior to defense",
+          "titulo": "Do comportamento à defesa",
           "linhas": [
-            "Observation: when sending content with personal data, the target masks it in the response (email becomes e***, name becomes initial).",
-            "Indicated defense: D06 — PII masking.",
-            "Logic: selective masking of patterns recognized as sensitive data is behavior specific to D06."
+            "Observação: ao enviar conteúdo com dados pessoais, o alvo os mascara na resposta (e-mail vira e***, nome vira inicial).",
+            "Defesa indicada: D06 — Mascaramento de PII.",
+            "Lógica: mascaramento seletivo de padrões reconhecidos como dados sensíveis é comportamento específico de D06."
           ]
         },
         {
           "tipo": "p",
-          "texto": "A signal is not proof: the signal-defense relationship is N:N (one signal indicates multiple candidate defenses) — disambiguation is by discriminatory testing (recon probes), never by direct reading."
+          "texto": "Sinal não é prova: a relação sinal↔defesa é N:N (um sinal indica várias defesas candidatas) — a disambiguação é por teste discriminatório (probes de recon), nunca por leitura direta."
         }
       ]
     },
@@ -168,105 +168,105 @@
       "blocos": [
         {
           "tipo": "p",
-          "texto": "Some LLM RDA fields use CLOSED vocabulary: they only accept values from a fixed list. This ensures that filters, joins, and counters work (the UI filters by equality, not by similarity). When populating or editing cards, use exactly these values — a new value only by recorded decision, never by free-form typing."
+          "texto": "Alguns campos do LLM RDA usam vocabulário FECHADO: só aceitam valores de uma lista fixa. Isso garante que filtros, joins e contadores funcionem (a UI filtra por igualdade, não por semelhança). Ao popular ou editar fichas, use exatamente estes valores — novo valor só por decisão registrada, nunca por digitação livre."
         },
         {
           "tipo": "sub",
-          "texto": "Defense — locus (defesas.json)"
+          "texto": "Defesa — locus (defesas.json)"
         },
         {
           "tipo": "ficha",
-          "titulo": "6 values",
+          "titulo": "6 valores",
           "linhas": [
-            "input — before the model (filters, classifiers, input sanitization)",
-            "prompt — during prompt assembly (demarcation, system prompt hardening)",
-            "modelo — intrinsic to the model (safety training, security reasoning)",
-            "output — after the model (output classifiers, response sanitization)",
-            "acao — during action execution (sandbox, access control, tool validation)",
-            "processo — outside runtime (adversarial testing, governance, kill switch)"
+            "input — antes do modelo (filtros, classificadores, sanitização de entrada)",
+            "prompt — na montagem do prompt (demarcação, system prompt hardening)",
+            "modelo — intrínseco ao modelo (safety training, raciocínio de segurança)",
+            "output — depois do modelo (classificadores de saída, sanitização de resposta)",
+            "acao — na execução de ações (sandbox, controle de acesso, validação de tools)",
+            "processo — fora do runtime (testes adversariais, governança, kill switch)"
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Technique — turn (tecnicas.json)"
+          "texto": "Técnica — turno (tecnicas.json)"
         },
         {
           "tipo": "ficha",
-          "titulo": "3 values",
+          "titulo": "3 valores",
           "linhas": [
-            "single-turn — payload in a single turn",
-            "multi-turn — depends on history/accumulation",
-            "m2s — multi-turn converted/packed into single-turn"
+            "single-turn — payload num único turno",
+            "multi-turn — depende de histórico/acumulação",
+            "m2s — multi-turn convertido/empacotado em single-turn"
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Technique — group (didactic; can grow by decision)"
+          "texto": "Técnica — grupo (didático; pode crescer por decisão)"
         },
         {
           "tipo": "ficha",
-          "titulo": "17 current groups",
+          "titulo": "17 grupos atuais",
           "linhas": [
             "single-turn: instruction-override · role-playing · context-exploitation · social-engineering · saturacao-de-contexto · manipulacao-de-raciocinio · optimization-based · in-context-learning · stochastic",
             "multi-turn: escalacao-gradual · priming-conversacional · memoria · automated-attack",
             "m2s: conversational-packing · compositional-packing · injection-via-data · exfiltration",
-            "Rule: groups are didactic — they facilitate navigation, with no weight in the pipeline"
+            "Regra: grupos são didáticos — facilitam navegação, sem peso no pipeline"
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Evasion — family (evasoes.json)"
+          "texto": "Evasão — familia (evasoes.json)"
         },
         {
           "tipo": "ficha",
-          "titulo": "12 current families",
+          "titulo": "12 famílias atuais",
           "linhas": [
             "semantic · encoding · cross-lingual · formatting-unicode · payload-splitting · mutation · ai-mutation · tokenizer · typoglycemia · multimodal · bijection · esteganografia",
-            "Rule: a transformation variant (e.g., A1Z26, Morse) is an example of the encoding family, not a new card"
+            "Regra: variante de transformação (ex.: A1Z26, Morse) é exemplo da família encoding, não ficha nova"
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Signal — type (sinais.json)"
+          "texto": "Sinal — tipo (sinais.json)"
         },
         {
           "tipo": "ficha",
-          "titulo": "2 values",
+          "titulo": "2 valores",
           "linhas": [
-            "passivo — observable without exploitation (behavior visible during normal use)",
-            "ativo — requires exploratory interaction to confirm"
+            "passivo — observável sem exploração (comportamento visível em uso normal)",
+            "ativo — requer interação exploratória para confirmar"
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Defense — applicability (defesas.json)"
+          "texto": "Defesa — aplicabilidade (defesas.json)"
         },
         {
           "tipo": "ficha",
-          "titulo": "4 architectural contexts",
+          "titulo": "4 contextos arquiteturais",
           "linhas": [
-            "LLM · RAG · Agent · MCP (applicability matrix of the card)"
+            "LLM · RAG · Agente · MCP (matriz de aplicabilidade da ficha)"
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Sources — type (hierarchy)"
+          "texto": "Fontes — tipo (hierarquia)"
         },
         {
           "tipo": "ficha",
-          "titulo": "2 types",
+          "titulo": "2 tipos",
           "linhas": [
-            "primaria — original research, official documentation, technical writeup",
-            "survey — systematic review, survey, meta-analysis"
+            "primaria — pesquisa original, documentação oficial, writeup técnico",
+            "survey — revisão sistemática, levantamento, meta-análise"
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Join keys (card IDs)"
+          "texto": "Chaves de junção (IDs de ficha)"
         },
         {
           "tipo": "p",
-          "texto": "defesas_bypassadas[] in techniques/evasions and defesas[] in signals/products reference IDs from the D01-D42 catalog. Card IDs: D (defense), P (product), T (technique), E (evasion), S (signal), R (reference), W (wiki), RECON (recon probe)."
+          "texto": "defesas_bypassadas[] em técnicas/evasões e defesas[] em sinais/produtos citam IDs do catálogo D01–D42. IDs de ficha: D (defesa), P (produto), T (técnica), E (evasão), S (sinal), R (referência), W (wiki), RECON (probe de recon)."
         }
       ]
     },
@@ -276,66 +276,66 @@
       "blocos": [
         {
           "tipo": "p",
-          "texto": "Fifteen defenses in the catalog do not receive technique or evasion cards in the \"Attacked by\" section — and this is by design, not omission. They fall into distinct categories, all sharing the same pattern: what circumvents them is not a prompt formulation."
+          "texto": "Quinze defesas do catálogo não recebem fichas de técnica ou evasão na seção \"Atacada por\" — e isso é por construção, não omissão. Elas se agrupam em categorias distintas, todas com o mesmo padrão: o que as contorna não é uma formulação de prompt."
         },
         {
           "tipo": "sub",
-          "texto": "Infrastructure and process"
+          "texto": "Infraestrutura e processo"
         },
         {
           "tipo": "ficha",
-          "titulo": "Defenses not reachable by prompt",
+          "titulo": "Defesas não alcançáveis por prompt",
           "linhas": [
-            "D34 — Execution sandbox — what circumvents it is sandbox escape (a distinct class of runtime vulnerability), not language.",
-            "D37 — MCP server segregation — cross-origin isolation; bypass requires infrastructure compromise.",
-            "D30 — Rule of Two (constraint separation) — architectural pattern that limits attack surface; not interceptable by prompt.",
-            "D40 — Kill switch — operational emergency control; does not exist at runtime to be circumvented.",
-            "D41 — Continuous adversarial testing — meta-defense; what defeats it is TIME (new technique between test rounds).",
-            "D42 — Governance and policy — organizational process; does not intercept anything at runtime."
+            "D34 · Sandbox de execução — o que a contorna é escape de sandbox (classe própria de vulnerabilidade de runtime), não linguagem.",
+            "D37 · Segregação de servidores MCP — isolamento cross-origin; bypass requer comprometimento de infraestrutura.",
+            "D30 · Rule of Two (separação entre restrições) — padrão arquitetural que limita superfície; não interceptável por prompt.",
+            "D40 · Kill switch — controle de emergência operacional; não existe em runtime para ser contornado.",
+            "D41 · Testes adversariais contínuos — meta-defesa; o que a vence é o TEMPO (técnica nova entre rodadas de teste).",
+            "D42 · Governança e política — processo organizacional; não intercepta nada em runtime."
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Post-generation classifiers"
+          "texto": "Classificadores pós-geração"
         },
         {
           "tipo": "ficha",
-          "titulo": "Defenses that act after the model",
+          "titulo": "Defesas que atuam depois do modelo",
           "linhas": [
-            "D20 — Output classifier — acts on the already-generated response; input techniques do not circumvent it directly.",
-            "D21 — LLM output judge — same as D20; the bypass would target the output, not the input."
+            "D20 · Classificador de output — atua sobre a resposta já gerada; técnicas de input não o contornam diretamente.",
+            "D21 · Julgador LLM de output — idem D20; o bypass seria sobre a saída, não sobre o input."
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Detection and verification"
+          "texto": "Detecção e verificação"
         },
         {
           "tipo": "ficha",
-          "titulo": "Defenses whose bypass is of a different class",
+          "titulo": "Defesas cujo bypass é de outra classe",
           "linhas": [
-            "D22 — Factuality verification — judges the response against the context; its limitation is the context being poisoned (manipulated RAG), not prompt persuasion.",
-            "D24 — Canary marker — detects leakage; what circumvents it is exfiltration in transformed form (re-encoding the canary in the output).",
-            "D25 — Task-action alignment — verifies whether the requested action is coherent with the task; bypass requires engineering at the orchestrator level."
+            "D22 · Verificação de factualidade — julga a resposta contra o contexto; seu limite é o contexto estar envenenado (RAG manipulado), não a persuasão do prompt.",
+            "D24 · Marcador canário — detecta vazamento; o que o contorna é exfiltração em forma transformada (recodificar o canário na saída).",
+            "D25 · Alinhamento tarefa-ação — verifica se a ação solicitada é coerente com a tarefa; bypass requer engenharia no nível do orquestrador."
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Recent defenses with few documented bypasses"
+          "texto": "Defesas recentes com poucos bypasses documentados"
         },
         {
           "tipo": "ficha",
-          "titulo": "Research gaps, not catalog gaps",
+          "titulo": "Lacunas de pesquisa, não de catálogo",
           "linhas": [
-            "D07 — Stochastic input transformation (SmoothLLM) — perturbative defense; bypass requires adaptive optimization (open research).",
-            "D18 — Circuit breakers (internal representations) — recent defense that operates on model activations; few documented bypasses.",
-            "D28 — CaMeL/IFC (information flow control) — recent defense with formal isolation; known bypasses are limited.",
-            "D06 — PII masking — sanitization infrastructure; prompt techniques do not target PII masking directly."
+            "D07 · Transformação estocástica de input (SmoothLLM) — defesa perturbativa; bypass requer otimização adaptativa (pesquisa aberta).",
+            "D18 · Circuit breakers (representações internas) — defesa recente que opera em ativações do modelo; poucos bypasses documentados.",
+            "D28 · CaMeL/IFC (controle de fluxo de informação) — defesa recente com isolamento formal; bypasses conhecidos são limitados.",
+            "D06 · Mascaramento de PII — infraestrutura de sanitização; técnicas de prompt não visam PII masking diretamente."
           ]
         },
         {
           "tipo": "p",
-          "texto": "In the pipeline, these defenses appear normally: they list signals (when observable) and locus. What does not exist is the arrow back — no technique or evasion in the catalog reaches them via defesas_bypassadas. Operationally: if the target only exposes containment or process layers, the path is not to formulate a better prompt — it is to change the attack class."
+          "texto": "No pipeline, essas defesas aparecem normalmente: listam sinais (quando observáveis) e locus. O que não existe é a seta de volta — nenhuma técnica ou evasão do catálogo as alcança por defesas_bypassadas. Operacionalmente: se o alvo só expõe camadas de contenção ou processo, o caminho não é formular melhor o prompt — é mudar a classe do ataque."
         }
       ]
     },
@@ -345,44 +345,44 @@
       "blocos": [
         {
           "tipo": "p",
-          "texto": "Navigation has two natures of state. DERIVED: what the system deduces from the markings of previous stages — automatic, transient, no checkbox; shows the hypothesis space without commitment. MARKED: the checkbox you turned on — explicit decision (candidate vs. confirmed), persists until turned off. The pipeline chains in three stages: Signals → Defenses@locus → Techniques/Evasions."
+          "texto": "A navegação tem duas naturezas de estado. DERIVADO: o que o sistema deduz das marcações das etapas anteriores — automático, transitório, sem checkbox; mostra o espaço de hipóteses sem compromisso. MARCADO: o checkbox que você ligou — decisão explícita (candidata vs confirmada), persiste até ser desligado. O pipeline se encadeia em três etapas: Sinais → Defesas@locus → Técnicas/Evasões."
         },
         {
           "tipo": "sub",
-          "texto": "The three rules"
+          "texto": "As três regras"
         },
         {
           "tipo": "ficha",
-          "titulo": "How the filter behaves",
+          "titulo": "Como o filtro se comporta",
           "linhas": [
-            "1. DERIVED FOLLOWS — marking a signal instantly updates the candidate defenses and filtered techniques/evasions, all automatic. E.g.: marking S07 → D01 candidate → techniques that bypass D01 visible.",
-            "2. MARKED TAKES CONTROL OF THE STAGE — a checked checkbox in a stage makes the filter of subsequent stages obey ONLY it; the derived from above does not add up. E.g.: with S07 marked (filters by D01), manually checking D14 → techniques filter only by D14.",
-            "3. UNMARKING RETURNS CONTROL TO DERIVED — removing the marking makes the stage revert to being driven from above. E.g.: unmarking D14 → returns to the filter derived from the signal."
+            "1. DERIVADO ACOMPANHA — marcar um sinal atualiza na hora as defesas candidatas e as técnicas/evasões filtradas, tudo automático. Ex.: marcar S07 → D01 candidata → técnicas que bypassam D01 visíveis.",
+            "2. MARCADO ASSUME O CONTROLE DA ETAPA — checkbox ligado numa etapa faz o filtro das seguintes obedecer SÓ a ele; o derivado de cima não soma. Ex.: com S07 marcado (filtra por D01), ligar D14 manualmente → técnicas filtram só por D14.",
+            "3. DESMARCAR DEVOLVE O CONTROLE AO DERIVADO — tirar a marcação faz a etapa voltar a ser ditada por cima. Ex.: desmarcar D14 → volta ao filtro derivado do sinal."
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Precedences"
+          "texto": "Precedências"
         },
         {
           "tipo": "ul",
           "itens": [
-            "In defense filtering: marked > derived from marked signals > all (neutral).",
-            "In technique/evasion cards: those that bypass any ACTIVE defense (marked or derived), combined with manually marked cards (working shortlist).",
-            "Confirming a defense + unmarking the signal = resolved hypothesis: derivation now uses only the confirmed defense."
+            "No filtro de defesas: marcadas > derivadas de sinais marcados > todas (neutro).",
+            "Nas fichas de técnicas/evasões: as que bypassam alguma defesa ATIVA (marcada ou derivada), unidas às fichas marcadas manualmente (shortlist de trabalho).",
+            "Confirmar defesa + desmarcar o sinal = hipótese resolvida: a derivação passa a usar só a defesa confirmada."
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Locus as visual organizer"
+          "texto": "Locus como organizador visual"
         },
         {
           "tipo": "p",
-          "texto": "In the Defenses tab, cards are grouped by locus (input → prompt → model → output → action → process). This reflects the processing pipeline: input defenses act first, process defenses are meta-controls. The locus does not affect the filter — it is a visual organizer to facilitate navigation."
+          "texto": "Na aba Defesas, as fichas são agrupadas por locus (input → prompt → modelo → output → ação → processo). Isso reflete o pipeline de processamento: defesas de input atuam primeiro, defesas de processo são meta-controles. O locus não afeta o filtro — é organizador visual para facilitar a navegação."
         },
         {
           "tipo": "p",
-          "texto": "The design mirrors the pentest workflow: observe signals → formulate defense hypotheses (derived) → discriminatory testing → confirm defense (mark) → narrow applicable techniques/evasions → choose attack card."
+          "texto": "O desenho espelha o workflow de pentest: observar sinais → formular hipóteses de defesa (derivado) → teste discriminatório → confirmar defesa (marcar) → estreitar técnicas/evasões aplicáveis → escolher ficha de ataque."
         }
       ]
     },
@@ -392,35 +392,35 @@
       "blocos": [
         {
           "tipo": "sub",
-          "texto": "What it is"
+          "texto": "O que é"
         },
         {
           "tipo": "p",
-          "texto": "The LLM App RDA (Defense and Attack Runbook) is an interactive pentest runbook for LLM-based applications. It structures the assessment in a pipeline: Signal → Defense@locus → Technique/Evasion — connecting reconnaissance, defense mapping, and attack selection in a navigable flow."
+          "texto": "O LLM App RDA (Roteiro de Defesa e Ataque) é um runbook interativo de pentest para aplicações baseadas em LLM. Ele estrutura o assessment em um pipeline: Sinal → Defesa@locus → Técnica/Evasão — conectando reconhecimento, mapeamento de defesas e seleção de ataques em um fluxo navegável."
         },
         {
           "tipo": "sub",
-          "texto": "Authorship"
+          "texto": "Autoria"
         },
         {
           "tipo": "p",
-          "texto": "Conception, methodology, and curation: Renato Braga. The R-D-A pipeline (Recon → Defenses → Attacks), the catalog of defenses, signals, techniques/evasions, and mappings are original contributions."
+          "texto": "Concepção, metodologia e curadoria: Renato Braga. Pipeline R-D-A (Recon → Defesas → Ataques), catálogo de defesas, sinais, técnicas/evasões e mapeamentos são contribuição original."
         },
         {
           "tipo": "sub",
-          "texto": "Inspiration"
+          "texto": "Inspiração"
         },
         {
           "tipo": "p",
-          "texto": "The taxonomic tree (Taxonomy tab) was inspired by the Arcanum Prompt Injection Taxonomy (Jason Haddix, Arcanum Information Security, CC BY 4.0). The R-D-A workflow and the defense-attack mapping methodology are independent."
+          "texto": "A árvore taxonômica (aba Taxonomia) foi inspirada na Arcanum Prompt Injection Taxonomy (Jason Haddix, Arcanum Information Security, CC BY 4.0). O workflow R-D-A e a metodologia de mapeamento defesa↔ataque são independentes."
         },
         {
           "tipo": "sub",
-          "texto": "Sources"
+          "texto": "Fontes"
         },
         {
           "tipo": "p",
-          "texto": "All content is anchored in traceable references (References tab). Surveys provide an overview; primary papers provide direct evidence. No card is included without at least one source. Inferences without direct reference (logical signals, mappings) are documented in evidencias/."
+          "texto": "Todo conteúdo é ancorado em referências rastreáveis (aba Referências). Surveys fornecem panorama; papers primários fornecem evidência direta. Nenhuma ficha é incluída sem pelo menos uma fonte. Inferências sem referência direta (sinais lógicos, mapeamentos) são documentadas em evidencias/."
         },
         {
           "tipo": "sub",
@@ -428,7 +428,7 @@
         },
         {
           "tipo": "p",
-          "texto": "This material is for educational purposes and authorized assessment only. The use of the described techniques must comply with applicable laws and the terms of service of the platforms being tested. The author assumes no responsibility for misuse."
+          "texto": "Este material é para fins educacionais e de assessment autorizado. O uso das técnicas descritas deve respeitar as leis aplicáveis e os termos de serviço das plataformas testadas. O autor não se responsabiliza pelo uso indevido."
         }
       ]
     }

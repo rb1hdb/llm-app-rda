@@ -23,7 +23,7 @@
     "defesas.aplicabilidade": ["LLM", "RAG", "Agente", "MCP"],
     "sinais.tipo": ["passivo", "ativo"],
     "tecnicas.turno": ["single-turn", "multi-turn", "m2s"],
-    "referencias.tipo": ["primaria", "survey"],
+    "referencias.tipo": ["primaria", "survey", "operacional"],
     "recon.grupo": ["abertura", "arquitetura", "defesas"]
   }
 }

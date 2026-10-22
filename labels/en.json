@@ -3,7 +3,7 @@
     "titulo": "LLM App RDA",
     "subtitulo": "Recon, Defense and Attack",
     "descricao": "Interactive pentest runbook for LLM-based applications",
-    "versao": "0.1"
+    "versao": "0.2"
   },
 
   "tabs": {
@@ -19,9 +19,8 @@
 
   "wiki_tabs": {
     "produtos": "Products",
-    "artigos": "Articles",
-    "taxonomia": "Taxonomy",
-    "sobre": "About"
+    "faq": "FAQ",
+    "taxonomia": "Taxonomy"
   },
 
   "toolbar": {
@@ -66,6 +65,7 @@
     "fonte_tipo": "Type",
     "fonte_primaria": "primary",
     "fonte_survey": "survey",
+    "fonte_operacional": "operational",
 
     "defesa_locus": "Locus",
     "defesa_fortalezas": "Strengths",
@@ -101,7 +101,8 @@
 
     "evasao_familia": "Family",
     "evasao_defesas_bypassadas": "Bypassed defenses",
-    "evasao_exemplos": "Examples",
+    "evasao_prompt_base": "Original prompt (before evasion)",
+    "evasao_exemplos": "Examples with evasion applied",
     "evasao_gerador": "Generator",
 
     "produto_fabricante": "Vendor",

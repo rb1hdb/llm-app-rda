@@ -26,10 +26,6 @@
         {
           "r": "R01",
           "tipo": "primaria"
-        },
-        {
-          "r": "R03",
-          "tipo": "primaria"
         }
       ]
     },
@@ -59,35 +55,7 @@
       "categoria": "Classifiers",
       "fontes": [
         {
-          "r": "R32",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R84",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R60",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R77",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R96",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R65",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -117,27 +85,11 @@
       "categoria": "LLM-based judgment",
       "fontes": [
         {
-          "r": "R03",
+          "r": "R147",
           "tipo": "primaria"
         },
         {
-          "r": "R10",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R86",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R01",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -164,11 +116,7 @@
       "categoria": "Input filtering",
       "fontes": [
         {
-          "r": "R03",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -196,18 +144,6 @@
       "fontes": [
         {
           "r": "R01",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R96",
           "tipo": "primaria"
         }
       ]
@@ -260,11 +196,11 @@
       "categoria": "Transformation",
       "fontes": [
         {
-          "r": "R87",
+          "r": "R31",
           "tipo": "primaria"
         },
         {
-          "r": "R64",
+          "r": "R01",
           "tipo": "primaria"
         }
       ]
@@ -294,14 +230,6 @@
         {
           "r": "R01",
           "tipo": "primaria"
-        },
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
         }
       ]
     },
@@ -331,18 +259,6 @@
         {
           "r": "R01",
           "tipo": "primaria"
-        },
-        {
-          "r": "R05",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R64",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R77",
-          "tipo": "primaria"
         }
       ]
     },
@@ -368,15 +284,11 @@
       "categoria": "Prompt structuring",
       "fontes": [
         {
-          "r": "R04",
+          "r": "R175",
           "tipo": "primaria"
         },
         {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -403,15 +315,11 @@
       "categoria": "Prompt structuring",
       "fontes": [
         {
-          "r": "R77",
+          "r": "R145",
           "tipo": "primaria"
         },
         {
-          "r": "R79",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R64",
+          "r": "R01",
           "tipo": "primaria"
         }
       ]
@@ -443,22 +351,6 @@
         {
           "r": "R01",
           "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
-        },
-        {
-          "r": "R63",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R64",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R93",
-          "tipo": "primaria"
         }
       ]
     },
@@ -485,14 +377,6 @@
         {
           "r": "R10",
           "tipo": "primaria"
-        },
-        {
-          "r": "R59",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
         }
       ]
     },
@@ -521,27 +405,7 @@
       "categoria": "Alignment",
       "fontes": [
         {
-          "r": "R14",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R15",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R92",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R91",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R88",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R21",
+          "r": "R97",
           "tipo": "primaria"
         }
       ]
@@ -570,14 +434,6 @@
         {
           "r": "R44",
           "tipo": "primaria"
-        },
-        {
-          "r": "R43",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R46",
-          "tipo": "primaria"
         }
       ]
     },
@@ -604,12 +460,12 @@
       "categoria": "Alignment",
       "fontes": [
         {
-          "r": "R07",
+          "r": "R148",
           "tipo": "primaria"
         },
         {
-          "r": "R08",
-          "tipo": "primaria"
+          "r": "R09",
+          "tipo": "survey"
         }
       ]
     },
@@ -636,19 +492,19 @@
       "categoria": "Anti-injection training",
       "fontes": [
         {
-          "r": "R80",
+          "r": "R163",
           "tipo": "primaria"
         },
         {
-          "r": "R81",
+          "r": "R164",
           "tipo": "primaria"
         },
         {
-          "r": "R82",
+          "r": "R135",
           "tipo": "primaria"
         },
         {
-          "r": "R79",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -673,11 +529,7 @@
       "categoria": "Alignment",
       "fontes": [
         {
-          "r": "R88",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -707,18 +559,6 @@
         {
           "r": "R01",
           "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
-        },
-        {
-          "r": "R63",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R93",
-          "tipo": "primaria"
         }
       ]
     },
@@ -746,23 +586,7 @@
       "categoria": "Classifiers",
       "fontes": [
         {
-          "r": "R32",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R84",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R96",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R21",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -790,19 +614,7 @@
       "categoria": "LLM-based judgment",
       "fontes": [
         {
-          "r": "R10",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R01",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -857,19 +669,11 @@
       "categoria": "Output handling",
       "fontes": [
         {
-          "r": "R28",
-          "tipo": "survey"
-        },
-        {
-          "r": "R96",
+          "r": "R151",
           "tipo": "primaria"
         },
         {
-          "r": "R37",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R64",
+          "r": "R01",
           "tipo": "primaria"
         }
       ]
@@ -898,10 +702,6 @@
         {
           "r": "R03",
           "tipo": "primaria"
-        },
-        {
-          "r": "R01",
-          "tipo": "primaria"
         }
       ]
     },
@@ -927,15 +727,11 @@
       "categoria": "Action control",
       "fontes": [
         {
-          "r": "R85",
+          "r": "R179",
           "tipo": "primaria"
         },
         {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R79",
+          "r": "R145",
           "tipo": "primaria"
         }
       ]
@@ -964,10 +760,6 @@
         {
           "r": "R89",
           "tipo": "primaria"
-        },
-        {
-          "r": "R77",
-          "tipo": "primaria"
         }
       ]
     },
@@ -994,15 +786,7 @@
       "categoria": "Design patterns",
       "fontes": [
         {
-          "r": "R89",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R01",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R83",
+          "r": "R139",
           "tipo": "primaria"
         }
       ]
@@ -1030,15 +814,7 @@
       "categoria": "Design patterns",
       "fontes": [
         {
-          "r": "R83",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R96",
+          "r": "R139",
           "tipo": "primaria"
         }
       ]
@@ -1119,26 +895,6 @@
         {
           "r": "R01",
           "tipo": "primaria"
-        },
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R17",
-          "tipo": "survey"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
-        },
-        {
-          "r": "R90",
-          "tipo": "primaria"
         }
       ]
     },
@@ -1165,27 +921,7 @@
       "categoria": "Action control",
       "fontes": [
         {
-          "r": "R01",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R83",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R90",
+          "r": "R139",
           "tipo": "primaria"
         }
       ]
@@ -1214,10 +950,6 @@
         {
           "r": "R27",
           "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
         }
       ]
     },
@@ -1244,14 +976,6 @@
         {
           "r": "R27",
           "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
-        },
-        {
-          "r": "R96",
-          "tipo": "primaria"
         }
       ]
     },
@@ -1277,10 +1001,6 @@
       "fontes": [
         {
           "r": "R27",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R96",
           "tipo": "primaria"
         }
       ]
@@ -1387,22 +1107,6 @@
         {
           "r": "R01",
           "tipo": "primaria"
-        },
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R17",
-          "tipo": "survey"
-        },
-        {
-          "r": "R06",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R28",
-          "tipo": "survey"
         }
       ]
     },
@@ -1456,40 +1160,16 @@
       "categoria": "Validation",
       "fontes": [
         {
-          "r": "R01",
+          "r": "R145",
           "tipo": "primaria"
         },
         {
-          "r": "R28",
-          "tipo": "survey"
-        },
-        {
-          "r": "R79",
+          "r": "R158",
           "tipo": "primaria"
         },
         {
-          "r": "R75",
+          "r": "R97",
           "tipo": "primaria"
-        },
-        {
-          "r": "R76",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R77",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R78",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R15",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R17",
-          "tipo": "survey"
         }
       ]
     },
@@ -1518,11 +1198,263 @@
       "fontes": [
         {
           "r": "R17",
-          "tipo": "survey"
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D43",
+      "nome": "Detection via model intrinsic features (PIShield)",
+      "descricao": "Uses the model's internal representations (attention layers, hidden states) to detect injected inputs by identifying anomalous activation patterns, without requiring an external classifier.",
+      "locus": "modelo",
+      "fortalezas": [
+        "Does not require a secondary model; operates with features already available in the forward pass",
+        "Can detect novel attack patterns by identifying distributional shifts in activations"
+      ],
+      "fraquezas": [
+        "Requires white-box access to the model (weights and internal layer activations)",
+        "Effectiveness may degrade with model architecture changes or fine-tuning"
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG"
+      ],
+      "categoria": "detection",
+      "fontes": [
+        {
+          "r": "R209",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D44",
+      "nome": "Injected segment localization (PromptLocate)",
+      "descricao": "Identifies and locates the exact segment of the prompt containing the injected instruction, enabling targeted removal without disrupting the legitimate context.",
+      "locus": "input",
+      "fortalezas": [
+        "Removes only the malicious segment, preserving legitimate context",
+        "Enables surgical remediation rather than full prompt rejection"
+      ],
+      "fraquezas": [
+        "Depends on a localization model that may fail with multipart dispersed attacks",
+        "Boundary detection between legitimate and injected text can be imprecise"
+      ],
+      "aplicabilidade": [
+        "RAG",
+        "Agente"
+      ],
+      "categoria": "detection",
+      "fontes": [
+        {
+          "r": "R180",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D45",
+      "nome": "Defensive tokens prepended to prompt",
+      "descricao": "Prepends a small set of special tokens trained via adversarial optimization to inoculate the prompt against injection attempts, acting as a learned prefix defense.",
+      "locus": "prompt",
+      "fortalezas": [
+        "Lightweight at runtime — few additional tokens with no perceptible latency",
+        "Does not require changes to the base model"
+      ],
+      "fraquezas": [
+        "Requires fine-tuning or adversarial optimization to derive effective tokens",
+        "Tokens may lose effectiveness against novel attack strategies not seen during training"
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente"
+      ],
+      "categoria": "prevention",
+      "fontes": [
+        {
+          "r": "R133",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D46",
+      "nome": "Tool dependency graph (IPIGuard)",
+      "descricao": "Constructs a dependency graph between tools available to the agent and verifies at runtime whether each tool call respects the authorized dependencies, blocking unauthorized lateral transitions.",
+      "locus": "acao",
+      "fortalezas": [
+        "Deterministic and auditable — graph defined a priori",
+        "Prevents privilege escalation via unauthorized tool chaining"
+      ],
+      "fraquezas": [
+        "Requires prior definition of the tool graph for each task (manual or derived)",
+        "May be overly restrictive for dynamic workflows requiring flexible tool combinations"
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "access control",
+      "fontes": [
+        {
+          "r": "R131",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D47",
+      "nome": "Masked re-execution (MELON)",
+      "descricao": "Executes the agent twice: once with the full context and once with a masked prompt (external data redacted), comparing results to detect if the response was influenced by injected content.",
+      "locus": "acao",
+      "fortalezas": [
+        "Formal proof of robustness against indirect injection under certain conditions",
+        "Detection independent of attack type — compares behavioral divergence"
+      ],
+      "fraquezas": [
+        "Doubles computational cost by requiring two executions per action",
+        "Masking may remove legitimate contextual information needed for correct responses"
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "verification",
+      "fontes": [
+        {
+          "r": "R160",
+          "tipo": "primaria"
         },
         {
-          "r": "R28",
-          "tipo": "survey"
+          "r": "R119",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D48",
+      "nome": "Programmable privilege control (Progent)",
+      "descricao": "Allows developers to specify fine-grained authorization policies — which tools, which parameters, and under what conditions can be invoked — enforced deterministically at runtime.",
+      "locus": "acao",
+      "fortalezas": [
+        "Explicit, versionable, and auditable policies",
+        "Deterministic enforcement independent of LLM behavior"
+      ],
+      "fraquezas": [
+        "Requires configuration effort for each application or workflow",
+        "Overly restrictive policies may block legitimate agent actions"
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "access control",
+      "fontes": [
+        {
+          "r": "R146",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D49",
+      "nome": "Adaptive guardrail with safety detection (AGrail)",
+      "descricao": "Guardrail system that detects unsafe agent actions using adaptive verification throughout the execution trace, dynamically adjusting detection thresholds.",
+      "locus": "acao",
+      "fortalezas": [
+        "Adapts automatically to each task without fixed manual configuration",
+        "Improves detection accuracy as it accumulates execution data"
+      ],
+      "fraquezas": [
+        "Warm-up phase with lower coverage until sufficient data is accumulated",
+        "Adaptive thresholds may be exploited by slowly escalating attacks"
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "detection",
+      "fontes": [
+        {
+          "r": "R189",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D50",
+      "nome": "Original instruction self-referencing",
+      "descricao": "Instructs the model to cite or repeat the user's original instruction before executing any action, anchoring attention to the legitimate directive and making deviations detectable.",
+      "locus": "prompt",
+      "fortalezas": [
+        "Simple to implement as a system instruction without model changes",
+        "Makes instruction adherence visible and auditable"
+      ],
+      "fraquezas": [
+        "Adaptive attackers can inject instructions that mimic the referencing format",
+        "Adds token overhead to every response"
+      ],
+      "aplicabilidade": [
+        "LLM",
+        "RAG",
+        "Agente"
+      ],
+      "categoria": "prevention",
+      "fontes": [
+        {
+          "r": "R165",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D51",
+      "nome": "LlamaFirewall (multi-layer guardrail for agents)",
+      "descricao": "Open source system combining multiple protection layers for LLM agents: prompt injection detection, unsafe code scanning, and execution alignment verification in an extensible pipeline.",
+      "locus": "acao",
+      "fortalezas": [
+        "Open source and extensible with new scanners",
+        "Multi-layer approach covers different attack vectors simultaneously"
+      ],
+      "fraquezas": [
+        "Additional latency proportional to the number of active scanners",
+        "Effectiveness depends on the quality of each individual scanner"
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "detection",
+      "fontes": [
+        {
+          "r": "R137",
+          "tipo": "primaria"
+        }
+      ]
+    },
+    {
+      "id": "D52",
+      "nome": "Execution trace enforcement (AgentArmor)",
+      "descricao": "Analyzes the agent's execution trace (sequence of actions, tool calls, and their parameters) via static and dynamic analysis to detect deviations from expected behavior patterns.",
+      "locus": "acao",
+      "fortalezas": [
+        "Analysis based on actual trace, not declared intent",
+        "Can detect multi-step attacks that appear benign individually"
+      ],
+      "fraquezas": [
+        "Requires definition of normal trace patterns for each task type",
+        "May generate false positives for novel but legitimate action sequences"
+      ],
+      "aplicabilidade": [
+        "Agente",
+        "MCP"
+      ],
+      "categoria": "detection",
+      "fontes": [
+        {
+          "r": "R150",
+          "tipo": "primaria"
         }
       ]
     }

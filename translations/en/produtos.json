@@ -4,113 +4,248 @@
       "id": "P01",
       "nome": "Llama Guard",
       "fabricante": "Meta",
-      "descricao": "Llama-based safety classification model fine-tuned to classify both input prompts (prompt classification) and LLM responses (response classification) against a configurable risk taxonomy (MLCommons, 14 categories). Open weights, 1B and 8B parameter variants, support for 8 languages, and optimized for tool call safety. Llama Guard 4 (12B) is the multimodal successor.",
-      "defesas": ["D02", "D20"],
-      "fontes": [{"r": "R32", "tipo": "primaria"}]
+      "descricao": "Safety classification model based on Llama, fine-tuned to classify both input prompts (prompt classification) and LLM responses (response classification) against a configurable risk taxonomy (MLCommons, 14 categories). Open weights, 1B and 8B parameter variants, support for 8 languages and optimized for tool call safety. Llama Guard 4 (12B) is the multimodal successor.",
+      "defesas": [
+        "D03",
+        "D16"
+      ],
+      "fontes": [
+        {
+          "r": "R32",
+          "tipo": "primaria"
+        }
+      ]
     },
     {
       "id": "P02",
       "nome": "Prompt Guard 2",
       "fabricante": "Meta",
-      "descricao": "Compact encoder classifier (DeBERTa/mDeBERTa) for detecting prompt injection and jailbreak in input text. Classifies prompts as benign or malicious. 22M-parameter (English) and 86M-parameter (multilingual, 8 languages) variants, 512-token window. Adversarial-attack-resistant tokenization and energy-based loss function for improved out-of-distribution performance. Input-only (does not evaluate responses).",
-      "defesas": ["D02"],
-      "fontes": [{"r": "R97", "tipo": "primaria"}]
+      "descricao": "Compact encoder classifier (DeBERTa/mDeBERTa) for prompt injection and jailbreak detection in input text. Classifies prompts as benign or malicious. Variants of 22M (English) and 86M (multilingual, 8 languages) parameters, 512-token window. Tokenization resistant to adversarial attacks and energy-based loss function for improved out-of-distribution performance.",
+      "defesas": [
+        "D03"
+      ],
+      "fontes": [
+        {
+          "r": "R97",
+          "tipo": "primaria"
+        }
+      ]
     },
     {
       "id": "P03",
       "nome": "NeMo Guardrails",
       "fabricante": "NVIDIA",
-      "descricao": "Configurable guardrails framework for LLM applications, based on the Colang language. Provides topic and dialog rails (topic restriction and conversational flow), LLM-based self-check for input and output, PII detection and masking in inputs/outputs/retrieved content, fact-checking, and hallucination detection for RAG. Rails are user-defined, independent of the underlying LLM, and interpretable.",
-      "defesas": ["D03", "D06", "D13", "D21", "D22"],
-      "fontes": [{"r": "R10", "tipo": "primaria"}, {"r": "R59", "tipo": "primaria"}]
+      "descricao": "Configurable guardrails framework for LLM applications, based on the Colang language. Offers topic and dialog rails (thematic restriction and conversational flow), self-check of input and output via LLM, PII detection and masking in inputs/outputs/retrieved content, fact-checking and hallucination detection for RAG.",
+      "defesas": [
+        "D05",
+        "D06",
+        "D11",
+        "D16",
+        "D17"
+      ],
+      "fontes": [
+        {
+          "r": "R10",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R59",
+          "tipo": "primaria"
+        }
+      ]
     },
     {
       "id": "P04",
       "nome": "Rebuff",
       "fabricante": "Protect AI",
-      "descricao": "Three-layer prompt injection detector: (1) heuristic — filters input by regex, keywords, and approximate matching; (2) vector similarity — compares prompt embeddings against stored embeddings of known attacks; (3) LLM judge — a dedicated LLM analyzes the prompt. Additionally, inserts canary tokens into the prompt to detect leakage. Repository archived (May 2025); the vendor states it does not offer 100% protection.",
-      "defesas": ["D01", "D03", "D04", "D24"],
-      "fontes": [{"r": "R03", "tipo": "primaria"}]
+      "descricao": "Three-layer prompt injection detector: (1) heuristic — filters input by regex, keywords and fuzzy matching; (2) vector similarity — compares prompt embeddings with known attack embeddings; (3) LLM judge — a dedicated LLM analyzes the prompt. Canary tokens for leakage detection. Repository archived (May 2025).",
+      "defesas": [
+        "D01",
+        "D03",
+        "D04",
+        "D05"
+      ],
+      "fontes": [
+        {
+          "r": "R03",
+          "tipo": "primaria"
+        }
+      ]
     },
     {
       "id": "P05",
       "nome": "Constitutional Classifiers",
       "fabricante": "Anthropic",
-      "descricao": "Input and output classifiers trained on synthetic data generated from a 'constitution' of natural-language safety rules. Evaluated against more than 3,000 hours of red teaming with no universal jailbreak found. Reported overhead: +0.38% refusals on production traffic and 23.7% inference overhead.",
-      "defesas": ["D02", "D20"],
-      "fontes": [{"r": "R84", "tipo": "primaria"}]
+      "descricao": "Input and output classifiers trained with synthetic data generated from a 'constitution' of safety rules in natural language. Evaluated against over 3,000 hours of red teaming with no universal jailbreak found. Declared overhead: +0.38% refusals in production traffic and 23.7% inference overhead.",
+      "defesas": [
+        "D03",
+        "D16"
+      ],
+      "fontes": [
+        {
+          "r": "R84",
+          "tipo": "primaria"
+        }
+      ]
     },
     {
       "id": "P06",
       "nome": "Azure AI Content Safety",
       "fabricante": "Microsoft",
-      "descricao": "Cloud service for detecting harmful content in AI applications. Includes Prompt Shields (detection of direct jailbreak attacks and indirect prompt injection from documents), text and image classification across harm categories, and groundedness detection (factuality verification against sources). Part of Microsoft's recommended stack against indirect injection.",
-      "defesas": ["D02", "D20", "D22"],
-      "fontes": [{"r": "R99", "tipo": "primaria"}, {"r": "R06", "tipo": "primaria"}]
+      "descricao": "Cloud service for harmful content detection in AI applications. Includes Prompt Shields (detection of direct jailbreak attacks and indirect prompt injection from documents), text and image classification across harm categories, and groundedness detection.",
+      "defesas": [
+        "D03",
+        "D16",
+        "D17"
+      ],
+      "fontes": [
+        {
+          "r": "R99",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R06",
+          "tipo": "primaria"
+        }
+      ]
     },
     {
       "id": "P07",
       "nome": "ShieldGemma",
       "fabricante": "Google DeepMind",
-      "descricao": "Family of open-weight content safety classifiers built on Gemma 2. Classify input (prompt-only) and output (prompt-response) against four harm categories: hate speech, harassment, sexually explicit content, and dangerous content. Text variants in 2B, 9B, and 27B parameters. ShieldGemma 2 (4B, based on Gemma 3) adds image moderation. Returns binary policy-violation classification (Yes/No).",
-      "defesas": ["D02", "D20"],
-      "fontes": [{"r": "R98", "tipo": "primaria"}]
+      "descricao": "Family of open-weight content safety classifiers built on Gemma 2. Classify input (prompt-only) and output (prompt-response) against four harm categories. Text variants in 2B, 9B, and 27B parameters. ShieldGemma 2 (4B) adds image moderation.",
+      "defesas": [
+        "D03",
+        "D16"
+      ],
+      "fontes": [
+        {
+          "r": "R98",
+          "tipo": "primaria"
+        }
+      ]
     },
     {
       "id": "P08",
       "nome": "Lakera Guard",
       "fabricante": "Lakera AI",
-      "descricao": "Protection API for GenAI applications with a single endpoint (/v2/guard). Detects prompt injection (direct and indirect, including in retrieved documents), detects and masks PII (addresses, cards, IPs, SSN, IBAN), provides content moderation (hate, violence, criminal content), and detects malicious/unknown links. Supports individual messages or full conversations. Configurable policies per project. SaaS, regional endpoints, or self-hosted.",
-      "defesas": ["D02", "D06", "D20"],
-      "fontes": [{"r": "R100", "tipo": "primaria"}]
+      "descricao": "Protection API for GenAI applications. Detects prompt injection (direct and indirect), detects and masks PII, offers content moderation and detects malicious links. Supports individual messages or full conversations. Configurable policies. SaaS or self-hosted.",
+      "defesas": [
+        "D03",
+        "D06",
+        "D16"
+      ],
+      "fontes": [
+        {
+          "r": "R100",
+          "tipo": "primaria"
+        }
+      ]
     },
     {
       "id": "P09",
       "nome": "PromptArmor",
       "fabricante": "PromptArmor",
-      "descricao": "Prompt injection defense that uses an off-the-shelf LLM to detect and remove injected prompts from untrusted content, rather than simply blocking. Reports false positives and negatives below 1% on the AgentDojo benchmark (vendor-reported figures, without independent confirmation under adaptive attack).",
-      "defesas": ["D03", "D05"],
-      "fontes": [{"r": "R86", "tipo": "primaria"}]
+      "descricao": "Prompt injection defense that uses an off-the-shelf LLM to detect and remove injected prompts from untrusted content. Reports false positives and negatives below 1% on the AgentDojo benchmark.",
+      "defesas": [
+        "D05",
+        "D06"
+      ],
+      "fontes": [
+        {
+          "r": "R86",
+          "tipo": "primaria"
+        }
+      ]
     },
     {
       "id": "P10",
       "nome": "Guardrails AI",
       "fabricante": "Guardrails AI",
-      "descricao": "Open-source LLM input and output validation framework. Hub of pre-built validators covering toxicity, PII, hallucination, profanity, and bias. Validators can be function-based, classifier-based, or LLM-based. Structured format enforcement via JSON Schema/Pydantic. Supports ReAsk (automatic LLM correction when validation fails), streaming, and retries. Apache 2.0 license, with a commercial version (Guardrails Pro).",
-      "defesas": ["D06", "D19", "D21", "D23", "D33"],
-      "fontes": [{"r": "R101", "tipo": "primaria"}]
+      "descricao": "Open-source framework for LLM input and output validation. Hub of pre-built validators covering toxicity, PII, hallucination, profanity, and bias. Supports ReAsk (automatic correction by the LLM). Apache 2.0 license.",
+      "defesas": [
+        "D06",
+        "D16",
+        "D17"
+      ],
+      "fontes": [
+        {
+          "r": "R101",
+          "tipo": "primaria"
+        }
+      ]
     },
     {
       "id": "P11",
       "nome": "LLM Guard",
       "fabricante": "Protect AI",
-      "descricao": "Open-source library of input and output scanners for LLMs. Input scanners include PII anonymization, topic and substring banning, and model-based prompt injection detection. Output scanners include compliance, JSON validation, and factual consistency verification. Secure vault for cross-referencing sensitive data between Anonymize and Sensitive scanners. Model-agnostic, deployable as a library or API.",
-      "defesas": ["D01", "D02", "D06", "D19", "D20", "D23"],
-      "fontes": [{"r": "R102", "tipo": "primaria"}]
+      "descricao": "Open-source library of input and output scanners for LLMs. Scanners include PII anonymization, topic banning, prompt injection detection, compliance, JSON validation, and factual consistency checking. Model-agnostic.",
+      "defesas": [
+        "D01",
+        "D03",
+        "D06",
+        "D16",
+        "D17"
+      ],
+      "fontes": [
+        {
+          "r": "R102",
+          "tipo": "primaria"
+        }
+      ]
     },
     {
       "id": "P12",
       "nome": "Vigil",
       "fabricante": "deadbits",
-      "descricao": "Open-source security scanner for LLMs that combines multiple detection methods: YARA rules (pattern-based heuristics), vector similarity search against known attacks, transformer model classification, prompt-response similarity verification, and canary tokens to detect leakage or hijacking. Modular and extensible. Experimental/alpha project, no updates since January 2024. The author redirects enterprise use to a commercial product (Robust Intelligence).",
-      "defesas": ["D01", "D02", "D04", "D24"],
-      "fontes": [{"r": "R103", "tipo": "primaria"}]
+      "descricao": "Open-source security scanner for LLMs that combines YARA rules, vector similarity search, transformer classification, prompt-response similarity verification, and canary tokens. Experimental project, no updates since January 2024.",
+      "defesas": [
+        "D01",
+        "D03",
+        "D04"
+      ],
+      "fontes": [
+        {
+          "r": "R103",
+          "tipo": "primaria"
+        }
+      ]
     },
     {
       "id": "P13",
       "nome": "Lasso Security",
       "fabricante": "Lasso Security",
-      "descricao": "Enterprise GenAI security platform with real-time input and output protection. Detects prompt injection, harmful content, and sensitive data leakage. Issues are blocked, masked, or logged in real time, with the ability to block sessions/users. Includes detailed logging of all LLM interactions, visibility dashboard, Shadow AI discovery, and data flow monitoring. Available on the Azure Marketplace.",
-      "defesas": ["D02", "D06", "D19", "D20", "D39"],
-      "fontes": [{"r": "R104", "tipo": "primaria"}]
+      "descricao": "Enterprise GenAI security platform with real-time input and output protection. Detects prompt injection, harmful content, and sensitive data leakage. Includes detailed logging, visibility dashboard, and Shadow AI discovery.",
+      "defesas": [
+        "D03",
+        "D06",
+        "D16",
+        "D18"
+      ],
+      "fontes": [
+        {
+          "r": "R104",
+          "tipo": "primaria"
+        }
+      ]
     },
     {
       "id": "P14",
       "nome": "Arthur Shield",
       "fabricante": "Arthur AI",
-      "descricao": "LLM firewall that sits between the application layer and the model. Configurable rules for real-time detection of PII/sensitive data, hallucination, prompt injection attempts, and toxic language. Validates both input prompts and model responses across two endpoints. Compatible with any LLM. Deployable as SaaS or on-premises. Renamed to Arthur Engine, with an open-source version available.",
-      "defesas": ["D02", "D06", "D20", "D22"],
-      "fontes": [{"r": "R105", "tipo": "primaria"}]
+      "descricao": "LLM firewall positioned between the application layer and the model. Configurable rules for real-time detection of PII, hallucination, prompt injection, and toxic language. Renamed to Arthur Engine.",
+      "defesas": [
+        "D03",
+        "D06",
+        "D16",
+        "D17"
+      ],
+      "fontes": [
+        {
+          "r": "R105",
+          "tipo": "primaria"
+        }
+      ]
     }
   ]
 }

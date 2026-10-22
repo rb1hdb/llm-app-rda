@@ -3,61 +3,53 @@
 <p align="center">
   <a href="https://rb1hdb.github.io/llm-app-rda/"><img src="https://img.shields.io/badge/Sitio%20en%20vivo-llm--app--rda-9966CC?style=for-the-badge&logo=lightning&logoColor=white" alt="Sitio"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/licencia-CC%20BY%204.0-2ea44f?style=for-the-badge&logo=creative-commons&logoColor=white" alt="Licencia"></a>
-  <img src="https://img.shields.io/badge/versi%C3%B3n-0.1-1f6feb?style=for-the-badge&logo=git&logoColor=white" alt="Version">
+  <img src="https://img.shields.io/badge/versi%C3%B3n-0.2-1f6feb?style=for-the-badge&logo=git&logoColor=white" alt="Versión">
   <img src="https://img.shields.io/badge/uso-educativo%20%26%20autorizado-d73a4a?style=for-the-badge&logo=law&logoColor=white" alt="Uso">
 </p>
 
 <p align="center">
-  <b>Idioma:</b> <a href="README.md">English</a> · <a href="README-pt.md">Portugues</a> · <b>Espanol</b>
+  <b>Idioma:</b> <a href="README.md">English</a> · <a href="README-pt.md">Português</a> · <b>Español</b>
 </p>
 
 ---
 
-## Que es esto
+## Qué es esto
 
-Runbook interactivo de pentest para aplicaciones basadas en LLM. Metodologia estructurada para identificar, fingerprint y explotar defensas — organizado en tres fases:
+Runbook interactivo de pentest para aplicaciones basadas en LLM. Metodología estructurada para identificar, fingerprint y explotar defensas — organizado en tres fases:
 
 | Fase | Contenido |
 |------|-----------|
-| **R — Recon** | 35 prompts black-box + 56 senales observables |
-| **D — Defensas** | 42 defensas catalogadas en 6 locales |
-| **A — Ataques** | 50 tecnicas de prompt injection + 12 evasiones |
+| **R — Recon** | 36 prompts black-box + 66 señales observables |
+| **D — Defensas** | 52 defensas catalogadas en 6 loci |
+| **A — Ataques** | 50 técnicas de prompt injection + 12 evasiones |
 
-**Pipeline:** Senal → Defensa@locus → Tecnica/Evasion
+**Pipeline:** Señal → Defensa@locus → Técnica/Evasión
 
-A diferencia de colecciones de jailbreaks sueltos, cada entrada tiene fuentes rastreadas (primaria o survey) y un pipeline reproducible.
+A diferencia de colecciones de jailbreaks sueltos, cada entrada tiene fuentes rastreadas (primaria, survey u operacional) y un pipeline reproducible.
 
 ---
 
-## Catalogos
+## Catálogos
 
-| Catalogo | Cant | Descripcion |
+| Catálogo | Cant | Descripción |
 |----------|------|-------------|
-| **Recon** | 35 | Prompts black-box para identificar defensas sin conocimiento previo |
-| **Senales** | 56 | Heuristicas observables indicando defensas activas |
-| **Defensas** | 42 | Fichas con definicion, locus, fortalezas, debilidades, aplicabilidad |
-| **Tecnicas** | 50 | Tecnicas de ataque organizadas por turno y grupo |
-| **Evasiones** | 12 | Transformaciones para escapar deteccion |
+| **Recon** | 36 | Prompts black-box para identificar defensas sin conocimiento previo |
+| **Señales** | 66 | Heurísticas observables indicando defensas activas |
+| **Defensas** | 52 | Fichas con definición, locus, fortalezas, debilidades, aplicabilidad |
+| **Técnicas** | 50 | Técnicas de ataque organizadas por turno y grupo |
+| **Evasiones** | 12 | Transformaciones para escapar detección |
 | **Productos** | 14 | Herramientas comerciales mapeadas a defensas que implementan |
-| **Referencias** | 100 | Fuentes (92 primarias + 8 surveys) |
-| **Wiki** | 7 | Articulos conceptuales sobre metodologia y decisiones de schema |
-| **Taxonomia** | 1 | Arbol jerarquico de ataques |
+| **Referencias** | 231 | Fuentes (224 primarias + 4 surveys + 3 operacionales) |
+| **Wiki** | 7 | Artículos conceptuales sobre metodología y decisiones de schema |
+| **Taxonomía** | 1 | Árbol jerárquico de ataques |
 
 ---
 
-## Inspiracion
+## Cómo usar
 
-La estructura taxonomica de prompt injection esta inspirada en la [Arcanum Prompt Injection Taxonomy](https://arcanum-sec.github.io/arc_pi_taxonomy/) de Jason Haddix (Arcanum Information Security).
+### Vía GitHub Pages (recomendado)
 
-El **workflow R-D-A** (pipeline Recon → Defensas → Ataques), las fichas con fuentes rastreadas, el metodo de descubrimiento por senales y el enlace defensa-locus-ataque son **trabajo original**.
-
----
-
-## Como usar
-
-### Via GitHub Pages (recomendado)
-
-Abra **[rb1hdb.github.io/llm-app-rda/](https://rb1hdb.github.io/llm-app-rda/)** — pagina interactiva single-file, sin servidor.
+Abra **[rb1hdb.github.io/llm-app-rda/](https://rb1hdb.github.io/llm-app-rda/)** — página interactiva single-file, sin servidor.
 
 ### Localmente
 
@@ -67,10 +59,11 @@ cd llm-app-rda
 # abrir index.html en el navegador
 ```
 
-### Rebuild despues de editar datos
+### Rebuild después de editar datos
 
 ```bash
-python build-page/build.py
+python build-page/build.py            # generar index.html
+python build-page/build.py --validate # validar integridad solamente
 ```
 
 ---
@@ -85,29 +78,30 @@ PT, EN, ES — alternables en el header. Todos los textos de UI vienen de `label
 
 ```
 llm-app-rda/
-├── index.html              <- Pagina interactiva generada
+├── index.html              <- Página interactiva generada
 ├── .nojekyll               <- Config GitHub Pages
 ├── LICENSE                 <- CC BY 4.0
-├── README.md               <- Version EN
-├── README-es.md            <- Este archivo
+├── README.md               <- README (EN)
+├── README-pt.md            <- README (PT)
+├── README-es.md            <- Este archivo (ES)
 ├── data/                   <- Fuente de verdad (PT)
-│   ├── defesas.json        <- 42 defensas
-│   ├── sinais.json         <- 56 senales
-│   ├── tecnicas.json       <- 50 tecnicas
+│   ├── defesas.json        <- 52 defensas
+│   ├── sinais.json         <- 66 señales
+│   ├── tecnicas.json       <- 50 técnicas
 │   ├── evasoes.json        <- 12 evasiones
-│   ├── recon.json          <- 35 prompts de recon
+│   ├── recon.json          <- 36 prompts de recon
 │   ├── produtos.json       <- 14 productos
-│   ├── referencias.json    <- 100 referencias
-│   ├── wiki.json           <- 7 articulos
-│   ├── taxonomia.json      <- Arbol taxonomico
-│   └── schema.json         <- Schema de validacion
+│   ├── referencias.json    <- 231 referencias
+│   ├── wiki.json           <- 7 artículos
+│   ├── taxonomia.json      <- Árbol taxonómico
+│   └── schema.json         <- Schema de validación
 ├── labels/                 <- Strings de UI (i18n)
 │   ├── pt.json
 │   ├── en.json
 │   └── es.json
 ├── translations/           <- Traducciones de datos
-│   ├── en/                 <- 8 archivos traducidos
-│   └── es/                 <- 8 archivos traducidos
+│   ├── en/                 <- Archivos traducidos
+│   └── es/                 <- Archivos traducidos
 └── build-page/
     ├── template.html       <- Template HTML/JS
     ├── style.css           <- Estilos
@@ -118,40 +112,60 @@ llm-app-rda/
 
 ## Loci de defensa
 
-Las defensas se clasifican por donde actuan en el pipeline LLM:
+Las defensas se clasifican por dónde actúan en el pipeline LLM:
 
-| Locus | Cant | Descripcion |
+| Locus | Cant | Descripción |
 |-------|------|-------------|
-| input | 8 | Filtros en la entrada del usuario |
+| input | 9 | Filtros en la entrada del usuario |
 | output | 6 | Filtros en la salida del modelo |
-| prompt | 5 | Diseno del system prompt |
-| modelo | 5 | Controles a nivel de modelo |
-| acao | 14 | Gating de acciones/herramientas |
-| processo | 4 | Controles de proceso |
+| prompt | 7 | Diseño del system prompt |
+| modelo | 6 | Controles a nivel de modelo |
+| acción | 20 | Gating de acciones/herramientas |
+| proceso | 4 | Controles de proceso |
 
 ---
 
-## Estado metodologico
+## Metodología
 
-Este runbook interactivo (pipeline R-D-A) fue construido a partir de fuentes ancla en seguridad de LLM (listadas en `data/referencias.json`). Cada entrada contiene la fuente que soporta su contenido.
+Este runbook interactivo (pipeline R-D-A) fue construido a partir de fuentes ancla en seguridad de LLM (listadas en `data/referencias.json`).
+
+**Jerarquía de fuentes:** cada entrada porta el tipo de fuente — *primaria* (evidencia textual directa), *survey* (revisión sistemática), *operacional* (documentación de herramienta) o *inferencia* (inferencia lógica, siempre documentada con racional).
 
 ### Sobre relaciones N:N
 
-Las relaciones vinculando senales → defensas → tecnicas/evasiones fueron generadas por **barrido automatizado por LLM** (no humano). **Fuera del alcance de auditoria**: senales y mecanismos en aislamiento, recon, referencias, wiki, taxonomia.
+Las relaciones vinculando señales → defensas → técnicas/evasiones fueron generadas por **barrido automatizado por LLM** (no curadas manualmente una a una). Una auditoría subsecuente corrigió conexiones defensa-evasión basándose en análisis de mecanismo de detección (regex/lexical, clasificador entrenado, LLM judge, semántico/embedding, estructural, proceso). **Fuera del alcance de auditoría**: señales y mecanismos en aislamiento, recon, referencias, wiki, taxonomía.
 
-### Motor de seleccion
+### Motor de selección
 
-Marque senales/defensas para filtrar tecnicas/evasiones candidatas. La lista resultante es una **shortlist para refinar**, no un veredicto — combinela con el paso de prueba discriminatoria (pestana Metodo) antes de atribuir un bypass.
+Marque señales/defensas para filtrar técnicas/evasiones candidatas. La lista resultante es una **shortlist para refinar**, no un veredicto — combínela con el paso de prueba discriminatoria (pestaña Método) antes de atribuir un bypass.
+
+---
+
+## Inspiración
+
+La estructura taxonómica de prompt injection está inspirada en la [Arcanum Prompt Injection Taxonomy](https://arcanum-sec.github.io/arc_pi_taxonomy/) de Jason Haddix (Arcanum Information Security).
+
+El **workflow R-D-A** (pipeline Recon → Defensas → Ataques), las fichas con fuentes rastreadas, el método de descubrimiento por señales y el enlace defensa-locus-ataque son **trabajo original**.
+
+---
+
+## Roadmap
+
+- **Evidence JSONL por producto** — registros estructurados de engagements reales (mantenidos separados de este repo; evidencias pertenecen a cada engagement, no al runbook público)
+- **Auditoría de cobertura señal-defensa** — revisión sistemática de la matriz 66×52 con el mismo rigor de mecanismo aplicado a las conexiones evasión-defensa
+- **Auditoría de conexiones técnica-defensa** — validar la matriz 50×52 contra mecanismos de detección
+- **Expansión de catálogos** — nuevas defensas, técnicas y evasiones conforme el campo evoluciona; nuevos mapeos de productos conforme vendors lanzan guardrails
+- **Regresión automatizada** — pipeline CI para ejecutar `build.py --validate` en cada commit
 
 ---
 
 ## Aviso
 
-Para **fines educativos y pruebas de seguridad autorizadas solamente**. Siempre obtenga autorizacion adecuada antes de probar cualquier sistema.
+Para **fines educativos y pruebas de seguridad autorizadas solamente**. Siempre obtenga autorización adecuada antes de probar cualquier sistema.
 
 ---
 
-## Creditos
+## Créditos
 
 Creado por **[Renato Braga](https://www.linkedin.com/in/renato-braga/)** — Material base para el curso *"LLM Application Security - Pentest Edition (LLMAS-P)"*
 
