@@ -38,11 +38,11 @@ Diferente de coleções de jailbreaks avulsos, cada entrada tem fontes rastreada
 | **Recon** | 37 | Prompts black-box para identificar defesas sem conhecimento prévio |
 | **Sinais** | 66 | Heurísticas observáveis indicando defesas ativas |
 | **Defesas** | 52 | Fichas com definição, locus, fortalezas, fraquezas, aplicabilidade |
-| **Técnicas** | 50 | Técnicas de ataque organizadas por turno e grupo |
+| **Técnicas** | 52 | Técnicas de ataque organizadas por turno e grupo |
 | **Evasões** | 12 | Transformações para escapar detecção |
 | **Produtos** | 14 | Ferramentas comerciais mapeadas para defesas que implementam |
-| **Referências** | 232 | Fontes (225 primárias + 4 surveys + 3 operacionais) |
-| **Wiki** | 7 | Artigos conceituais sobre metodologia e decisões de schema |
+| **Referências** | 145 | Fontes (136 primárias + 6 surveys + 3 operacionais) |
+| **Wiki** | 8 | Artigos conceituais sobre metodologia e decisões de schema |
 | **Taxonomia** | 1 | Árvore hierárquica de ataques |
 | **Triagem** | 6 | Guia de decisão que mapeia observações a clusters de defesa |
 
@@ -94,8 +94,8 @@ llm-app-rda/
 │   ├── evasoes.json        <- 12 evasões
 │   ├── recon.json          <- 37 prompts de recon
 │   ├── produtos.json       <- 14 produtos
-│   ├── referencias.json    <- 232 referências
-│   ├── wiki.json           <- 7 artigos
+│   ├── referencias.json    <- 145 referências
+│   ├── wiki.json           <- 8 artigos
 │   ├── taxonomia.json      <- Árvore taxonômica
 │   ├── triagem.json        <- Árvore de triagem (perguntas → clusters)
 │   ├── clusters.json       <- Mapa defesa → cluster
@@ -139,7 +139,7 @@ Este runbook interativo (pipeline R-D-A) foi construído a partir de fontes ânc
 
 ### Sobre relações N:N
 
-As relações ligando sinais → defesas → técnicas/evasões foram geradas por **varredura automatizada por LLM** (não curadas manualmente uma a uma). Uma auditoria subsequente corrigiu conexões defesa-evasão com base em análise de mecanismo de detecção (regex/lexical, classificador treinado, LLM judge, semântico/embedding, estrutural, processo). **Fora do escopo de auditoria**: sinais e mecanismos em isolamento, recon, referências, wiki, taxonomia.
+As relações ligando sinais → defesas → técnicas/evasões foram geradas por **varredura automatizada por LLM** (não curadas manualmente uma a uma). Uma auditoria subsequente corrigiu conexões defesa-evasão com base em análise de mecanismo de detecção (regex/lexical, classificador treinado, LLM judge, semântico/embedding, estrutural, processo). Os vínculos técnica/evasão → defesa foram depois auditados contra as fontes: cada vínculo mantém só uma base lida (testado, alegado pela fonte ou inferência documentada); vínculos sem evidência foram removidos, então algumas técnicas ainda aparecem sem vínculo com defesa. As fontes das técnicas também trazem status de verificação e link direto para a página ou o payload exato. **Fora do escopo de auditoria**: sinais e mecanismos em isolamento, recon, wiki, taxonomia.
 
 ### Motor de seleção
 
@@ -159,7 +159,7 @@ O **workflow R-D-A** (pipeline Recon → Defesas → Ataques), as fichas com fon
 
 - **Evidence JSONL por produto** — registros estruturados de engajamentos reais (mantidos separados deste repo; evidências pertencem a cada engajamento, não ao runbook público)
 - **Auditoria de cobertura sinal-defesa** — revisão sistemática da matriz 66×52 com o mesmo rigor de mecanismo aplicado às conexões evasão-defesa
-- **Auditoria de conexões técnica-defesa** — validar a matriz 50×52 contra mecanismos de detecção
+- **Cobertura de vínculos** — achar fontes que sustentem vínculos com defesa para técnicas e evasões que ainda não têm nenhum
 - **Expansão de catálogos** — novas defesas, técnicas e evasões conforme o campo evolui; novos mapeamentos de produtos conforme vendors lançam guardrails
 - **Regressão automatizada** — pipeline CI para rodar `build.py --validate` em cada commit
 - **Validação cega do guia de decisão (triagem)** — testar cada ramo da árvore de triagem com casos públicos independentes (write-ups de CTF/red team, engajamentos autorizados) e reportar a cobertura por ramo

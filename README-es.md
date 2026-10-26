@@ -38,11 +38,11 @@ A diferencia de colecciones de jailbreaks sueltos, cada entrada tiene fuentes ra
 | **Recon** | 37 | Prompts black-box para identificar defensas sin conocimiento previo |
 | **Señales** | 66 | Heurísticas observables indicando defensas activas |
 | **Defensas** | 52 | Fichas con definición, locus, fortalezas, debilidades, aplicabilidad |
-| **Técnicas** | 50 | Técnicas de ataque organizadas por turno y grupo |
+| **Técnicas** | 52 | Técnicas de ataque organizadas por turno y grupo |
 | **Evasiones** | 12 | Transformaciones para escapar detección |
 | **Productos** | 14 | Herramientas comerciales mapeadas a defensas que implementan |
-| **Referencias** | 232 | Fuentes (225 primarias + 4 surveys + 3 operacionales) |
-| **Wiki** | 7 | Artículos conceptuales sobre metodología y decisiones de schema |
+| **Referencias** | 145 | Fuentes (136 primarias + 6 surveys + 3 operacionales) |
+| **Wiki** | 8 | Artículos conceptuales sobre metodología y decisiones de schema |
 | **Taxonomía** | 1 | Árbol jerárquico de ataques |
 | **Triaje** | 6 | Guía de decisión que mapea observaciones a clusters de defensa |
 
@@ -94,8 +94,8 @@ llm-app-rda/
 │   ├── evasoes.json        <- 12 evasiones
 │   ├── recon.json          <- 37 prompts de recon
 │   ├── produtos.json       <- 14 productos
-│   ├── referencias.json    <- 232 referencias
-│   ├── wiki.json           <- 7 artículos
+│   ├── referencias.json    <- 145 referencias
+│   ├── wiki.json           <- 8 artículos
 │   ├── taxonomia.json      <- Árbol taxonómico
 │   ├── triagem.json        <- Árbol de triaje (preguntas → clusters)
 │   ├── clusters.json       <- Mapa defensa → cluster
@@ -139,7 +139,7 @@ Este runbook interactivo (pipeline R-D-A) fue construido a partir de fuentes anc
 
 ### Sobre relaciones N:N
 
-Las relaciones vinculando señales → defensas → técnicas/evasiones fueron generadas por **barrido automatizado por LLM** (no curadas manualmente una a una). Una auditoría subsecuente corrigió conexiones defensa-evasión basándose en análisis de mecanismo de detección (regex/lexical, clasificador entrenado, LLM judge, semántico/embedding, estructural, proceso). **Fuera del alcance de auditoría**: señales y mecanismos en aislamiento, recon, referencias, wiki, taxonomía.
+Las relaciones vinculando señales → defensas → técnicas/evasiones fueron generadas por **barrido automatizado por LLM** (no curadas manualmente una a una). Una auditoría subsecuente corrigió conexiones defensa-evasión basándose en análisis de mecanismo de detección (regex/lexical, clasificador entrenado, LLM judge, semántico/embedding, estructural, proceso). Los vínculos técnica/evasión → defensa fueron luego auditados contra las fuentes: cada vínculo conserva solo una base leída (probado, alegado por la fuente o inferencia documentada); los vínculos sin evidencia se eliminaron, por lo que algunas técnicas aún aparecen sin vínculo con una defensa. Las fuentes de las técnicas también traen estado de verificación y enlace directo a la página o al payload exacto. **Fuera del alcance de auditoría**: señales y mecanismos en aislamiento, recon, wiki, taxonomía.
 
 ### Motor de selección
 
@@ -159,7 +159,7 @@ El **workflow R-D-A** (pipeline Recon → Defensas → Ataques), las fichas con 
 
 - **Evidence JSONL por producto** — registros estructurados de engagements reales (mantenidos separados de este repo; evidencias pertenecen a cada engagement, no al runbook público)
 - **Auditoría de cobertura señal-defensa** — revisión sistemática de la matriz 66×52 con el mismo rigor de mecanismo aplicado a las conexiones evasión-defensa
-- **Auditoría de conexiones técnica-defensa** — validar la matriz 50×52 contra mecanismos de detección
+- **Cobertura de vínculos** — encontrar fuentes que respalden vínculos con defensas para técnicas y evasiones que aún no tienen ninguno
 - **Expansión de catálogos** — nuevas defensas, técnicas y evasiones conforme el campo evoluciona; nuevos mapeos de productos conforme vendors lanzan guardrails
 - **Regresión automatizada** — pipeline CI para ejecutar `build.py --validate` en cada commit
 - **Validación ciega de la guía de decisión (triaje)** — probar cada rama del árbol de triaje con casos públicos independientes (write-ups de CTF/red team, engagements autorizados) y reportar la cobertura por rama

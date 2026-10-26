@@ -8,6 +8,7 @@ Usage:
 import copy
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -453,10 +454,14 @@ def validate(data):
         ("evasoes", data["evasoes"]["evasoes"]),
         ("recon", data["recon"]["prompts"]),
         ("produtos", data["produtos"]["produtos"]),
+        ("sinais", data["sinais"]["sinais"]),
     ]:
         for item in items:
             for f in item.get("fontes", []):
                 cited.add(f["r"])
+    # citações em texto livre (ex.: "(R251 §3)") também contam como citadas
+    _txt = json.dumps({k: v for k, v in data.items() if k != "referencias"}, ensure_ascii=False)
+    cited |= set(re.findall(r"\bR\d{2,3}\b", _txt))
     orphans = set(refs.keys()) - cited
     if orphans:
         warns.append(f"Orphan references (not cited): {sorted(orphans)}")
