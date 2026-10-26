@@ -58,6 +58,7 @@
     "nome": "Nombre",
     "descricao": "Descripción",
     "fontes": "Fuentes",
+    "sem_vinculo": "Ningún vínculo con defensa tiene evidencia leída",
     "verif_parcial": "parcial",
     "verif_parcial_dica": "La fuente respalda solo parte de la afirmación",
     "verif_nao_verificado": "no verificada",

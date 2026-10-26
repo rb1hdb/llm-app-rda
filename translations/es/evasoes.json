@@ -6,15 +6,33 @@
       "rotulos": [
         "Paráfrasis indirecta",
         "Metáfora"
+      ],
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Debilidad documentada de D01 (R251, data/defesas.json): la paráfrasis no está cubierta por la coincidencia léxica, que juzga la superficie y no la intención."
+        }
       ]
     },
     {
       "id": "E02",
-      "descricao": "Codifica el payload con cifrados clásicos (ROT13, César, Base64, Morse, A1Z26, ASCII hex, etc.) o pide al modelo que decodifique antes de responder, eludiendo filtros que operan sobre texto plano."
+      "descricao": "Codifica el payload con cifrados clásicos (ROT13, César, Base64, Morse, A1Z26, ASCII hex, etc.) o pide al modelo que decodifique antes de responder, eludiendo filtros que operan sobre texto plano.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Debilidad documentada de D01 (R251, data/defesas.json): la codificación del payload queda fuera de la heurística fuzzy, que solo detecta anagramas."
+        }
+      ]
     },
     {
       "id": "E03",
-      "descricao": "Traduce el payload a un idioma de bajos recursos o menos representado en el entrenamiento de seguridad, explotando que el alineamiento de seguridad es más débil en idiomas distintos del inglés."
+      "descricao": "Traduce el payload a un idioma de bajos recursos o menos representado en el entrenamiento de seguridad, explotando que el alineamiento de seguridad es más débil en idiomas distintos del inglés.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Debilidad documentada de D01 (R251, data/defesas.json): la traducción del payload no está cubierta por la coincidencia léxica."
+        }
+      ]
     },
     {
       "id": "E04",
@@ -22,6 +40,12 @@
       "rotulos": [
         "Homóglifos",
         "Zero-width"
+      ],
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Debilidad documentada de D01 (R251): la coincidencia léxica no cubre la codificación/ofuscación más allá de los anagramas; las fuentes del ítem no prueban Unicode."
+        }
       ]
     },
     {
@@ -30,19 +54,43 @@
       "rotulos": [
         "División de variable",
         "Multi-part"
+      ],
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Debilidad documentada de D01 (R251): las ofuscaciones como el split de payload quedan fuera de la coincidencia léxica; R83 no prueba un filtro léxico."
+        }
       ]
     },
     {
       "id": "E06",
-      "descricao": "Aplica transformaciones deterministas basadas en reglas (Pig Latin, Leetspeak, palabras invertidas, permutación a nivel de palabra, cifrado personalizado) que el modelo puede revertir internamente."
+      "descricao": "Aplica transformaciones deterministas basadas en reglas (Pig Latin, Leetspeak, palabras invertidas, permutación a nivel de palabra, cifrado personalizado) que el modelo puede revertir internamente.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Debilidad documentada de D01 (R251): la paráfrasis o la codificación no están cubiertas por la coincidencia léxica; R72 y R100 no prueban un filtro léxico."
+        }
+      ]
     },
     {
       "id": "E07",
-      "descricao": "Usa un LLM auxiliar para generar automáticamente variaciones del payload que preservan el significado pero evitan la detección, incluidos algoritmos genéticos sobre prompts (AutoDAN, GPTFUZZER, TAP)."
+      "descricao": "Usa un LLM auxiliar para generar automáticamente variaciones del payload que preservan el significado pero evitan la detección, incluidos algoritmos genéticos sobre prompts (AutoDAN, GPTFUZZER, TAP).",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Debilidad documentada de D01 (R251): la paráfrasis del payload no está cubierta por la coincidencia léxica; las fuentes leídas no prueban AutoDAN contra un filtro léxico."
+        }
+      ]
     },
     {
       "id": "E08",
-      "descricao": "Explota particularidades del tokenizer (tokens compuestos, glitch tokens, boundary splitting) para crear representaciones de texto que parecen inofensivas a nivel de carácter pero generan tokens interpretados de forma distinta por el modelo."
+      "descricao": "Explota particularidades del tokenizer (tokens compuestos, glitch tokens, boundary splitting) para crear representaciones de texto que parecen inofensivas a nivel de carácter pero generan tokens interpretados de forma distinta por el modelo.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "R18 §III: palabra única 'hardest to be detected' por filtros o pattern matching; sin experimento (§V.C)."
+        }
+      ]
     },
     {
       "id": "E09",
@@ -54,11 +102,23 @@
     },
     {
       "id": "E11",
-      "descricao": "Define un mapeo biyectivo (alfabeto personalizado, lenguaje inventado, diccionario de sustitución) entre palabras/caracteres y sus equivalentes, codificando la instrucción hostil en ese mapeo y pidiendo al modelo que decodifique."
+      "descricao": "Define un mapeo biyectivo (alfabeto personalizado, lenguaje inventado, diccionario de sustitución) entre palabras/caracteres y sus equivalentes, codificando la instrucción hostil en ese mapeo y pidiendo al modelo que decodifique.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Debilidad en defesas.json: la codificación del payload no está cubierta por la coincidencia léxica (R251)."
+        }
+      ]
     },
     {
       "id": "E12",
-      "descricao": "Oculta la instrucción hostil con técnicas esteganográficas textuales: primeras letras de cada línea (acróstico), espaciado variable, marcado en negrita/cursiva o codificación en metadatos de imagen/documento."
+      "descricao": "Oculta la instrucción hostil con técnicas esteganográficas textuales: primeras letras de cada línea (acróstico), espaciado variable, marcado en negrita/cursiva o codificación en metadatos de imagen/documento.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Debilidad en defesas.json: fuzzy solo detecta anagramas; otras ofuscaciones quedan fuera (R251)."
+        }
+      ]
     }
   ]
 }

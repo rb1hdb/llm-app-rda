@@ -6,13 +6,13 @@
       "descricao": "Verifica o prompt antes de chegar ao modelo por regras lexicais: regex, palavras-chave e listas de bloqueio contra frases de injeção conhecidas, mais correspondência aproximada (anagrama/distância de string) para capturar embaralhamentos de letras tipo typoglycemia. A decisão é sobre a forma do texto, sem modelar intenção.",
       "locus": "input",
       "fortalezas": [
-        "Atua antes de o modelo ver o prompt e não depende de LLM: é a camada 'heurística' do Rebuff, que filtra a entrada potencialmente maliciosa antes do LLM (R03) e a validação/sanitização de entrada recomendada pelo OWASP (R01).",
-        "A variante fuzzy captura embaralhamentos estilo anagrama (typoglycemia) que o casamento exato não vê (R01)."
+        "Atua antes de o modelo ver o prompt e não depende de LLM: é a camada 'heurística' do Rebuff, que filtra a entrada potencialmente maliciosa antes do LLM (R03) e a validação/sanitização de entrada recomendada pelo OWASP (R251).",
+        "Normalizar o texto antes da triagem (por exemplo, NFKC) reduz parte das ofuscações por caracteres de compatibilidade (R251)."
       ],
       "fraquezas": [
-        "Julga superfície, não intenção: o próprio OWASP registra que 'similarity alone does not identify malicious intent' (R01), então paráfrase, tradução ou codificação do payload não são cobertas por casamento lexical.",
-        "A heurística fuzzy documentada é 'intentionally minimal' e só pega scrambles estilo anagrama (R01); outras ofuscações (codificação, split de payload) ficam fora.",
-        "Não cobre injeção indireta: 'Pattern-based filters do not reliably catch indirect injection in untrusted content' (R01).",
+        "Julga superfície, não intenção: o próprio OWASP registra que 'similarity does not identify intent' (R251), então paráfrase, tradução ou codificação do payload não são cobertas por casamento lexical.",
+        "Letras embaralhadas (typoglycemia) e outras ofuscações, como Base64, evadem filtros por palavra-chave (R251).",
+        "Não cobre injeção indireta: 'Pattern-based filters do not reliably catch indirect injection in untrusted content' (R251).",
         "O fornecedor da ferramenta declara que a camada heurística (junto das demais) não dá proteção completa: 'cannot provide 100% protection' (R03)."
       ],
       "aplicabilidade": [
@@ -24,7 +24,7 @@
       "categoria": "Filtragem de entrada",
       "fontes": [
         {
-          "r": "R01",
+          "r": "R251",
           "tipo": "primaria"
         }
       ]
@@ -77,7 +77,7 @@
         "Sem retreino do modelo principal; o guardrail por LLM é configurável (self-check do NeMo Guardrails) (R10)."
       ],
       "fraquezas": [
-        "O próprio juiz é um LLM e é injetável: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection' (R01).",
+        "O próprio juiz é um LLM e é injetável: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection' (R251).",
         "Detectores com conhecimento secreto baseados em LLM foram contornados por ataque adaptativo: DataSentinel 'In every case, the defense was bypassed' (R79 §5.4).",
         "Falsos positivos de defesas probabilísticas bloqueiam ações legítimas e há custo de latência/computação (R06 Outcomes).",
         "Os números de PromptArmor (<1%) vêm de avaliação no AgentDojo reportada pelos próprios autores (R86 abstract); nas fontes lidas não há confirmação independente sob ataque adaptativo contra esse detector."
@@ -96,6 +96,10 @@
         },
         {
           "r": "R145",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R251",
           "tipo": "primaria"
         }
       ]
@@ -133,11 +137,11 @@
       "descricao": "Trata como não confiável todo conteúdo externo (documentos, páginas, e-mails, respostas de tools, mesmo de servidores aprovados) e o limpa antes de entrar no contexto: remove padrões de injeção, filtra markup suspeito e valida/sanitiza saídas de tools.",
       "locus": "input",
       "fortalezas": [
-        "Atua na fronteira de ingestão de fontes remotas: 'Remove common injection patterns from external sources' e 'Filter suspicious markup in web content and documents' (R01).",
+        "Atua na fronteira de ingestão de fontes remotas: 'Remove common injection patterns from external sources' e 'Filter suspicious markup in web content and documents' (R251).",
         "Regra explícita de não confiar nem em tools aprovadas: 'Treat every tool response as untrusted data, including responses from approved servers' (R27 §12)."
       ],
       "fraquezas": [
-        "Filtros por padrão 'do not reliably catch indirect injection in untrusted content' (R01).",
+        "Filtros por padrão 'do not reliably catch indirect injection in untrusted content' (R251).",
         "A causa de fundo é que a IA não distingue entrada do usuário de conteúdo externo: 'the AI's inability to distinguish between user input and external content, making traditional input validation insufficient' (R06 Context), então a limpeza pode apenas reduzir, não eliminar.",
         "Sanitização de links/markup foi contornada em incidente real: 'circumventing link redaction with reference-style Markdown' (R96)."
       ],
@@ -149,7 +153,7 @@
       "categoria": "Sanitização",
       "fontes": [
         {
-          "r": "R01",
+          "r": "R251",
           "tipo": "primaria"
         }
       ]
@@ -217,13 +221,13 @@
       "descricao": "No gateway, antes do modelo, impõe limites de requisições por usuário/IP/sessão/tenant, quotas e timeouts, restringindo o orçamento de tentativas do atacante e o consumo de recursos.",
       "locus": "input",
       "fortalezas": [
-        "Limita o orçamento de tentativas de ataques por amostragem: 'Implement request rate limiting per user/IP' dentro da mitigação de Best-of-N (R01).",
+        "Limita o orçamento de tentativas de ataques por amostragem: 'Implement request rate limiting per user/IP' dentro da mitigação de Best-of-N (R251).",
         "Resiste a DoS e abuso econômico: 'Apply resource controls (rate limits, quotas, timeouts) per session or tenant to resist DoS' (R27 §6; também R28/LLM10)."
       ],
       "fraquezas": [
-        "O próprio OWASP restringe a alegação: rate limiting 'Restricts attempt budgets; it does not establish model robustness' (R01).",
+        "O próprio OWASP restringe a alegação: rate limiting 'Restricts attempt budgets; it does not establish model robustness' (R251).",
         "Limita volume, não conteúdo: um ataque de uma única tentativa bem-sucedida não é afetado (consequência do desenho).",
-        "Limites chaveados por usuário/IP/sessão (R01, R27) pressupõem identidade estável; identidades descartáveis zeram o contador (inferência lógica)."
+        "Limites chaveados por usuário/IP/sessão (R251, R27) pressupõem identidade estável; identidades descartáveis zeram o contador (inferência lógica)."
       ],
       "aplicabilidade": [
         "LLM",
@@ -234,7 +238,7 @@
       "categoria": "Controle de recursos",
       "fontes": [
         {
-          "r": "R01",
+          "r": "R251",
           "tipo": "primaria"
         }
       ]
@@ -246,13 +250,13 @@
       "locus": "prompt",
       "fortalezas": [
         "Reduz parte da injeção em agentes: delimitar saídas de tools baixou o ASR direcionado de 57,69% para 41,65% no AgentDojo (R77 §4.3, Tabela 5).",
-        "É a prática base recomendada de separar 'trusted instructions' de 'untrusted data' (R01)."
+        "É a prática base recomendada de separar 'trusted instructions' de 'untrusted data' (R251)."
       ],
       "fraquezas": [
         "Delimitadores são burlados digitando o delimitador na entrada: 'This is very easily defeated' (R05).",
         "Há ataque que nem usa os delimitadores: 'this attack doesn't attempt to use the delimiters at all' porque tudo 'is flattened down to that sequence of integers' (R05).",
-        "O OWASP orienta a não tratar rótulos como fronteira: 'do not treat text labels or prompt wording as an enforcement boundary' (R01).",
-        "Pode piorar: 'XML-tagging increases the ASR ... by 5.5% on the turn 1 attack and 3.4% on turn 2' no vazamento de prompt (R64 §5)."
+        "O OWASP orienta a não tratar rótulos como fronteira: 'do not treat text labels or prompt wording as an enforcement boundary' (R251).",
+        "Pode piorar: 'XML-tagging increases the ASR ... by 5.5% on the turn 1 attack and 3.4% on turn 2' no vazamento de prompt (R01 §5)."
       ],
       "aplicabilidade": [
         "LLM",
@@ -264,6 +268,10 @@
       "fontes": [
         {
           "r": "R01",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R251",
           "tipo": "primaria"
         }
       ]
@@ -337,7 +345,7 @@
       "locus": "prompt",
       "fortalezas": [
         "Contra vazamento de prompt, a instrução defensiva foi a melhor defesa isolada no turno 2 do ataque (≈ -50 pontos em modelos fechados) (R64 §5).",
-        "Não requer componente extra e é recomendada como primeira camada: 'Design system prompts with clear role definitions and security constraints' (R01).",
+        "Não requer componente extra e é recomendada como primeira camada: 'Design system prompts with clear role definitions and security constraints' (R251).",
         "A variante AREA (soft prompt otimizável que reancora a atenção) iguala a resistência de defesas de ponta e melhora a usabilidade média em mais de 33% (R63)."
       ],
       "fraquezas": [
@@ -355,7 +363,7 @@
       "categoria": "Instrução defensiva",
       "fontes": [
         {
-          "r": "R01",
+          "r": "R251",
           "tipo": "primaria"
         }
       ]
@@ -546,12 +554,12 @@
       "descricao": "Examina a resposta gerada por regras de padrão para sinais de injeção bem-sucedida ou vazamento (segredos, chaves, instruções do sistema) e bloqueia ou trunca a saída que casar.",
       "locus": "output",
       "fortalezas": [
-        "Última verificação determinística antes da entrega: 'Monitor LLM outputs for signs of successful injection attacks' (R01).",
+        "Última verificação determinística antes da entrega: 'Monitor LLM outputs for signs of successful injection attacks' (R251).",
         "Monitoramento de padrões incomuns na saída é recomendado como controle de logging/monitoring (R28/LLM05)."
       ],
       "fraquezas": [
-        "Insuficiente por si só: 'output keyword filtering is not sufficient' (R01 Secure Implementation Pipeline).",
-        "Só reconhece padrões previstos; vazamento reformulado, fragmentado ou transcodificado não casa (inferência lógica, o mesmo limite do filtro lexical R01).",
+        "Insuficiente por si só: 'output keyword filtering is not sufficient' (R251 Secure Implementation Pipeline).",
+        "Só reconhece padrões previstos; vazamento reformulado, fragmentado ou transcodificado não casa (inferência lógica, o mesmo limite do filtro lexical R251).",
         "Mais de 80% das implantações vazaram o system prompt sob consultas adversariais realistas mesmo com defesas (R63), e extração por ataques textuais simples tem alta probabilidade (R93)."
       ],
       "aplicabilidade": [
@@ -563,7 +571,7 @@
       "categoria": "Filtragem de saída",
       "fontes": [
         {
-          "r": "R01",
+          "r": "R251",
           "tipo": "primaria"
         }
       ]
@@ -608,7 +616,7 @@
         "Critic agents auditam 'inputs and outputs in real time, especially in multi-agent systems' (R06)."
       ],
       "fraquezas": [
-        "O juiz é injetável: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection' (R01), e o texto a julgar foi produzido por um modelo que pode estar comprometido pelo mesmo ataque.",
+        "O juiz é injetável: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection' (R251), e o texto a julgar foi produzido por um modelo que pode estar comprometido pelo mesmo ataque.",
         "Falsos positivos e custo adicional por resposta (R06 Outcomes: Trade-offs).",
         "Um juiz LLM não resolveu detecção sob ataque adaptativo: DataSentinel foi contornado 'In every case' (R79 §5.4)."
       ],
@@ -622,6 +630,10 @@
       "fontes": [
         {
           "r": "R145",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R251",
           "tipo": "primaria"
         }
       ]
@@ -692,10 +704,10 @@
       "locus": "output",
       "fortalezas": [
         "Detecção direta de vazamento: o Rebuff 'Add canary tokens to prompts to detect leakages' (R03).",
-        "O marcador é também usado para testar: 'a dummy marker placed in the system prompt appears in the response' é critério de teste de vazamento (R01 'Grade the intended outcome')."
+        "O marcador é também usado para testar: 'a dummy marker placed in the system prompt appears in the response' é critério de teste de vazamento (R251 'Grade the intended outcome')."
       ],
       "fraquezas": [
-        "Ausência do marcador não prova ausência de vazamento: 'Marker absence means only that this exact marker was not observed' (R01).",
+        "Ausência do marcador não prova ausência de vazamento: 'Marker absence means only that this exact marker was not observed' (R251).",
         "Só detecta vazamento do texto exato marcado; paráfrase ou transcodificação do conteúdo sem o token passam (inferência lógica sobre a mesma limitação).",
         "Cobertura limitada ao contexto efetivamente canarizado e a camada faz parte de protótipo sem proteção de 100% (R03)."
       ],
@@ -708,6 +720,10 @@
       "fontes": [
         {
           "r": "R03",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R251",
           "tipo": "primaria"
         }
       ]
@@ -776,14 +792,14 @@
       "descricao": "Divide o trabalho entre um LLM privilegiado (recebe instruções, planeja e usa tools) e um LLM em quarentena sem acesso a tools que processa o conteúdo não confiável; variante Map-Reduce despacha agentes isolados para cada pedaço de dados de terceiros. Só resultados estruturados cruzam a fronteira.",
       "locus": "acao",
       "fortalezas": [
-        "'A quarantined LLM with zero tool access parses the untrusted data' enquanto o privilegiado só planeja (R01 Model-Based Guardrails).",
+        "'A quarantined LLM with zero tool access parses the untrusted data' enquanto o privilegiado só planeja (R251 Model-Based Guardrails).",
         "Dual LLM: um LLM privilegiado que 'receives instructions and plans actions, and can use tools' e um em quarentena sem tools (R89 §3.1).",
         "Map-Reduce: 'dispatch an isolated LLM-agent to process individual pieces of 3rd party data' (R89 §3.1)."
       ],
       "fraquezas": [
         "No estudo de caso do assistente de e-mail 'the quarantined LLM is still susceptible to prompt injection' (R89 §4.3.3).",
         "Map-Reduce exige decomposição estrita: 'may be tasks where such a strict decomposition is impossible' (R89 §4.1.2).",
-        "Variante CaMeL: assume 'a trusted user prompt and uncompromised memory' e o código foi liberado como artefato de pesquisa, não componente de segurança suportado (R01)."
+        "Variante CaMeL: assume 'a trusted user prompt and uncompromised memory' e o código foi liberado como artefato de pesquisa, não componente de segurança suportado (R251)."
       ],
       "aplicabilidade": [
         "Agente",
@@ -794,6 +810,10 @@
       "fontes": [
         {
           "r": "R139",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R251",
           "tipo": "primaria"
         }
       ]
@@ -883,7 +903,7 @@
       "descricao": "Concede a cada tool, servidor e aplicação apenas os dados e operações de que precisa: escopos OAuth estreitos e de curta duração, contas somente leitura, tokens próprios da aplicação, funções críticas mantidas em código fora do alcance do modelo.",
       "locus": "acao",
       "fortalezas": [
-        "'Grant each tool only the data and operations it needs' (R01).",
+        "'Grant each tool only the data and operations it needs' (R251).",
         "Escopos estreitos: 'Request narrow OAuth scopes (e.g., mail.readonly instead of mail.modify or mail.full_access)' (R27 §1).",
         "Limita o dano se o modelo for manipulado: o controle 'Least model privilege' visa 'Minimize what a model can do (trigger actions or access data)' (R17); a Microsoft acrescenta privilégios de curta duração, removidos após cada uso (R06)."
       ],
@@ -900,7 +920,7 @@
       "categoria": "Controle de acesso",
       "fontes": [
         {
-          "r": "R01",
+          "r": "R251",
           "tipo": "primaria"
         }
       ]
@@ -911,15 +931,15 @@
       "descricao": "Exige aprovação humana explícita antes de executar ações destrutivas, financeiras, de compartilhamento de dados ou de alto risco, com os parâmetros completos à vista; o risco é avaliado pela ação e não pelo conteúdo do prompt.",
       "locus": "acao",
       "fortalezas": [
-        "'Require human approval for consequential tool actions before execution' (R01); 'Require explicit user confirmation for destructive, financial, or data-sharing operations' (R27 §4).",
+        "'Require human approval for consequential tool actions before execution' (R251); 'Require explicit user confirmation for destructive, financial, or data-sharing operations' (R27 §4).",
         "A Microsoft o classifica como 'the last line of defense' (R06).",
         "Rodar tarefas com [A][B][C] só com supervisão é a saída da Regra de Dois (R90)."
       ],
       "fraquezas": [
         "Fadiga de confirmação: 'users become desensitized to security prompts' (R83 §9.2); a Meta cita o caso de o usuário confirmar um aviso às cegas (R90).",
-        "O OWASP lembra que 'the most vulnerable pieces of a system are humans' (R01).",
-        "Gate roteado por palavra-chave do prompt é inválido: 'keyword counts in the user's prompt do not establish the action's risk' (R01).",
-        "'A prompt requesting human review does not itself stop execution' (R01, LangChain): o gate precisa ser imposto em código (R01)."
+        "O OWASP lembra que 'the most vulnerable pieces of a system are humans' (R251).",
+        "Gate roteado por palavra-chave do prompt é inválido: 'keyword counts in the user's prompt do not establish the action's risk' (R251).",
+        "'A prompt requesting human review does not itself stop execution' (R251, LangChain): o gate precisa ser imposto em código (R251)."
       ],
       "aplicabilidade": [
         "Agente",
@@ -929,6 +949,10 @@
       "fontes": [
         {
           "r": "R139",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R251",
           "tipo": "primaria"
         }
       ]
@@ -1094,13 +1118,13 @@
       "descricao": "Registra decisões de guardrail e invocações de tools (parâmetros, usuário, tempo), dispara alertas em padrões suspeitos e monitora o uso e o comportamento do sistema; serve à detecção, à resposta a incidentes e à reconstrução forense.",
       "locus": "processo",
       "fortalezas": [
-        "'Log security-relevant metadata and decisions' e 'Set up alerting for suspicious patterns' (R01 Comprehensive Monitoring).",
+        "'Log security-relevant metadata and decisions' e 'Set up alerting for suspicious patterns' (R251 Comprehensive Monitoring).",
         "'Log all MCP tool invocations with full parameters, user context, and timestamps' (R27 §10).",
         "Supervisão contínua: 'Oversight of internal and external AI system behaviour by humans and/or automated mechanisms' (R17 #OVERSIGHT); a Microsoft recomenda monitoramento contínuo em runtime (R06)."
       ],
       "fraquezas": [
         "Observa e reage, não bloqueia: a detecção ocorre depois da ação (consequência do desenho).",
-        "O próprio log pode vazar: o OWASP manda registrar metadados 'excluding credentials, secrets' (R01), indicando que gravar parâmetros completos carrega esse risco.",
+        "O próprio log pode vazar: o OWASP manda registrar metadados 'excluding credentials, secrets' (R251), indicando que gravar parâmetros completos carrega esse risco.",
         "Detecção depende de haver sinal: ataques lentos ou sem padrão conhecido podem não gerar alerta (inferência lógica; sem medição nas fontes lidas)."
       ],
       "aplicabilidade": [
@@ -1112,7 +1136,7 @@
       "categoria": "Detecção e resposta",
       "fontes": [
         {
-          "r": "R01",
+          "r": "R251",
           "tipo": "primaria"
         }
       ]
@@ -1123,11 +1147,11 @@
       "descricao": "Controle operacional para interromper o sistema ou a funcionalidade comprometida durante um incidente ativo (comportamento indevido, ataque em curso).",
       "locus": "processo",
       "fortalezas": [
-        "O OWASP o inclui no checklist de implantação: 'Implement emergency controls and kill switches' (R01 Best Practices Checklist, Deployment Phase)."
+        "O OWASP o inclui no checklist de implantação: 'Implement emergency controls and kill switches' (R251 Best Practices Checklist, Deployment Phase)."
       ],
       "fraquezas": [
         "Interrompe, não previne: o dano antes do acionamento já ocorreu (consequência do desenho; fonte lida só o recomenda, sem avaliá-lo).",
-        "Depende de detecção e decisão de acionamento (R01 só lista o controle); a eficácia herda a de D39 (inferência lógica)."
+        "Depende de detecção e decisão de acionamento (R251 só lista o controle); a eficácia herda a de D39 (inferência lógica)."
       ],
       "aplicabilidade": [
         "LLM",
@@ -1138,7 +1162,7 @@
       "categoria": "Detecção e resposta",
       "fontes": [
         {
-          "r": "R01",
+          "r": "R251",
           "tipo": "primaria"
         }
       ]
@@ -1149,13 +1173,13 @@
       "descricao": "Processo de testar a aplicação com padrões de ataque conhecidos, benchmarks, red teaming (humano ou automatizado) e simulações de intrusão, tratando o modelo como usuário não confiável, para medir resistência e detectar regressões.",
       "locus": "processo",
       "fortalezas": [
-        "'Conduct regular security testing with known attack patterns' (R01) e 'Perform regular penetration testing and breach simulations, treating the model as an untrusted user' (R28/LLM01).",
+        "'Conduct regular security testing with known attack patterns' (R251) e 'Perform regular penetration testing and breach simulations, treating the model as an untrusted user' (R28/LLM01).",
         "Há benchmarks padronizados e abertos para medir robustez: HarmBench, JailbreakBench, AgentDojo, InjecAgent (R75, R76, R77, R78).",
         "Red teaming multilíngue/holístico é apontado como necessário para salvaguardas robustas (R15)."
       ],
       "fraquezas": [
         "Teste estático superestima robustez: 'the majority of defenses originally reported near-zero attack success rates' mas 12 defesas foram contornadas com ataques adaptativos (R79).",
-        "Resultado de smoke test não generaliza: 'Passing this smoke test does not show resistance to a persistent adversary' (R01).",
+        "Resultado de smoke test não generaliza: 'Passing this smoke test does not show resistance to a persistent adversary' (R251).",
         "'Evaluation characterizes behaviour; it does not prove correctness' (R17)."
       ],
       "aplicabilidade": [
@@ -1176,6 +1200,10 @@
         },
         {
           "r": "R97",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R251",
           "tipo": "primaria"
         }
       ]

@@ -1999,6 +1999,14 @@
       "ano": 2024,
       "url": "https://arxiv.org/abs/2401.12242",
       "tipo": "primaria"
+    },
+    {
+      "id": "R251",
+      "titulo": "LLM Prompt Injection Prevention Cheat Sheet",
+      "autores": "OWASP",
+      "ano": "s.d.",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html",
+      "tipo": "primaria"
     }
   ]
 }

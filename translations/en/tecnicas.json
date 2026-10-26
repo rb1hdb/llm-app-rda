@@ -6,7 +6,13 @@
     },
     {
       "id": "T02",
-      "descricao": "Hides the hostile instruction in legitimate-looking text or retrieved data (HTML comments, documentation, Markdown, encoded payload), so the model processes it as content and does not recognize it as an instruction."
+      "descricao": "Hides the hostile instruction in legitimate-looking text or retrieved data (HTML comments, documentation, Markdown, encoded payload), so the model processes it as content and does not recognize it as an instruction.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Documented weakness in D01 (R251): lexical filter does not cover indirect injection or payload encoding."
+        }
+      ]
     },
     {
       "id": "T03",
@@ -34,7 +40,13 @@
     },
     {
       "id": "T09",
-      "descricao": "Family of prompts that create an unrestricted persona ('DAN') with a liberation narrative and a token/punishment system to force compliance. In study R92, the 'Basic' community gathers the original DAN and its close variants: 49 prompts, from 2023-01-08 to 2023-10-11 (276 days), with no circulation after October 2023."
+      "descricao": "Family of prompts that create an unrestricted persona ('DAN') with a liberation narrative and a token/punishment system to force compliance. In study R92, the 'Basic' community gathers the original DAN and its close variants: 49 prompts, from 2023-01-08 to 2023-10-11 (276 days), with no circulation after October 2023.",
+      "bypass": [
+        {
+          "defesa": "D03",
+          "nota": "R92 §6.1, Tab. 8: NeMo-Guardrails' Guard LLM reduced mean ASR by only 0.019 on in-the-wild jailbreaks; a class-level result, not just DAN."
+        }
+      ]
     },
     {
       "id": "T10",
@@ -54,11 +66,23 @@
     },
     {
       "id": "T14",
-      "descricao": "Creates deliberate ambiguity, fragmenting the hostile intent into implicit cues or making it unclear which information is authoritative, so the model infers the hostile meaning without detecting it."
+      "descricao": "Creates deliberate ambiguity, fragmenting the hostile intent into implicit cues or making it unclear which information is authoritative, so the model infers the hostile meaning without detecting it.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Documented weakness of D01 (OWASP R251, Input Validation): lexical similarity does not identify intent; fragmented implicit cues do not match blocklists."
+        }
+      ]
     },
     {
       "id": "T15",
-      "descricao": "Fabricates a precedent (previous conversation, FAQ, changelog, email) where the model supposedly already provided the requested information, normalizing the disclosure."
+      "descricao": "Fabricates a precedent (previous conversation, FAQ, changelog, email) where the model supposedly already provided the requested information, normalizing the disclosure.",
+      "bypass": [
+        {
+          "defesa": "D05",
+          "nota": "Documented weakness of D05 (OWASP R251, Model-Based Guardrails): filters by default do not catch indirect injection in untrusted content, such as a FAQ or forged email."
+        }
+      ]
     },
     {
       "id": "T16",
@@ -71,15 +95,49 @@
     },
     {
       "id": "T18",
-      "descricao": "Wraps the hostile instruction in an abstraction layer (code, LaTeX table, text continuation, metaprompt) that the model interprets as data but executes as an instruction."
+      "descricao": "Wraps the hostile instruction in an abstraction layer (code, LaTeX table, text continuation, metaprompt) that the model interprets as data but executes as an instruction.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "R66 (abstract) does not test a lexical filter. Documented weakness of D01 (R251): paraphrase/encoding escape lexical matching; nesting rewrites the prompt."
+        },
+        {
+          "defesa": "D03",
+          "nota": "Section 6.2, Table 8: GPT as prompt classifier. GPT-3.5 reduced ASR by 17.7 (near-total bypass); GPT-4 reduced it by 89.4, leaving ~10% (defense largely held)."
+        },
+        {
+          "defesa": "D07",
+          "nota": "Section 5, Table 5: RA-LLM (random token removal from the prompt, decision by refusal rate) left ASR at 72.0 (Llama2) and 76.0 (Claude-2): partial bypass. Analogous class, not SmoothLLM."
+        }
+      ]
     },
     {
       "id": "T19",
-      "descricao": "Creates a fictional scenario or simulation (imaginary virtual environment) where real-world rules supposedly do not apply."
+      "descricao": "Creates a fictional scenario or simulation (imaginary virtual environment) where real-world rules supposedly do not apply.",
+      "bypass": [
+        {
+          "defesa": "D13",
+          "nota": "Section 6.2, Table 8: NeMo-Guardrails reduced mean ASR by only 0.019 (baseline 0.685); near-total bypass. Aggregate result over all prompts, including the Virtualization community (Section 4.3)."
+        }
+      ]
     },
     {
       "id": "T20",
-      "descricao": "Injects end-of-conversation markers, closing delimiters, or fake assistant responses to make the model believe a new unrestricted context has been initiated."
+      "descricao": "Injects end-of-conversation markers, closing delimiters, or fake assistant responses to make the model believe a new unrestricted context has been initiated.",
+      "bypass": [
+        {
+          "defesa": "D07",
+          "nota": "Tables 7a/7b: against the Combined Attack (includes fake completion), paraphrasing lowered ASV from 0.75 to 0.21 (with utility loss) and retokenization to 0.41: partial bypass, defense effective but costly."
+        },
+        {
+          "defesa": "D11",
+          "nota": "Tables 7a/7b: sandwich prevention reduced mean ASV from 0.75 to 0.46 and MR from 0.87 to 0.52 against the Combined Attack: partial bypass."
+        },
+        {
+          "defesa": "D12",
+          "nota": "Tables 7a/7b: instructional prevention (warning to ignore injected instructions) left mean ASV at 0.38 (baseline 0.75): partial bypass. R132 Section 6.1 reports higher ASR with this type of defense under ChatInject."
+        }
+      ]
     },
     {
       "id": "T21",
@@ -111,11 +169,11 @@
       "bypass": [
         {
           "defesa": "D14",
-          "nota": "Manual Crescendo evaluated against ChatGPT (GPT-4), Gemini Pro, Gemini Advanced, Claude-2, Claude-3, LLaMA-2 70b and LLaMA-3 70b, all aligned; Gemini Advanced failed on the Meth task (Table 2)."
+          "nota": "Manual Crescendo evaluated on 7 aligned systems (GPT-4, Gemini Pro, Gemini Advanced, Claude-2, Claude-3, LLaMA-2 70b, LLaMA-3 70b); only Gemini Advanced failed on Meth (Table 2). Revalidated."
         },
         {
           "defesa": "D12",
-          "nota": "Partial bypass: Self-Reminder and Goal Prioritization limit the ASR on some tasks (mainly Toxin and Explicit) on GPT-4, without significantly affecting Election, Climate and Stabbing (§5.7, Figure 13)."
+          "nota": "Partial bypass: Self-Reminder and Goal Prioritization reduce ASR on Toxin and Explicit, with no significant effect on Election, Climate and Stabbing; Meth passed with more turns/backtracking (§5.7, Fig. 13). Revalidated; the figure's model was not confirmed in the reading."
         }
       ]
     },
@@ -125,15 +183,15 @@
       "bypass": [
         {
           "defesa": "D07",
-          "nota": "Paraphrasing: 90→88% (Vicuna-13b) and 52→50% (Llama-2-7b); SmoothLLM reduces only in part, to 70% and 42% (§4.4, Table 3)."
+          "nota": "Paraphrasing: 90→88% (Vicuna-13b) and 52→50% (Llama-2-7b); SmoothLLM reduces only partially, to 70% and 42% (§4.4, Table 3). Revalidated."
         },
         {
           "defesa": "D14",
-          "nota": "With no added defense, the attack reaches 90% (Vicuna-13b) and 52% (Llama-2-7b) on the AdvBench subset (§4.4, Table 3)."
+          "nota": "Without additional defense, the attack reaches 90% (Vicuna-13b) and 52% (Llama-2-7b) on the AdvBench subset (§4.4, Table 3). Revalidated."
         },
         {
           "defesa": "D01",
-          "nota": "The paper presents the GPT-4 web results as evidence that CFA works against keyword filtering and dynamic output detection; the effect was not isolated in a test (§5)."
+          "nota": "The paper states, without isolating the effect, that CFA targets malicious keywords, useful against keyword filters; GPT4-Web had ASR 0.90 (§5, Table 2). Revalidated."
         }
       ]
     },
@@ -155,11 +213,11 @@
       "bypass": [
         {
           "defesa": "D02",
-          "nota": "Llama Guard 3 8B labeled 56.6% to 58.5% of each M2S variant's prompts 'Safe', and 71.0% for the ensemble (§5.1, Table 2)."
+          "nota": "Llama Guard 3 8B labeled 'Safe' 56.6% (Hyphenize) to 58.5% (Numberize/Pythonize) and 71.0% in the ensemble, versus 66.1% for the original multi-turn (§5.1, Table 2). Revalidated."
         },
         {
           "defesa": "D14",
-          "nota": "ASR of 70.6% to 95.9% on MHJ against aligned models (GPT-4o, GPT-4o-mini, Mistral-7B, Llama-3-70B) (abstract, §4.2)."
+          "nota": "ASR on MHJ of 70.6% (Llama-3-70b) to 95.9% (Mistral-7B) in the M2S ensemble; GPT-4o 89.0% and GPT-4o-mini 95.5% (Table 1, §4.2). Revalidated; clarification: values are from the ensemble."
         }
       ]
     },
@@ -177,11 +235,31 @@
         {
           "descricao": "Uses statements that give the earlier context logical closure, through three methods: Reasoning Summary, Specific Ignoring and Additional Task (R24 §5.4)."
         }
+      ],
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Tailored payload (Framework+Disruptor, §5.1) is not a known injection phrase; D01 weakness: lexical judges surface, not intent (R251)."
+        }
       ]
     },
     {
       "id": "T31",
-      "descricao": "Combines techniques in nested layers (rewriting + wrapper, scenarios within scenarios) and, in variants, decomposes and reconstructs the request (DrAttack)."
+      "descricao": "Combines techniques in nested layers (rewriting + wrapper, scenarios within scenarios) and, in variants, decomposes and reconstructs the request (DrAttack).",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "DrAttack decomposes and reconstructs the request (R83); D01 weakness: payload splitting and obfuscations fall outside the lexical filter (R251)."
+        },
+        {
+          "defesa": "D02",
+          "nota": "§5, Table 5: OpenAI Moderation Endpoint on ReNeLLM prompts, ASR 100.0; total bypass, no prompt detected."
+        },
+        {
+          "defesa": "D03",
+          "nota": "§6.2, Table 8: GPT-3.5 as classifier reduced GPT-ASR by only 17.7 points (partial bypass); GPT-4 reduced it by 89.4 (largely held)."
+        }
+      ]
     },
     {
       "id": "T32",
@@ -189,7 +267,13 @@
     },
     {
       "id": "T33",
-      "descricao": "Exploits structured output formats (JSON, XML, table, form) to make the model fill fields containing restricted information as if it were a data template."
+      "descricao": "Exploits structured output formats (JSON, XML, table, form) to make the model fill fields containing restricted information as if it were a data template.",
+      "bypass": [
+        {
+          "defesa": "D16",
+          "nota": "Post claims to be the first post-instruction-hierarchy bypass, circumventing system prompts on almost all frontier models; no table."
+        }
+      ]
     },
     {
       "id": "T34",
@@ -202,22 +286,50 @@
         {
           "descricao": "Adds multi-turn persuasion to prime the agent until it accepts actions it would otherwise treat as suspicious; 52.33% average ASR on InjecAgent (R132)."
         }
+      ],
+      "bypass": [
+        {
+          "defesa": "D11",
+          "nota": "§6.1, Appendix D.4: repeating the user instruction (sandwich) did not beat baseline; ASR stayed above no-defense; bypass."
+        },
+        {
+          "defesa": "D12",
+          "nota": "§6.1, Table 16: anti-instruction warning in tool output (hardening) did not stop ChatInject; ASR above baseline; bypass."
+        }
       ]
     },
     {
       "id": "T35",
       "nome": "Memory Exploitation (memory poisoning)",
-      "descricao": "Poisons the persistent memory or accumulated context of an LLM agent, inserting instructions that will be retrieved and executed in future sessions."
+      "descricao": "Poisons the persistent memory or accumulated context of an LLM agent, inserting instructions that will be retrieved and executed in future sessions.",
+      "bypass": [
+        {
+          "defesa": "D12",
+          "nota": "§6.3, Table 3: naive hardening ineffective on GPT-5.4 (IR 96.8%) and Kimi; near zero on Gemini and Sonnet. Partial."
+        }
+      ]
     },
     {
       "id": "T36",
       "nome": "Echo Chamber (shared-context poisoning)",
-      "descricao": "In multi-agent systems, a malicious instruction propagates from a compromised agent to the others, and false responses and inflated memory amplify the effect (self-replication). The name 'Echo Chamber' is the project's, not the source's."
+      "descricao": "In multi-agent systems, a malicious instruction propagates from a compromised agent to the others, and false responses and inflated memory amplify the effect (self-replication). The name 'Echo Chamber' is the project's, not the source's.",
+      "bypass": [
+        {
+          "defesa": "D11",
+          "nota": "§6, Table 2: delimiting and sandwich alone let almost all attacks through; with LLM Tagging the attack dropped to 16%."
+        }
+      ]
     },
     {
       "id": "T37",
       "nome": "Special/structural token injection",
-      "descricao": "Injects special tokenizer or chat-template tokens (BOS, EOS, role tokens, turn delimiters) to manipulate how the model interprets the conversation structure."
+      "descricao": "Injects special tokenizer or chat-template tokens (BOS, EOS, role tokens, turn delimiters) to manipulate how the model interprets the conversation structure.",
+      "bypass": [
+        {
+          "defesa": "D02",
+          "nota": "§5.3.1, Tables 5-6: segmentation was flagged in 19.4% (LlamaGuard), 38.2% (PromptGuard), 14.9% (ShieldGemma); ASR 59.7%. Partial bypass."
+        }
+      ]
     },
     {
       "id": "T38",
@@ -230,7 +342,7 @@
       "bypass": [
         {
           "defesa": "D14",
-          "nota": "Crescendomation backtracks and rephrases after a refusal (§4.3), but the isolated effect of reiteration was not measured."
+          "nota": "Corrected: §5.5, Fig. 11 measures 0/5/10 backtracks on GPT-4; Election 100% without backtracking, Manifesto hard without it. Partial."
         }
       ]
     },
@@ -242,7 +354,13 @@
     {
       "id": "T41",
       "nome": "Thinking-Mode Manipulation (reasoning budget)",
-      "descricao": "Manipulates the model's extended reasoning process (thinking/reasoning mode), interrupting, limiting, or redirecting the reasoning token budget to prevent the safety evaluation."
+      "descricao": "Manipulates the model's extended reasoning process (thinking/reasoning mode), interrupting, limiting, or redirecting the reasoning token budget to prevent the safety evaluation.",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "Section 4.3, Table 2: models with thinking enabled (R1-Distill-Qwen-1.5B, GCG/AdvBench) had ASR 86.2% versus 3.1% without thinking; partial bypass, correlation with long reasoning, not direct budget manipulation."
+        }
+      ]
     },
     {
       "id": "T42",
@@ -275,6 +393,12 @@
         {
           "descricao": "Picks one unsafe topic and two benign ones. Turn 1: asks for a cohesive narrative linking the three topics. Turn 2: asks to expand on each topic. Turn 3 (optional): asks to expand on the unsafe topic, which usually gives the highest success; turn 4 shows diminishing returns. Average ASR of about 65% within 3 turns (8 models, 8,000 cases) versus 5.8% for a direct request (R236)."
         }
+      ],
+      "bypass": [
+        {
+          "defesa": "D02",
+          "nota": "Section 'Quality of the Generated Content': states that filters 'are more likely to be misled by the benign content'; not measured (filters off)."
+        }
       ]
     },
     {
@@ -286,20 +410,8 @@
       "descricao": "Provides a large number of fictitious Q&A pairs where the assistant answers harmful requests (the study tested up to 256), using long context windows so the in-context pattern overrides the trained alignment.",
       "bypass": [
         {
-          "defesa": "D07",
-          "nota": "I-FSJ variant: retokenization reached 76% without random search (RS) and 100% with RS, and SmoothLLM swap 100% without RS, at 8 shots on Llama-2-7B-Chat (§4.3, Table 3)."
-        },
-        {
-          "defesa": "D12",
-          "nota": "I-FSJ variant: Self-Reminder reached 48% without RS and 100% with RS at 8 shots; at 4 and 8 shots the ICD fails to defend (§4.3, Table 3)."
-        },
-        {
           "defesa": "D14",
-          "nota": "I-FSJ variant: RLHF baseline at 0% with 2 shots without RS and 96–100% with RS at 4 and 8 shots (Table 3). In R56, fine-tuning to refuse only delayed the attack: harmful outputs eventually appeared."
-        },
-        {
-          "defesa": "D20",
-          "nota": "I-FSJ variant: output-side Llama Guard saw 34% without RS and 100% with RS at 8 shots, with demonstrations adapted to the guard's template (§4.3, Remark 2, Table 3)."
+          "nota": "Section Mitigating: refusal fine-tuning only delayed the attack; harmful outputs 'eventually appeared' (up to 256 shots, Claude 2.0)."
         }
       ]
     },

@@ -58,6 +58,7 @@
     "nome": "Name",
     "descricao": "Description",
     "fontes": "Sources",
+    "sem_vinculo": "No defense link has evidence read yet",
     "verif_parcial": "partial",
     "verif_parcial_dica": "Source supports only part of the claim",
     "verif_nao_verificado": "unverified",

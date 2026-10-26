@@ -110,6 +110,7 @@ function esc(s) {
 }
 
 function bypassLinks(lista) {
+  if (!lista.length) return '<span class="ghost">' + esc(L.campos.sem_vinculo) + '</span>';
   return lista.map(b => {
     const d = b.defesa;
     const dica = (L.campos['base_' + b.base] || b.base) + (b.nota ? ' — ' + b.nota : '');

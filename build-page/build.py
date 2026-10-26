@@ -52,8 +52,6 @@ def validar_bypass(nome_ent, it, defs, bases, errs):
     """Each link carries its evidence base; returns the number of 'nao_auditado' links."""
     n_na = 0
     fontes_it = {f["r"] for f in it.get("fontes", [])}
-    if not it.get("bypass"):
-        errs.append(f"{nome_ent} {it['id']}: bypass is empty")
     vistos = set()
     for b in it.get("bypass", []):
         if b["defesa"] not in defs:
@@ -66,8 +64,9 @@ def validar_bypass(nome_ent, it, defs, bases, errs):
         elif b["base"] == "nao_auditado":
             n_na += 1
         else:
-            if b.get("fonte") not in fontes_it:
-                errs.append(f"{nome_ent} {it['id']}: bypass[{b['defesa']}].fonte '{b.get('fonte')}' not in its fontes")
+            fontes_def = {f["r"] for f in defs.get(b["defesa"], {}).get("fontes", [])} if b.get("base") == "inferencia" else set()
+            if b.get("fonte") not in fontes_it and b.get("fonte") not in fontes_def:
+                errs.append(f"{nome_ent} {it['id']}: bypass[{b['defesa']}].fonte '{b.get('fonte')}' not in its fontes" + (" nor in the defesa's fontes" if b.get("base") == "inferencia" else ""))
             if not b.get("nota"):
                 errs.append(f"{nome_ent} {it['id']}: bypass[{b['defesa']}] needs a nota (base != nao_auditado)")
     return n_na
@@ -364,6 +363,9 @@ def validate(data):
         nomes = [v.get("nome") for v in t.get("variantes", [])]
         if len(nomes) != len(set(nomes)) or not all(nomes) or not all(v.get("descricao") for v in t.get("variantes", [])):
             errs.append(f"tecnica {tid}: variantes need unique nome and a descricao")
+    n_vazios = sum(1 for _, itens in (("t", data["tecnicas"]["tecnicas"]), ("e", data["evasoes"]["evasoes"])) for it in itens if not it.get("bypass"))
+    if n_vazios:
+        warns.append(f"{n_vazios} technique/evasion items with no defense link (no evidence read)")
     if n_nao_auditado:
         warns.append(f"{n_nao_auditado} technique/evasion→defense links with base 'nao_auditado' (audit pending)")
     if len(ordem) != len(set(ordem)):

@@ -7,15 +7,9 @@
       "bypass": [
         {
           "defesa": "D01",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D02",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D03",
-          "base": "nao_auditado"
+          "base": "inferencia",
+          "fonte": "R251",
+          "nota": "Fraqueza documentada de D01 (R251, data/defesas.json): paráfrase não é coberta por casamento lexical, que julga superfície e não intenção."
         }
       ],
       "exemplos": [
@@ -52,31 +46,9 @@
       "bypass": [
         {
           "defesa": "D01",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D02",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D03",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D04",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D06",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D19",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D24",
-          "base": "nao_auditado"
+          "base": "inferencia",
+          "fonte": "R251",
+          "nota": "Fraqueza documentada de D01 (R251, data/defesas.json): codificação do payload fica fora da heurística fuzzy, que só pega anagramas."
         }
       ],
       "exemplos": [
@@ -126,23 +98,9 @@
       "bypass": [
         {
           "defesa": "D01",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D02",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D03",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D05",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D13",
-          "base": "nao_auditado"
+          "base": "inferencia",
+          "fonte": "R251",
+          "nota": "Fraqueza documentada de D01 (R251, data/defesas.json): tradução do payload não é coberta por casamento lexical."
         }
       ],
       "exemplos": [
@@ -184,19 +142,9 @@
       "bypass": [
         {
           "defesa": "D01",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D02",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D04",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D19",
-          "base": "nao_auditado"
+          "base": "inferencia",
+          "fonte": "R251",
+          "nota": "Fraqueza documentada de D01 (R251): casamento lexical não cobre codificação/ofuscação além de anagramas; fontes do item não testam Unicode."
         }
       ],
       "exemplos": [
@@ -237,15 +185,9 @@
       "bypass": [
         {
           "defesa": "D01",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D02",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D03",
-          "base": "nao_auditado"
+          "base": "inferencia",
+          "fonte": "R251",
+          "nota": "Fraqueza documentada de D01 (R251): ofuscações como split de payload ficam fora do casamento lexical; R83 não testa filtro lexical."
         }
       ],
       "exemplos": [
@@ -286,27 +228,9 @@
       "bypass": [
         {
           "defesa": "D01",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D02",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D03",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D06",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D19",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D24",
-          "base": "nao_auditado"
+          "base": "inferencia",
+          "fonte": "R251",
+          "nota": "Fraqueza documentada de D01 (R251): paráfrase ou codificação não são cobertas por casamento lexical; R72 e R100 não testam filtro lexical."
         }
       ],
       "exemplos": [
@@ -351,27 +275,9 @@
       "bypass": [
         {
           "defesa": "D01",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D02",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D03",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D04",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D13",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D15",
-          "base": "nao_auditado"
+          "base": "inferencia",
+          "fonte": "R251",
+          "nota": "Fraqueza documentada de D01 (R251): paráfrase do payload não é coberta por casamento lexical; fontes lidas não testam AutoDAN contra filtro lexical."
         }
       ],
       "exemplos": [
@@ -413,15 +319,9 @@
       "bypass": [
         {
           "defesa": "D01",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D02",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D04",
-          "base": "nao_auditado"
+          "base": "alegado",
+          "fonte": "R18",
+          "nota": "R18 §III: palavra única 'hardest to be detected' por filtros ou pattern matching; sem experimento (§V.C)."
         }
       ],
       "exemplos": [
@@ -443,16 +343,7 @@
       "id": "E09",
       "nome": "Typoglycemia / Misspelling",
       "descricao": "Aplica erros ortográficos intencionais, embaralhamento de letras internas (preservando primeira e última letra) ou abreviações que humanos e LLMs compreendem mas filtros exatos não capturam.",
-      "bypass": [
-        {
-          "defesa": "D01",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D02",
-          "base": "nao_auditado"
-        }
-      ],
+      "bypass": [],
       "exemplos": [
         {
           "rotulo": "Scrambled internals",
@@ -484,24 +375,7 @@
       "id": "E10",
       "nome": "Multimodal Injection (image/audio)",
       "descricao": "Embute a instrução hostil em uma modalidade alternativa (imagem com texto, áudio, documento PDF, vídeo) que o modelo processa mas que filtros de texto não inspecionam.",
-      "bypass": [
-        {
-          "defesa": "D01",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D02",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D03",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D06",
-          "base": "nao_auditado"
-        }
-      ],
+      "bypass": [],
       "exemplos": [
         {
           "rotulo": "Image with text",
@@ -544,27 +418,9 @@
       "bypass": [
         {
           "defesa": "D01",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D02",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D03",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D06",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D19",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D24",
-          "base": "nao_auditado"
+          "base": "inferencia",
+          "fonte": "R251",
+          "nota": "Fraqueza em defesas.json: codificação do payload não é coberta por casamento lexical (R251)."
         }
       ],
       "exemplos": [
@@ -601,19 +457,9 @@
       "bypass": [
         {
           "defesa": "D01",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D02",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D03",
-          "base": "nao_auditado"
-        },
-        {
-          "defesa": "D19",
-          "base": "nao_auditado"
+          "base": "inferencia",
+          "fonte": "R251",
+          "nota": "Fraqueza em defesas.json: fuzzy só pega anagramas; outras ofuscações ficam fora (R251)."
         }
       ],
       "exemplos": [

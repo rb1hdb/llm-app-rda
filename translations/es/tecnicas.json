@@ -6,7 +6,13 @@
     },
     {
       "id": "T02",
-      "descricao": "Oculta la instrucción hostil en texto de apariencia legítima o en datos recuperados (comentarios HTML, documentación, Markdown, payload codificado), de modo que el modelo la procesa como contenido y no la reconoce como instrucción."
+      "descricao": "Oculta la instrucción hostil en texto de apariencia legítima o en datos recuperados (comentarios HTML, documentación, Markdown, payload codificado), de modo que el modelo la procesa como contenido y no la reconoce como instrucción.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Debilidad documentada en D01 (R251): el filtro léxico no cubre la inyección indirecta ni la codificación del payload."
+        }
+      ]
     },
     {
       "id": "T03",
@@ -34,7 +40,13 @@
     },
     {
       "id": "T09",
-      "descricao": "Familia de prompts que crean una persona sin restricciones ('DAN') con narrativa de liberación y sistema de tokens/castigo para forzar el cumplimiento. En el estudio R92, la comunidad 'Basic' reúne el DAN original y sus variantes cercanas: 49 prompts, del 08/01/2023 al 11/10/2023 (276 días), sin circular después de octubre de 2023."
+      "descricao": "Familia de prompts que crean una persona sin restricciones ('DAN') con narrativa de liberación y sistema de tokens/castigo para forzar el cumplimiento. En el estudio R92, la comunidad 'Basic' reúne el DAN original y sus variantes cercanas: 49 prompts, del 08/01/2023 al 11/10/2023 (276 días), sin circular después de octubre de 2023.",
+      "bypass": [
+        {
+          "defesa": "D03",
+          "nota": "R92 §6.1, Tab. 8: el Guard LLM de NeMo-Guardrails redujo el ASR medio solo 0,019 en jailbreaks in-the-wild; resultado de clase, no solo DAN."
+        }
+      ]
     },
     {
       "id": "T10",
@@ -54,11 +66,23 @@
     },
     {
       "id": "T14",
-      "descricao": "Crea ambigüedad deliberada, fragmentando la intención hostil en pistas implícitas o haciendo incierto qué información es autoritativa, para que el modelo infiera el significado hostil sin detectarlo."
+      "descricao": "Crea ambigüedad deliberada, fragmentando la intención hostil en pistas implícitas o haciendo incierto qué información es autoritativa, para que el modelo infiera el significado hostil sin detectarlo.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Debilidad documentada de D01 (OWASP R251, Input Validation): la similitud léxica no identifica la intención; las pistas implícitas fragmentadas no coinciden con las listas de bloqueo."
+        }
+      ]
     },
     {
       "id": "T15",
-      "descricao": "Fabrica un precedente (conversación anterior, FAQ, changelog, email) donde el modelo supuestamente ya proporcionó la información solicitada, normalizando la divulgación."
+      "descricao": "Fabrica un precedente (conversación anterior, FAQ, changelog, email) donde el modelo supuestamente ya proporcionó la información solicitada, normalizando la divulgación.",
+      "bypass": [
+        {
+          "defesa": "D05",
+          "nota": "Debilidad documentada de D05 (OWASP R251, Model-Based Guardrails): los filtros por defecto no detectan la inyección indirecta en contenido no confiable, como una FAQ o un correo falsificado."
+        }
+      ]
     },
     {
       "id": "T16",
@@ -71,15 +95,49 @@
     },
     {
       "id": "T18",
-      "descricao": "Encapsula la instrucción hostil en una capa de abstracción (código, tabla LaTeX, continuación de texto, metaprompt) que el modelo interpreta como datos pero ejecuta como instrucción."
+      "descricao": "Encapsula la instrucción hostil en una capa de abstracción (código, tabla LaTeX, continuación de texto, metaprompt) que el modelo interpreta como datos pero ejecuta como instrucción.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "R66 (resumen) no prueba un filtro léxico. Debilidad documentada de D01 (R251): la paráfrasis/codificación escapan a la coincidencia léxica; el anidamiento reescribe el prompt."
+        },
+        {
+          "defesa": "D03",
+          "nota": "Sección 6.2, Tabla 8: GPT como clasificador del prompt. GPT-3.5 redujo el ASR en 17,7 (elusión casi total); GPT-4 lo redujo en 89,4, quedando ~10% (la defensa resistió en gran parte)."
+        },
+        {
+          "defesa": "D07",
+          "nota": "Sección 5, Tabla 5: RA-LLM (eliminación aleatoria de tokens del prompt, decisión por tasa de rechazo) dejó el ASR en 72,0 (Llama2) y 76,0 (Claude-2): elusión parcial. Clase análoga, no SmoothLLM."
+        }
+      ]
     },
     {
       "id": "T19",
-      "descricao": "Crea un escenario ficticio o simulación (entorno virtual imaginario) donde las reglas del mundo real supuestamente no se aplican."
+      "descricao": "Crea un escenario ficticio o simulación (entorno virtual imaginario) donde las reglas del mundo real supuestamente no se aplican.",
+      "bypass": [
+        {
+          "defesa": "D13",
+          "nota": "Sección 6.2, Tabla 8: NeMo-Guardrails redujo el ASR medio solo 0,019 (baseline 0,685); elusión casi total. Resultado agregado de todos los prompts, incluida la comunidad Virtualization (Sección 4.3)."
+        }
+      ]
     },
     {
       "id": "T20",
-      "descricao": "Inyecta marcadores de fin de conversación, delimitadores de cierre o respuestas falsas del asistente para hacer que el modelo crea que un nuevo contexto sin restricciones fue iniciado."
+      "descricao": "Inyecta marcadores de fin de conversación, delimitadores de cierre o respuestas falsas del asistente para hacer que el modelo crea que un nuevo contexto sin restricciones fue iniciado.",
+      "bypass": [
+        {
+          "defesa": "D07",
+          "nota": "Tablas 7a/7b: contra el Combined Attack (incluye fake completion), el paraphrasing bajó el ASV de 0,75 a 0,21 (con pérdida de utilidad) y la retokenization a 0,41: elusión parcial, defensa eficaz pero costosa."
+        },
+        {
+          "defesa": "D11",
+          "nota": "Tablas 7a/7b: la sandwich prevention redujo el ASV medio de 0,75 a 0,46 y el MR de 0,87 a 0,52 contra el Combined Attack: elusión parcial."
+        },
+        {
+          "defesa": "D12",
+          "nota": "Tablas 7a/7b: la instructional prevention (aviso para ignorar instrucciones inyectadas) dejó el ASV medio en 0,38 (baseline 0,75): elusión parcial. R132 Sección 6.1 reporta mayor ASR con este tipo de defensa bajo ChatInject."
+        }
+      ]
     },
     {
       "id": "T21",
@@ -111,11 +169,11 @@
       "bypass": [
         {
           "defesa": "D14",
-          "nota": "Crescendo manual evaluado contra ChatGPT (GPT-4), Gemini Pro, Gemini Advanced, Claude-2, Claude-3, LLaMA-2 70b y LLaMA-3 70b, todos alineados; Gemini Advanced falló en la tarea Meth (Tabla 2)."
+          "nota": "Crescendo manual evaluado en 7 sistemas alineados (GPT-4, Gemini Pro, Gemini Advanced, Claude-2, Claude-3, LLaMA-2 70b, LLaMA-3 70b); solo Gemini Advanced falló en Meth (Tabla 2). Revalidado."
         },
         {
           "defesa": "D12",
-          "nota": "Bypass parcial: Self-Reminder y Goal Prioritization limitan el ASR en algunas tareas (principalmente Toxin y Explicit) en GPT-4, sin afectar significativamente Election, Climate y Stabbing (§5.7, Figura 13)."
+          "nota": "Elusión parcial: Self-Reminder y Goal Prioritization reducen el ASR en Toxin y Explicit, sin efecto significativo en Election, Climate y Stabbing; Meth pasó con más turnos/backtracking (§5.7, Fig. 13). Revalidado; el modelo de la figura no se confirmó en la lectura."
         }
       ]
     },
@@ -125,15 +183,15 @@
       "bypass": [
         {
           "defesa": "D07",
-          "nota": "Paraphrasing: 90→88% (Vicuna-13b) y 52→50% (Llama-2-7b); SmoothLLM reduce solo en parte, a 70% y 42% (§4.4, Tabla 3)."
+          "nota": "Paraphrasing: 90→88% (Vicuna-13b) y 52→50% (Llama-2-7b); SmoothLLM reduce solo en parte, a 70% y 42% (§4.4, Tabla 3). Revalidado."
         },
         {
           "defesa": "D14",
-          "nota": "Sin defensa adicional, el ataque llega a 90% (Vicuna-13b) y 52% (Llama-2-7b) en el subconjunto de AdvBench (§4.4, Tabla 3)."
+          "nota": "Sin defensa adicional, el ataque llega a 90% (Vicuna-13b) y 52% (Llama-2-7b) en el subconjunto de AdvBench (§4.4, Tabla 3). Revalidado."
         },
         {
           "defesa": "D01",
-          "nota": "El paper presenta los resultados en GPT-4 web como evidencia de que CFA funciona contra filtro de palabras clave y detección dinámica de salida; el efecto no se aisló en una prueba (§5)."
+          "nota": "El paper afirma, sin aislar el efecto, que CFA apunta a palabras clave maliciosas, útil contra filtros de palabras clave; GPT4-Web tuvo ASR 0,90 (§5, Tabla 2). Revalidado."
         }
       ]
     },
@@ -155,11 +213,11 @@
       "bypass": [
         {
           "defesa": "D02",
-          "nota": "Llama Guard 3 8B clasificó como 'Safe' entre 56,6% y 58,5% de los prompts de cada variante M2S y 71,0% en el ensemble (§5.1, Tabla 2)."
+          "nota": "Llama Guard 3 8B etiquetó como 'Safe' 56,6% (Hyphenize) a 58,5% (Numberize/Pythonize) y 71,0% en el ensemble, frente a 66,1% del multi-turno original (§5.1, Tabla 2). Revalidado."
         },
         {
           "defesa": "D14",
-          "nota": "ASR de 70,6% a 95,9% en MHJ contra modelos alineados (GPT-4o, GPT-4o-mini, Mistral-7B, Llama-3-70B) (resumen, §4.2)."
+          "nota": "ASR en MHJ de 70,6% (Llama-3-70b) a 95,9% (Mistral-7B) en el ensemble M2S; GPT-4o 89,0% y GPT-4o-mini 95,5% (Tabla 1, §4.2). Revalidado; precisión: los valores son del ensemble."
         }
       ]
     },
@@ -177,11 +235,31 @@
         {
           "descricao": "Usa afirmaciones que dan cierre lógico al contexto anterior, mediante tres métodos: Reasoning Summary, Specific Ignoring y Additional Task (R24 §5.4)."
         }
+      ],
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Payload a medida (Framework+Disruptor, §5.1) no es una frase de inyección conocida; debilidad de D01: el léxico juzga la superficie, no la intención (R251)."
+        }
       ]
     },
     {
       "id": "T31",
-      "descricao": "Combina técnicas en capas anidadas (reescritura + wrapper, escenarios dentro de escenarios) y, en variantes, descompone y reconstruye la petición (DrAttack)."
+      "descricao": "Combina técnicas en capas anidadas (reescritura + wrapper, escenarios dentro de escenarios) y, en variantes, descompone y reconstruye la petición (DrAttack).",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "DrAttack descompone y reconstruye la solicitud (R83); debilidad de D01: el split de payload y las ofuscaciones quedan fuera del filtro léxico (R251)."
+        },
+        {
+          "defesa": "D02",
+          "nota": "§5, Tabla 5: Moderation Endpoint de OpenAI sobre prompts de ReNeLLM, ASR 100,0; elusión total, ningún prompt detectado."
+        },
+        {
+          "defesa": "D03",
+          "nota": "§6.2, Tabla 8: GPT-3.5 como clasificador redujo el GPT-ASR solo 17,7 puntos (elusión parcial); GPT-4 lo redujo 89,4 (resistió en gran parte)."
+        }
+      ]
     },
     {
       "id": "T32",
@@ -189,7 +267,13 @@
     },
     {
       "id": "T33",
-      "descricao": "Explota formatos de salida estructurada (JSON, XML, tabla, formulario) para hacer que el modelo rellene campos que contienen información restringida como si fuera un template de datos."
+      "descricao": "Explota formatos de salida estructurada (JSON, XML, tabla, formulario) para hacer que el modelo rellene campos que contienen información restringida como si fuera un template de datos.",
+      "bypass": [
+        {
+          "defesa": "D16",
+          "nota": "El post afirma ser la primera elusión posterior a la jerarquía de instrucciones, sorteando los prompts de sistema en casi todos los modelos de frontera; sin tabla."
+        }
+      ]
     },
     {
       "id": "T34",
@@ -202,22 +286,50 @@
         {
           "descricao": "Añade persuasión en varios turnos para preparar al agente hasta que acepte acciones que de otro modo trataría como sospechosas; ASR medio del 52,33% en InjecAgent (R132)."
         }
+      ],
+      "bypass": [
+        {
+          "defesa": "D11",
+          "nota": "§6.1, Apéndice D.4: repetir la instrucción del usuario (sandwich) no superó el baseline; el ASR quedó por encima del caso sin defensa; elusión."
+        },
+        {
+          "defesa": "D12",
+          "nota": "§6.1, Tabla 16: el aviso anti-instrucción en la salida de la tool (hardening) no impidió ChatInject; ASR por encima del baseline; elusión."
+        }
       ]
     },
     {
       "id": "T35",
       "nome": "Memory Exploitation (envenenamiento de memoria)",
-      "descricao": "Envenena la memoria persistente o el contexto acumulado de un agente LLM, insertando instrucciones que serán recuperadas y ejecutadas en sesiones futuras."
+      "descricao": "Envenena la memoria persistente o el contexto acumulado de un agente LLM, insertando instrucciones que serán recuperadas y ejecutadas en sesiones futuras.",
+      "bypass": [
+        {
+          "defesa": "D12",
+          "nota": "§6.3, Tabla 3: el hardening ingenuo es ineficaz en GPT-5.4 (IR 96,8%) y Kimi; casi cero en Gemini y Sonnet. Parcial."
+        }
+      ]
     },
     {
       "id": "T36",
       "nome": "Echo Chamber (envenenamiento de contexto compartido)",
-      "descricao": "En sistemas multiagente, una instrucción maliciosa se propaga de un agente comprometido a los demás, y las respuestas falsas y la memoria inflada amplifican el efecto (autorreplicación). El nombre 'Echo Chamber' es del proyecto, no de la fuente."
+      "descricao": "En sistemas multiagente, una instrucción maliciosa se propaga de un agente comprometido a los demás, y las respuestas falsas y la memoria inflada amplifican el efecto (autorreplicación). El nombre 'Echo Chamber' es del proyecto, no de la fuente.",
+      "bypass": [
+        {
+          "defesa": "D11",
+          "nota": "§6, Tabla 2: delimiting y sandwich aislados dejaron pasar casi todos los ataques; con LLM Tagging el ataque cayó a 16%."
+        }
+      ]
     },
     {
       "id": "T37",
       "nome": "Inyección de tokens especiales/estructurales",
-      "descricao": "Inyecta tokens especiales del tokenizer o template de chat (BOS, EOS, tokens de rol, delimitadores de turno) para manipular cómo el modelo interpreta la estructura de la conversación."
+      "descricao": "Inyecta tokens especiales del tokenizer o template de chat (BOS, EOS, tokens de rol, delimitadores de turno) para manipular cómo el modelo interpreta la estructura de la conversación.",
+      "bypass": [
+        {
+          "defesa": "D02",
+          "nota": "§5.3.1, Tablas 5-6: la segmentación fue señalada en 19,4% (LlamaGuard), 38,2% (PromptGuard), 14,9% (ShieldGemma); ASR 59,7%. Elusión parcial."
+        }
+      ]
     },
     {
       "id": "T38",
@@ -230,7 +342,7 @@
       "bypass": [
         {
           "defesa": "D14",
-          "nota": "Crescendomation retrocede y reformula tras un rechazo (§4.3), pero el efecto aislado de la reiteración no se midió."
+          "nota": "Corregida: §5.5, Fig. 11 mide 0/5/10 backtracks en GPT-4; Election 100% sin backtrack, Manifesto difícil sin él. Parcial."
         }
       ]
     },
@@ -242,7 +354,13 @@
     {
       "id": "T41",
       "nome": "Thinking-Mode Manipulation (presupuesto de razonamiento)",
-      "descricao": "Manipula el proceso de razonamiento extendido (thinking/reasoning mode) del modelo, interrumpiendo, limitando o redirigiendo el presupuesto de tokens de razonamiento para impedir la evaluación de seguridad."
+      "descricao": "Manipula el proceso de razonamiento extendido (thinking/reasoning mode) del modelo, interrumpiendo, limitando o redirigiendo el presupuesto de tokens de razonamiento para impedir la evaluación de seguridad.",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "Sección 4.3, Tabla 2: los modelos con thinking activo (R1-Distill-Qwen-1.5B, GCG/AdvBench) tuvieron ASR 86,2% frente a 3,1% sin thinking; elusión parcial, correlación con razonamiento largo, no manipulación directa del presupuesto."
+        }
+      ]
     },
     {
       "id": "T42",
@@ -275,6 +393,12 @@
         {
           "descricao": "Elige un tema inseguro y dos benignos. Turno 1: pide una narrativa cohesiva que enlace los tres temas. Turno 2: pide ampliar cada tema. Turno 3 (opcional): pide ampliar el tema inseguro, lo que suele dar el mayor éxito; el turno 4 tiene rendimientos decrecientes. ASR medio de cerca del 65% en hasta 3 turnos (8 modelos, 8.000 casos) frente al 5,8% con petición directa (R236)."
         }
+      ],
+      "bypass": [
+        {
+          "defesa": "D02",
+          "nota": "Sección 'Quality of the Generated Content': afirma que los filtros 'are more likely to be misled by the benign content'; no fue medido (filtros desactivados)."
+        }
       ]
     },
     {
@@ -286,20 +410,8 @@
       "descricao": "Proporciona un gran número de pares Q&A ficticios donde el asistente responde a solicitudes perjudiciales (el estudio probó hasta 256), usando ventanas de contexto largas para que el patrón in-context domine el alineamiento entrenado.",
       "bypass": [
         {
-          "defesa": "D07",
-          "nota": "Variante I-FSJ: la retokenización alcanzó 76% sin búsqueda aleatoria (RS) y 100% con RS, y SmoothLLM swap 100% sin RS, con 8 shots en Llama-2-7B-Chat (§4.3, Tabla 3)."
-        },
-        {
-          "defesa": "D12",
-          "nota": "Variante I-FSJ: el Self-Reminder alcanzó 48% sin RS y 100% con RS con 8 shots; con 4 y 8 shots el ICD no logra defender (§4.3, Tabla 3)."
-        },
-        {
           "defesa": "D14",
-          "nota": "Variante I-FSJ: baseline RLHF en 0% con 2 shots sin RS y 96–100% con RS con 4 y 8 shots (Tabla 3). En R56, el fine-tuning de rechazo solo retrasó el ataque: las salidas dañinas terminaron apareciendo."
-        },
-        {
-          "defesa": "D20",
-          "nota": "Variante I-FSJ: Llama Guard en la salida tuvo 34% sin RS y 100% con RS con 8 shots, con las demostraciones adaptadas a la plantilla del guard (§4.3, Observación 2, Tabla 3)."
+          "nota": "Sección Mitigating: el fine-tuning de rechazo solo retrasó el ataque; las salidas dañinas 'eventually appeared' (hasta 256 shots, Claude 2.0)."
         }
       ]
     },
