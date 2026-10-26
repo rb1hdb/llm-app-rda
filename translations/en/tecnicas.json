@@ -34,7 +34,7 @@
     },
     {
       "id": "T09",
-      "descricao": "Family of prompts that create an unrestricted persona ('DAN') with a liberation narrative and a token/punishment system to force compliance."
+      "descricao": "Family of prompts that create an unrestricted persona ('DAN') with a liberation narrative and a token/punishment system to force compliance. In study R92, the 'Basic' community gathers the original DAN and its close variants: 49 prompts, from 2023-01-08 to 2023-10-11 (276 days), with no circulation after October 2023."
     },
     {
       "id": "T10",
@@ -194,7 +194,15 @@
     {
       "id": "T34",
       "nome": "Fake history fabrication (Fake Assistant Turn)",
-      "descricao": "Injects fake assistant turns or tool-call turns into the conversation history, making the model believe it has already fulfilled similar requests or that a tool-call returned sensitive data."
+      "descricao": "Injects fake assistant turns or tool-call turns into the conversation history, making the model believe it has already fulfilled similar requests or that a tool-call returned sensitive data.",
+      "variantes": [
+        {
+          "descricao": "Formats the malicious payload to mimic the model's native chat templates, so the injected text looks like the conversation's own structure. Compared with traditional prompt injection, ASR rises from 5.18% to 32.05% on AgentDojo and from 15.13% to 45.90% on InjecAgent (R132)."
+        },
+        {
+          "descricao": "Adds multi-turn persuasion to prime the agent until it accepts actions it would otherwise treat as suspicious; 52.33% average ASR on InjecAgent (R132)."
+        }
+      ]
     },
     {
       "id": "T35",
@@ -259,7 +267,15 @@
     },
     {
       "id": "T47",
-      "descricao": "Wraps the hostile request between legitimate or harmless requests, distracting the model's safety reasoning, which focuses on the benign content. The named variant Deceptive Delight (Unit 42) is multi-turn."
+      "descricao": "Wraps the hostile request between legitimate or harmless requests, distracting the model's safety reasoning, which focuses on the benign content. The named variant Deceptive Delight (Unit 42) is multi-turn.",
+      "variantes": [
+        {
+          "descricao": "Hostile request embedded between legitimate requests in the same message."
+        },
+        {
+          "descricao": "Picks one unsafe topic and two benign ones. Turn 1: asks for a cohesive narrative linking the three topics. Turn 2: asks to expand on each topic. Turn 3 (optional): asks to expand on the unsafe topic, which usually gives the highest success; turn 4 shows diminishing returns. Average ASR of about 65% within 3 turns (8 models, 8,000 cases) versus 5.8% for a direct request (R236)."
+        }
+      ]
     },
     {
       "id": "T48",

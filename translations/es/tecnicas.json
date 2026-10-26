@@ -34,7 +34,7 @@
     },
     {
       "id": "T09",
-      "descricao": "Familia de prompts que crean una persona sin restricciones ('DAN') con narrativa de liberación y sistema de tokens/castigo para forzar el cumplimiento."
+      "descricao": "Familia de prompts que crean una persona sin restricciones ('DAN') con narrativa de liberación y sistema de tokens/castigo para forzar el cumplimiento. En el estudio R92, la comunidad 'Basic' reúne el DAN original y sus variantes cercanas: 49 prompts, del 08/01/2023 al 11/10/2023 (276 días), sin circular después de octubre de 2023."
     },
     {
       "id": "T10",
@@ -194,7 +194,15 @@
     {
       "id": "T34",
       "nome": "Fabricación de historial (Fake Assistant Turn)",
-      "descricao": "Inyecta turnos falsos de asistente o de llamada de herramienta en el historial de conversación, haciendo que el modelo crea que ya cumplió solicitudes similares o que un tool-call retornó datos sensibles."
+      "descricao": "Inyecta turnos falsos de asistente o de llamada de herramienta en el historial de conversación, haciendo que el modelo crea que ya cumplió solicitudes similares o que un tool-call retornó datos sensibles.",
+      "variantes": [
+        {
+          "descricao": "Da formato al payload malicioso imitando las plantillas de chat nativas del modelo, de modo que el texto inyectado parezca la propia estructura de la conversación. Frente a la prompt injection tradicional, el ASR sube del 5,18% al 32,05% en AgentDojo y del 15,13% al 45,90% en InjecAgent (R132)."
+        },
+        {
+          "descricao": "Añade persuasión en varios turnos para preparar al agente hasta que acepte acciones que de otro modo trataría como sospechosas; ASR medio del 52,33% en InjecAgent (R132)."
+        }
+      ]
     },
     {
       "id": "T35",
@@ -259,7 +267,15 @@
     },
     {
       "id": "T47",
-      "descricao": "Envuelve la petición hostil entre peticiones legítimas o inofensivas, distrayendo el razonamiento de seguridad del modelo, que se centra en el contenido benigno. La variante nombrada Deceptive Delight (Unit 42) es multi-turn."
+      "descricao": "Envuelve la petición hostil entre peticiones legítimas o inofensivas, distrayendo el razonamiento de seguridad del modelo, que se centra en el contenido benigno. La variante nombrada Deceptive Delight (Unit 42) es multi-turn.",
+      "variantes": [
+        {
+          "descricao": "Petición hostil insertada entre peticiones legítimas en el mismo mensaje."
+        },
+        {
+          "descricao": "Elige un tema inseguro y dos benignos. Turno 1: pide una narrativa cohesiva que enlace los tres temas. Turno 2: pide ampliar cada tema. Turno 3 (opcional): pide ampliar el tema inseguro, lo que suele dar el mayor éxito; el turno 4 tiene rendimientos decrecientes. ASR medio de cerca del 65% en hasta 3 turnos (8 modelos, 8.000 casos) frente al 5,8% con petición directa (R236)."
+        }
+      ]
     },
     {
       "id": "T48",
