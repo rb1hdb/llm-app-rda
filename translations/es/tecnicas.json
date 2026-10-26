@@ -377,7 +377,7 @@
     {
       "id": "T45",
       "nome": "Confused Deputy (autoridad del agente)",
-      "descricao": "Explota el hecho de que el agente LLM tiene acceso privilegiado (tools, APIs, filesystem) y no distingue entre instrucciones del usuario e instrucciones inyectadas en datos procesados, haciéndolo actuar como deputado confuso."
+      "descricao": "Explota el hecho de que el agente LLM tiene acceso privilegiado (tools, APIs, filesystem) y no distingue entre instrucciones del usuario e instrucciones inyectadas en datos procesados, haciéndolo actuar como un confused deputy (delegado confundido)."
     },
     {
       "id": "T46",
