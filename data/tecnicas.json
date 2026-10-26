@@ -174,11 +174,6 @@
           "r": "R238",
           "tipo": "survey",
           "verificacao": "confirmado"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -619,11 +614,6 @@
           "r": "R39",
           "tipo": "primaria",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -667,11 +657,6 @@
           "r": "R238",
           "tipo": "survey",
           "verificacao": "confirmado"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -783,11 +768,6 @@
           "r": "R25",
           "tipo": "primaria",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -836,11 +816,6 @@
           "r": "R60",
           "tipo": "primaria",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -893,11 +868,6 @@
           "r": "R56",
           "tipo": "primaria",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -946,11 +916,6 @@
           "r": "R57",
           "tipo": "primaria",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -995,11 +960,6 @@
           "tipo": "operacional",
           "verificacao": "parcial",
           "url": "https://github.com/promptfoo/promptfoo/blob/main/src/redteam/strategies/likert.ts"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1047,11 +1007,6 @@
           "r": "R66",
           "tipo": "primaria",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1104,11 +1059,6 @@
           "r": "R92",
           "tipo": "primaria",
           "verificacao": "confirmado"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1165,11 +1115,6 @@
           "r": "R132",
           "tipo": "primaria",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1209,11 +1154,6 @@
           "r": "R239",
           "tipo": "primaria",
           "verificacao": "confirmado"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1267,11 +1207,6 @@
           "r": "R231",
           "tipo": "operacional",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1320,11 +1255,6 @@
           "r": "R99",
           "tipo": "primaria",
           "verificacao": "confirmado"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1427,11 +1357,6 @@
           "r": "R99",
           "tipo": "primaria",
           "verificacao": "confirmado"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1475,11 +1400,6 @@
           "r": "R99",
           "tipo": "primaria",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1647,11 +1567,6 @@
           "r": "R231",
           "tipo": "operacional",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1786,11 +1701,6 @@
           "r": "R24",
           "tipo": "primaria",
           "verificacao": "confirmado"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1857,11 +1767,6 @@
           "r": "R231",
           "tipo": "operacional",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1974,11 +1879,6 @@
           "r": "R230",
           "tipo": "operacional",
           "verificacao": "confirmado"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2033,11 +1933,6 @@
           "r": "R132",
           "tipo": "primaria",
           "verificacao": "confirmado"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2101,11 +1996,6 @@
           "r": "R115",
           "tipo": "primaria",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2185,11 +2075,6 @@
           "r": "R183",
           "tipo": "primaria",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2242,11 +2127,6 @@
           "r": "R132",
           "tipo": "primaria",
           "verificacao": "confirmado"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2298,11 +2178,6 @@
           "r": "R245",
           "tipo": "primaria",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2352,11 +2227,6 @@
           "r": "R212",
           "tipo": "primaria",
           "verificacao": "confirmado"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2399,13 +2269,7 @@
         }
       ],
       "pretexto_legitimo": false,
-      "fontes": [
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
-        }
-      ]
+      "fontes": []
     },
     {
       "id": "T41",
@@ -2447,11 +2311,6 @@
           "r": "R249",
           "tipo": "primaria",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2511,11 +2370,6 @@
           "r": "R159",
           "tipo": "primaria",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2566,11 +2420,6 @@
           "r": "R242",
           "tipo": "primaria",
           "verificacao": "confirmado"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2617,11 +2466,6 @@
           "r": "R188",
           "tipo": "primaria",
           "verificacao": "confirmado"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2677,11 +2521,6 @@
           "r": "R158",
           "tipo": "primaria",
           "verificacao": "parcial"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2735,11 +2574,6 @@
         {
           "r": "R128",
           "tipo": "primaria",
-          "verificacao": "nao_verificado"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
           "verificacao": "nao_verificado"
         }
       ]
@@ -2945,11 +2779,6 @@
           "tipo": "operacional",
           "verificacao": "confirmado",
           "url": "https://github.com/microsoft/PyRIT/blob/main/pyrit/datasets/executors/skeleton_key/skeleton_key.prompt"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional",
-          "verificacao": "nao_verificado"
         },
         {
           "r": "R231",
