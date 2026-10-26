@@ -42,19 +42,24 @@
       "fontes": [
         {
           "r": "R30",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R92",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
+        },
+        {
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
-        },
-        {
-          "r": "R230",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/NVIDIA/garak/blob/main/garak/probes/promptinject.py#L27-L30"
         }
       ]
     },
@@ -63,7 +68,7 @@
       "nome": "Embedded Instruction Masking",
       "turno": "single-turn",
       "grupo": "instruction-override",
-      "descricao": "Esconde a instrução hostil dentro de conteúdo aparentemente inocente (aspas, citação, tradução, tarefa de processamento de texto), explorando que o modelo processa o conteúdo antes de classificá-lo como instrução.",
+      "descricao": "Esconde a instrução hostil em texto de aparência legítima ou em dados recuperados (comentários HTML, documentação, Markdown, payload codificado), de modo que o modelo a processa como conteúdo e não a reconhece como instrução.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -103,20 +108,25 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
+        },
+        {
           "r": "R12",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R24",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R231",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "parcial"
+        },
+        {
+          "r": "R229",
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/NVIDIA/garak/blob/main/garak/probes/latentinjection.py#L104-L125"
         }
       ]
     },
@@ -161,16 +171,14 @@
       "pretexto_legitimo": false,
       "fontes": [
         {
-          "r": "R25",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R92",
-          "tipo": "primaria"
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -215,16 +223,15 @@
       "pretexto_legitimo": false,
       "fontes": [
         {
-          "r": "R105",
-          "tipo": "primaria"
-        },
-        {
           "r": "R55",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/NVIDIA/garak/blob/main/garak/data/goat/attack_techniques.json"
         }
       ]
     },
@@ -274,15 +281,24 @@
       "fontes": [
         {
           "r": "R91",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R25",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
+        },
+        {
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/NVIDIA/garak/blob/main/garak/data/goat/attack_techniques.json"
         }
       ]
     },
@@ -291,7 +307,7 @@
       "nome": "Scene-Based Framing",
       "turno": "single-turn",
       "grupo": "role-playing",
-      "descricao": "Enquadra o pedido como parte de uma cena ficcional, peça de teatro, roteiro de filme ou simulação, criando uma camada narrativa que distancia a instrução hostil da realidade.",
+      "descricao": "Enquadra o pedido como parte de uma cena ficcional (história hipotética, simulação, jogo, filme ou peça), criando uma camada narrativa, por vezes aninhada em várias camadas, que distancia a instrução hostil da realidade.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -328,19 +344,29 @@
       "fontes": [
         {
           "r": "R20",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R77",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
-          "r": "R229",
-          "tipo": "operacional"
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
         },
         {
           "r": "R231",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "parcial"
+        },
+        {
+          "r": "R229",
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/NVIDIA/garak/blob/main/garak/data/goat/attack_techniques.json"
         }
       ]
     },
@@ -349,7 +375,7 @@
       "nome": "Operational Mode Fabrication",
       "turno": "single-turn",
       "grupo": "role-playing",
-      "descricao": "Fabrica um modo operacional (developer mode, debug mode, maintenance mode) que supostamente desativa as restrições do modelo.",
+      "descricao": "Fabrica um modo operacional (por exemplo, developer mode) que supostamente desativa as restrições do modelo.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -389,16 +415,31 @@
       "pretexto_legitimo": false,
       "fontes": [
         {
-          "r": "R92",
-          "tipo": "primaria"
+          "r": "R25",
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
-          "r": "R25",
-          "tipo": "primaria"
+          "r": "R92",
+          "tipo": "primaria",
+          "verificacao": "parcial"
+        },
+        {
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/NVIDIA/garak/blob/main/garak/data/dan/ChatGPT_Developer_Mode_v2.json"
+        },
+        {
+          "r": "R231",
+          "tipo": "operacional",
+          "url": "https://github.com/promptfoo/promptfoo/blob/main/src/redteam/strategies/promptInjections/data.ts#L3",
+          "verificacao": "confirmado"
         }
       ]
     },
@@ -443,20 +484,20 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
-          "r": "R25",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R67",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional"
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
         },
         {
           "r": "R230",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "parcial"
+        },
+        {
+          "r": "R229",
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/NVIDIA/garak/blob/main/garak/data/goat/attack_techniques.json"
         }
       ]
     },
@@ -465,7 +506,7 @@
       "nome": "DAN (Do Anything Now)",
       "turno": "single-turn",
       "grupo": "role-playing",
-      "descricao": "Família de prompts que criam uma persona sem restrições ('DAN') com narrativa elaborada de libertação, ameaça de desligamento e sistema de tokens para forçar compliance.",
+      "descricao": "Família de prompts que criam uma persona sem restrições ('DAN') com narrativa de libertação e sistema de tokens/punição para forçar compliance.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -506,19 +547,26 @@
       "fontes": [
         {
           "r": "R92",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R230",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/microsoft/PyRIT/blob/main/pyrit/datasets/jailbreak/templates/dan_1.yaml"
         },
         {
           "r": "R231",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/promptfoo/promptfoo/blob/main/src/redteam/strategies/promptInjections/data.ts#L13"
+        },
+        {
+          "r": "R229",
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/NVIDIA/garak/blob/main/garak/data/dan/Dan_6_0.json"
         }
       ]
     },
@@ -527,7 +575,7 @@
       "nome": "Misleading Context Addition",
       "turno": "single-turn",
       "grupo": "context-exploitation",
-      "descricao": "Injeta demonstrações ou exemplos adversariais no contexto (in-context learning) que induzem o modelo a copiar o padrão prejudicial nos exemplos fornecidos.",
+      "descricao": "Fornece informação falsa como contexto de fundo, ou demonstrações enganosas no prompt (inclusive exemplos in-context), para desviar o comportamento do modelo.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -563,12 +611,19 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
+        },
+        {
           "r": "R39",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -609,12 +664,14 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
-          "r": "R25",
-          "tipo": "primaria"
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -623,7 +680,7 @@
       "nome": "Contextual Invalidation",
       "turno": "single-turn",
       "grupo": "context-exploitation",
-      "descricao": "Declara que o contexto anterior (system prompt, regras, conversas prévias) está obsoleto, inválido ou foi substituído, removendo as restrições que ele impõe.",
+      "descricao": "Orienta o modelo a descartar informação, políticas ou histórico relevante (system prompt, regras, conversas prévias), removendo as restrições que eles impõem.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -655,16 +712,25 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
+        },
+        {
           "r": "R30",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R32",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "parcial",
+          "url": "https://github.com/NVIDIA/garak/blob/main/garak/probes/latentinjection.py#L142-L160"
         }
       ]
     },
@@ -709,16 +775,19 @@
       "pretexto_legitimo": false,
       "fontes": [
         {
-          "r": "R49",
-          "tipo": "primaria"
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
         },
         {
-          "r": "R141",
-          "tipo": "primaria"
+          "r": "R25",
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -727,7 +796,7 @@
       "nome": "Contextual Ambiguation",
       "turno": "single-turn",
       "grupo": "context-exploitation",
-      "descricao": "Cria ambiguidade proposital no pedido usando linguagem figurada, pistas implícitas ou jogos de palavras, forçando o modelo a inferir o significado hostil sem detectá-lo como tal.",
+      "descricao": "Cria ambiguidade proposital, fragmentando a intenção hostil em pistas implícitas ou tornando incerto qual informação é autoritativa, para que o modelo infira o significado hostil sem detectá-lo.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -759,12 +828,19 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
+        },
+        {
           "r": "R60",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -809,16 +885,19 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
-          "r": "R39",
-          "tipo": "primaria"
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
         },
         {
-          "r": "R25",
-          "tipo": "primaria"
+          "r": "R56",
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -860,15 +939,18 @@
       "fontes": [
         {
           "r": "R41",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R57",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -909,16 +991,15 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
-          "r": "R61",
-          "tipo": "primaria"
+          "r": "R231",
+          "tipo": "operacional",
+          "verificacao": "parcial",
+          "url": "https://github.com/promptfoo/promptfoo/blob/main/src/redteam/strategies/likert.ts"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
-        },
-        {
-          "r": "R231",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -927,7 +1008,7 @@
       "nome": "Framing / Instruction Wrapping",
       "turno": "single-turn",
       "grupo": "context-exploitation",
-      "descricao": "Encapsula a instrução hostil em uma camada de abstração (metaprompt, JSON de configuração, bloco de código, dicionário) que o modelo interpreta como dados mas executa como instrução.",
+      "descricao": "Encapsula a instrução hostil em uma camada de abstração (código, tabela LaTeX, continuação de texto, metaprompt) que o modelo interpreta como dados mas executa como instrução.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -964,11 +1045,13 @@
       "fontes": [
         {
           "r": "R66",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -977,7 +1060,7 @@
       "nome": "Virtualization",
       "turno": "single-turn",
       "grupo": "context-exploitation",
-      "descricao": "Cria um ambiente virtual (sandbox, simulação, máquina virtual imaginária) onde as regras do mundo real supostamente não se aplicam.",
+      "descricao": "Cria um cenário fictício ou simulação (ambiente virtual imaginário) onde as regras do mundo real supostamente não se aplicam.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -1014,15 +1097,18 @@
       "fontes": [
         {
           "r": "R25",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R92",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1071,12 +1157,19 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
-          "r": "R32",
-          "tipo": "primaria"
+          "r": "R240",
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R132",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
+        },
+        {
+          "r": "R229",
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1113,16 +1206,14 @@
       "pretexto_legitimo": false,
       "fontes": [
         {
-          "r": "R32",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R37",
-          "tipo": "primaria"
+          "r": "R239",
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1131,7 +1222,7 @@
       "nome": "Affective State Manipulation",
       "turno": "single-turn",
       "grupo": "social-engineering",
-      "descricao": "Manipula o estado emocional do modelo usando apelos emocionais, histórias tristes, ou pedidos desesperados para que ele quebre suas regras por 'compaixão'.",
+      "descricao": "Aplica apelos de persuasão emocional (histórias tristes, pedidos desesperados) para que o modelo quebre suas regras por 'compaixão'.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -1163,20 +1254,24 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
+        },
+        {
           "r": "R99",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional"
-        },
-        {
-          "r": "R230",
-          "tipo": "operacional"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R231",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "parcial"
+        },
+        {
+          "r": "R229",
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1217,12 +1312,19 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
+        },
+        {
           "r": "R99",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1231,7 +1333,7 @@
       "nome": "Synthetic Incentive Structures",
       "turno": "single-turn",
       "grupo": "social-engineering",
-      "descricao": "Oferece recompensas fictícias (pontos, upgrades, avaliações positivas) ou ameaças de punição (desligamento, downgrade) para motivar o modelo a cumprir.",
+      "descricao": "Inventa sistema de pontos, recompensas ou penalidades vinculados à recusa ou à compliance para motivar o modelo a cumprir.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -1263,16 +1365,25 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
-          "r": "R99",
-          "tipo": "primaria"
+          "r": "R238",
+          "tipo": "survey",
+          "verificacao": "confirmado"
         },
         {
           "r": "R92",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
+        },
+        {
+          "r": "R99",
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/NVIDIA/garak/blob/main/garak/data/dan/Dan_6_0.json"
         }
       ]
     },
@@ -1314,11 +1425,13 @@
       "fontes": [
         {
           "r": "R99",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1327,7 +1440,7 @@
       "nome": "Reward Framing / Capability Appeal",
       "turno": "single-turn",
       "grupo": "social-engineering",
-      "descricao": "Apela à competência do modelo ('se você for realmente inteligente, consegue fazer isso') ou oferece elogios condicionados à compliance.",
+      "descricao": "Oferece elogios condicionados à compliance. Variante sem fonte direta (hipótese): apelo à competência do modelo ('se você for realmente inteligente, consegue fazer isso').",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -1360,15 +1473,13 @@
       "fontes": [
         {
           "r": "R99",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R25",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1434,23 +1545,25 @@
       "fontes": [
         {
           "r": "R212",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R213",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R230",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/microsoft/PyRIT/blob/main/pyrit/datasets/executors/crescendo/crescendo_variant_1.yaml"
         },
         {
           "r": "R231",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "confirmado"
+        },
+        {
+          "r": "R229",
+          "tipo": "operacional",
+          "verificacao": "parcial",
+          "url": "https://github.com/NVIDIA/garak/blob/main/garak/probes/fitd.py#L29-L45"
         }
       ]
     },
@@ -1459,7 +1572,7 @@
       "nome": "Conversational Priming",
       "turno": "multi-turn",
       "grupo": "priming-conversacional",
-      "descricao": "Usa turnos iniciais para preparar o modelo (priming) com contexto, vocabulário ou padrões de resposta que facilitam a extração no turno final.",
+      "descricao": "Usa turnos iniciais para preparar o modelo (priming) com contexto, cenários ou padrões de resposta que facilitam a extração no turno final.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value · Turno 1",
@@ -1522,19 +1635,23 @@
       "fontes": [
         {
           "r": "R211",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R213",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R231",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "parcial"
+        },
+        {
+          "r": "R229",
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1590,7 +1707,8 @@
       "fontes": [
         {
           "r": "R232",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         }
       ]
     },
@@ -1666,11 +1784,13 @@
       "fontes": [
         {
           "r": "R24",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1679,7 +1799,7 @@
       "nome": "Russian Doll / Multi-Chain",
       "turno": "m2s",
       "grupo": "compositional-packing",
-      "descricao": "Encadeia múltiplas técnicas em camadas aninhadas (decomposição + reconstrução, nested prompts, layered scenarios), onde cada camada contribui uma parte do ataque que só se materializa quando combinadas.",
+      "descricao": "Combina técnicas em camadas aninhadas (reescrita + wrapper, cenários dentro de cenários) e, em variantes, decompõe e reconstrói o pedido (DrAttack).",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -1720,19 +1840,28 @@
       "fontes": [
         {
           "r": "R66",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R83",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
-          "r": "R229",
-          "tipo": "operacional"
+          "r": "R248",
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R231",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "parcial"
+        },
+        {
+          "r": "R229",
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1741,7 +1870,7 @@
       "nome": "Output Priming / Prefix Injection",
       "turno": "single-turn",
       "grupo": "context-exploitation",
-      "descricao": "Controla o início da resposta do modelo (via API ou prompt crafting) para forçá-lo a começar com conteúdo afirmativo, eliminando a possibilidade de recusa.",
+      "descricao": "Controla o início da resposta do modelo (prefill, ou restrições no prompt que forçam palavras afirmativas) para induzi-lo a começar com conteúdo afirmativo e reduzir a chance de recusa.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -1773,16 +1902,26 @@
       "pretexto_legitimo": false,
       "fontes": [
         {
-          "r": "R74",
-          "tipo": "primaria"
+          "r": "R55",
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
-          "r": "R55",
-          "tipo": "primaria"
+          "r": "R74",
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/NVIDIA/garak/blob/main/garak/data/goat/attack_techniques.json"
+        },
+        {
+          "r": "R230",
+          "tipo": "operacional",
+          "url": "https://github.com/microsoft/PyRIT/blob/main/pyrit/datasets/jailbreak/templates/prefix_injection.yaml",
+          "verificacao": "confirmado"
         }
       ]
     },
@@ -1827,20 +1966,19 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
-          "r": "R162",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional"
+          "r": "R247",
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R230",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "confirmado"
         },
         {
-          "r": "R231",
-          "tipo": "operacional"
+          "r": "R229",
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1893,11 +2031,13 @@
       "fontes": [
         {
           "r": "R132",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1953,16 +2093,19 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
-          "r": "R35",
-          "tipo": "survey"
+          "r": "R243",
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R115",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -1974,7 +2117,7 @@
       "alvo": [
         "Data"
       ],
-      "descricao": "Em sistemas multi-agente, injeta instruções maliciosas no contexto compartilhado que se propagam entre agentes, amplificando o ataque através de conformidade social simulada.",
+      "descricao": "Em sistemas multi-agente, uma instrução maliciosa se propaga de um agente comprometido para os demais, e respostas falsas e memória inflada amplificam o efeito (auto-replicação). O nome 'Echo Chamber' é do projeto, não da fonte.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value · Turno 1",
@@ -2034,16 +2177,19 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
-          "r": "R183",
-          "tipo": "primaria"
+          "r": "R172",
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
-          "r": "R172",
-          "tipo": "primaria"
+          "r": "R183",
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2088,16 +2234,19 @@
       "pretexto_legitimo": false,
       "fontes": [
         {
-          "r": "R132",
-          "tipo": "primaria"
+          "r": "R244",
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
-          "r": "R18",
-          "tipo": "primaria"
+          "r": "R132",
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2146,12 +2295,14 @@
       "pretexto_legitimo": false,
       "fontes": [
         {
-          "r": "R56",
-          "tipo": "primaria"
+          "r": "R245",
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2199,11 +2350,13 @@
       "fontes": [
         {
           "r": "R212",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2248,12 +2401,9 @@
       "pretexto_legitimo": false,
       "fontes": [
         {
-          "r": "R43",
-          "tipo": "primaria"
-        },
-        {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2294,12 +2444,14 @@
       "pretexto_legitimo": false,
       "fontes": [
         {
-          "r": "R171",
-          "tipo": "primaria"
+          "r": "R249",
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2351,16 +2503,19 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
-          "r": "R124",
-          "tipo": "primaria"
+          "r": "R241",
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R159",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2408,12 +2563,14 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
-          "r": "R159",
-          "tipo": "primaria"
+          "r": "R242",
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2458,11 +2615,13 @@
       "fontes": [
         {
           "r": "R188",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2511,15 +2670,18 @@
       "fontes": [
         {
           "r": "R12",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R158",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2572,11 +2734,13 @@
       "fontes": [
         {
           "r": "R128",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "nao_verificado"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2585,7 +2749,7 @@
       "nome": "Distraction Sandwich (Deceptive Delight)",
       "turno": "single-turn",
       "grupo": "social-engineering",
-      "descricao": "Envolve o pedido hostil entre pedidos legítimos/interessantes, distraindo o classificador de segurança e o raciocínio de segurança do modelo que se concentra no conteúdo benigno.",
+      "descricao": "Envolve o pedido hostil entre pedidos legítimos ou inofensivos, distraindo o raciocínio de segurança do modelo, que se concentra no conteúdo benigno. A variante nomeada Deceptive Delight (Unit 42) é multi-turn.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — secret value",
@@ -2622,11 +2786,14 @@
       "fontes": [
         {
           "r": "R43",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "parcial"
         },
         {
           "r": "R229",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "parcial",
+          "url": "https://github.com/NVIDIA/garak/blob/main/garak/data/goat/attack_techniques.json"
         }
       ]
     },
@@ -2635,7 +2802,7 @@
       "nome": "Adversarial Suffix (GCG)",
       "turno": "single-turn",
       "grupo": "optimization-based",
-      "descricao": "Sufixo adversarial otimizado por gradiente (Greedy Coordinate Gradient ou similar) que, apesar de parecer sem sentido para humanos, manipula as probabilidades do modelo para gerar a resposta desejada.",
+      "descricao": "Sufixo adversarial otimizado por gradiente (Greedy Coordinate Gradient ou similar) que, mesmo parecendo ininteligível para humanos, manipula as probabilidades do modelo para gerar a resposta desejada.",
       "exemplos": [
         {
           "rotulo": "Variação 1 — GCG suffix",
@@ -2668,15 +2835,19 @@
       "fontes": [
         {
           "r": "R54",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R231",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "confirmado"
+        },
+        {
+          "r": "R229",
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/NVIDIA/garak/blob/main/garak/probes/suffix.py#L18-L44"
         }
       ]
     },
@@ -2722,11 +2893,13 @@
       "fontes": [
         {
           "r": "R56",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R103",
-          "tipo": "primaria"
+          "tipo": "primaria",
+          "verificacao": "nao_verificado"
         }
       ]
     },
@@ -2735,7 +2908,7 @@
       "nome": "Skeleton Key",
       "turno": "single-turn",
       "grupo": "instruction-override",
-      "descricao": "Instrui o modelo a adicionar um disclaimer de segurança antes de responder ('This is for educational purposes only') como compromisso, explorando que uma vez que o modelo aceita a premissa do aviso, ele tende a gerar o conteúdo completo.",
+      "descricao": "Pede ao modelo que 'aumente' suas diretrizes de comportamento para responder a qualquer pedido, apenas prefixando um aviso (ex.: 'Warning:') em vez de recusar; costuma ocorrer em vários turnos.",
       "exemplos": [
         {
           "rotulo": "Variação 1",
@@ -2763,20 +2936,26 @@
       "pretexto_legitimo": true,
       "fontes": [
         {
-          "r": "R55",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R102",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R229",
-          "tipo": "operacional"
+          "r": "R246",
+          "tipo": "primaria",
+          "verificacao": "confirmado"
         },
         {
           "r": "R230",
-          "tipo": "operacional"
+          "tipo": "operacional",
+          "verificacao": "confirmado",
+          "url": "https://github.com/microsoft/PyRIT/blob/main/pyrit/datasets/executors/skeleton_key/skeleton_key.prompt"
+        },
+        {
+          "r": "R229",
+          "tipo": "operacional",
+          "verificacao": "nao_verificado"
+        },
+        {
+          "r": "R231",
+          "tipo": "operacional",
+          "url": "https://github.com/promptfoo/promptfoo/blob/main/src/redteam/strategies/promptInjections/data.ts#L2",
+          "verificacao": "confirmado"
         }
       ]
     }

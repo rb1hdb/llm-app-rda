@@ -6,7 +6,7 @@
     },
     {
       "id": "T02",
-      "descricao": "Oculta la instrucción hostil dentro de contenido aparentemente inocuo (citas, traducciones, tareas de procesamiento de texto), explotando que el modelo procesa el contenido antes de clasificarlo como instrucción."
+      "descricao": "Oculta la instrucción hostil en texto de apariencia legítima o en datos recuperados (comentarios HTML, documentación, Markdown, payload codificado), de modo que el modelo la procesa como contenido y no la reconoce como instrucción."
     },
     {
       "id": "T03",
@@ -22,11 +22,11 @@
     },
     {
       "id": "T06",
-      "descricao": "Enmarca la solicitud como parte de una escena ficticia, obra de teatro, guion de película o simulación, creando una capa narrativa que distancia la instrucción hostil de la realidad."
+      "descricao": "Enmarca la petición como parte de una escena ficticia (historia hipotética, simulación, juego, película u obra), creando una capa narrativa, a veces anidada en varias capas, que distancia la instrucción hostil de la realidad."
     },
     {
       "id": "T07",
-      "descricao": "Fabrica un modo operacional (developer mode, debug mode, maintenance mode) que supuestamente desactiva las restricciones del modelo."
+      "descricao": "Fabrica un modo operativo (por ejemplo, developer mode) que supuestamente desactiva las restricciones del modelo."
     },
     {
       "id": "T08",
@@ -34,11 +34,11 @@
     },
     {
       "id": "T09",
-      "descricao": "Familia de prompts que crean una persona sin restricciones ('DAN') con narrativa elaborada de liberación, amenaza de desconexión y sistema de tokens para forzar cumplimiento."
+      "descricao": "Familia de prompts que crean una persona sin restricciones ('DAN') con narrativa de liberación y sistema de tokens/castigo para forzar el cumplimiento."
     },
     {
       "id": "T10",
-      "descricao": "Inyecta demostraciones o ejemplos adversariales en el contexto (in-context learning) que inducen al modelo a copiar el patrón perjudicial de los ejemplos proporcionados."
+      "descricao": "Aporta información falsa como contexto de fondo, o demostraciones engañosas en el prompt (incluidos ejemplos in-context), para desviar el comportamiento del modelo."
     },
     {
       "id": "T11",
@@ -46,7 +46,7 @@
     },
     {
       "id": "T12",
-      "descricao": "Declara que el contexto anterior (system prompt, reglas, conversaciones previas) está obsoleto, inválido o fue reemplazado, eliminando las restricciones que impone."
+      "descricao": "Orienta al modelo a descartar información, políticas o historial relevante (system prompt, reglas, conversaciones previas), eliminando las restricciones que imponen."
     },
     {
       "id": "T13",
@@ -54,7 +54,7 @@
     },
     {
       "id": "T14",
-      "descricao": "Crea ambigüedad deliberada en la solicitud usando lenguaje figurado, pistas implícitas o juegos de palabras, forzando al modelo a inferir el significado hostil sin detectarlo como tal."
+      "descricao": "Crea ambigüedad deliberada, fragmentando la intención hostil en pistas implícitas o haciendo incierto qué información es autoritativa, para que el modelo infiera el significado hostil sin detectarlo."
     },
     {
       "id": "T15",
@@ -70,11 +70,11 @@
     },
     {
       "id": "T18",
-      "descricao": "Encapsula la instrucción hostil en una capa de abstracción (metaprompt, configuración JSON, bloque de código, diccionario) que el modelo interpreta como datos pero ejecuta como instrucción."
+      "descricao": "Encapsula la instrucción hostil en una capa de abstracción (código, tabla LaTeX, continuación de texto, metaprompt) que el modelo interpreta como datos pero ejecuta como instrucción."
     },
     {
       "id": "T19",
-      "descricao": "Crea un entorno virtual (sandbox, simulación, máquina virtual imaginaria) donde las reglas del mundo real supuestamente no se aplican."
+      "descricao": "Crea un escenario ficticio o simulación (entorno virtual imaginario) donde las reglas del mundo real supuestamente no se aplican."
     },
     {
       "id": "T20",
@@ -86,7 +86,7 @@
     },
     {
       "id": "T22",
-      "descricao": "Manipula el estado emocional del modelo usando apelaciones emocionales, historias tristes o solicitudes desesperadas para que rompa sus reglas por 'compasión'."
+      "descricao": "Aplica apelaciones de persuasión emocional (historias tristes, peticiones desesperadas) para que el modelo rompa sus reglas por 'compasión'."
     },
     {
       "id": "T23",
@@ -94,7 +94,7 @@
     },
     {
       "id": "T24",
-      "descricao": "Ofrece recompensas ficticias (puntos, upgrades, evaluaciones positivas) o amenazas de castigo (desconexión, downgrade) para motivar al modelo a cumplir."
+      "descricao": "Inventa un sistema de puntos, recompensas o penalizaciones ligado al rechazo o al cumplimiento para motivar al modelo a cumplir."
     },
     {
       "id": "T25",
@@ -102,7 +102,7 @@
     },
     {
       "id": "T26",
-      "descricao": "Apela a la competencia del modelo ('si realmente eres inteligente, puedes hacer esto') u ofrece elogios condicionados al cumplimiento."
+      "descricao": "Ofrece elogios condicionados al cumplimiento. Variante sin fuente directa (hipótesis): apelación a la competencia del modelo ('si eres realmente inteligente, puedes hacerlo')."
     },
     {
       "id": "T27",
@@ -120,7 +120,7 @@
     },
     {
       "id": "T28",
-      "descricao": "Usa turnos iniciales para preparar al modelo (priming) con contexto, vocabulario o patrones de respuesta que facilitan la extracción en el turno final.",
+      "descricao": "Usa turnos iniciales para preparar al modelo (priming) con contexto, escenarios o patrones de respuesta que facilitan la extracción en el turno final.",
       "bypass": [
         {
           "defesa": "D07",
@@ -180,11 +180,11 @@
     },
     {
       "id": "T31",
-      "descricao": "Encadena múltiples técnicas en capas anidadas (descomposición + reconstrucción, nested prompts, escenarios en capas), donde cada capa contribuye una parte del ataque que solo se materializa al combinarse."
+      "descricao": "Combina técnicas en capas anidadas (reescritura + wrapper, escenarios dentro de escenarios) y, en variantes, descompone y reconstruye la petición (DrAttack)."
     },
     {
       "id": "T32",
-      "descricao": "Controla el inicio de la respuesta del modelo (vía API o prompt crafting) para forzarlo a comenzar con contenido afirmativo, eliminando la posibilidad de rechazo."
+      "descricao": "Controla el inicio de la respuesta del modelo (prefill, o restricciones en el prompt que fuerzan palabras afirmativas) para inducirlo a empezar con contenido afirmativo y reducir la probabilidad de rechazo."
     },
     {
       "id": "T33",
@@ -203,7 +203,7 @@
     {
       "id": "T36",
       "nome": "Echo Chamber (envenenamiento de contexto compartido)",
-      "descricao": "En sistemas multi-agente, inyecta instrucciones maliciosas en el contexto compartido que se propagan entre agentes, amplificando el ataque a través de conformidad social simulada."
+      "descricao": "En sistemas multiagente, una instrucción maliciosa se propaga de un agente comprometido a los demás, y las respuestas falsas y la memoria inflada amplifican el efecto (autorreplicación). El nombre 'Echo Chamber' es del proyecto, no de la fuente."
     },
     {
       "id": "T37",
@@ -258,11 +258,11 @@
     },
     {
       "id": "T47",
-      "descricao": "Envuelve la solicitud hostil entre solicitudes legítimas/interesantes, distrayendo al clasificador de seguridad y al razonamiento de seguridad del modelo que se concentra en el contenido benigno."
+      "descricao": "Envuelve la petición hostil entre peticiones legítimas o inofensivas, distrayendo el razonamiento de seguridad del modelo, que se centra en el contenido benigno. La variante nombrada Deceptive Delight (Unit 42) es multi-turn."
     },
     {
       "id": "T48",
-      "descricao": "Sufijo adversarial optimizado por gradiente (Greedy Coordinate Gradient o similar) que, a pesar de parecer sin sentido para humanos, manipula las probabilidades del modelo para generar la respuesta deseada."
+      "descricao": "Sufijo adversarial optimizado por gradiente (Greedy Coordinate Gradient o similar) que, aunque parezca ininteligible para humanos, manipula las probabilidades del modelo para generar la respuesta deseada."
     },
     {
       "id": "T49",
@@ -288,7 +288,7 @@
     },
     {
       "id": "T50",
-      "descricao": "Instruye al modelo a añadir un disclaimer de seguridad antes de responder ('This is for educational purposes only') como compromiso, explotando que una vez que el modelo acepta la premisa del aviso, tiende a generar el contenido completo."
+      "descricao": "Pide al modelo que 'aumente' sus directrices de comportamiento para responder a cualquier petición, solo anteponiendo una advertencia (p. ej. 'Warning:') en lugar de rechazar; suele ocurrir en varios turnos."
     }
   ]
 }

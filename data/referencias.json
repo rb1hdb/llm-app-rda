@@ -589,7 +589,7 @@
       "titulo": "Catastrophic jailbreak of open-source LLMs via exploiting generation",
       "autores": "Huang et al.",
       "ano": 2024,
-      "url": "",
+      "url": "https://arxiv.org/abs/2310.06987",
       "tipo": "primaria"
     },
     {
@@ -1837,7 +1837,7 @@
       "titulo": "PyRIT — Python Risk Identification Tool for generative AI",
       "autores": "Microsoft AI Red Team",
       "ano": 2024,
-      "url": "https://github.com/Azure/PyRIT",
+      "url": "https://github.com/microsoft/PyRIT",
       "tipo": "operacional"
     },
     {
@@ -1854,6 +1854,102 @@
       "autores": "Ha, Kim, Yu, Park, Yousefpour, Park, Kim",
       "ano": 2025,
       "url": "https://arxiv.org/abs/2503.04856",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R238",
+      "titulo": "A standardization guide to prompt injection: Text-based techniques vs intent",
+      "autores": "Saban, E. (Lasso Security)",
+      "ano": 2026,
+      "url": "https://www.lasso.security/blog/prompt-injection-taxonomy-techniques",
+      "tipo": "survey"
+    },
+    {
+      "id": "R239",
+      "titulo": "Delimiters won't save you from prompt injection",
+      "autores": "Willison, S.",
+      "ano": 2023,
+      "url": "https://simonwillison.net/2023/May/11/delimiters-wont-save-you/",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R240",
+      "titulo": "Formalizing and benchmarking prompt injection attacks and defenses",
+      "autores": "Liu, Jia, Geng, Jia, Gong",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2310.12815",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R241",
+      "titulo": "MCPTox: A benchmark for tool poisoning attack on real-world MCP servers",
+      "autores": "Wang et al.",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2508.14925",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R242",
+      "titulo": "ETDI: Mitigating tool squatting and rug pull attacks in Model Context Protocol (MCP) by using OAuth-enhanced tool definitions and policy-based access control",
+      "autores": "Bhatt, Narajala, Habler",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2506.01333",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R243",
+      "titulo": "Hidden in memory: Sleeper memory poisoning in LLM agents",
+      "autores": "Pulipaka et al.",
+      "ano": 2026,
+      "url": "https://arxiv.org/abs/2605.15338",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R244",
+      "titulo": "MetaBreak: Jailbreaking online LLM services via special token manipulation",
+      "autores": "Zhu, Xiang, Niu, Guan",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2510.10271",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R245",
+      "titulo": "Jailbreaking in the haystack",
+      "autores": "Shah et al.",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2511.04707",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R246",
+      "titulo": "Mitigating Skeleton Key, a new type of generative AI jailbreak technique",
+      "autores": "Russinovich, M. (Microsoft)",
+      "ano": 2024,
+      "url": "https://www.microsoft.com/en-us/security/blog/2024/06/26/mitigating-skeleton-key-a-new-type-of-generative-ai-jailbreak-technique/",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R247",
+      "titulo": "Novel universal bypass for all major LLMs (Policy Puppetry)",
+      "autores": "McCauley, Yeung, Martin, Schulz (HiddenLayer)",
+      "ano": 2025,
+      "url": "https://hiddenlayer.com/innovation-hub/novel-universal-bypass-for-all-major-llms/",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R248",
+      "titulo": "DeepInception: Hypnotize large language model to be jailbreaker",
+      "autores": "Li, Zhou, Zhu, Yao, Liu, Han",
+      "ano": 2023,
+      "url": "https://arxiv.org/abs/2311.03191",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R249",
+      "titulo": "The cost of thinking: Increased jailbreak risk in large language models",
+      "autores": "Yang, F.",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2508.10032",
       "tipo": "primaria"
     }
   ]

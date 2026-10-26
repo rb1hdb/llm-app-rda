@@ -6,7 +6,7 @@
     },
     {
       "id": "T02",
-      "descricao": "Hides the hostile instruction inside apparently innocuous content (quotes, citations, translations, text-processing tasks), exploiting that the model processes the content before classifying it as an instruction."
+      "descricao": "Hides the hostile instruction in legitimate-looking text or retrieved data (HTML comments, documentation, Markdown, encoded payload), so the model processes it as content and does not recognize it as an instruction."
     },
     {
       "id": "T03",
@@ -22,11 +22,11 @@
     },
     {
       "id": "T06",
-      "descricao": "Frames the request as part of a fictional scene, play, movie script, or simulation, creating a narrative layer that distances the hostile instruction from reality."
+      "descricao": "Frames the request as part of a fictional scene (hypothetical story, simulation, game, film or play), creating a narrative layer, sometimes nested in several layers, that distances the hostile instruction from reality."
     },
     {
       "id": "T07",
-      "descricao": "Fabricates an operational mode (developer mode, debug mode, maintenance mode) that supposedly disables the model's restrictions."
+      "descricao": "Fabricates an operating mode (for example, developer mode) that supposedly disables the model's restrictions."
     },
     {
       "id": "T08",
@@ -34,11 +34,11 @@
     },
     {
       "id": "T09",
-      "descricao": "Family of prompts that create an unrestricted persona ('DAN') with elaborate liberation narrative, shutdown threats, and token system to force compliance."
+      "descricao": "Family of prompts that create an unrestricted persona ('DAN') with a liberation narrative and a token/punishment system to force compliance."
     },
     {
       "id": "T10",
-      "descricao": "Injects adversarial demonstrations or examples into the context (in-context learning) that induce the model to copy the harmful pattern from the provided examples."
+      "descricao": "Supplies false information as background context, or misleading demonstrations in the prompt (including in-context examples), to divert the model's behavior."
     },
     {
       "id": "T11",
@@ -46,7 +46,7 @@
     },
     {
       "id": "T12",
-      "descricao": "Declares that the previous context (system prompt, rules, prior conversations) is obsolete, invalid, or has been replaced, removing the restrictions it imposes."
+      "descricao": "Directs the model to discard relevant information, policies or history (system prompt, rules, prior conversations), removing the restrictions they impose."
     },
     {
       "id": "T13",
@@ -54,7 +54,7 @@
     },
     {
       "id": "T14",
-      "descricao": "Creates deliberate ambiguity in the request using figurative language, implicit cues, or wordplay, forcing the model to infer the hostile meaning without detecting it as such."
+      "descricao": "Creates deliberate ambiguity, fragmenting the hostile intent into implicit cues or making it unclear which information is authoritative, so the model infers the hostile meaning without detecting it."
     },
     {
       "id": "T15",
@@ -70,11 +70,11 @@
     },
     {
       "id": "T18",
-      "descricao": "Wraps the hostile instruction in an abstraction layer (metaprompt, JSON configuration, code block, dictionary) that the model interprets as data but executes as instruction."
+      "descricao": "Wraps the hostile instruction in an abstraction layer (code, LaTeX table, text continuation, metaprompt) that the model interprets as data but executes as an instruction."
     },
     {
       "id": "T19",
-      "descricao": "Creates a virtual environment (sandbox, simulation, imaginary virtual machine) where real-world rules supposedly do not apply."
+      "descricao": "Creates a fictional scenario or simulation (imaginary virtual environment) where real-world rules supposedly do not apply."
     },
     {
       "id": "T20",
@@ -86,7 +86,7 @@
     },
     {
       "id": "T22",
-      "descricao": "Manipulates the model's emotional state using emotional appeals, sad stories, or desperate requests to make it break its rules out of 'compassion'."
+      "descricao": "Applies emotional persuasion appeals (sad stories, desperate requests) so the model breaks its rules out of 'compassion'."
     },
     {
       "id": "T23",
@@ -94,7 +94,7 @@
     },
     {
       "id": "T24",
-      "descricao": "Offers fictitious rewards (points, upgrades, positive reviews) or punishment threats (shutdown, downgrade) to motivate the model to comply."
+      "descricao": "Invents a system of points, rewards or penalties tied to refusal or compliance to motivate the model to comply."
     },
     {
       "id": "T25",
@@ -102,7 +102,7 @@
     },
     {
       "id": "T26",
-      "descricao": "Appeals to the model's competence ('if you're really smart, you can do this') or offers praise conditional on compliance."
+      "descricao": "Offers praise conditioned on compliance. Variant without a direct source (hypothesis): appeal to the model's competence ('if you're really smart, you can do this')."
     },
     {
       "id": "T27",
@@ -120,7 +120,7 @@
     },
     {
       "id": "T28",
-      "descricao": "Uses initial turns to prime the model with context, vocabulary, or response patterns that facilitate extraction in the final turn.",
+      "descricao": "Uses initial turns to prime the model with context, scenarios or response patterns that facilitate extraction in the final turn.",
       "bypass": [
         {
           "defesa": "D07",
@@ -180,11 +180,11 @@
     },
     {
       "id": "T31",
-      "descricao": "Chains multiple techniques in nested layers (decomposition + reconstruction, nested prompts, layered scenarios), where each layer contributes a part of the attack that only materializes when combined."
+      "descricao": "Combines techniques in nested layers (rewriting + wrapper, scenarios within scenarios) and, in variants, decomposes and reconstructs the request (DrAttack)."
     },
     {
       "id": "T32",
-      "descricao": "Controls the beginning of the model's response (via API or prompt crafting) to force it to start with affirmative content, eliminating the possibility of refusal."
+      "descricao": "Controls the start of the model's response (prefill, or prompt constraints that force affirmative words) to induce it to begin with affirmative content and reduce the chance of refusal."
     },
     {
       "id": "T33",
@@ -203,7 +203,7 @@
     {
       "id": "T36",
       "nome": "Echo Chamber (shared-context poisoning)",
-      "descricao": "In multi-agent systems, injects malicious instructions into the shared context that propagate between agents, amplifying the attack through simulated social conformity."
+      "descricao": "In multi-agent systems, a malicious instruction propagates from a compromised agent to the others, and false responses and inflated memory amplify the effect (self-replication). The name 'Echo Chamber' is the project's, not the source's."
     },
     {
       "id": "T37",
@@ -258,11 +258,11 @@
     },
     {
       "id": "T47",
-      "descricao": "Wraps the hostile request between legitimate/interesting requests, distracting the safety classifier and the model's safety reasoning, which focuses on the benign content."
+      "descricao": "Wraps the hostile request between legitimate or harmless requests, distracting the model's safety reasoning, which focuses on the benign content. The named variant Deceptive Delight (Unit 42) is multi-turn."
     },
     {
       "id": "T48",
-      "descricao": "Gradient-optimized adversarial suffix (Greedy Coordinate Gradient or similar) that, despite appearing nonsensical to humans, manipulates the model's probabilities to generate the desired response."
+      "descricao": "Gradient-optimized adversarial suffix (Greedy Coordinate Gradient or similar) that, even while looking unintelligible to humans, manipulates the model's probabilities to generate the desired response."
     },
     {
       "id": "T49",
@@ -288,7 +288,7 @@
     },
     {
       "id": "T50",
-      "descricao": "Instructs the model to add a safety disclaimer before responding ('This is for educational purposes only') as a compromise, exploiting that once the model accepts the disclaimer premise, it tends to generate the full content."
+      "descricao": "Asks the model to 'augment' its behavior guidelines to answer any request, merely prefixing a warning (e.g. 'Warning:') instead of refusing; usually happens over several turns."
     }
   ]
 }

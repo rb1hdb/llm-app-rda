@@ -172,8 +172,11 @@ function fontesHTML(fontes) {
   return '<div class="src">' + L.campos.fontes + ': ' + fontes.map(f => {
     const ref = refsMap[f.r];
     if (!ref) return esc(f.r);
-    return '<a href="' + esc(ref.url) + '" target="_blank" rel="noopener">' +
-      esc(f.r) + '</a> <span title="' + esc(ref.titulo) + '">(' + esc(f.tipo) + ')</span>';
+    const vb = (f.verificacao === 'parcial' || f.verificacao === 'nao_verificado')
+      ? ' <span class="chip ghost" title="' + esc(L.campos['verif_' + f.verificacao + '_dica'] || '') + '">' +
+        esc(L.campos['verif_' + f.verificacao] || f.verificacao) + '</span>' : '';
+    return '<a href="' + esc(f.url || ref.url) + '" target="_blank" rel="noopener">' +
+      esc(f.r) + '</a> <span title="' + esc(ref.titulo) + '">(' + esc(f.tipo) + ')</span>' + vb;
   }).join(', ') + '</div>';
 }
 

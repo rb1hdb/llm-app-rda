@@ -330,6 +330,10 @@ def validate(data):
                     errs.append(f"{entity_name} {item['id']}: fontes references nonexistent ref '{rid}'")
                 elif f["tipo"] != refs[rid]["tipo"]:
                     errs.append(f"{entity_name} {item['id']}: fontes[{rid}].tipo='{f['tipo']}' != refs tipo='{refs[rid]['tipo']}'")
+                if "verificacao" in f and f["verificacao"] not in ("confirmado", "parcial", "nao_verificado"):
+                    errs.append(f"{entity_name} {item['id']}: fontes[{rid}].verificacao invalid '{f['verificacao']}'")
+                if "url" in f and not str(f["url"]).startswith("https://"):
+                    errs.append(f"{entity_name} {item['id']}: fontes[{rid}].url must start with https://")
 
     # FK: sinais → defesas
     check_fk("sinal", data["sinais"]["sinais"], "defesas", defs, "defesa")

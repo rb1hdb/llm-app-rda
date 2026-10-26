@@ -43,6 +43,7 @@
   ],
   "constraints": [
     "fontes[].tipo must equal referencias[r].tipo",
+    "fontes[].verificacao (optional): confirmado | parcial | nao_verificado (source read for BK-04: supports / supports in part / not read); fontes[].url (optional, https): deep link to the exact payload/page that anchors the claim, shown instead of referencias[r].url",
     "recon.sinal_alvo[] must reference sinais with tipo=passivo",
     "all ids unique within each file",
     "clusters.defesa_para_cluster must cover every defesa id exactly once (no gaps, no duplicates)",
