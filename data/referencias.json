@@ -1951,6 +1951,54 @@
       "ano": 2025,
       "url": "https://arxiv.org/abs/2508.10032",
       "tipo": "primaria"
+    },
+    {
+      "id": "R233",
+      "titulo": "H-CoT: Hijacking the chain-of-thought safety reasoning mechanism to jailbreak large reasoning models",
+      "autores": "Kuo, Zhang, Ding, Wang, DiValentin, Bao, Wei, Li, Chen",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2502.12893",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R234",
+      "titulo": "Chain-of-thought hijacking",
+      "autores": "Zhao, Fu, Schaeffer, Sharma, Barez",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2510.26418",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R235",
+      "titulo": "Bad Likert Judge: A novel multi-turn technique to jailbreak LLMs by misusing their evaluation capability",
+      "autores": "Huang, Ji, Hu, Rao, Tsechansky, Chen (Unit 42)",
+      "ano": 2024,
+      "url": "https://unit42.paloaltonetworks.com/multi-turn-technique-jailbreaks-llms/",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R236",
+      "titulo": "Deceptive Delight: Jailbreak LLMs through camouflage and distraction",
+      "autores": "Lu, R. (Unit 42)",
+      "ano": 2024,
+      "url": "https://unit42.paloaltonetworks.com/jailbreak-llms-through-camouflage-distraction/",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R237",
+      "titulo": "Jailbreaking is (mostly) simpler than you think",
+      "autores": "Russinovich, Salem",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2503.05264",
+      "tipo": "primaria"
+    },
+    {
+      "id": "R250",
+      "titulo": "BadChain: Backdoor chain-of-thought prompting for large language models",
+      "autores": "Xiang, Jiang, Xiong, Ramasubramanian, Poovendran, Li",
+      "ano": 2024,
+      "url": "https://arxiv.org/abs/2401.12242",
+      "tipo": "primaria"
     }
   ]
 }

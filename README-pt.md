@@ -21,7 +21,7 @@ Runbook interativo de pentest para aplicações baseadas em LLM. Metodologia est
 |------|----------|
 | **R — Recon** | 37 prompts black-box + 66 sinais observáveis |
 | **D — Defesas** | 52 defesas catalogadas em 6 loci |
-| **A — Ataques** | 50 técnicas de prompt injection + 12 evasões |
+| **A — Ataques** | 52 técnicas de prompt injection + 12 evasões |
 
 **Pipeline:** Sinal → Defesa@locus → Técnica/Evasão
 
@@ -90,7 +90,7 @@ llm-app-rda/
 ├── data/                   <- Fonte da verdade (PT)
 │   ├── defesas.json        <- 52 defesas
 │   ├── sinais.json         <- 66 sinais
-│   ├── tecnicas.json       <- 50 técnicas
+│   ├── tecnicas.json       <- 52 técnicas
 │   ├── evasoes.json        <- 12 evasões
 │   ├── recon.json          <- 37 prompts de recon
 │   ├── produtos.json       <- 14 produtos

@@ -91,7 +91,7 @@ llm-app-rda/
 ├── data/                   <- Source of truth (PT)
 │   ├── defesas.json        <- 52 defenses
 │   ├── sinais.json         <- 66 signals
-│   ├── tecnicas.json       <- 50 techniques
+│   ├── tecnicas.json       <- 52 techniques
 │   ├── evasoes.json        <- 12 evasions
 │   ├── recon.json          <- 37 recon prompts
 │   ├── produtos.json       <- 14 products
