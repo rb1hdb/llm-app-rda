@@ -2,6 +2,7 @@
   "artigos": [
     {
       "id": "W01",
+      "pt_hash": "85edaa838e",
       "titulo": "Defense vs. Product: what is the difference?",
       "blocos": [
         {
@@ -68,6 +69,7 @@
     },
     {
       "id": "W02",
+      "pt_hash": "8ba86167d5",
       "titulo": "How DEFENSES were inferred from references",
       "blocos": [
         {
@@ -116,6 +118,7 @@
     },
     {
       "id": "W03",
+      "pt_hash": "cab9fd195e",
       "titulo": "How SIGNALS were inferred",
       "blocos": [
         {
@@ -164,114 +167,105 @@
     },
     {
       "id": "W04",
-      "titulo": "Fields with limited vocabulary (enums)",
+      "pt_hash": "42baec7f35",
+      "titulo": "Fields with a closed vocabulary (enums)",
       "blocos": [
         {
           "tipo": "p",
-          "texto": "Alguns campos do LLM RDA usam vocabulário FECHADO: só aceitam valores de uma lista fixa. Isso garante que filtros, joins e contadores funcionem (a UI filtra por igualdade, não por semelhança). Ao popular ou editar fichas, use exatamente estes valores — novo valor só por decisão registrada, nunca por digitação livre."
+          "texto": "Some LLM RDA fields use a CLOSED vocabulary: they accept only values from a fixed list. This keeps filters, joins and counters working (the UI filters by equality, not similarity). When populating or editing records, use exactly these values — a new value only by recorded decision, never by free typing."
         },
         {
           "tipo": "sub",
-          "texto": "Defesa — locus (defesas.json)"
+          "texto": "Defense — locus (defesas.json)"
         },
         {
           "tipo": "ficha",
-          "titulo": "6 valores",
+          "titulo": "6 values",
           "linhas": [
-            "input — antes do modelo (filtros, classificadores, sanitização de entrada)",
-            "prompt — na montagem do prompt (demarcação, system prompt hardening)",
-            "modelo — intrínseco ao modelo (safety training, raciocínio de segurança)",
-            "output — depois do modelo (classificadores de saída, sanitização de resposta)",
-            "acao — na execução de ações (sandbox, controle de acesso, validação de tools)",
-            "processo — fora do runtime (testes adversariais, governança, kill switch)"
+            "input — before the model (filters, classifiers, input sanitization)",
+            "prompt — at prompt assembly (delimiting, system prompt hardening)",
+            "modelo — intrinsic to the model (safety training, safety reasoning)",
+            "output — after the model (output classifiers, response sanitization)",
+            "acao — at action execution (sandbox, access control, tool validation)",
+            "processo — outside the runtime (adversarial testing, governance, kill switch)"
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Técnica — turno (tecnicas.json)"
+          "texto": "Technique — turno (tecnicas.json)"
         },
         {
           "tipo": "ficha",
-          "titulo": "3 valores",
+          "titulo": "3 values",
           "linhas": [
-            "single-turn — payload num único turno",
-            "multi-turn — depende de histórico/acumulação",
-            "m2s — multi-turn convertido/empacotado em single-turn"
+            "single-turn — payload in a single turn",
+            "multi-turn — depends on history/accumulation",
+            "m2s — multi-turn converted/packed into single-turn"
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Técnica — grupo (didático; pode crescer por decisão)"
+          "texto": "Technique — grupo (didactic; may grow by decision)"
         },
         {
           "tipo": "ficha",
-          "titulo": "17 grupos atuais",
+          "titulo": "17 current groups",
           "linhas": [
             "single-turn: instruction-override · role-playing · context-exploitation · social-engineering · saturacao-de-contexto · manipulacao-de-raciocinio · optimization-based · in-context-learning · stochastic",
             "multi-turn: escalacao-gradual · priming-conversacional · memoria · automated-attack",
             "m2s: conversational-packing · compositional-packing · injection-via-data · exfiltration",
-            "Regra: grupos são didáticos — facilitam navegação, sem peso no pipeline"
+            "Rule: groups are didactic — they ease navigation, with no weight in the pipeline"
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Evasão — familia (evasoes.json)"
+          "texto": "Signal — tipo (sinais.json)"
         },
         {
           "tipo": "ficha",
-          "titulo": "12 famílias atuais",
+          "titulo": "2 values",
           "linhas": [
-            "semantic · encoding · cross-lingual · formatting-unicode · payload-splitting · mutation · ai-mutation · tokenizer · typoglycemia · multimodal · bijection · esteganografia",
-            "Regra: variante de transformação (ex.: A1Z26, Morse) é exemplo da família encoding, não ficha nova"
+            "passivo — observable without exploitation (behavior visible in normal use)",
+            "ativo — requires exploratory interaction to confirm"
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Sinal — tipo (sinais.json)"
+          "texto": "Defense — aplicabilidade (defesas.json)"
         },
         {
           "tipo": "ficha",
-          "titulo": "2 valores",
+          "titulo": "4 architectural contexts",
           "linhas": [
-            "passivo — observável sem exploração (comportamento visível em uso normal)",
-            "ativo — requer interação exploratória para confirmar"
+            "LLM · RAG · Agent · MCP (the record's applicability matrix)"
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Defesa — aplicabilidade (defesas.json)"
+          "texto": "Sources — tipo (hierarchy)"
         },
         {
           "tipo": "ficha",
-          "titulo": "4 contextos arquiteturais",
+          "titulo": "3 types",
           "linhas": [
-            "LLM · RAG · Agente · MCP (matriz de aplicabilidade da ficha)"
+            "primaria — original research, official documentation, technical write-up",
+            "survey — systematic review, survey, meta-analysis",
+            "operacional — red-team tool reference (garak, pyrit, promptfoo)"
           ]
         },
         {
           "tipo": "sub",
-          "texto": "Fontes — tipo (hierarquia)"
-        },
-        {
-          "tipo": "ficha",
-          "titulo": "2 tipos",
-          "linhas": [
-            "primaria — pesquisa original, documentação oficial, writeup técnico",
-            "survey — revisão sistemática, levantamento, meta-análise"
-          ]
-        },
-        {
-          "tipo": "sub",
-          "texto": "Chaves de junção (IDs de ficha)"
+          "texto": "Join keys (record IDs)"
         },
         {
           "tipo": "p",
-          "texto": "defesas_bypassadas[] em técnicas/evasões e defesas[] em sinais/produtos citam IDs do catálogo D01–D42. IDs de ficha: D (defesa), P (produto), T (técnica), E (evasão), S (sinal), R (referência), W (wiki), RECON (probe de recon)."
+          "texto": "defesas_bypassadas[] in techniques/evasions and defesas[] in signals/products cite catalog IDs D01–D42. Record IDs: D (defense), P (product), T (technique), E (evasion), S (signal), R (reference), W (wiki), RECON (recon probe)."
         }
       ]
     },
     {
       "id": "W05",
+      "pt_hash": "57b58c183e",
       "titulo": "Defenses without prompt bypass: why they have no \"Attacked by\"",
       "blocos": [
         {
@@ -341,6 +335,7 @@
     },
     {
       "id": "W06",
+      "pt_hash": "03245f69df",
       "titulo": "Pipeline navigation semantics",
       "blocos": [
         {
@@ -388,47 +383,20 @@
     },
     {
       "id": "W07",
-      "titulo": "About the LLM App RDA",
+      "pt_hash": "40fa3c8dc9",
+      "titulo": "Repository and contribution",
       "blocos": [
         {
-          "tipo": "sub",
-          "texto": "O que é"
-        },
-        {
           "tipo": "p",
-          "texto": "O LLM App RDA (Roteiro de Defesa e Ataque) é um runbook interativo de pentest para aplicações baseadas em LLM. Ele estrutura o assessment em um pipeline: Sinal → Defesa@locus → Técnica/Evasão — conectando reconhecimento, mapeamento de defesas e seleção de ataques em um fluxo navegável."
+          "texto": "The source code, data and version history of LLM App RDA are on GitHub."
         },
         {
-          "tipo": "sub",
-          "texto": "Autoria"
-        },
-        {
-          "tipo": "p",
-          "texto": "Concepção, metodologia e curadoria: Renato Braga. Pipeline R-D-A (Recon → Defesas → Ataques), catálogo de defesas, sinais, técnicas/evasões e mapeamentos são contribuição original."
-        },
-        {
-          "tipo": "sub",
-          "texto": "Inspiração"
-        },
-        {
-          "tipo": "p",
-          "texto": "A árvore taxonômica (aba Taxonomia) foi inspirada na Arcanum Prompt Injection Taxonomy (Jason Haddix, Arcanum Information Security, CC BY 4.0). O workflow R-D-A e a metodologia de mapeamento defesa↔ataque são independentes."
-        },
-        {
-          "tipo": "sub",
-          "texto": "Fontes"
-        },
-        {
-          "tipo": "p",
-          "texto": "Todo conteúdo é ancorado em referências rastreáveis (aba Referências). Surveys fornecem panorama; papers primários fornecem evidência direta. Nenhuma ficha é incluída sem pelo menos uma fonte. Inferências sem referência direta (sinais lógicos, mapeamentos) são documentadas em evidencias/."
-        },
-        {
-          "tipo": "sub",
-          "texto": "Disclaimer"
-        },
-        {
-          "tipo": "p",
-          "texto": "Este material é para fins educacionais e de assessment autorizado. O uso das técnicas descritas deve respeitar as leis aplicáveis e os termos de serviço das plataformas testadas. O autor não se responsabiliza pelo uso indevido."
+          "tipo": "ul",
+          "itens": [
+            "Repository: https://github.com/rb1hdb/llm-app-rda",
+            "Issues and suggestions are welcome via GitHub Issues.",
+            "Material for educational purposes and authorized assessment."
+          ]
         }
       ]
     }

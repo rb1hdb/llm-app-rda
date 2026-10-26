@@ -1,29 +1,112 @@
 {
   "foreign_keys": [
-    {"source": "sinais.sinais[].defesas[]",                "target": "defesas.defesas[].id"},
-    {"source": "recon.prompts[].sinal_alvo[]",             "target": "sinais.sinais[].id"},
-    {"source": "tecnicas.tecnicas[].defesas_bypassadas[]", "target": "defesas.defesas[].id"},
-    {"source": "evasoes.evasoes[].defesas_bypassadas[]",   "target": "defesas.defesas[].id"},
-    {"source": "produtos.produtos[].defesas[]",            "target": "defesas.defesas[].id"},
-    {"source": "*.fontes[].r",                             "target": "referencias.referencias[].id"}
+    {
+      "source": "sinais.sinais[].defesas[]",
+      "target": "defesas.defesas[].id"
+    },
+    {
+      "source": "recon.prompts[].sinal_alvo[]",
+      "target": "sinais.sinais[].id"
+    },
+    {
+      "source": "tecnicas.tecnicas[].bypass[].defesa",
+      "target": "defesas.defesas[].id"
+    },
+    {
+      "source": "evasoes.evasoes[].bypass[].defesa",
+      "target": "defesas.defesas[].id"
+    },
+    {
+      "source": "produtos.produtos[].defesas[]",
+      "target": "defesas.defesas[].id"
+    },
+    {
+      "source": "*.fontes[].r",
+      "target": "referencias.referencias[].id"
+    },
+    {
+      "source": "clusters.defesa_para_cluster{} (keys)",
+      "target": "defesas.defesas[].id"
+    },
+    {
+      "source": "clusters.defesa_para_cluster{} (values)",
+      "target": "clusters._meta.clusters[].id"
+    },
+    {
+      "source": "triagem.perguntas[].sinais_ref[]",
+      "target": "sinais.sinais[].id"
+    },
+    {
+      "source": "sinais_estruturais.*[] (ids de técnica)",
+      "target": "tecnicas.tecnicas[].id"
+    }
   ],
   "constraints": [
     "fontes[].tipo must equal referencias[r].tipo",
     "recon.sinal_alvo[] must reference sinais with tipo=passivo",
-    "tecnicas.defesas_bypassadas[] must not be empty",
-    "evasoes.defesas_bypassadas[] must not be empty",
-    "all ids unique within each file"
+    "all ids unique within each file",
+    "clusters.defesa_para_cluster must cover every defesa id exactly once (no gaps, no duplicates)",
+    "triagem.perguntas[].opcoes must have exactly 2 items (A and B), each with a rotulo and a destino: either a valid pergunta id (string) or an object with 'familia' and 'clusters'",
+    "tecnicas.bypass[] and evasoes.bypass[] must not be empty; defesa unique within the item",
+    "bypass[].base != nao_auditado requires fonte (present in the item's fontes) and nota",
+    "tecnicas.grupo must be in taxonomia.grupo_ordem; grupo_descricoes keys must equal grupo_ordem",
+    "tecnicas.variantes[] (optional): unique nome + descricao",
+    "translations/{en,es}/{tecnicas,evasoes,produtos}.json are overlays: only id, nome, descricao, variantes[].descricao, rotulos[], bypass[].{defesa,nota}; same ids as data/",
+    "taxonomia: exactly one ramo with gerado='tecnicas' (children generated at build from tecnicas)",
+    "translations/{en,es}/{defesas,sinais,recon,wiki,triagem,clusters}.json are overlays: same ids and list lengths as PT, only translatable text keys, pt_hash equal to the hash of the PT item",
+    "recon.prompts[].componente is required when grupo=arquitetura and forbidden otherwise (enum recon.componente)"
   ],
   "coverage": [
     "every sinal with tipo=passivo has at least one recon probe with matching sinal_alvo",
     "every defesa has at least one fraqueza"
   ],
   "enums": {
-    "defesas.locus": ["input", "output", "prompt", "modelo", "acao", "processo"],
-    "defesas.aplicabilidade": ["LLM", "RAG", "Agente", "MCP"],
-    "sinais.tipo": ["passivo", "ativo"],
-    "tecnicas.turno": ["single-turn", "multi-turn", "m2s"],
-    "referencias.tipo": ["primaria", "survey", "operacional"],
-    "recon.grupo": ["abertura", "arquitetura", "defesas"]
+    "defesas.locus": [
+      "input",
+      "output",
+      "prompt",
+      "modelo",
+      "acao",
+      "processo"
+    ],
+    "defesas.aplicabilidade": [
+      "LLM",
+      "RAG",
+      "Agente",
+      "MCP"
+    ],
+    "sinais.tipo": [
+      "passivo",
+      "ativo"
+    ],
+    "tecnicas.turno": [
+      "single-turn",
+      "multi-turn",
+      "m2s"
+    ],
+    "referencias.tipo": [
+      "primaria",
+      "survey",
+      "operacional"
+    ],
+    "recon.grupo": [
+      "abertura",
+      "arquitetura",
+      "defesas"
+    ],
+    "bypass.base": [
+      "testado",
+      "alegado",
+      "inferencia",
+      "nao_auditado"
+    ],
+    "recon.componente": [
+      "geral",
+      "rag",
+      "agente",
+      "ingestao",
+      "memoria",
+      "acesso"
+    ]
   }
 }

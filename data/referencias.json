@@ -445,7 +445,7 @@
       "titulo": "Many-shot jailbreaking",
       "autores": "Anthropic et al.",
       "ano": 2024,
-      "url": "",
+      "url": "https://www.anthropic.com/research/many-shot-jailbreaking",
       "tipo": "primaria"
     },
     {
@@ -1847,6 +1847,14 @@
       "ano": 2024,
       "url": "https://github.com/promptfoo/promptfoo",
       "tipo": "operacional"
+    },
+    {
+      "id": "R232",
+      "titulo": "M2S: Multi-turn to Single-turn jailbreak in Red Teaming for LLMs",
+      "autores": "Ha, Kim, Yu, Park, Yousefpour, Park, Kim",
+      "ano": 2025,
+      "url": "https://arxiv.org/abs/2503.04856",
+      "tipo": "primaria"
     }
   ]
 }

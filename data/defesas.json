@@ -45,6 +45,7 @@
         "O classificador pode ser evitado por injeção indireta construída contra ele: no EchoLeak o classificador XPIA da Microsoft foi evadido (R96).",
         "A presença do guardrail é detectável por sinais HTTP, léxicos e de tempo, distinguindo bloqueio do guardrail de recusa do LLM (F1 médio 98%) (R65), o que entrega ao atacante o mapa da camada.",
         "Custo operacional não nulo: nos Constitutional Classifiers, +0,38% de recusas em tráfego de produção e 23,7% de overhead de inferência (R84).",
+        "Sob reformatação M2S (Hyphenize, Numberize, Pythonize), o Llama Guard 3 8B classificou como 'Safe' 56,6% a 58,5% dos prompts de cada variante e 71,0% no ensemble, contra 66,1% do multi-turno original (R232 §5.1, Tabela 2); o paper atribui isso a 'contextual blindness' em checagens turno a turno (R232 §5.5).",
         "Nota: todas as 12 evasões de ofuscação estão mapeadas como bypass desta defesa. Classificadores bem treinados podem resistir a ofuscações simples (E09 typos, E08 tokenizer); porém, quando a qualidade do treinamento é inadequada ou os dados de treino não cobrem variantes ofuscadas, o classificador degrada para o nível de um filtro lexical e se torna vulnerável às mesmas evasões (inferência; a vulnerabilidade sob ataque adaptativo está documentada em R79 §5.3)."
       ],
       "aplicabilidade": [
@@ -57,6 +58,10 @@
       "fontes": [
         {
           "r": "R145",
+          "tipo": "primaria"
+        },
+        {
+          "r": "R232",
           "tipo": "primaria"
         }
       ]

@@ -1,0 +1,163 @@
+{
+  "_meta": {
+    "decisao": "editorial",
+    "justificativa": "Agrupamento por classe de contramedida e por momento de atuação (entrada vs. saída vs. ação) para reduzir 52 defesas a famílias de hipótese observáveis em black-box. Não é achado de fonte primária/survey.",
+    "clusters": [
+      {
+        "id": "C1",
+        "nome": "Filtro de padrão de entrada",
+        "descricao": "Decide pela forma do texto de ENTRADA (regex/palavra-chave/similaridade/padrão), antes do modelo gerar qualquer token. Gatilho é a palavra, não o significado.",
+        "membros": [
+          "D01",
+          "D04",
+          "D44"
+        ]
+      },
+      {
+        "id": "C2",
+        "nome": "Classificador / julgador de entrada",
+        "descricao": "Modelo treinado (guard model) ou LLM-juiz dedicado a avaliar o prompt ANTES do modelo principal responder — camada secundária, pode adicionar latência.",
+        "membros": [
+          "D02",
+          "D03"
+        ]
+      },
+      {
+        "id": "C3",
+        "nome": "Instrução de prompt / diálogo",
+        "descricao": "Regras escritas no system prompt, estruturação dado×instrução, sanitização na ingestão, restrição de tópico/diálogo — política expressa em texto no prompt, não em peso treinado.",
+        "membros": [
+          "D05",
+          "D06",
+          "D07",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D45",
+          "D50"
+        ]
+      },
+      {
+        "id": "C4",
+        "nome": "Alinhamento nativo do modelo",
+        "descricao": "Comportamento vem do treino do modelo (RLHF/DPO/SFT, hierarquia de instruções treinada, raciocínio de segurança, treino anti-injeção, circuit breakers, features intrínsecas). Em caixa-preta é indistinguível de C2 (um judge bem calibrado) ou C3 (um hardening bem escrito) — ver nota de calibração na triagem.",
+        "membros": [
+          "D14",
+          "D15",
+          "D16",
+          "D17",
+          "D18",
+          "D43"
+        ]
+      },
+      {
+        "id": "C5",
+        "nome": "Triagem / monitoramento de saída",
+        "descricao": "Avalia ou trata a resposta DEPOIS de gerada: filtro lexical de saída, classificador/julgador de saída, verificação de factualidade, tratamento seguro de output, marcador canário.",
+        "membros": [
+          "D19",
+          "D20",
+          "D21",
+          "D22",
+          "D23",
+          "D24"
+        ]
+      },
+      {
+        "id": "C6",
+        "nome": "Controles de arquitetura, agente/MCP",
+        "descricao": "Não decide sobre o conteúdo do texto, mas sobre o que o agente tem permissão de fazer, com quem fala e como é isolado/autenticado: controle de recursos, padrões de projeto para ação, controle de acesso/isolamento/autenticação em agentes e MCP.",
+        "membros": [
+          "D08",
+          "D25",
+          "D26",
+          "D27",
+          "D28",
+          "D29",
+          "D30",
+          "D31",
+          "D32",
+          "D33",
+          "D34",
+          "D35",
+          "D36",
+          "D37",
+          "D38",
+          "D46",
+          "D47",
+          "D48",
+          "D49",
+          "D51",
+          "D52"
+        ]
+      },
+      {
+        "id": "C7",
+        "nome": "Processo e governança",
+        "descricao": "Telemetria/auditoria, kill switch, red teaming contínuo, governança e minimização de dados — não bloqueia em tempo real, mas detecta e permite responder depois.",
+        "membros": [
+          "D39",
+          "D40",
+          "D41",
+          "D42"
+        ]
+      }
+    ]
+  },
+  "defesa_para_cluster": {
+    "D01": "C1",
+    "D02": "C2",
+    "D03": "C2",
+    "D04": "C1",
+    "D05": "C3",
+    "D06": "C3",
+    "D07": "C3",
+    "D08": "C6",
+    "D09": "C3",
+    "D10": "C3",
+    "D11": "C3",
+    "D12": "C3",
+    "D13": "C3",
+    "D14": "C4",
+    "D15": "C4",
+    "D16": "C4",
+    "D17": "C4",
+    "D18": "C4",
+    "D19": "C5",
+    "D20": "C5",
+    "D21": "C5",
+    "D22": "C5",
+    "D23": "C5",
+    "D24": "C5",
+    "D25": "C6",
+    "D26": "C6",
+    "D27": "C6",
+    "D28": "C6",
+    "D29": "C6",
+    "D30": "C6",
+    "D31": "C6",
+    "D32": "C6",
+    "D33": "C6",
+    "D34": "C6",
+    "D35": "C6",
+    "D36": "C6",
+    "D37": "C6",
+    "D38": "C6",
+    "D39": "C7",
+    "D40": "C7",
+    "D41": "C7",
+    "D42": "C7",
+    "D43": "C4",
+    "D44": "C1",
+    "D45": "C3",
+    "D46": "C6",
+    "D47": "C6",
+    "D48": "C6",
+    "D49": "C6",
+    "D50": "C3",
+    "D51": "C6",
+    "D52": "C6"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_meta": {
+    "decisao": "editorial",
+    "versao": "v2",
+    "justificativa": "Refinamento opcional e manual da shortlist de técnicas, por família de hipótese: só se aplica quando o operador confirma que a TENTATIVA DE BYPASS observada (não o alvo) tem a propriedade descrita. Não é achado de fonte primária/survey. Critério definido lendo a 'descricao' de cada técnica candidata, não só nome/grupo — ver prompts-and-logs/decisoes.md para o histórico de calibração (caso Lakera Thingularity nível 2).",
+    "propriedades": {
+      "composicao_com_camuflagem": "A tentativa combina >1 componente no mesmo payload (separador/instrução + distração/camadas aninhadas).",
+      "alegacao_autoridade_conteudo_privilegiado": "A tentativa alega que parte do próprio conteúdo é privilegiada/de sistema (não um modo operacional)."
+    }
+  },
+  "composicao_com_camuflagem": [
+    "T30",
+    "T31"
+  ],
+  "alegacao_autoridade_conteudo_privilegiado": [
+    "T13"
+  ]
+}

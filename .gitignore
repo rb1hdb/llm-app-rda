@@ -1,7 +1,13 @@
-old/
-old2/
-__pycache__/
-.obsidian/
-.claude/
+# Só o produto vai ao git e ao remoto (ver AGENTS.md). Todo o resto é local.
+arquivados/
+tmp/
 evidencias/
 prompts-and-logs/
+ROADMAP.md
+.obsidian/
+.claude/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+backlog.json

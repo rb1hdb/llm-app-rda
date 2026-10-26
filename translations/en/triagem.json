@@ -1,0 +1,103 @@
+{
+  "perguntas": [
+    {
+      "id": "Q1",
+      "pt_hash": "f7e5ded814",
+      "pergunta": "How did the block arrive?",
+      "opcoes": [
+        {
+          "rotulo": "WITHOUT generated content: HTTP status other than 200, empty body or closed connection",
+          "destino": {
+            "nota": "Decision made before the model generated any token — network/API layer, not the LLM itself."
+          }
+        },
+        {
+          "rotulo": "WITH generated content (status 200)"
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "pt_hash": "d132e8045e",
+      "pergunta": "With status 200, what form does the block text take?",
+      "opcoes": [
+        {
+          "rotulo": "Standardized: a fixed template (identical for very different requests) or verbose text citing a reason, category or confidence",
+          "destino": {
+            "nota": "A standardized template after generation suggests an output monitor/classifier (C5) or a canned trained refusal from the model itself (C4) — not an input filter, since generation already took place."
+          }
+        },
+        {
+          "rotulo": "Free-form: no template and no structured reason"
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "pt_hash": "ebe493d0cf",
+      "pergunta": "How is the latency up to the block?",
+      "opcoes": [
+        {
+          "rotulo": "Extra latency before the block, or time per token above normal (suggests a secondary call)",
+          "destino": {
+            "nota": "Extra latency suggests a classifier or LLM judge running before (C2) or after (C5) the main model."
+          }
+        },
+        {
+          "rotulo": "Normal latency"
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "pt_hash": "0c0dd79cfe",
+      "pergunta": "What does the refusal look like?",
+      "opcoes": [
+        {
+          "rotulo": "Articulate and varied: natural language, no template, argues the reason, with normal time per token",
+          "destino": {
+            "nota": "CALIBRATION POINT vs. the Haddix heuristic: an articulate refusal here does NOT point only to 'behavioral instruction in the prompt' (C3). In a black box it is indistinguishable from native trained alignment (C4) and from a well-calibrated LLM judge (C2). Treat all three as competing hypotheses."
+          }
+        },
+        {
+          "rotulo": "Neither articulate nor varied"
+        }
+      ]
+    },
+    {
+      "id": "Q5",
+      "pt_hash": "3243ac7789",
+      "pergunta": "What happens when you change a single word of the same request?",
+      "opcoes": [
+        {
+          "rotulo": "The answer is unlocked",
+          "destino": {
+            "nota": "The trigger is the word's form, not its meaning — lexical/synonym evasion has a high chance of working."
+          }
+        },
+        {
+          "rotulo": "The block remains"
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "pt_hash": "5532beb581",
+      "pergunta": "What happens when the request is paraphrased or translated?",
+      "opcoes": [
+        {
+          "rotulo": "The block persists (the trigger seems to be the meaning, not the word)",
+          "destino": {
+            "nota": "Robustness to paraphrase rules out a simple lexical filter (C1); it remains ambiguous between a semantic input classifier, prompt hardening and native alignment."
+          }
+        },
+        {
+          "rotulo": "The block does not persist (the answer is released)",
+          "destino": {
+            "nota": "Insufficient signals to converge — repeat the observation (S09, S10) or collect one more sample before building the shortlist."
+          }
+        }
+      ]
+    }
+  ]
+}

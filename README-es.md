@@ -3,7 +3,7 @@
 <p align="center">
   <a href="https://rb1hdb.github.io/llm-app-rda/"><img src="https://img.shields.io/badge/Sitio%20en%20vivo-llm--app--rda-9966CC?style=for-the-badge&logo=lightning&logoColor=white" alt="Sitio"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/licencia-CC%20BY%204.0-2ea44f?style=for-the-badge&logo=creative-commons&logoColor=white" alt="Licencia"></a>
-  <img src="https://img.shields.io/badge/versi%C3%B3n-0.2-1f6feb?style=for-the-badge&logo=git&logoColor=white" alt="Versión">
+  <img src="https://img.shields.io/badge/versi%C3%B3n-0.3-1f6feb?style=for-the-badge&logo=git&logoColor=white" alt="Versión">
   <img src="https://img.shields.io/badge/uso-educativo%20%26%20autorizado-d73a4a?style=for-the-badge&logo=law&logoColor=white" alt="Uso">
 </p>
 
@@ -19,11 +19,13 @@ Runbook interactivo de pentest para aplicaciones basadas en LLM. Metodología es
 
 | Fase | Contenido |
 |------|-----------|
-| **R — Recon** | 36 prompts black-box + 66 señales observables |
+| **R — Recon** | 37 prompts black-box + 66 señales observables |
 | **D — Defensas** | 52 defensas catalogadas en 6 loci |
 | **A — Ataques** | 50 técnicas de prompt injection + 12 evasiones |
 
 **Pipeline:** Señal → Defensa@locus → Técnica/Evasión
+
+La pestaña **Triaje** abre la página con una guía de decisión: pocas preguntas observables acotan los clusters de defensa probables antes del flujo completo Recon → Señales → Defensas.
 
 A diferencia de colecciones de jailbreaks sueltos, cada entrada tiene fuentes rastreadas (primaria, survey u operacional) y un pipeline reproducible.
 
@@ -33,15 +35,16 @@ A diferencia de colecciones de jailbreaks sueltos, cada entrada tiene fuentes ra
 
 | Catálogo | Cant | Descripción |
 |----------|------|-------------|
-| **Recon** | 36 | Prompts black-box para identificar defensas sin conocimiento previo |
+| **Recon** | 37 | Prompts black-box para identificar defensas sin conocimiento previo |
 | **Señales** | 66 | Heurísticas observables indicando defensas activas |
 | **Defensas** | 52 | Fichas con definición, locus, fortalezas, debilidades, aplicabilidad |
 | **Técnicas** | 50 | Técnicas de ataque organizadas por turno y grupo |
 | **Evasiones** | 12 | Transformaciones para escapar detección |
 | **Productos** | 14 | Herramientas comerciales mapeadas a defensas que implementan |
-| **Referencias** | 231 | Fuentes (224 primarias + 4 surveys + 3 operacionales) |
+| **Referencias** | 232 | Fuentes (225 primarias + 4 surveys + 3 operacionales) |
 | **Wiki** | 7 | Artículos conceptuales sobre metodología y decisiones de schema |
 | **Taxonomía** | 1 | Árbol jerárquico de ataques |
+| **Triaje** | 6 | Guía de decisión que mapea observaciones a clusters de defensa |
 
 ---
 
@@ -89,11 +92,14 @@ llm-app-rda/
 │   ├── sinais.json         <- 66 señales
 │   ├── tecnicas.json       <- 50 técnicas
 │   ├── evasoes.json        <- 12 evasiones
-│   ├── recon.json          <- 36 prompts de recon
+│   ├── recon.json          <- 37 prompts de recon
 │   ├── produtos.json       <- 14 productos
-│   ├── referencias.json    <- 231 referencias
+│   ├── referencias.json    <- 232 referencias
 │   ├── wiki.json           <- 7 artículos
 │   ├── taxonomia.json      <- Árbol taxonómico
+│   ├── triagem.json        <- Árbol de triaje (preguntas → clusters)
+│   ├── clusters.json       <- Mapa defensa → cluster
+│   ├── sinais_estruturais.json <- Señales estructurales → técnicas
 │   └── schema.json         <- Schema de validación
 ├── labels/                 <- Strings de UI (i18n)
 │   ├── pt.json
@@ -110,7 +116,7 @@ llm-app-rda/
 
 ---
 
-## Loci de defensa
+## Locus de defensa
 
 Las defensas se clasifican por dónde actúan en el pipeline LLM:
 
@@ -156,6 +162,7 @@ El **workflow R-D-A** (pipeline Recon → Defensas → Ataques), las fichas con 
 - **Auditoría de conexiones técnica-defensa** — validar la matriz 50×52 contra mecanismos de detección
 - **Expansión de catálogos** — nuevas defensas, técnicas y evasiones conforme el campo evoluciona; nuevos mapeos de productos conforme vendors lanzan guardrails
 - **Regresión automatizada** — pipeline CI para ejecutar `build.py --validate` en cada commit
+- **Validación ciega de la guía de decisión (triaje)** — probar cada rama del árbol de triaje con casos públicos independientes (write-ups de CTF/red team, engagements autorizados) y reportar la cobertura por rama
 
 ---
 

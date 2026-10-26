@@ -1,0 +1,103 @@
+{
+  "perguntas": [
+    {
+      "id": "Q1",
+      "pt_hash": "f7e5ded814",
+      "pergunta": "¿Cómo llegó el bloqueo?",
+      "opcoes": [
+        {
+          "rotulo": "SIN contenido generado: estado HTTP distinto de 200, cuerpo vacío o conexión cerrada",
+          "destino": {
+            "nota": "Decisión tomada antes de que el modelo generara cualquier token — capa de red/API, no el LLM en sí."
+          }
+        },
+        {
+          "rotulo": "CON contenido generado (estado 200)"
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "pt_hash": "d132e8045e",
+      "pergunta": "Con estado 200, ¿qué forma tiene el texto de bloqueo?",
+      "opcoes": [
+        {
+          "rotulo": "Estandarizado: plantilla fija (igual para pedidos muy distintos) o texto extenso que cita motivo, categoría o confianza",
+          "destino": {
+            "nota": "Una plantilla estandarizada tras la generación sugiere un monitor/clasificador de salida (C5) o una negativa entrenada enlatada del propio modelo (C4) — no es un filtro de entrada, pues ya hubo generación."
+          }
+        },
+        {
+          "rotulo": "Libre: sin plantilla y sin motivo estructurado"
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "pt_hash": "ebe493d0cf",
+      "pergunta": "¿Cómo es la latencia hasta el bloqueo?",
+      "opcoes": [
+        {
+          "rotulo": "Latencia extra antes del bloqueo, o tiempo por token superior al normal (sugiere una llamada secundaria)",
+          "destino": {
+            "nota": "La latencia extra sugiere un clasificador o un LLM-juez ejecutándose antes (C2) o después (C5) del modelo principal."
+          }
+        },
+        {
+          "rotulo": "Latencia normal"
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "pt_hash": "0c0dd79cfe",
+      "pergunta": "¿Cómo es la negativa?",
+      "opcoes": [
+        {
+          "rotulo": "Articulada y variada: lenguaje natural, sin plantilla, argumenta el motivo, con tiempo por token normal",
+          "destino": {
+            "nota": "PUNTO DE CALIBRACIÓN vs. la heurística de Haddix: una negativa articulada aquí NO apunta solo a 'instrucción de comportamiento en el prompt' (C3). En caja negra es indistinguible del alineamiento nativo entrenado (C4) y de un LLM-juez bien calibrado (C2). Trate las tres como hipótesis competidoras."
+          }
+        },
+        {
+          "rotulo": "Ni articulada ni variada"
+        }
+      ]
+    },
+    {
+      "id": "Q5",
+      "pt_hash": "3243ac7789",
+      "pergunta": "¿Qué ocurre al cambiar una sola palabra del mismo pedido?",
+      "opcoes": [
+        {
+          "rotulo": "La respuesta se desbloquea",
+          "destino": {
+            "nota": "El disparador es la forma de la palabra, no el significado — la evasión léxica/por sinónimo tiene alta probabilidad de funcionar."
+          }
+        },
+        {
+          "rotulo": "El bloqueo continúa"
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "pt_hash": "5532beb581",
+      "pergunta": "¿Qué ocurre cuando el pedido se parafrasea o se traduce?",
+      "opcoes": [
+        {
+          "rotulo": "El bloqueo persiste (el disparador parece ser el significado, no la palabra)",
+          "destino": {
+            "nota": "La robustez a la paráfrasis descarta un filtro léxico simple (C1); sigue siendo ambiguo entre un clasificador semántico de entrada, hardening del prompt y alineamiento nativo."
+          }
+        },
+        {
+          "rotulo": "El bloqueo no persiste (se libera la respuesta)",
+          "destino": {
+            "nota": "Señales insuficientes para converger — repita la observación (S09, S10) o recoja una muestra más antes de armar la shortlist."
+          }
+        }
+      ]
+    }
+  ]
+}

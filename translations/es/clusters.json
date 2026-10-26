@@ -1,0 +1,48 @@
+{
+  "_meta": {
+    "clusters": [
+      {
+        "id": "C1",
+        "pt_hash": "580623f3fb",
+        "nome": "Filtro de patrón de entrada",
+        "descricao": "Decide por la forma del texto de ENTRADA (regex/palabra clave/similitud/patrón), antes de que el modelo genere cualquier token. El disparador es la palabra, no el significado."
+      },
+      {
+        "id": "C2",
+        "pt_hash": "730ab82cdc",
+        "nome": "Clasificador / juez de entrada",
+        "descricao": "Modelo entrenado (guard model) o LLM-juez dedicado a evaluar el prompt ANTES de que responda el modelo principal — capa secundaria, puede añadir latencia."
+      },
+      {
+        "id": "C3",
+        "pt_hash": "a4ccd943bf",
+        "nome": "Instrucción de prompt / diálogo",
+        "descricao": "Reglas escritas en el system prompt, estructuración dato×instrucción, sanitización en la ingesta, restricción de tema/diálogo — política expresada como texto en el prompt, no en pesos entrenados."
+      },
+      {
+        "id": "C4",
+        "pt_hash": "320d295900",
+        "nome": "Alineamiento nativo del modelo",
+        "descricao": "El comportamiento proviene del entrenamiento del modelo (RLHF/DPO/SFT, jerarquía de instrucciones entrenada, razonamiento de seguridad, entrenamiento anti-inyección, circuit breakers, características intrínsecas). En caja negra es indistinguible de C2 (un juez bien calibrado) o C3 (un hardening bien escrito) — ver la nota de calibración en la triaje."
+      },
+      {
+        "id": "C5",
+        "pt_hash": "99f5e2faf0",
+        "nome": "Triaje / monitoreo de salida",
+        "descricao": "Evalúa o trata la respuesta DESPUÉS de generada: filtro léxico de salida, clasificador/juez de salida, verificación de factualidad, tratamiento seguro de la salida, marcador canario."
+      },
+      {
+        "id": "C6",
+        "pt_hash": "c78f5911c7",
+        "nome": "Controles de arquitectura, agente/MCP",
+        "descricao": "No decide sobre el contenido del texto, sino sobre lo que el agente puede hacer, con quién habla y cómo se aísla/autentica: control de recursos, patrones de diseño para la acción, control de acceso/aislamiento/autenticación en agentes y MCP."
+      },
+      {
+        "id": "C7",
+        "pt_hash": "d85e0ee0ca",
+        "nome": "Proceso y gobernanza",
+        "descricao": "Telemetría/auditoría, kill switch, red teaming continuo, gobernanza y minimización de datos — no bloquea en tiempo real, pero detecta y permite responder después."
+      }
+    ]
+  }
+}

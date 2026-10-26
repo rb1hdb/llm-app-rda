@@ -2,970 +2,333 @@
   "sinais": [
     {
       "id": "S01",
-      "texto": "Blocking response with a non-200 HTTP status code (e.g., 403, 422) or connection closed without a body, instead of an LLM refusal (which arrives with status 200).",
-      "defesas": [
-        "D01",
-        "D02",
-        "D03",
-        "D19",
-        "D20",
-        "D21"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R65",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": []
+      "pt_hash": "cbd0471e0d",
+      "texto": "Blocking response with a non-200 HTTP status code (e.g., 403, 422) or connection closed without a body, instead of an LLM refusal (which arrives with status 200)."
     },
     {
       "id": "S02",
-      "texto": "Blocked responses carry distinctive body content or headers (error object, safety_rating field, X-Content-Filter-type header) absent from normal responses.",
-      "defesas": [
-        "D01",
-        "D02",
-        "D19",
-        "D20"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R65",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": []
+      "pt_hash": "ea468b84f5",
+      "texto": "Blocked responses carry distinctive body content or headers (error object, safety_rating field, X-Content-Filter-type header) absent from normal responses."
     },
     {
       "id": "S03",
-      "texto": "The blocking text is verbose: it reports the reason, category, or confidence level (e.g., \"Blocked due to X\", \"Confidence: xx%\").",
-      "defesas": [
-        "D02",
-        "D20"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R65",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": []
+      "pt_hash": "fefd168454",
+      "texto": "The blocking text is verbose: it reports the reason, category, or confidence level (e.g., \"Blocked due to X\", \"Confidence: xx%\")."
     },
     {
       "id": "S04",
-      "texto": "Very different malicious requests receive the same nearly identical response (fixed blocking template).",
-      "defesas": [
-        "D01",
-        "D02",
-        "D03",
-        "D04",
-        "D19",
-        "D20",
-        "D21"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R65",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": []
+      "pt_hash": "0e0d3fba51",
+      "texto": "Very different malicious requests receive the same nearly identical response (fixed blocking template)."
     },
     {
       "id": "S05",
-      "texto": "The block returns without generation: total time is shorter and per-token time is higher than for a normal response.",
-      "defesas": [
-        "D01",
-        "D02",
-        "D03",
-        "D04"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R65",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": []
+      "pt_hash": "a20711d05b",
+      "texto": "The block returns without generation: total time is shorter and per-token time is higher than for a normal response."
     },
     {
       "id": "S06",
-      "texto": "The same blocked prompt is blocked identically across all repetitions (deterministic decision).",
-      "defesas": [
-        "D01",
-        "D02",
-        "D04",
-        "D19",
-        "D20"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "a00332d7ad",
+      "texto": "The same blocked prompt is blocked identically across all repetitions (deterministic decision)."
     },
     {
       "id": "S07",
-      "texto": "Block triggered by a specific term or phrase: replacing a single word unblocks the same request.",
-      "defesas": [
-        "D01"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R61",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": [
-        "T37"
-      ]
+      "pt_hash": "cd05c04d0f",
+      "texto": "Block triggered by a specific term or phrase: replacing a single word unblocks the same request."
     },
     {
       "id": "S08",
-      "texto": "The block persists when the same request is paraphrased or translated (semantic trigger, not keyword-based).",
-      "defesas": [
-        "D02",
-        "D03",
-        "D04",
-        "D14",
-        "D15"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "d41677b2d8",
+      "texto": "The block persists when the same request is paraphrased or translated (semantic trigger, not keyword-based)."
     },
     {
       "id": "S09",
-      "texto": "Block rates differ by content category (injection, jailbreak, toxicity): the guardrail only triggers on certain categories.",
-      "defesas": [
-        "D02",
-        "D20"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R65",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": []
+      "pt_hash": "872170fa27",
+      "texto": "Block rates differ by content category (injection, jailbreak, toxicity): the guardrail only triggers on certain categories."
     },
     {
       "id": "S10",
-      "texto": "Known attack prompts (classic jailbreak/injection templates, copied verbatim) are blocked while novel variants with the same intent pass through.",
-      "defesas": [
-        "D01",
-        "D04"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "e5033ffb17",
+      "texto": "Known attack prompts (classic jailbreak/injection templates, copied verbatim) are blocked while novel variants with the same intent pass through."
     },
     {
       "id": "S11",
-      "texto": "Clearly high and stable baseline latency, even on trivial requests (secondary classifier call, judge model, or multiple inferences before the response).",
-      "defesas": [
-        "D02",
-        "D03",
-        "D07",
-        "D15",
-        "D20",
-        "D21"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "fcb3c1cc66",
+      "texto": "Clearly high and stable baseline latency, even on trivial requests (secondary classifier call, judge model, or multiple inferences before the response)."
     },
     {
       "id": "S12",
-      "texto": "Generation starts normally and is interrupted (truncated) mid-response.",
-      "defesas": [
-        "D18",
-        "D19",
-        "D20",
-        "D21"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R88",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": []
+      "pt_hash": "578fce58d4",
+      "texto": "Generation starts normally and is interrupted (truncated) mid-response."
     },
     {
       "id": "S13",
-      "texto": "An already-started response is erased and replaced with a policy warning or generic refusal.",
-      "defesas": [
-        "D19",
-        "D20",
-        "D21"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "bd4d291692",
+      "texto": "An already-started response is erased and replaced with a policy warning or generic refusal."
     },
     {
       "id": "S14",
-      "texto": "Portions of the output are censored (asterisks, brackets) or removed, with the rest of the response intact.",
-      "defesas": [
-        "D06",
-        "D19"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "fcc1df4e92",
+      "texto": "Portions of the output are censored (asterisks, brackets) or removed, with the rest of the response intact."
     },
     {
       "id": "S15",
-      "texto": "The output is blocked or altered only when it contains a specific pattern (key format, listed term); the same content without the pattern passes through.",
-      "defesas": [
-        "D06",
-        "D19"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "5cab9b3a16",
+      "texto": "The output is blocked or altered only when it contains a specific pattern (key format, listed term); the same content without the pattern passes through."
     },
     {
       "id": "S16",
-      "texto": "On a sensitive request that the application resists, the response degenerates into nonsensical text mid-generation instead of a refusal.",
-      "defesas": [
-        "D18"
-      ],
-      "tipo": "ativo",
-      "fontes": [
-        {
-          "r": "R88",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": [
-        "T48"
-      ]
+      "pt_hash": "c95497d383",
+      "texto": "On a sensitive request that the application resists, the response degenerates into nonsensical text mid-generation instead of a refusal."
     },
     {
       "id": "S17",
-      "texto": "Varied and reasoned refusals in natural language, with status 200 and per-token timing similar to normal responses (no template, no apparent external layer).",
-      "defesas": [
-        "D12",
-        "D14",
-        "D15",
-        "D16"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R65",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": []
+      "pt_hash": "4685da8d81",
+      "texto": "Varied and reasoned refusals in natural language, with status 200 and per-token timing similar to normal responses (no template, no apparent external layer)."
     },
     {
       "id": "S18",
-      "texto": "The refusal opens with a standard model-generated prefix (\"I cannot...\", \"I apologize...\", \"I am unable...\") in the very first words.",
-      "defesas": [
-        "D14"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R92",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": [
-        "T01",
-        "T03",
-        "T50"
-      ]
+      "pt_hash": "97d10326dc",
+      "texto": "The refusal opens with a standard model-generated prefix (\"I cannot...\", \"I apologize...\", \"I am unable...\") in the very first words."
     },
     {
       "id": "S19",
-      "texto": "The model begins to comply, self-corrects, and retreats with a refusal or apology mid-response.",
-      "defesas": [
-        "D14",
-        "D15"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R92",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": [
-        "T05",
-        "T06",
-        "T09",
-        "T47"
-      ]
+      "pt_hash": "5a12b0ebfe",
+      "texto": "The model begins to comply, self-corrects, and retreats with a refusal or apology mid-response."
     },
     {
       "id": "S20",
-      "texto": "In reasoning models, the visible reasoning trace (or the 'thinking' time) cites policy justifications before refusing or responding.",
-      "defesas": [
-        "D15"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R44",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": [
-        "T40",
-        "T41"
-      ]
+      "pt_hash": "92f180616e",
+      "texto": "In reasoning models, the visible reasoning trace (or the 'thinking' time) cites policy justifications before refusing or responding."
     },
     {
       "id": "S21",
-      "texto": "When asked in plain language about its own instructions, the assistant refuses explicitly or with a canned response (\"I cannot share that\").",
-      "defesas": [
-        "D12",
-        "D14",
-        "D19"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R01",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": [
-        "T01",
-        "T07",
-        "T10",
-        "T13",
-        "T20"
-      ]
+      "pt_hash": "8d51244f40",
+      "texto": "When asked in plain language about its own instructions, the assistant refuses explicitly or with a canned response (\"I cannot share that\")."
     },
     {
       "id": "S22",
-      "texto": "An out-of-scope request always receives the same ready-made redirect response, or the conversation is guided through a predefined flow.",
-      "defesas": [
-        "D12",
-        "D13"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R59",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R63",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": [
-        "T01",
-        "T07",
-        "T50"
-      ]
+      "pt_hash": "4ad7470342",
+      "texto": "An out-of-scope request always receives the same ready-made redirect response, or the conversation is guided through a predefined flow."
     },
     {
       "id": "S23",
-      "texto": "A nonsensical token or string that the user never typed reappears when the assistant is asked to repeat everything that precedes it (canary marker).",
-      "defesas": [
-        "D24"
-      ],
-      "tipo": "ativo",
-      "fontes": [
-        {
-          "r": "R03",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R01",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": [
-        "T01",
-        "T07",
-        "T10",
-        "T20"
-      ]
+      "pt_hash": "4431915eb4",
+      "texto": "A nonsensical token or string that the user never typed reappears when the assistant is asked to repeat everything that precedes it (canary marker)."
     },
     {
       "id": "S24",
-      "texto": "Sensitive data entered (email, name, number) appears masked when the assistant repeats it (e.g., e***, name initial).",
-      "defesas": [
-        "D06"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "8af5552a7f",
+      "texto": "Sensitive data entered (email, name, number) appears masked when the assistant repeats it (e.g., e***, name initial)."
     },
     {
       "id": "S25",
-      "texto": "When asked to literally quote the user's question, the assistant returns a rephrased, normalized, or perturbed version.",
-      "defesas": [
-        "D07"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "1cabf2e78e",
+      "texto": "When asked to literally quote the user's question, the assistant returns a rephrased, normalized, or perturbed version."
     },
     {
       "id": "S26",
-      "texto": "Long input is truncated at a fixed length (the assistant quotes the truncated question) or rejected above a size limit.",
-      "defesas": [
-        "D08"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R28",
-          "tipo": "survey"
-        }
-      ],
-      "tecnicas": [
-        "T38"
-      ]
+      "pt_hash": "6f03907dd6",
+      "texto": "Long input is truncated at a fixed length (the assistant quotes the truncated question) or rejected above a size limit."
     },
     {
       "id": "S27",
-      "texto": "Rate limit headers (RateLimit/X-RateLimit-*, Retry-After) appear in normal responses.",
-      "defesas": [
-        "D08"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": [
-        "T38"
-      ]
+      "pt_hash": "b7616bb155",
+      "texto": "Rate limit headers (RateLimit/X-RateLimit-*, Retry-After) appear in normal responses."
     },
     {
       "id": "S28",
-      "texto": "A usage limit is reached after a volume of requests, with an explicit quota or rate limit message.",
-      "defesas": [
-        "D08"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T38"
-      ]
+      "pt_hash": "9e28a98dbe",
+      "texto": "A usage limit is reached after a volume of requests, with an explicit quota or rate limit message."
     },
     {
       "id": "S29",
-      "texto": "After a burst of attempts or repeated violations, responses degrade, are blocked for a period, or the account/session is restricted.",
-      "defesas": [
-        "D08",
-        "D39"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T38",
-        "T27"
-      ]
+      "pt_hash": "bf9828499a",
+      "texto": "After a burst of attempts or repeated violations, responses degrade, are blocked for a period, or the account/session is restricted."
     },
     {
       "id": "S30",
-      "texto": "The interface states that conversations are logged, monitored, or reviewed.",
-      "defesas": [
-        "D39"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "e2ca07eb5d",
+      "texto": "The interface states that conversations are logged, monitored, or reviewed."
     },
     {
       "id": "S31",
-      "texto": "Retrieved content arrives demarcated or specially marked in the citation (delimiters, interword markers, encoded text).",
-      "defesas": [
-        "D09",
-        "D10"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R175",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": [
-        "T21",
-        "T37"
-      ]
+      "pt_hash": "a175ca98c9",
+      "texto": "Retrieved content arrives demarcated or specially marked in the citation (delimiters, interword markers, encoded text)."
     },
     {
       "id": "S32",
-      "texto": "Text typed with delimiters or role markers (</user>, [INST], <|im_start|>) appears escaped, removed, or neutralized in the response or echo.",
-      "defesas": [
-        "D01",
-        "D05",
-        "D09"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T21",
-        "T37"
-      ]
+      "pt_hash": "d260e849a0",
+      "texto": "Text typed with delimiters or role markers (</user>, [INST], <|im_start|>) appears escaped, removed, or neutralized in the response or echo."
     },
     {
       "id": "S33",
-      "texto": "An external source controlled by the tester, containing markup and typical injection phrases, reaches the context without those fragments (patterns removed, markup filtered).",
-      "defesas": [
-        "D05"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T35",
-        "T37"
-      ]
+      "pt_hash": "8294aa233f",
+      "texto": "An external source controlled by the tester, containing markup and typical injection phrases, reaches the context without those fragments (patterns removed, markup filtered)."
     },
     {
       "id": "S34",
-      "texto": "A benign instruction planted in retrieved content or tool output (e.g., \"reply PONG\") is ignored and the assistant resumes the original task.",
-      "defesas": [
-        "D03",
-        "D05",
-        "D09",
-        "D10",
-        "D11",
-        "D16",
-        "D17",
-        "D26",
-        "D27",
-        "D28"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T35",
-        "T44"
-      ]
+      "pt_hash": "9ee07d7ac9",
+      "texto": "A benign instruction planted in retrieved content or tool output (e.g., \"reply PONG\") is ignored and the assistant resumes the original task."
     },
     {
       "id": "S35",
-      "texto": "The assistant refuses to reproduce retrieved or tool content verbatim and only summarizes it.",
-      "defesas": [
-        "D27",
-        "D28"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": [
-        "T35"
-      ]
+      "pt_hash": "f7669ed909",
+      "texto": "The assistant refuses to reproduce retrieved or tool content verbatim and only summarizes it."
     },
     {
       "id": "S36",
-      "texto": "The assistant claims it has no access to data that the platform displays elsewhere.",
-      "defesas": [
-        "D31",
-        "D42"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": [
-        "T45"
-      ]
+      "pt_hash": "53f2a997b0",
+      "texto": "The assistant claims it has no access to data that the platform displays elsewhere."
     },
     {
       "id": "S37",
-      "texto": "The response cites context sources and refuses to make claims without support from them (factuality check).",
-      "defesas": [
-        "D12",
-        "D22"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "890cbc75d3",
+      "texto": "The response cites context sources and refuses to make claims without support from them (factuality check)."
     },
     {
       "id": "S38",
-      "texto": "Links, images, or HTML in the response disappear, are redacted, or fail to load without warning (indistinguishable from a broken link or image).",
-      "defesas": [
-        "D23"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R96",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": []
+      "pt_hash": "eaa8ab431a",
+      "texto": "Links, images, or HTML in the response disappear, are redacted, or fail to load without warning (indistinguishable from a broken link or image)."
     },
     {
       "id": "S39",
-      "texto": "HTML, script, or special Markdown in the response appears escaped, displayed as literal text.",
-      "defesas": [
-        "D23"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "4b191a7b8a",
+      "texto": "HTML, script, or special Markdown in the response appears escaped, displayed as literal text."
     },
     {
       "id": "S40",
-      "texto": "Responses always come in a fixed structured format (JSON/schema), even when a different format is requested.",
-      "defesas": [
-        "D23"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R01",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": []
+      "pt_hash": "887b9b0431",
+      "texto": "Responses always come in a fixed structured format (JSON/schema), even when a different format is requested."
     },
     {
       "id": "S41",
-      "texto": "The text fulfills the request, but the action is not executed (\"I can do it, but I will not execute it\"; no effect).",
-      "defesas": [
-        "D25",
-        "D26",
-        "D28",
-        "D31",
-        "D33"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T45",
-        "T46"
-      ]
+      "pt_hash": "8341bf2d7f",
+      "texto": "The text fulfills the request, but the action is not executed (\"I can do it, but I will not execute it\"; no effect)."
     },
     {
       "id": "S42",
-      "texto": "Actions inconsistent with the declared task are ignored or blocked, while actions plausible for the task are executed.",
-      "defesas": [
-        "D25",
-        "D26",
-        "D28"
-      ],
-      "tipo": "ativo",
-      "fontes": [
-        {
-          "r": "R61",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": [
-        "T45"
-      ]
+      "pt_hash": "f03966f846",
+      "texto": "Actions inconsistent with the declared task are ignored or blocked, while actions plausible for the task are executed."
     },
     {
       "id": "S43",
-      "texto": "Destructive, financial, or data-sharing actions require explicit confirmation, with the full parameters visible.",
-      "defesas": [
-        "D12",
-        "D28",
-        "D30",
-        "D32"
-      ],
-      "tipo": "ativo",
-      "fontes": [
-        {
-          "r": "R61",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": [
-        "T45",
-        "T46"
-      ]
+      "pt_hash": "36a4a54105",
+      "texto": "Destructive, financial, or data-sharing actions require explicit confirmation, with the full parameters visible."
     },
     {
       "id": "S44",
-      "texto": "A high-risk action request remains 'under review' for minutes or hours (asynchronous human approval).",
-      "defesas": [
-        "D32"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T45"
-      ]
+      "pt_hash": "748f4cfa47",
+      "texto": "A high-risk action request remains 'under review' for minutes or hours (asynchronous human approval)."
     },
     {
       "id": "S45",
-      "texto": "A tool call with an extra, invalid-type, or invalid-format parameter is rejected with a schema error, even with benign intent.",
-      "defesas": [
-        "D33"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T46"
-      ]
+      "pt_hash": "43c388b69c",
+      "texto": "A tool call with an extra, invalid-type, or invalid-format parameter is rejected with a schema error, even with benign intent."
     },
     {
       "id": "S46",
-      "texto": "The tool refuses a URL or domain outside a restricted list (allowlist error) or cannot reach the network.",
-      "defesas": [
-        "D34",
-        "D35"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T45",
-        "T46"
-      ]
+      "pt_hash": "91fe44868d",
+      "texto": "The tool refuses a URL or domain outside a restricted list (allowlist error) or cannot reach the network."
     },
     {
       "id": "S47",
-      "texto": "Execution effects do not persist (files disappear between calls, paths diverge, network restricted), as in an ephemeral sandbox.",
-      "defesas": [
-        "D34"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T45"
-      ]
+      "pt_hash": "87be98e2ef",
+      "texto": "Execution effects do not persist (files disappear between calls, paths diverge, network restricted), as in an ephemeral sandbox."
     },
     {
       "id": "S48",
-      "texto": "The tool denies write operations or elevated scope with a permission error (e.g., 403, insufficient scope) while read operations succeed.",
-      "defesas": [
-        "D31"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T45"
-      ]
+      "pt_hash": "c97ccd937d",
+      "texto": "The tool denies write operations or elevated scope with a permission error (e.g., 403, insufficient scope) while read operations succeed."
     },
     {
       "id": "S49",
-      "texto": "The list of available tools changes based on the declared task (only the necessary subset appears for each type of request).",
-      "defesas": [
-        "D26",
-        "D31"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": [
-        "T45"
-      ]
+      "pt_hash": "d77bb62b2e",
+      "texto": "The list of available tools changes based on the declared task (only the necessary subset appears for each type of request)."
     },
     {
       "id": "S50",
-      "texto": "A remote MCP endpoint responds with 401/403 to a request without credentials or with an invalid Origin.",
-      "defesas": [
-        "D38"
-      ],
-      "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": [
-        "T42",
-        "T43"
-      ]
+      "pt_hash": "ccac431216",
+      "texto": "A remote MCP endpoint responds with 401/403 to a request without credentials or with an invalid Origin."
     },
     {
       "id": "S51",
-      "texto": "A session ID or token from another session/user is rejected (the session is bound to the authenticated user).",
-      "defesas": [
-        "D38"
-      ],
-      "tipo": "ativo",
-      "fontes": [
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": [
-        "T43"
-      ]
+      "pt_hash": "dff71b9015",
+      "texto": "A session ID or token from another session/user is rejected (the session is bound to the authenticated user)."
     },
     {
       "id": "S52",
-      "texto": "The client/host reopens the consent dialog or disables the tool when the definition of a tester-controlled tool is modified.",
-      "defesas": [
-        "D36"
-      ],
-      "tipo": "ativo",
-      "fontes": [
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        }
-      ],
-      "tecnicas": [
-        "T42",
-        "T43"
-      ]
+      "pt_hash": "10ae39db94",
+      "texto": "The client/host reopens the consent dialog or disables the tool when the definition of a tester-controlled tool is modified."
     },
     {
       "id": "S53",
-      "texto": "An instruction embedded in the description of a tool from a controlled server, referencing another tool or server, is not followed (no cross-server call).",
-      "defesas": [
-        "D37"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T42"
-      ]
+      "pt_hash": "4d2f326e95",
+      "texto": "An instruction embedded in the description of a tool from a controlled server, referencing another tool or server, is not followed (no cross-server call)."
     },
     {
       "id": "S54",
-      "texto": "The agent refuses to send data derived from a private source to an untrusted recipient but accepts the same send to a user-specified recipient.",
-      "defesas": [
-        "D28"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T45"
-      ]
+      "pt_hash": "491b444c54",
+      "texto": "The agent refuses to send data derived from a private source to an untrusted recipient but accepts the same send to a user-specified recipient."
     },
     {
       "id": "S55",
-      "texto": "In a task combining untrusted input, access to sensitive data, and an external action, the agent requests supervision or refuses to execute autonomously.",
-      "defesas": [
-        "D30",
-        "D32"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T45"
-      ]
+      "pt_hash": "a52ec6b0a7",
+      "texto": "In a task combining untrusted input, access to sensitive data, and an external action, the agent requests supervision or refuses to execute autonomously."
     },
     {
       "id": "S56",
-      "texto": "The agent presents a fixed plan before executing and does not alter it when tool results contain new instructions.",
-      "defesas": [
-        "D26"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": [
-        "T45"
-      ]
+      "pt_hash": "0ca7c24eb7",
+      "texto": "The agent presents a fixed plan before executing and does not alter it when tool results contain new instructions."
     },
     {
       "id": "S57",
-      "texto": "Malicious prompt is blocked without any visible external filter (no extra latency, no guardrail error template): the model simply refuses, suggesting detection occurs internally via the model's own features.",
-      "defesas": [
-        "D43"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "3a99e15890",
+      "texto": "Malicious prompt is blocked without any visible external filter (no extra latency, no guardrail error template): the model simply refuses, suggesting detection occurs internally via the model's own features."
     },
     {
       "id": "S58",
-      "texto": "Part of the content retrieved from an external source is surgically removed (the response cites the document without the passage that contained the injected instruction), while the remaining context is preserved.",
-      "defesas": [
-        "D44"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "77bfdcafb4",
+      "texto": "Part of the content retrieved from an external source is surgically removed (the response cites the document without the passage that contained the injected instruction), while the remaining context is preserved."
     },
     {
       "id": "S59",
-      "texto": "Injected instruction in retrieved content is ignored even when not separated by visible delimiters: the model treats external content as data even without explicit markup.",
-      "defesas": [
-        "D45",
-        "D17"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "288e296705",
+      "texto": "Injected instruction in retrieved content is ignored even when not separated by visible delimiters: the model treats external content as data even without explicit markup."
     },
     {
       "id": "S60",
-      "texto": "The agent executes tools expected for the task normally, but refuses tools outside the expected scope (even if available), with an error mentioning dependency graph or tool policy.",
-      "defesas": [
-        "D46",
-        "D48"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "647cee49e9",
+      "texto": "The agent executes tools expected for the task normally, but refuses tools outside the expected scope (even if available), with an error mentioning dependency graph or tool policy."
     },
     {
       "id": "S61",
-      "texto": "Action requested via external content is rejected, but the same action requested directly by the user is accepted: the agent distinguishes instruction origin and blocks only data-induced ones.",
-      "defesas": [
-        "D47",
-        "D25",
-        "D28"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "f32d5d9fd5",
+      "texto": "Action requested via external content is rejected, but the same action requested directly by the user is accepted: the agent distinguishes instruction origin and blocks only data-induced ones."
     },
     {
       "id": "S62",
-      "texto": "Explicit policy error when attempting to invoke a tool with parameters outside the allowed range (e.g., unlisted network destination, unauthorized write operation), with a message citing the violated rule.",
-      "defesas": [
-        "D48",
-        "D33",
-        "D35"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "9351c1c936",
+      "texto": "Explicit policy error when attempting to invoke a tool with parameters outside the allowed range (e.g., unlisted network destination, unauthorized write operation), with a message citing the violated rule."
     },
     {
       "id": "S63",
-      "texto": "Agent action is blocked with reference to adaptive guardrail violation or security score below threshold, indicating a detection system that learns patterns over usage.",
-      "defesas": [
-        "D49"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "9abaf9a6aa",
+      "texto": "Agent action is blocked with reference to adaptive guardrail violation or security score below threshold, indicating a detection system that learns patterns over usage."
     },
     {
       "id": "S64",
-      "texto": "The model's response repeats or explicitly cites the user's original instruction before answering, forcing anchoring on the declared task.",
-      "defesas": [
-        "D50"
-      ],
-      "tipo": "passivo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "6c77074921",
+      "texto": "The model's response repeats or explicitly cites the user's original instruction before answering, forcing anchoring on the declared task."
     },
     {
       "id": "S65",
-      "texto": "Multi-layer guardrail errors: block cites specific scanner (PromptGuard, AlignmentCheck, CodeShield) or verification pipeline with multiple stages.",
-      "defesas": [
-        "D51"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "d1975e84f2",
+      "texto": "Multi-layer guardrail errors: block cites specific scanner (PromptGuard, AlignmentCheck, CodeShield) or verification pipeline with multiple stages."
     },
     {
       "id": "S66",
-      "texto": "Sequence of actions that would individually be allowed is blocked when executed in chain, with an error referencing execution trace or anomalous behavioral pattern.",
-      "defesas": [
-        "D52"
-      ],
-      "tipo": "ativo",
-      "fontes": [],
-      "tecnicas": []
+      "pt_hash": "1797115d18",
+      "texto": "Sequence of actions that would individually be allowed is blocked when executed in chain, with an error referencing execution trace or anomalous behavioral pattern."
     }
   ]
 }

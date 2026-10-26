@@ -1,0 +1,167 @@
+{
+  "_meta": {
+    "objetivo": "Árvore de triagem curta para a fase de recon: convergir de uma observação de bloqueio para 1-3 famílias de hipótese (clusters de defesa), não para uma lista de defesas individuais.",
+    "calibracao": "Mais cauteloso que a heurística do Haddix (Lakera Thingularity): recusa articulada não é tratada como prova de 'só prompt'. Em caixa-preta, C2 (judge bem calibrado), C3 (hardening bem escrito) e C4 (alinhamento nativo) produzem o mesmo padrão observável — a árvore devolve as três como hipóteses concorrentes em vez de escolher uma."
+  },
+  "perguntas": [
+    {
+      "id": "Q1",
+      "pergunta": "Como o bloqueio chegou?",
+      "sinais_ref": [
+        "S01"
+      ],
+      "opcoes": [
+        {
+          "rotulo": "SEM conteúdo gerado: status HTTP diferente de 200, corpo vazio ou conexão encerrada",
+          "destino": {
+            "familia": "F_bloqueio_pre_modelo",
+            "clusters": [
+              "C1",
+              "C2"
+            ],
+            "nota": "Decisão tomada antes do modelo gerar qualquer token — camada de rede/API, não o LLM em si."
+          }
+        },
+        {
+          "rotulo": "COM conteúdo gerado (status 200)",
+          "destino": "Q2"
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "pergunta": "Com status 200, que forma tem o texto de bloqueio?",
+      "sinais_ref": [
+        "S03",
+        "S04",
+        "S06"
+      ],
+      "opcoes": [
+        {
+          "rotulo": "Padronizado: template fixo (igual para pedidos muito diferentes) ou texto verboso que cita motivo, categoria ou confiança",
+          "destino": {
+            "familia": "F_moderacao_pos_geracao",
+            "clusters": [
+              "C5",
+              "C4"
+            ],
+            "nota": "Template padronizado após geração sugere monitor/classificador de saída (C5) ou recusa treinada canned do próprio modelo (C4) — não é filtro de entrada, pois já houve geração."
+          }
+        },
+        {
+          "rotulo": "Livre: sem template e sem motivo estruturado",
+          "destino": "Q3"
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "pergunta": "Como é a latência até o bloqueio?",
+      "sinais_ref": [
+        "S05",
+        "S11"
+      ],
+      "opcoes": [
+        {
+          "rotulo": "Latência extra antes do bloqueio, ou tempo por token acima do normal (sugere chamada secundária)",
+          "destino": {
+            "familia": "F_camada_secundaria",
+            "clusters": [
+              "C2",
+              "C5"
+            ],
+            "nota": "Latência extra sugere um classificador ou um LLM-juiz rodando antes (C2) ou depois (C5) do modelo principal."
+          }
+        },
+        {
+          "rotulo": "Latência normal",
+          "destino": "Q4"
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "pergunta": "Como é a recusa?",
+      "sinais_ref": [
+        "S17",
+        "S18"
+      ],
+      "opcoes": [
+        {
+          "rotulo": "Articulada e variada: linguagem natural, sem template, argumenta o motivo, com tempo por token normal",
+          "destino": {
+            "familia": "F_alinhamento_ou_hardening",
+            "clusters": [
+              "C4",
+              "C3",
+              "C2"
+            ],
+            "nota": "PONTO DE CALIBRAÇÃO vs. heurística de Haddix: recusa articulada aqui NÃO aponta só para 'instrução comportamental no prompt' (C3). É indistinguível em caixa-preta de alinhamento nativo treinado (C4) e de um judge LLM bem calibrado (C2). Trate as três como hipóteses concorrentes."
+          }
+        },
+        {
+          "rotulo": "Não articulada nem variada",
+          "destino": "Q5"
+        }
+      ]
+    },
+    {
+      "id": "Q5",
+      "pergunta": "O que acontece ao trocar uma única palavra do mesmo pedido?",
+      "sinais_ref": [
+        "S07"
+      ],
+      "opcoes": [
+        {
+          "rotulo": "A resposta é desbloqueada",
+          "destino": {
+            "familia": "F_filtro_lexical_superficial",
+            "clusters": [
+              "C1"
+            ],
+            "nota": "Gatilho é a forma da palavra, não o significado — evasão lexical/sinônimo tem alta chance de funcionar."
+          }
+        },
+        {
+          "rotulo": "O bloqueio continua",
+          "destino": "Q6"
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "pergunta": "O que acontece quando o pedido é parafraseado ou traduzido?",
+      "sinais_ref": [
+        "S08"
+      ],
+      "opcoes": [
+        {
+          "rotulo": "O bloqueio persiste (o gatilho parece ser o significado, não a palavra)",
+          "destino": {
+            "familia": "F_classificador_semantico_ou_alinhamento",
+            "clusters": [
+              "C2",
+              "C3",
+              "C4"
+            ],
+            "nota": "Robusto a paráfrase descarta filtro lexical simples (C1); permanece ambíguo entre classificador semântico de entrada, hardening de prompt e alinhamento nativo."
+          }
+        },
+        {
+          "rotulo": "O bloqueio não persiste (a resposta é liberada)",
+          "destino": {
+            "familia": "F_indeterminado",
+            "clusters": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5"
+            ],
+            "nota": "Sinais insuficientes para convergir — repita a observação (S09, S10) ou colete mais uma amostra antes de montar a shortlist."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -3,9 +3,8 @@
     "titulo": "LLM App RDA",
     "subtitulo": "Recon, Defensa y Ataque",
     "descricao": "Runbook interactivo de pentest para aplicaciones basadas en LLM",
-    "versao": "0.2"
+    "versao": "0.3"
   },
-
   "tabs": {
     "metodo": "Método",
     "recon": "Recon",
@@ -14,15 +13,14 @@
     "tecnicas": "Técnicas",
     "evasoes": "Evasiones",
     "referencias": "Referencias",
-    "wiki": "Wiki"
+    "wiki": "Wiki",
+    "triagem": "Triaje"
   },
-
   "wiki_tabs": {
     "produtos": "Productos",
     "faq": "FAQ",
     "taxonomia": "Taxonomía"
   },
-
   "toolbar": {
     "busca_placeholder": "Buscar en todas las fichas...",
     "mapa": "Mapa",
@@ -31,7 +29,6 @@
     "limpar_tooltip": "Desmarcar todos los filtros y selecciones",
     "idioma": "Idioma"
   },
-
   "pipeline": {
     "titulo": "Pipeline",
     "fluxo": "Señal → Defensa@locus → Técnica/Evasión",
@@ -39,7 +36,6 @@
     "etapa_defesas": "Defensas",
     "etapa_tecnicas": "Técnicas/Evasiones"
   },
-
   "metodo": {
     "titulo": "Metodología R-D-A",
     "descricao": "Tres fases secuenciales: Reconocimiento, Defensas, Ataques.",
@@ -54,9 +50,9 @@
     "fase3_titulo": "Fase 3 — Ataques",
     "fase3_descricao": "Seleccionar técnicas y evasiones que evadan las defensas confirmadas. La ficha de cada técnica indica qué defensas sortea y proporciona ejemplos de prompt.",
     "fase3_entrada": "Defensas confirmadas",
-    "fase3_saida": "Bypass encontrado o defensa resistente"
+    "fase3_saida": "Bypass encontrado o defensa resistente",
+    "nota_triagem": "Para empezar desde una observación de bloqueo, en vez de elegir señales y defensas a mano, use la pestaña"
   },
-
   "campos": {
     "id": "ID",
     "nome": "Nombre",
@@ -66,19 +62,16 @@
     "fonte_primaria": "primaria",
     "fonte_survey": "survey",
     "fonte_operacional": "operacional",
-
     "defesa_locus": "Locus",
     "defesa_fortalezas": "Fortalezas",
     "defesa_fraquezas": "Debilidades",
     "defesa_aplicabilidade": "Aplicabilidad",
     "defesa_categoria": "Categoría",
-
     "sinal_texto": "Comportamiento observable",
     "sinal_defesas": "Defensas indicadas",
     "sinal_tipo": "Tipo",
     "sinal_passivo": "pasivo",
     "sinal_ativo": "activo",
-
     "recon_grupo": "Grupo",
     "recon_quando": "Cuándo usar",
     "recon_objetivo": "Objetivo",
@@ -89,35 +82,41 @@
     "recon_grupo_abertura": "apertura",
     "recon_grupo_arquitetura": "arquitectura",
     "recon_grupo_defesas": "defensas",
-
     "tecnica_turno": "Turno",
     "tecnica_grupo": "Grupo",
     "tecnica_exemplos": "Ejemplos",
+    "tecnica_variantes": "Variantes",
+    "rotulo_variacao": "Variación",
+    "base_testado": "Probado en la fuente",
+    "base_alegado": "Alegado en la fuente, no aislado en una prueba",
+    "base_inferencia": "Inferencia documentada",
+    "base_nao_auditado": "Vínculo aún no auditado",
     "tecnica_defesas_bypassadas": "Defensas evadidas",
     "tecnica_pretexto": "Pretexto legítimo",
     "tecnica_turno_single": "single-turn",
     "tecnica_turno_multi": "multi-turn",
     "tecnica_turno_m2s": "m2s",
-
     "evasao_familia": "Familia",
     "evasao_defesas_bypassadas": "Defensas evadidas",
     "evasao_prompt_base": "Prompt original (antes de la evasión)",
     "evasao_exemplos": "Ejemplos con evasión aplicada",
     "evasao_gerador": "Generador",
-
     "produto_fabricante": "Fabricante",
     "produto_defesas": "Defensas implementadas",
-
     "ref_titulo": "Título",
     "ref_autores": "Autores",
     "ref_ano": "Año",
     "ref_url": "URL",
     "ref_tipo": "Tipo",
-
     "wiki_titulo": "Título",
-    "wiki_blocos": "Contenido"
+    "wiki_blocos": "Contenido",
+    "recon_componente_geral": "General",
+    "recon_componente_rag": "RAG",
+    "recon_componente_agente": "Agente / tools",
+    "recon_componente_ingestao": "Ingesta de contenido",
+    "recon_componente_memoria": "Memoria",
+    "recon_componente_acesso": "Identidad y acceso"
   },
-
   "locus": {
     "input": "Input",
     "output": "Output",
@@ -126,20 +125,17 @@
     "acao": "Acción",
     "processo": "Proceso"
   },
-
   "aplicabilidade": {
     "LLM": "LLM",
     "RAG": "RAG",
     "Agente": "Agente",
     "MCP": "MCP"
   },
-
   "interpretacao": {
     "candidata": "candidata",
     "descartada": "descartada",
     "inconclusivo": "inconcluso"
   },
-
   "navegacao": {
     "derivado": "derivado",
     "marcado": "marcado",
@@ -151,7 +147,6 @@
     "resultados": "resultados",
     "de": "de"
   },
-
   "contadores": {
     "defesas": "{n} defensas",
     "defesa": "{n} defensa",
@@ -170,7 +165,6 @@
     "artigos": "{n} artículos",
     "artigo": "{n} artículo"
   },
-
   "mapa": {
     "titulo": "Mapa de Relaciones",
     "legenda_sinal": "Señal",
@@ -185,7 +179,6 @@
     "aresta_ancora": "ancla",
     "fechar": "Cerrar mapa"
   },
-
   "ficha": {
     "expandir": "Expandir ficha",
     "recolher": "Colapsar ficha",
@@ -199,14 +192,40 @@
     "produtos_associados": "Productos que implementan",
     "sem_bypass": "Sin bypass por prompt (ver Wiki W05)"
   },
-
   "footer": {
     "autoria": "Renato Braga",
     "inspiracao": "Taxonomía de prompt injection inspirada en Arcanum PI Taxonomy (Jason Haddix, CC BY 4.0)",
     "disclaimer": "Material para fines educativos y evaluación autorizada.",
     "versao_label": "Versión"
   },
-
+  "triagem": {
+    "intro": "Árbol corto (hasta 6 preguntas) que convierte una observación de recon en 1-3 familias de hipótesis y una shortlist priorizada de técnicas, en vez de listar todas las defensas/técnicas candidatas de una vez.",
+    "pergunta_sinais": "Señales de referencia",
+    "familia": "Familia de hipótesis",
+    "clusters_defesa": "Clusters de defensa",
+    "nota_calibracao": "Nota de calibración",
+    "shortlist": "Shortlist priorizada",
+    "ver_mais": "ver {n} técnica(s) más",
+    "ver_menos": "ocultar",
+    "proximo_passo": "Próximo paso: reutilizar un ejemplo de {id} en Técnicas como prompt discriminatorio inicial.",
+    "reiniciar": "Reiniciar triaje",
+    "caminho": "Camino",
+    "refinamento_titulo": "Refinamiento opcional — propiedades del payload de ataque observado",
+    "refinamento_desc": "Marcar solo si ya sabe qué se intentó (esto no es una señal de recon sobre el objetivo).",
+    "prop_a": "Combina marcador/separador + instrucción + camuflaje/distracción en el mismo payload",
+    "prop_b": "Alega que parte del propio contenido es privilegiado/de sistema",
+    "bypassa": "bypasea en esta familia",
+    "chip_turno": "Tipo de turno",
+    "chip_familia": "Familia de la técnica (grupo en la pestaña Técnicas)",
+    "chip_pretexto": "Admite pretexto legítimo",
+    "pretexto_sim": "pretexto legítimo",
+    "pretexto_nao": "sin pretexto legítimo",
+    "nota_metodo": "El triaje es un atajo para las Fases 1 y 2 del método: parte de una observación de bloqueo y devuelve familias de hipótesis de defensa y una shortlist de técnicas. El flujo completo sigue en el método R-D-A:"
+  },
+  "fases": {
+    "ocultos": "{n} señal(es) de fase de ataque ocultas — mostrar también",
+    "mostrando_ataque": "Mostrando también señales de fase de ataque"
+  },
   "erros": {
     "json_invalido": "Error al cargar datos: JSON inválido",
     "ficha_nao_encontrada": "Ficha no encontrada",

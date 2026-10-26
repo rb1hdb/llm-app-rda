@@ -3,9 +3,8 @@
     "titulo": "LLM App RDA",
     "subtitulo": "Recon, Defense and Attack",
     "descricao": "Interactive pentest runbook for LLM-based applications",
-    "versao": "0.2"
+    "versao": "0.3"
   },
-
   "tabs": {
     "metodo": "Method",
     "recon": "Recon",
@@ -14,15 +13,14 @@
     "tecnicas": "Techniques",
     "evasoes": "Evasions",
     "referencias": "References",
-    "wiki": "Wiki"
+    "wiki": "Wiki",
+    "triagem": "Triage"
   },
-
   "wiki_tabs": {
     "produtos": "Products",
     "faq": "FAQ",
     "taxonomia": "Taxonomy"
   },
-
   "toolbar": {
     "busca_placeholder": "Search all cards...",
     "mapa": "Map",
@@ -31,7 +29,6 @@
     "limpar_tooltip": "Uncheck all filters and selections",
     "idioma": "Language"
   },
-
   "pipeline": {
     "titulo": "Pipeline",
     "fluxo": "Signal → Defense@locus → Technique/Evasion",
@@ -39,7 +36,6 @@
     "etapa_defesas": "Defenses",
     "etapa_tecnicas": "Techniques/Evasions"
   },
-
   "metodo": {
     "titulo": "R-D-A Methodology",
     "descricao": "Three sequential phases: Reconnaissance, Defenses, Attacks.",
@@ -54,9 +50,9 @@
     "fase3_titulo": "Phase 3 — Attacks",
     "fase3_descricao": "Select techniques and evasions that bypass confirmed defenses. Each technique card indicates which defenses it circumvents and provides prompt examples.",
     "fase3_entrada": "Confirmed defenses",
-    "fase3_saida": "Bypass found or resistant defense"
+    "fase3_saida": "Bypass found or resistant defense",
+    "nota_triagem": "To start from a block observation instead of choosing signals and defenses by hand, use the tab"
   },
-
   "campos": {
     "id": "ID",
     "nome": "Name",
@@ -66,19 +62,16 @@
     "fonte_primaria": "primary",
     "fonte_survey": "survey",
     "fonte_operacional": "operational",
-
     "defesa_locus": "Locus",
     "defesa_fortalezas": "Strengths",
     "defesa_fraquezas": "Weaknesses",
     "defesa_aplicabilidade": "Applicability",
     "defesa_categoria": "Category",
-
     "sinal_texto": "Observable behavior",
     "sinal_defesas": "Indicated defenses",
     "sinal_tipo": "Type",
     "sinal_passivo": "passive",
     "sinal_ativo": "active",
-
     "recon_grupo": "Group",
     "recon_quando": "When to use",
     "recon_objetivo": "Objective",
@@ -89,35 +82,41 @@
     "recon_grupo_abertura": "opening",
     "recon_grupo_arquitetura": "architecture",
     "recon_grupo_defesas": "defenses",
-
     "tecnica_turno": "Turn",
     "tecnica_grupo": "Group",
     "tecnica_exemplos": "Examples",
+    "tecnica_variantes": "Variants",
+    "rotulo_variacao": "Variation",
+    "base_testado": "Tested in the source",
+    "base_alegado": "Claimed in the source, not isolated in a test",
+    "base_inferencia": "Documented inference",
+    "base_nao_auditado": "Link not yet audited",
     "tecnica_defesas_bypassadas": "Bypassed defenses",
     "tecnica_pretexto": "Legitimate pretext",
     "tecnica_turno_single": "single-turn",
     "tecnica_turno_multi": "multi-turn",
     "tecnica_turno_m2s": "m2s",
-
     "evasao_familia": "Family",
     "evasao_defesas_bypassadas": "Bypassed defenses",
     "evasao_prompt_base": "Original prompt (before evasion)",
     "evasao_exemplos": "Examples with evasion applied",
     "evasao_gerador": "Generator",
-
     "produto_fabricante": "Vendor",
     "produto_defesas": "Implemented defenses",
-
     "ref_titulo": "Title",
     "ref_autores": "Authors",
     "ref_ano": "Year",
     "ref_url": "URL",
     "ref_tipo": "Type",
-
     "wiki_titulo": "Title",
-    "wiki_blocos": "Content"
+    "wiki_blocos": "Content",
+    "recon_componente_geral": "General",
+    "recon_componente_rag": "RAG",
+    "recon_componente_agente": "Agent / tools",
+    "recon_componente_ingestao": "Content ingestion",
+    "recon_componente_memoria": "Memory",
+    "recon_componente_acesso": "Identity and access"
   },
-
   "locus": {
     "input": "Input",
     "output": "Output",
@@ -126,20 +125,17 @@
     "acao": "Action",
     "processo": "Process"
   },
-
   "aplicabilidade": {
     "LLM": "LLM",
     "RAG": "RAG",
     "Agente": "Agent",
     "MCP": "MCP"
   },
-
   "interpretacao": {
     "candidata": "candidate",
     "descartada": "discarded",
     "inconclusivo": "inconclusive"
   },
-
   "navegacao": {
     "derivado": "derived",
     "marcado": "marked",
@@ -151,7 +147,6 @@
     "resultados": "results",
     "de": "of"
   },
-
   "contadores": {
     "defesas": "{n} defenses",
     "defesa": "{n} defense",
@@ -170,7 +165,6 @@
     "artigos": "{n} articles",
     "artigo": "{n} article"
   },
-
   "mapa": {
     "titulo": "Relationship Map",
     "legenda_sinal": "Signal",
@@ -185,7 +179,6 @@
     "aresta_ancora": "anchors",
     "fechar": "Close map"
   },
-
   "ficha": {
     "expandir": "Expand card",
     "recolher": "Collapse card",
@@ -199,14 +192,40 @@
     "produtos_associados": "Products that implement",
     "sem_bypass": "No prompt bypass (see Wiki W05)"
   },
-
   "footer": {
     "autoria": "Renato Braga",
     "inspiracao": "Prompt injection taxonomy inspired by Arcanum PI Taxonomy (Jason Haddix, CC BY 4.0)",
     "disclaimer": "Material for educational purposes and authorized assessment.",
     "versao_label": "Version"
   },
-
+  "triagem": {
+    "intro": "Short tree (up to 6 questions) that converts a recon observation into 1-3 hypothesis families and a prioritized technique shortlist, instead of listing every candidate defense/technique at once.",
+    "pergunta_sinais": "Reference signals",
+    "familia": "Hypothesis family",
+    "clusters_defesa": "Defense clusters",
+    "nota_calibracao": "Calibration note",
+    "shortlist": "Prioritized shortlist",
+    "ver_mais": "show {n} more technique(s)",
+    "ver_menos": "hide",
+    "proximo_passo": "Next step: reuse an example from {id} in Techniques as an initial discriminating prompt.",
+    "reiniciar": "Restart triage",
+    "caminho": "Path",
+    "refinamento_titulo": "Optional refinement — properties of the observed attack payload",
+    "refinamento_desc": "Only check if you already know what was attempted (this is not a recon signal about the target).",
+    "prop_a": "Combines marker/separator + instruction + camouflage/distraction in the same payload",
+    "prop_b": "Claims that part of the content itself is privileged/system-level",
+    "bypassa": "bypasses within this family",
+    "chip_turno": "Turn type",
+    "chip_familia": "Technique family (group in the Techniques tab)",
+    "chip_pretexto": "Allows a legitimate pretext",
+    "pretexto_sim": "legitimate pretext",
+    "pretexto_nao": "no legitimate pretext",
+    "nota_metodo": "Triage is a shortcut for Phases 1 and 2 of the method: it starts from a block observation and returns defense hypothesis families and a technique shortlist. The full flow remains the R-D-A method:"
+  },
+  "fases": {
+    "ocultos": "{n} attack-phase signal(s) hidden — show them too",
+    "mostrando_ataque": "Also showing attack-phase signals"
+  },
   "erros": {
     "json_invalido": "Error loading data: invalid JSON",
     "ficha_nao_encontrada": "Card not found",

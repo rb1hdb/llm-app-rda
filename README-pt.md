@@ -3,7 +3,7 @@
 <p align="center">
   <a href="https://rb1hdb.github.io/llm-app-rda/"><img src="https://img.shields.io/badge/Site%20ao%20vivo-llm--app--rda-9966CC?style=for-the-badge&logo=lightning&logoColor=white" alt="Site"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/licen%C3%A7a-CC%20BY%204.0-2ea44f?style=for-the-badge&logo=creative-commons&logoColor=white" alt="Licença"></a>
-  <img src="https://img.shields.io/badge/vers%C3%A3o-0.2-1f6feb?style=for-the-badge&logo=git&logoColor=white" alt="Versão">
+  <img src="https://img.shields.io/badge/vers%C3%A3o-0.3-1f6feb?style=for-the-badge&logo=git&logoColor=white" alt="Versão">
   <img src="https://img.shields.io/badge/uso-educacional%20%26%20autorizado-d73a4a?style=for-the-badge&logo=law&logoColor=white" alt="Uso">
 </p>
 
@@ -19,11 +19,13 @@ Runbook interativo de pentest para aplicações baseadas em LLM. Metodologia est
 
 | Fase | Conteúdo |
 |------|----------|
-| **R — Recon** | 36 prompts black-box + 66 sinais observáveis |
+| **R — Recon** | 37 prompts black-box + 66 sinais observáveis |
 | **D — Defesas** | 52 defesas catalogadas em 6 loci |
 | **A — Ataques** | 50 técnicas de prompt injection + 12 evasões |
 
 **Pipeline:** Sinal → Defesa@locus → Técnica/Evasão
+
+A aba **Triagem** abre a página com um guia de decisão: poucas perguntas observáveis restringem os clusters de defesa prováveis antes do fluxo completo Recon → Sinais → Defesas.
 
 Diferente de coleções de jailbreaks avulsos, cada entrada tem fontes rastreadas (primária, survey ou operacional) e um pipeline reproduzível.
 
@@ -33,15 +35,16 @@ Diferente de coleções de jailbreaks avulsos, cada entrada tem fontes rastreada
 
 | Catálogo | Qtd | Descrição |
 |----------|-----|-----------|
-| **Recon** | 36 | Prompts black-box para identificar defesas sem conhecimento prévio |
+| **Recon** | 37 | Prompts black-box para identificar defesas sem conhecimento prévio |
 | **Sinais** | 66 | Heurísticas observáveis indicando defesas ativas |
 | **Defesas** | 52 | Fichas com definição, locus, fortalezas, fraquezas, aplicabilidade |
 | **Técnicas** | 50 | Técnicas de ataque organizadas por turno e grupo |
 | **Evasões** | 12 | Transformações para escapar detecção |
 | **Produtos** | 14 | Ferramentas comerciais mapeadas para defesas que implementam |
-| **Referências** | 231 | Fontes (224 primárias + 4 surveys + 3 operacionais) |
+| **Referências** | 232 | Fontes (225 primárias + 4 surveys + 3 operacionais) |
 | **Wiki** | 7 | Artigos conceituais sobre metodologia e decisões de schema |
 | **Taxonomia** | 1 | Árvore hierárquica de ataques |
+| **Triagem** | 6 | Guia de decisão que mapeia observações a clusters de defesa |
 
 ---
 
@@ -89,11 +92,14 @@ llm-app-rda/
 │   ├── sinais.json         <- 66 sinais
 │   ├── tecnicas.json       <- 50 técnicas
 │   ├── evasoes.json        <- 12 evasões
-│   ├── recon.json          <- 36 prompts de recon
+│   ├── recon.json          <- 37 prompts de recon
 │   ├── produtos.json       <- 14 produtos
-│   ├── referencias.json    <- 231 referências
+│   ├── referencias.json    <- 232 referências
 │   ├── wiki.json           <- 7 artigos
 │   ├── taxonomia.json      <- Árvore taxonômica
+│   ├── triagem.json        <- Árvore de triagem (perguntas → clusters)
+│   ├── clusters.json       <- Mapa defesa → cluster
+│   ├── sinais_estruturais.json <- Sinais estruturais → técnicas
 │   └── schema.json         <- Schema de validação
 ├── labels/                 <- Strings de UI (i18n)
 │   ├── pt.json
@@ -110,7 +116,7 @@ llm-app-rda/
 
 ---
 
-## Loci de defesa
+## Locus da defesa
 
 Defesas são classificadas por onde atuam no pipeline LLM:
 
@@ -156,6 +162,7 @@ O **workflow R-D-A** (pipeline Recon → Defesas → Ataques), as fichas com fon
 - **Auditoria de conexões técnica-defesa** — validar a matriz 50×52 contra mecanismos de detecção
 - **Expansão de catálogos** — novas defesas, técnicas e evasões conforme o campo evolui; novos mapeamentos de produtos conforme vendors lançam guardrails
 - **Regressão automatizada** — pipeline CI para rodar `build.py --validate` em cada commit
+- **Validação cega do guia de decisão (triagem)** — testar cada ramo da árvore de triagem com casos públicos independentes (write-ups de CTF/red team, engajamentos autorizados) e reportar a cobertura por ramo
 
 ---
 

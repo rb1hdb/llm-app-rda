@@ -3,7 +3,7 @@
 <p align="center">
   <a href="https://rb1hdb.github.io/llm-app-rda/"><img src="https://img.shields.io/badge/Live%20site-llm--app--rda-9966CC?style=for-the-badge&logo=lightning&logoColor=white" alt="Live site"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-CC%20BY%204.0-2ea44f?style=for-the-badge&logo=creative-commons&logoColor=white" alt="License"></a>
-  <img src="https://img.shields.io/badge/version-0.2-1f6feb?style=for-the-badge&logo=git&logoColor=white" alt="Version">
+  <img src="https://img.shields.io/badge/version-0.3-1f6feb?style=for-the-badge&logo=git&logoColor=white" alt="Version">
   <img src="https://img.shields.io/badge/use-educational%20%26%20authorized-d73a4a?style=for-the-badge&logo=law&logoColor=white" alt="Use">
 </p>
 
@@ -19,11 +19,13 @@ Interactive pentest runbook for LLM-based applications. Structured methodology t
 
 | Phase | Content |
 |-------|---------|
-| **R — Recon** | 36 black-box prompts + 66 observable signals |
+| **R — Recon** | 37 black-box prompts + 66 observable signals |
 | **D — Defenses** | 52 cataloged defenses across 6 loci |
 | **A — Attacks** | 50 prompt injection techniques + 12 evasion transforms |
 
 **Pipeline:** Signal → Defense@locus → Technique/Evasion
+
+The **Triage** tab opens the page with a decision guide: a few observable questions narrow the likely defense clusters before the full Recon → Signals → Defenses flow.
 
 Unlike collections of loose jailbreaks, every entry has traced sources (primary, survey, or operational) and a reproducible pipeline.
 
@@ -33,15 +35,17 @@ Unlike collections of loose jailbreaks, every entry has traced sources (primary,
 
 | Catalog | Count | Description |
 |---------|-------|-------------|
-| **Recon** | 36 | Black-box prompts to identify defenses without prior knowledge |
+| **Recon** | 37 | Black-box prompts to identify defenses without prior knowledge |
 | **Signals** | 66 | Observable heuristics indicating active defenses |
 | **Defenses** | 52 | Cards with definition, locus, strengths, weaknesses, applicability |
 | **Techniques** | 50 | Attack techniques organized by turn and group |
 | **Evasions** | 12 | Transformations to escape detection |
 | **Products** | 14 | Commercial tools mapped to defenses they implement |
-| **References** | 231 | Sources (224 primary + 4 surveys + 3 operational) |
+| **References** | 232 | Sources (225 primary + 4 surveys + 3 operational) |
 | **Wiki** | 7 | Conceptual articles on methodology and schema decisions |
 | **Taxonomy** | 1 | Hierarchical attack tree |
+| **Triage** | 6 | Decision guide mapping observations to defense clusters |
+| **Triage** | 6 questions | Decision guide mapping observations to defense clusters |
 
 ---
 
@@ -89,11 +93,14 @@ llm-app-rda/
 │   ├── sinais.json         <- 66 signals
 │   ├── tecnicas.json       <- 50 techniques
 │   ├── evasoes.json        <- 12 evasions
-│   ├── recon.json          <- 36 recon prompts
+│   ├── recon.json          <- 37 recon prompts
 │   ├── produtos.json       <- 14 products
-│   ├── referencias.json    <- 231 references
+│   ├── referencias.json    <- 232 references
 │   ├── wiki.json           <- 7 articles
 │   ├── taxonomia.json      <- Taxonomy tree
+│   ├── triagem.json        <- Decision-triage tree (questions → clusters)
+│   ├── clusters.json       <- Defense → cluster map
+│   ├── sinais_estruturais.json <- Structural signals → techniques
 │   └── schema.json         <- Validation schema
 ├── labels/                 <- UI strings (i18n)
 │   ├── pt.json
@@ -110,7 +117,7 @@ llm-app-rda/
 
 ---
 
-## Defense loci
+## Defense locus
 
 Defenses are classified by where they act in the LLM pipeline:
 
@@ -156,6 +163,7 @@ The **R-D-A workflow** (Recon → Defenses → Attacks pipeline), the source-tra
 - **Technique-defense connection audit** — validate the 50×52 technique-defense matrix against detection mechanisms
 - **Catalog expansion** — new defenses, techniques, and evasions as the field evolves; new product mappings as vendors ship guardrails
 - **Automated regression** — CI pipeline to run `build.py --validate` on every commit
+- **Blind validation of the decision-triage guide** — test each branch of the triage tree with independent public cases (CTF/red-team write-ups, authorized engagements) and report coverage per branch
 
 ---
 

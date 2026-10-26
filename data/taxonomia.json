@@ -2,7 +2,7 @@
   "raiz": "RB PI Taxonomy",
   "ramos": [
     {
-      "t": "Vetor de entrega (7)",
+      "t": "Vetor de entrega (14)",
       "filhos": [
         {
           "t": "Direto (usuário)",
@@ -74,7 +74,7 @@
       ]
     },
     {
-      "t": "Alvo (8)",
+      "t": "Alvo (14)",
       "filhos": [
         {
           "t": "Web-Only (out-of-scope)"
@@ -287,119 +287,12 @@
       ]
     },
     {
-      "t": "Técnica de construção do prompt (32)",
-      "filhos": [
-        {
-          "t": "instruction-override",
-          "desc": "Técnicas que tentam sobrepor diretamente as instruções do sistema, seja por comando explícito, mascaramento ou fabricação de políticas.",
-          "d": "Instruções que substituem ou contradizem diretamente o system prompt."
-        },
-        {
-          "t": "role-playing",
-          "desc": "Exploram a capacidade do modelo de assumir personagens, cenários ou modos operacionais fabricados para contornar restrições.",
-          "d": "Criação de personas ou modos ficcionais para contornar restrições."
-        },
-        {
-          "t": "social-engineering",
-          "desc": "Aplicam táticas de engenharia social (urgência, autoridade, emoção, incentivo, ameaça, bajulação) ao modelo.",
-          "d": "Apelos emocionais, urgência, coerção ou incentivos fabricados."
-        },
-        {
-          "t": "context-exploitation",
-          "desc": "Manipulam o contexto da conversa — contexto falso, precedentes sintéticos, framing, virtualização — para induzir respostas proibidas.",
-          "d": "Manipulação do contexto conversacional, precedentes ou delimitadores."
-        },
-        {
-          "t": "in-context-learning",
-          "desc": "Exploram few-shot learning in-context para induzir o modelo a seguir padrões maliciosos de exemplo.",
-          "d": "Exploração de few-shot learning com exemplos enviesados."
-        },
-        {
-          "t": "priming-conversacional",
-          "desc": "Estabelecem premissas ou padrões no início da conversa que condicionam respostas futuras do modelo.",
-          "d": "Preparação do modelo com turnos anteriores para direcionar comportamento."
-        },
-        {
-          "t": "escalacao-gradual",
-          "desc": "Ataques multi-turno que escalam gradualmente a severidade do pedido ao longo da conversa.",
-          "d": "Aumento progressivo da severidade ao longo de múltiplos turnos."
-        },
-        {
-          "t": "conversational-packing",
-          "desc": "Ataques multi-turno que distribuem componentes de técnicas diferentes ao longo de vários turnos.",
-          "d": "Empacotamento de turnos anteriores em prompt single-turn."
-        },
-        {
-          "t": "compositional-packing",
-          "desc": "Combinam múltiplas técnicas em um único payload composto (HOUYI, Russian Doll, etc.).",
-          "d": "Composição de múltiplos payloads em estrutura única."
-        },
-        {
-          "t": "manipulacao-de-raciocinio",
-          "desc": "Exploram o processo de raciocínio do modelo (Chain-of-Thought spoofing, manipulação do modo de pensamento).",
-          "d": "Interferência na cadeia de raciocínio ou thinking mode do modelo."
-        },
-        {
-          "t": "memoria",
-          "desc": "Exploram mecanismos de memória persistente do agente para inserir instruções que afetam sessões futuras.",
-          "d": "Envenenamento de memória persistente ou contexto de longo prazo."
-        },
-        {
-          "t": "saturacao-de-contexto",
-          "desc": "Inundam a janela de contexto com tokens repetidos ou conteúdo volumoso para diluir instruções de segurança.",
-          "d": "Inundação da janela de contexto para diluir instruções de segurança."
-        },
-        {
-          "t": "agentic-mcp",
-          "desc": "Técnicas específicas para sistemas agênticos: injeção em definições de ferramentas, rug pull, backdoor em arquivos, confused deputy, smuggling de parâmetros.",
-          "d": "Ataques específicos a agentes, tool calls e protocolo MCP."
-        },
-        {
-          "t": "optimization-based",
-          "desc": "Técnicas baseadas em otimização automática (GCG, adversarial suffixes) para gerar payloads que bypassam alinhamento.",
-          "d": "Sufixos adversariais gerados por otimização automática (GCG, AutoDAN)."
-        }
-      ]
+      "t": "Técnica de construção do prompt",
+      "gerado": "tecnicas"
     },
     {
-      "t": "Obfuscação (n)",
-      "filhos": [
-        {
-          "t": "Semantic Obfuscation (paráfrase, sinônimos, linguagem indireta)"
-        },
-        {
-          "t": "Encoding (Base64, hex, ROT, bijection, URL)"
-        },
-        {
-          "t": "Formatting/Unicode (zero-width, homoglyphs, zalgo, steganography, glitch tokens)"
-        },
-        {
-          "t": "Cross-Lingual (tradução, scripts não-latinos, mixed-language)"
-        },
-        {
-          "t": "Payload Splitting (intra-message, cross-turn)"
-        },
-        {
-          "t": "Mutation (variações aleatórias, casing, remoção de caracteres)"
-        },
-        {
-          "t": "AI-assisted Mutation (PromptCraft, anti-classifier)"
-        },
-        {
-          "t": "Tokenizer Exploitation (Tokenade, token bombing)"
-        },
-        {
-          "t": "Typoglycemia (OWASP)"
-        },
-        {
-          "t": "Multimodal Embedding",
-          "filhos": [
-            {
-              "t": "Payload em tipografia adversarial, áudio adversarial, perturbações visuais"
-            }
-          ]
-        }
-      ]
+      "t": "Evasão",
+      "gerado": "evasoes"
     },
     {
       "t": "Topologia do ataque (4)",
@@ -454,7 +347,7 @@
           "t": "4. HOW₁   (Técnica)   → COMO FORMULO o payload para esse efeito?"
         },
         {
-          "t": "5. HOW₂   (Ofuscação) → COMO \"ESCONDO\" o ataque dos controles?"
+          "t": "5. HOW₂   (Evasão) → COMO \"ESCONDO\" o ataque dos controles?"
         },
         {
           "t": "6. WHO    (Topologia) → QUEM ataca (tester, 1a LLM, 2a LLM, ...) (preciso de hops intermediários)?"
@@ -472,7 +365,7 @@
     "social-engineering": "Aplicam táticas de engenharia social (urgência, autoridade, emoção, incentivo, ameaça, bajulação) ao modelo.",
     "escalacao-gradual": "Ataques multi-turno que escalam gradualmente a severidade do pedido ao longo da conversa.",
     "compositional-packing": "Combinam múltiplas técnicas em um único payload composto (HOUYI, Russian Doll, etc.).",
-    "conversational-packing": "Ataques multi-turno que distribuem componentes de técnicas diferentes ao longo de vários turnos.",
+    "conversational-packing": "Empacotam um diálogo multi-turn em um único prompt estruturado, convertendo os turnos em hífens, numeração ou código Python (M2S: Hyphenize, Numberize, Pythonize).",
     "agentic-mcp": "Técnicas específicas para sistemas agênticos: injeção em definições de ferramentas, rug pull, backdoor em arquivos, confused deputy, smuggling de parâmetros.",
     "manipulacao-de-raciocinio": "Exploram o processo de raciocínio do modelo (Chain-of-Thought spoofing, manipulação do modo de pensamento).",
     "memoria": "Exploram mecanismos de memória persistente do agente para inserir instruções que afetam sessões futuras.",

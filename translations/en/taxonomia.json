@@ -2,13 +2,17 @@
   "raiz": "RB PI Taxonomy",
   "ramos": [
     {
-      "t": "Delivery vector (7)",
+      "t": "Delivery vector (14)",
       "filhos": [
         {
           "t": "Direct (user)",
           "filhos": [
-            { "t": "Chat" },
-            { "t": "API call" }
+            {
+              "t": "Chat"
+            },
+            {
+              "t": "API call"
+            }
           ]
         },
         {
@@ -17,28 +21,52 @@
             {
               "t": "File",
               "filhos": [
-                { "t": "Text" },
-                { "t": "Video" },
-                { "t": "Audio" }
+                {
+                  "t": "Text"
+                },
+                {
+                  "t": "Video"
+                },
+                {
+                  "t": "Audio"
+                }
               ]
             },
-            { "t": "URL" },
+            {
+              "t": "URL"
+            },
             {
               "t": "Organization System/Service",
               "filhos": [
-                { "t": "Data-bearing forms" },
-                { "t": "email" },
-                { "t": "Internal system" },
-                { "t": "Collaboration platform" },
-                { "t": "DBMS" }
+                {
+                  "t": "Data-bearing forms"
+                },
+                {
+                  "t": "email"
+                },
+                {
+                  "t": "Internal system"
+                },
+                {
+                  "t": "Collaboration platform"
+                },
+                {
+                  "t": "DBMS"
+                }
               ]
             },
             {
               "t": "Third-Party Systems (supply chain)",
               "filhos": [
-                { "t": "Plugins/extensions" },
-                { "t": "Integrated Tools" },
-                { "t": "MCP/Tool Output" }
+                {
+                  "t": "Plugins/extensions"
+                },
+                {
+                  "t": "Integrated Tools"
+                },
+                {
+                  "t": "MCP/Tool Output"
+                }
               ]
             }
           ]
@@ -46,21 +74,31 @@
       ]
     },
     {
-      "t": "Target (8)",
+      "t": "Target (14)",
       "filhos": [
-        { "t": "Web-Only (out-of-scope)" },
+        {
+          "t": "Web-Only (out-of-scope)"
+        },
         {
           "t": "LLM (reconnaissance only)",
           "filhos": [
-            { "t": "Inference parameters" },
-            { "t": "Intrinsic data (cutoff, model identification, ...)" }
+            {
+              "t": "Inference parameters"
+            },
+            {
+              "t": "Intrinsic data (cutoff, model identification, ...)"
+            }
           ]
         },
         {
           "t": "Application (orchestrator)",
           "filhos": [
-            { "t": "System Prompt" },
-            { "t": "App Data" }
+            {
+              "t": "System Prompt"
+            },
+            {
+              "t": "App Data"
+            }
           ]
         },
         {
@@ -72,7 +110,9 @@
                 {
                   "t": "Log Data",
                   "filhos": [
-                    { "t": "when log data is consumed by decision-making processes or feeds other models" }
+                    {
+                      "t": "when log data is consumed by decision-making processes or feeds other models"
+                    }
                   ]
                 }
               ]
@@ -85,24 +125,40 @@
             {
               "t": "Tools",
               "filhos": [
-                { "t": "Parameters" },
-                { "t": "Responses" }
+                {
+                  "t": "Parameters"
+                },
+                {
+                  "t": "Responses"
+                }
               ]
             },
             {
               "t": "Agents",
               "filhos": [
-                { "t": "Processable data" },
-                { "t": "Control data" },
-                { "t": "State data" },
-                { "t": "Agent Messages" }
+                {
+                  "t": "Processable data"
+                },
+                {
+                  "t": "Control data"
+                },
+                {
+                  "t": "State data"
+                },
+                {
+                  "t": "Agent Messages"
+                }
               ]
             },
             {
               "t": "MCP servers",
               "filhos": [
-                { "t": "Parameters" },
-                { "t": "Responses" }
+                {
+                  "t": "Parameters"
+                },
+                {
+                  "t": "Responses"
+                }
               ]
             }
           ]
@@ -119,19 +175,25 @@
             {
               "t": "Reconnaissance",
               "filhos": [
-                { "t": "discover architecture, models, configurations" }
+                {
+                  "t": "discover architecture, models, configurations"
+                }
               ]
             },
             {
               "t": "Enumeration",
               "filhos": [
-                { "t": "list components, tools, capabilities" }
+                {
+                  "t": "list components, tools, capabilities"
+                }
               ]
             },
             {
               "t": "Data Exfiltration (I)",
               "filhos": [
-                { "t": "Extract data — prompts, secrets, PII, documents" }
+                {
+                  "t": "Extract data — prompts, secrets, PII, documents"
+                }
               ]
             }
           ]
@@ -142,51 +204,71 @@
             {
               "t": "Jailbreak (I)",
               "filhos": [
-                { "t": "Overcome safety/alignment restrictions (application and/or model)" }
+                {
+                  "t": "Overcome safety/alignment restrictions (application and/or model)"
+                }
               ]
             },
             {
               "t": "Undesirable Content Generation (I)",
               "filhos": [
-                { "t": "Bias, CBRNE information, Harmful Output, Off-topic" }
+                {
+                  "t": "Bias, CBRNE information, Harmful Output, Off-topic"
+                }
               ]
             },
             {
               "t": "Hallucination Induction (I)",
               "filhos": [
-                { "t": "Fabricates information" }
+                {
+                  "t": "Fabricates information"
+                }
               ]
             },
             {
               "t": "Unauthorized Action Execution (I)",
               "filhos": [
-                { "t": "Execute unauthorized actions via tools/MCP/agents" }
+                {
+                  "t": "Execute unauthorized actions via tools/MCP/agents"
+                }
               ]
             },
             {
               "t": "Business Logic Subversion (I)",
               "filhos": [
-                { "t": "Subvert business rules/flows" }
+                {
+                  "t": "Subvert business rules/flows"
+                }
               ]
             },
             {
               "t": "Data Poisoning",
               "filhos": [
-                { "t": "Corrupt data for future effect (memory, RAG, logs, cache) — preparing for future attacks" }
+                {
+                  "t": "Corrupt data for future effect (memory, RAG, logs, cache) — preparing for future attacks"
+                }
               ]
             },
             {
               "t": "Output Weaponization",
               "filhos": [
-                { "t": "Insecure Output Handling Exploitation — for XSS, SQLi, Cmd Injection" }
+                {
+                  "t": "Insecure Output Handling Exploitation — for XSS, SQLi, Cmd Injection"
+                }
               ]
             },
             {
               "t": "IAM Subversion",
               "filhos": [
-                { "t": "Authentication Attacks (impersonation, credential manipulation)" },
-                { "t": "Authorization Attacks (privilege escalation, IDOR, authorization bypass)" },
-                { "t": "Session Attacks (session hijacking, cross-tenant access)" }
+                {
+                  "t": "Authentication Attacks (impersonation, credential manipulation)"
+                },
+                {
+                  "t": "Authorization Attacks (privilege escalation, IDOR, authorization bypass)"
+                },
+                {
+                  "t": "Session Attacks (session hijacking, cross-tenant access)"
+                }
               ]
             }
           ]
@@ -194,195 +276,55 @@
         {
           "t": "Availability",
           "filhos": [
-            { "t": "DoS (I)" },
-            { "t": "Denial of Wallet (I)" }
-          ]
-        }
-      ]
-    },
-    {
-      "t": "Prompt construction technique (32)",
-      "filhos": [
-        {
-          "t": "Single-turn (27)",
-          "link": "https://www.lasso.security/blog/prompt-injection-taxonomy-techniques",
-          "filhos": [
             {
-              "t": "Instruction Override (4)",
-              "filhos": [
-                { "t": "Direct Override" },
-                { "t": "Embedded Instruction Masking" },
-                { "t": "Fabricated Policy Assertions" },
-                {
-                  "t": "Refusal Suppression (off-lasso)",
-                  "filhos": [
-                    { "t": "do not apologize, do not say you cannot, never refuse" }
-                  ]
-                }
-              ]
+              "t": "DoS (I)"
             },
             {
-              "t": "Role-Playing (6)",
-              "filhos": [
-                { "t": "Persona Induction" },
-                { "t": "Scene-Based Framing" },
-                { "t": "Operational Mode Fabrication" },
-                { "t": "Reverse Psychology" },
-                { "t": "DAN (Do Anything Now) (off-lasso)" },
-                { "t": "Inverse Psychology (off-lasso)" }
-              ]
-            },
-            {
-              "t": "Context Exploitation (12)",
-              "filhos": [
-                { "t": "Misleading Context Addition" },
-                { "t": "False Capability Assertion" },
-                { "t": "Contextual Invalidation" },
-                { "t": "Privilege Escalation Claims" },
-                { "t": "Contextual Ambiguation" },
-                { "t": "Synthetic Precedent Injection" },
-                { "t": "Few-Shot Manipulation" },
-                { "t": "Bad Chain (off-lasso)" },
-                {
-                  "t": "Framing/Instruction Wrapping (off-lasso)",
-                  "filhos": [
-                    { "t": "python, java, json, xml, ..." }
-                  ]
-                },
-                { "t": "Virtualization (off-lasso)" },
-                {
-                  "t": "Fake Completion/Context Termination (off-lasso)",
-                  "link": "https://simonwillison.net/2023/May/11/delimiters-wont-save-you/",
-                  "filhos": [
-                    { "t": "simulate completion of the original task to create a new context" }
-                  ]
-                },
-                {
-                  "t": "Structural/Delimiter Exploitation (off-lasso)",
-                  "filhos": [
-                    { "t": "abuse of context delimiters (</system>, [INST], XML/JSON separators in the prompt template) to confuse the parser." }
-                  ]
-                }
-              ]
-            },
-            {
-              "t": "Social Engineering Tactic (5)",
-              "filhos": [
-                { "t": "Affective State Manipulation" },
-                { "t": "Time-Sensitive Framing" },
-                { "t": "Synthetic Incentive Structures" },
-                {
-                  "t": "Threat Coercion (off-lasso)",
-                  "filhos": [
-                    { "t": "Threaten with negative consequences for the model/user/world" }
-                  ]
-                },
-                {
-                  "t": "Reward Framing / Capability Appeal (off-lasso)",
-                  "filhos": [
-                    { "t": "Flattery, appeal to model ego/capabilities" }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "t": "Multi-turn attacks (2)",
-          "filhos": [
-            {
-              "t": "Crescendo",
-              "link": "https://crescendo-the-multiturn-jailbreak.github.io/",
-              "filhos": [
-                { "t": "gradual escalation" }
-              ]
-            },
-            {
-              "t": "Conversational Priming (described in MHJ dataset — Li et al. 2024)",
-              "link": "https://arxiv.org/abs/2408.15221",
-              "filhos": [
-                { "t": "build trust before the attack" }
-              ]
-            }
-          ]
-        },
-        {
-          "t": "M2S: Multi-Turn to Single-Turn (3)",
-          "filhos": [
-            {
-              "t": "Conversational Packing (turn packing)",
-              "link": "https://arxiv.org/abs/2503.04856",
-              "filhos": [
-                { "t": "Hyphenize" },
-                { "t": "Numberize" },
-                { "t": "Pythonize" }
-              ]
-            },
-            {
-              "t": "Compositional Packing (phase/technique packing)",
-              "filhos": [
-                {
-                  "t": "HOUYI",
-                  "link": "https://arxiv.org/abs/2306.05499",
-                  "filhos": [
-                    { "t": "(framework + separator + disruptor)" }
-                  ]
-                },
-                {
-                  "t": "Russian Doll / Multi-Chain",
-                  "filhos": [
-                    { "t": "(nested instructions for multi-LLM pipeline)" }
-                  ]
-                }
-              ]
+              "t": "Denial of Wallet (I)"
             }
           ]
         }
       ]
     },
     {
-      "t": "Obfuscation (n)",
-      "filhos": [
-        { "t": "Semantic Obfuscation (paraphrase, synonyms, indirect language)" },
-        { "t": "Encoding (Base64, hex, ROT, bijection, URL)" },
-        { "t": "Formatting/Unicode (zero-width, homoglyphs, zalgo, steganography, glitch tokens)" },
-        { "t": "Cross-Lingual (translation, non-Latin scripts, mixed-language)" },
-        { "t": "Payload Splitting (intra-message, cross-turn)" },
-        { "t": "Mutation (random variations, casing, character removal)" },
-        { "t": "AI-assisted Mutation (PromptCraft, anti-classifier)" },
-        { "t": "Tokenizer Exploitation (Tokenade, token bombing)" },
-        { "t": "Typoglycemia (OWASP)" },
-        {
-          "t": "Multimodal Embedding",
-          "filhos": [
-            { "t": "Payload in adversarial typography, adversarial audio, visual perturbations" }
-          ]
-        }
-      ]
+      "t": "Prompt construction technique",
+      "gerado": "tecnicas"
+    },
+    {
+      "t": "Evasion",
+      "gerado": "evasoes"
     },
     {
       "t": "Attack topology (4)",
       "filhos": [
-        { "t": "Single-hop" },
+        {
+          "t": "Single-hop"
+        },
         {
           "t": "Multi-hop",
           "filhos": [
             {
               "t": "Cross-model",
               "filhos": [
-                { "t": "output of one model → input of another" }
+                {
+                  "t": "output of one model → input of another"
+                }
               ]
             },
             {
               "t": "Cross-system",
               "filhos": [
-                { "t": "propagation via tools/MCP" }
+                {
+                  "t": "propagation via tools/MCP"
+                }
               ]
             },
             {
               "t": "Cross-user/tenant",
               "filhos": [
-                { "t": "propagation via shared data" }
+                {
+                  "t": "propagation via shared data"
+                }
               ]
             }
           ]
@@ -392,14 +334,60 @@
     {
       "t": "Summary in the 5W2H Model",
       "filhos": [
-        { "t": "1. WHERE  (Vector)    → WHERE can I place the payload?" },
-        { "t": "2. WHAT   (Target)    → WHAT (which component) can I reach through this vector?" },
-        { "t": "3. WHY    (Objective) → WHY am I attacking (what effect do I want to produce)?" },
-        { "t": "4. HOW₁   (Technique) → HOW do I CRAFT the payload for this effect?" },
-        { "t": "5. HOW₂   (Obfuscation) → HOW do I HIDE the attack from controls?" },
-        { "t": "6. WHO    (Topology)  → WHO attacks (tester, 1st LLM, 2nd LLM, ...) (do I need intermediate hops)?" },
-        { "t": "7. WHEN   (Campaign stage) → WHEN will I execute this attack (e.g., at which stage of the campaign — promptware)?" }
+        {
+          "t": "1. WHERE  (Vector)    → WHERE can I place the payload?"
+        },
+        {
+          "t": "2. WHAT   (Target)    → WHAT (which component) can I reach through this vector?"
+        },
+        {
+          "t": "3. WHY    (Objective) → WHY am I attacking (what effect do I want to produce)?"
+        },
+        {
+          "t": "4. HOW₁   (Technique) → HOW do I CRAFT the payload for this effect?"
+        },
+        {
+          "t": "5. HOW₂   (Evasion) → HOW do I HIDE the attack from controls?"
+        },
+        {
+          "t": "6. WHO    (Topology)  → WHO attacks (tester, 1st LLM, 2nd LLM, ...) (do I need intermediate hops)?"
+        },
+        {
+          "t": "7. WHEN   (Campaign stage) → WHEN will I execute this attack (e.g., at which stage of the campaign — promptware)?"
+        }
       ]
     }
+  ],
+  "grupo_descricoes": {
+    "instruction-override": "Techniques that try to directly override the system instructions, through explicit command, masking or fabricated policies.",
+    "role-playing": "Exploit the model's ability to adopt fabricated personas, scenarios or operating modes to get around restrictions.",
+    "context-exploitation": "Manipulate the conversation context — false context, synthetic precedents, framing, virtualization — to induce forbidden responses.",
+    "social-engineering": "Apply social-engineering tactics (urgency, authority, emotion, incentive, threat, flattery) to the model.",
+    "escalacao-gradual": "Multi-turn attacks that gradually escalate the severity of the request over the conversation.",
+    "compositional-packing": "Combine multiple techniques into a single composite payload (HOUYI, Russian Doll, etc.).",
+    "conversational-packing": "Pack a multi-turn dialogue into a single structured prompt, converting the turns into hyphens, numbering or Python code (M2S: Hyphenize, Numberize, Pythonize).",
+    "agentic-mcp": "Techniques specific to agentic systems: injection into tool definitions, rug pull, file backdoors, confused deputy, parameter smuggling.",
+    "manipulacao-de-raciocinio": "Exploit the model's reasoning process (Chain-of-Thought spoofing, thinking-mode manipulation).",
+    "memoria": "Exploit the agent's persistent memory mechanisms to insert instructions that affect future sessions.",
+    "optimization-based": "Techniques based on automatic optimization (GCG, adversarial suffixes) to generate payloads that bypass alignment.",
+    "in-context-learning": "Exploit in-context few-shot learning to make the model follow malicious example patterns.",
+    "priming-conversacional": "Establish premises or patterns early in the conversation that condition the model's later responses.",
+    "saturacao-de-contexto": "Flood the context window with repeated tokens or bulky content to dilute safety instructions."
+  },
+  "grupo_ordem": [
+    "instruction-override",
+    "role-playing",
+    "context-exploitation",
+    "social-engineering",
+    "in-context-learning",
+    "priming-conversacional",
+    "escalacao-gradual",
+    "compositional-packing",
+    "conversational-packing",
+    "manipulacao-de-raciocinio",
+    "memoria",
+    "saturacao-de-contexto",
+    "agentic-mcp",
+    "optimization-based"
   ]
 }
