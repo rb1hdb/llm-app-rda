@@ -195,7 +195,7 @@
     "sinais_associados": "Sinais associados",
     "probes_associados": "Probes de recon",
     "produtos_associados": "Produtos que implementam",
-    "sem_bypass": "Sem bypass por prompt (ver Wiki W05)"
+    "sem_bypass": "Sem técnica ou evasão vinculada (ver Wiki W05)"
   },
   "footer": {
     "autoria": "Renato Braga",
