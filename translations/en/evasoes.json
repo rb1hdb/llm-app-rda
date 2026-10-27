@@ -54,6 +54,20 @@
       "rotulos": [
         "Variable splitting",
         "Multi-part"
+      ],
+      "bypass": [
+        {
+          "defesa": "D07",
+          "nota": "DrAttack (decomposing the request into sub-prompts) kept a high ASR against RA-LLM (random token dropping with aggregation): the drop was small, while PAIR and DeepInception dropped considerably (R83, Fig. 8b)."
+        },
+        {
+          "defesa": "D20",
+          "nota": "DrAttack kept a high ASR with the OpenAI Moderation Endpoint applied to responses: the drop was small (R83, Fig. 8b)."
+        },
+        {
+          "defesa": "D16",
+          "nota": "R83 (appendix C.4) states that closed-source defenses such as the 'Instruction Hierarchy' were also bypassed by DrAttack; values not detailed in the text."
+        }
       ]
     },
     {

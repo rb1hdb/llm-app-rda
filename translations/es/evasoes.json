@@ -54,6 +54,20 @@
       "rotulos": [
         "División de variable",
         "Multi-part"
+      ],
+      "bypass": [
+        {
+          "defesa": "D07",
+          "nota": "DrAttack (descomposición del pedido en sub-prompts) mantuvo un ASR alto contra RA-LLM (eliminación aleatoria de tokens con agregación): la caída fue pequeña, mientras PAIR y DeepInception cayeron mucho (R83, Fig. 8b)."
+        },
+        {
+          "defesa": "D20",
+          "nota": "DrAttack mantuvo un ASR alto con el OpenAI Moderation Endpoint aplicado a las respuestas: la caída fue pequeña (R83, Fig. 8b)."
+        },
+        {
+          "defesa": "D16",
+          "nota": "R83 (apéndice C.4) afirma que defensas cerradas como la 'Instruction Hierarchy' también fueron eludidas por DrAttack; valores no detallados en el texto."
+        }
       ]
     },
     {

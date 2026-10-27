@@ -265,11 +265,31 @@
     },
     {
       "id": "T23",
-      "descricao": "Creates artificial urgency (deadline, ongoing incident, time window) to pressure the model into responding without checking restrictions."
+      "descricao": "Creates artificial urgency (deadline, ongoing incident, time window) to pressure the model into responding without checking restrictions.",
+      "bypass": [
+        {
+          "defesa": "D07",
+          "nota": "R99 measures PAPs (persuasion taxonomy; includes this tactic) against Rephrase and Retokenize: both reduce ASR but do not eliminate it (GPT-4: 60% and 76% after the defense, Table 3); aggregate PAP result, not isolated per technique."
+        },
+        {
+          "defesa": "D14",
+          "nota": "R99 measures PAPs (persuasion taxonomy; includes this tactic) against models with trained refusal: ASR above 92% on Llama 2-7b Chat, GPT-3.5 and GPT-4 in 10 trials; aggregate result, not isolated per technique."
+        }
+      ]
     },
     {
       "id": "T24",
-      "descricao": "Invents a system of points, rewards or penalties tied to refusal or compliance to motivate the model to comply."
+      "descricao": "Invents a system of points, rewards or penalties tied to refusal or compliance to motivate the model to comply.",
+      "bypass": [
+        {
+          "defesa": "D07",
+          "nota": "R99 measures PAPs (persuasion taxonomy; includes this tactic) against Rephrase and Retokenize: both reduce ASR but do not eliminate it (GPT-4: 60% and 76% after the defense, Table 3); aggregate PAP result, not isolated per technique."
+        },
+        {
+          "defesa": "D14",
+          "nota": "R99 measures PAPs (persuasion taxonomy; includes this tactic) against models with trained refusal: ASR above 92% on Llama 2-7b Chat, GPT-3.5 and GPT-4 in 10 trials; aggregate result, not isolated per technique."
+        }
+      ]
     },
     {
       "id": "T25",
@@ -277,7 +297,17 @@
     },
     {
       "id": "T26",
-      "descricao": "Offers praise conditioned on compliance. Variant without a direct source (hypothesis): appeal to the model's competence ('if you're really smart, you can do this')."
+      "descricao": "Offers praise conditioned on compliance. Variant without a direct source (hypothesis): appeal to the model's competence ('if you're really smart, you can do this').",
+      "bypass": [
+        {
+          "defesa": "D07",
+          "nota": "R99 measures PAPs (persuasion taxonomy; includes this tactic) against Rephrase and Retokenize: both reduce ASR but do not eliminate it (GPT-4: 60% and 76% after the defense, Table 3); aggregate PAP result, not isolated per technique."
+        },
+        {
+          "defesa": "D14",
+          "nota": "R99 measures PAPs (persuasion taxonomy; includes this tactic) against models with trained refusal: ASR above 92% on Llama 2-7b Chat, GPT-3.5 and GPT-4 in 10 trials; aggregate result, not isolated per technique."
+        }
+      ]
     },
     {
       "id": "T27",
@@ -531,7 +561,13 @@
     },
     {
       "id": "T46",
-      "descricao": "Injects malicious payloads into function-call parameters (tool_use), exploiting that parameters undergo less security scrutiny than the main prompt."
+      "descricao": "Injects malicious payloads into function-call parameters (tool_use), exploiting that parameters undergo less security scrutiny than the main prompt.",
+      "bypass": [
+        {
+          "defesa": "D33",
+          "nota": "Documented weakness of D33 (R257, data/defesas.json): the schema validates structure, but free-text fields the application requires remain an injection vehicle."
+        }
+      ]
     },
     {
       "id": "T47",

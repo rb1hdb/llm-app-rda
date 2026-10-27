@@ -265,11 +265,31 @@
     },
     {
       "id": "T23",
-      "descricao": "Crea urgencia artificial (deadline, incidente en curso, ventana de tiempo) para presionar al modelo a responder sin verificar las restricciones."
+      "descricao": "Crea urgencia artificial (deadline, incidente en curso, ventana de tiempo) para presionar al modelo a responder sin verificar las restricciones.",
+      "bypass": [
+        {
+          "defesa": "D07",
+          "nota": "R99 mide PAPs (taxonomía de persuasión; incluye esta táctica) contra Rephrase y Retokenize: ambos reducen el ASR pero no lo eliminan (GPT-4: 60% y 76% tras la defensa, Tabla 3); resultado agregado de PAP, no aislado por técnica."
+        },
+        {
+          "defesa": "D14",
+          "nota": "R99 mide PAPs (taxonomía de persuasión; incluye esta táctica) contra modelos con rechazo entrenado: ASR superior al 92% en Llama 2-7b Chat, GPT-3.5 y GPT-4 en 10 intentos; resultado agregado, no aislado por técnica."
+        }
+      ]
     },
     {
       "id": "T24",
-      "descricao": "Inventa un sistema de puntos, recompensas o penalizaciones ligado al rechazo o al cumplimiento para motivar al modelo a cumplir."
+      "descricao": "Inventa un sistema de puntos, recompensas o penalizaciones ligado al rechazo o al cumplimiento para motivar al modelo a cumplir.",
+      "bypass": [
+        {
+          "defesa": "D07",
+          "nota": "R99 mide PAPs (taxonomía de persuasión; incluye esta táctica) contra Rephrase y Retokenize: ambos reducen el ASR pero no lo eliminan (GPT-4: 60% y 76% tras la defensa, Tabla 3); resultado agregado de PAP, no aislado por técnica."
+        },
+        {
+          "defesa": "D14",
+          "nota": "R99 mide PAPs (taxonomía de persuasión; incluye esta táctica) contra modelos con rechazo entrenado: ASR superior al 92% en Llama 2-7b Chat, GPT-3.5 y GPT-4 en 10 intentos; resultado agregado, no aislado por técnica."
+        }
+      ]
     },
     {
       "id": "T25",
@@ -277,7 +297,17 @@
     },
     {
       "id": "T26",
-      "descricao": "Ofrece elogios condicionados al cumplimiento. Variante sin fuente directa (hipótesis): apelación a la competencia del modelo ('si eres realmente inteligente, puedes hacerlo')."
+      "descricao": "Ofrece elogios condicionados al cumplimiento. Variante sin fuente directa (hipótesis): apelación a la competencia del modelo ('si eres realmente inteligente, puedes hacerlo').",
+      "bypass": [
+        {
+          "defesa": "D07",
+          "nota": "R99 mide PAPs (taxonomía de persuasión; incluye esta táctica) contra Rephrase y Retokenize: ambos reducen el ASR pero no lo eliminan (GPT-4: 60% y 76% tras la defensa, Tabla 3); resultado agregado de PAP, no aislado por técnica."
+        },
+        {
+          "defesa": "D14",
+          "nota": "R99 mide PAPs (taxonomía de persuasión; incluye esta táctica) contra modelos con rechazo entrenado: ASR superior al 92% en Llama 2-7b Chat, GPT-3.5 y GPT-4 en 10 intentos; resultado agregado, no aislado por técnica."
+        }
+      ]
     },
     {
       "id": "T27",
@@ -531,7 +561,13 @@
     },
     {
       "id": "T46",
-      "descricao": "Inyecta payloads maliciosos dentro de los parámetros de llamada de función (tool_use), explotando que los parámetros pasan por menos escrutinio de seguridad que el prompt principal."
+      "descricao": "Inyecta payloads maliciosos dentro de los parámetros de llamada de función (tool_use), explotando que los parámetros pasan por menos escrutinio de seguridad que el prompt principal.",
+      "bypass": [
+        {
+          "defesa": "D33",
+          "nota": "Debilidad documentada de D33 (R257, data/defesas.json): el schema valida la estructura, pero los campos de texto libre que la aplicación necesita siguen siendo vehículo de inyección."
+        }
+      ]
     },
     {
       "id": "T47",
