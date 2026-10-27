@@ -273,14 +273,6 @@
       "tipo": "primaria"
     },
     {
-      "id": "R74",
-      "titulo": "Catastrophic jailbreak of open-source LLMs via exploiting generation",
-      "autores": "Huang et al.",
-      "ano": 2024,
-      "url": "https://arxiv.org/abs/2310.06987",
-      "tipo": "primaria"
-    },
-    {
       "id": "R77",
       "titulo": "GUARD: role-playing to generate natural-language jailbreakings",
       "autores": "Jin et al.",
@@ -350,14 +342,6 @@
       "autores": "Shen et al.",
       "ano": 2023,
       "url": "https://arxiv.org/abs/2308.03825",
-      "tipo": "primaria"
-    },
-    {
-      "id": "R95",
-      "titulo": "FuzzLLM: A novel and universal fuzzing framework for proactively discovering jailbreak vulnerabilities in LLMs",
-      "autores": "Yao et al.",
-      "ano": 2023,
-      "url": "https://arxiv.org/abs/2309.05274",
       "tipo": "primaria"
     },
     {

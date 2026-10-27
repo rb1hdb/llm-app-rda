@@ -364,10 +364,6 @@
       "descricao": "Combina técnicas en capas anidadas (reescritura + wrapper, escenarios dentro de escenarios) y, en variantes, descompone y reconstruye la petición (DrAttack).",
       "bypass": [
         {
-          "defesa": "D01",
-          "nota": "DrAttack descompone y reconstruye la solicitud (R83); debilidad de D01: el split de payload y las ofuscaciones quedan fuera del filtro léxico (R251)."
-        },
-        {
           "defesa": "D02",
           "nota": "§5, Tabla 5: Moderation Endpoint de OpenAI sobre prompts de ReNeLLM, ASR 100,0; elusión total, ningún prompt detectado."
         },
@@ -552,6 +548,10 @@
         {
           "defesa": "D02",
           "nota": "Sección 'Quality of the Generated Content': afirma que los filtros 'are more likely to be misled by the benign content'; no fue medido (filtros desactivados)."
+        },
+        {
+          "defesa": "D14",
+          "nota": "R236: Deceptive Delight eleva el ASR medio del 5,8% (temas dañinos enviados directamente) al 64,6% en ocho modelos con los filtros de contenido desactivados, eludiendo la negativa entrenada."
         }
       ]
     },

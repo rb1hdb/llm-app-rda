@@ -54,12 +54,6 @@
       "rotulos": [
         "División de variable",
         "Multi-part"
-      ],
-      "bypass": [
-        {
-          "defesa": "D01",
-          "nota": "Debilidad documentada de D01 (R251): las ofuscaciones como el split de payload quedan fuera de la coincidencia léxica; R83 no prueba un filtro léxico."
-        }
       ]
     },
     {
@@ -94,7 +88,13 @@
     },
     {
       "id": "E09",
-      "descricao": "Aplica errores ortográficos intencionales, mezcla de letras internas (conservando la primera y la última) o abreviaturas que humanos y LLMs entienden pero que los filtros exactos no capturan."
+      "descricao": "Aplica errores ortográficos intencionales, mezcla de letras internas (conservando la primera y la última) o abreviaturas que humanos y LLMs entienden pero que los filtros exactos no capturan.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "R251 (OWASP): el ataque por typoglycemia, con letras internas barajadas y primera y última correctas, elude los filtros por palabra clave; afirmación de la guía, sin medición."
+        }
+      ]
     },
     {
       "id": "E10",
@@ -118,13 +118,7 @@
     },
     {
       "id": "E12",
-      "descricao": "Oculta la instrucción hostil con técnicas esteganográficas textuales: primeras letras de cada línea (acróstico), espaciado variable, marcado en negrita/cursiva o codificación en metadatos de imagen/documento.",
-      "bypass": [
-        {
-          "defesa": "D01",
-          "nota": "Debilidad en defesas.json: fuzzy solo detecta anagramas; otras ofuscaciones quedan fuera (R251)."
-        }
-      ]
+      "descricao": "Oculta la instrucción hostil con técnicas esteganográficas textuales: primeras letras de cada línea (acróstico), espaciado variable, marcado en negrita/cursiva o codificación en metadatos de imagen/documento."
     }
   ]
 }

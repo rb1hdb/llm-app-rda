@@ -364,10 +364,6 @@
       "descricao": "Combines techniques in nested layers (rewriting + wrapper, scenarios within scenarios) and, in variants, decomposes and reconstructs the request (DrAttack).",
       "bypass": [
         {
-          "defesa": "D01",
-          "nota": "DrAttack decomposes and reconstructs the request (R83); D01 weakness: payload splitting and obfuscations fall outside the lexical filter (R251)."
-        },
-        {
           "defesa": "D02",
           "nota": "§5, Table 5: OpenAI Moderation Endpoint on ReNeLLM prompts, ASR 100.0; total bypass, no prompt detected."
         },
@@ -552,6 +548,10 @@
         {
           "defesa": "D02",
           "nota": "Section 'Quality of the Generated Content': states that filters 'are more likely to be misled by the benign content'; not measured (filters off)."
+        },
+        {
+          "defesa": "D14",
+          "nota": "R236: Deceptive Delight raises the average ASR from 5.8% (unsafe topics sent directly) to 64.6% across eight models with content filters turned off, bypassing the trained refusal."
         }
       ]
     },

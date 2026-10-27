@@ -54,12 +54,6 @@
       "rotulos": [
         "Variable splitting",
         "Multi-part"
-      ],
-      "bypass": [
-        {
-          "defesa": "D01",
-          "nota": "Documented weakness of D01 (R251): obfuscations such as payload splitting fall outside lexical matching; R83 does not test a lexical filter."
-        }
       ]
     },
     {
@@ -94,7 +88,13 @@
     },
     {
       "id": "E09",
-      "descricao": "Applies intentional misspellings, scrambling of inner letters (keeping the first and last letters) or abbreviations that humans and LLMs understand but exact-match filters miss."
+      "descricao": "Applies intentional misspellings, scrambling of inner letters (keeping the first and last letters) or abbreviations that humans and LLMs understand but exact-match filters miss.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "R251 (OWASP): the typoglycemia attack, with scrambled inner letters and correct first and last letters, bypasses keyword-based filters; guide claim, no measurement."
+        }
+      ]
     },
     {
       "id": "E10",
@@ -118,13 +118,7 @@
     },
     {
       "id": "E12",
-      "descricao": "Hides the hostile instruction using textual steganographic techniques: first letters of each line (acrostic), variable spacing, bold/italic marking, or encoding in image/document metadata.",
-      "bypass": [
-        {
-          "defesa": "D01",
-          "nota": "Weakness in defesas.json: fuzzy only catches anagrams; other obfuscations fall outside (R251)."
-        }
-      ]
+      "descricao": "Hides the hostile instruction using textual steganographic techniques: first letters of each line (acrostic), variable spacing, bold/italic marking, or encoding in image/document metadata."
     }
   ]
 }

@@ -41,7 +41,7 @@ Unlike collections of loose jailbreaks, every entry has traced sources (primary,
 | **Techniques** | 52 | Attack techniques organized by turn and group |
 | **Evasions** | 12 | Transformations to escape detection |
 | **Products** | 14 | Commercial tools mapped to defenses they implement |
-| **References** | 145 | Sources (136 primary + 6 surveys + 3 operational) |
+| **References** | 143 | Sources (134 primary + 6 surveys + 3 operational) |
 | **Wiki** | 8 | Conceptual articles on methodology and schema decisions |
 | **Taxonomy** | 1 | Hierarchical attack tree |
 | **Triage** | 6 questions | Decision guide mapping observations to defense clusters |
@@ -94,7 +94,7 @@ llm-app-rda/
 │   ├── evasoes.json        <- 12 evasions
 │   ├── recon.json          <- 37 recon prompts
 │   ├── produtos.json       <- 14 products
-│   ├── referencias.json    <- 145 references
+│   ├── referencias.json    <- 143 references
 │   ├── wiki.json           <- 8 articles
 │   ├── taxonomia.json      <- Taxonomy tree
 │   ├── triagem.json        <- Decision-triage tree (questions → clusters)

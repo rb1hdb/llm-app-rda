@@ -1553,12 +1553,6 @@
       ],
       "bypass": [
         {
-          "defesa": "D01",
-          "base": "inferencia",
-          "fonte": "R83",
-          "nota": "DrAttack decompõe e reconstrói o pedido (R83); fraqueza D01: split de payload e ofuscações ficam fora do lexical (R251)."
-        },
-        {
           "defesa": "D02",
           "base": "testado",
           "fonte": "R66",
@@ -1629,11 +1623,6 @@
           "r": "R55",
           "tipo": "primaria",
           "verificacao": "confirmado"
-        },
-        {
-          "r": "R74",
-          "tipo": "primaria",
-          "verificacao": "parcial"
         },
         {
           "r": "R229",
@@ -2321,6 +2310,12 @@
           "base": "alegado",
           "fonte": "R236",
           "nota": "Seção 'Quality of the Generated Content': afirma que filtros 'are more likely to be misled by the benign content'; não foi medido (filtros desligados)."
+        },
+        {
+          "defesa": "D14",
+          "base": "testado",
+          "fonte": "R236",
+          "nota": "R236: o Deceptive Delight eleva o ASR médio de 5,8% (tópicos nocivos enviados direto) para 64,6% em oito modelos com filtros de conteúdo desligados, contornando a recusa treinada."
         }
       ],
       "pretexto_legitimo": true,

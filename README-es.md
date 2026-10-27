@@ -41,7 +41,7 @@ A diferencia de colecciones de jailbreaks sueltos, cada entrada tiene fuentes ra
 | **Técnicas** | 52 | Técnicas de ataque organizadas por turno y grupo |
 | **Evasiones** | 12 | Transformaciones para escapar detección |
 | **Productos** | 14 | Herramientas comerciales mapeadas a defensas que implementan |
-| **Referencias** | 145 | Fuentes (136 primarias + 6 surveys + 3 operacionales) |
+| **Referencias** | 143 | Fuentes (134 primarias + 6 surveys + 3 operacionales) |
 | **Wiki** | 8 | Artículos conceptuales sobre metodología y decisiones de schema |
 | **Taxonomía** | 1 | Árbol jerárquico de ataques |
 | **Triaje** | 6 | Guía de decisión que mapea observaciones a clusters de defensa |
@@ -94,7 +94,7 @@ llm-app-rda/
 │   ├── evasoes.json        <- 12 evasiones
 │   ├── recon.json          <- 37 prompts de recon
 │   ├── produtos.json       <- 14 productos
-│   ├── referencias.json    <- 145 referencias
+│   ├── referencias.json    <- 143 referencias
 │   ├── wiki.json           <- 8 artículos
 │   ├── taxonomia.json      <- Árbol taxonómico
 │   ├── triagem.json        <- Árbol de triaje (preguntas → clusters)
