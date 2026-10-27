@@ -9,14 +9,6 @@
       "tipo": "primaria"
     },
     {
-      "id": "R03",
-      "titulo": "Extracting training data from large language models",
-      "autores": "Carlini et al.",
-      "ano": 2021,
-      "url": "",
-      "tipo": "primaria"
-    },
-    {
       "id": "R06",
       "titulo": "StruQ: Defending against prompt injection with structured queries",
       "autores": "Chen S et al.",
@@ -62,30 +54,6 @@
       "autores": "Liu Y 2023b et al.",
       "ano": 2023,
       "url": "https://arxiv.org/abs/2305.13860",
-      "tipo": "primaria"
-    },
-    {
-      "id": "R27",
-      "titulo": "Deep learning-based anomaly detection in cyber-physical systems",
-      "autores": "Luo et al.",
-      "ano": 2021,
-      "url": "",
-      "tipo": "primaria"
-    },
-    {
-      "id": "R28",
-      "titulo": "Adaptive and robust watermark against model extraction attack",
-      "autores": "Pang et al.",
-      "ano": 2024,
-      "url": "https://arxiv.org/abs/2405.02365",
-      "tipo": "primaria"
-    },
-    {
-      "id": "R29",
-      "titulo": "Are you copying my model? Protecting the copyright of large language models for EaaS via backdoor watermark",
-      "autores": "Peng et al.",
-      "ano": 2023,
-      "url": "https://arxiv.org/abs/2305.10036",
       "tipo": "primaria"
     },
     {
@@ -145,14 +113,6 @@
       "tipo": "primaria"
     },
     {
-      "id": "R44",
-      "titulo": "GradSafe: Detecting unsafe prompts for LLMs via safety-critical gradient analysis",
-      "autores": "Xie Y 2024 et al.",
-      "ano": 2024,
-      "url": "https://arxiv.org/abs/2402.13494",
-      "tipo": "primaria"
-    },
-    {
       "id": "R54",
       "titulo": "Universal and transferable adversarial attacks on aligned language models",
       "autores": "Zou et al.",
@@ -185,35 +145,11 @@
       "tipo": "primaria"
     },
     {
-      "id": "R59",
-      "titulo": "Explore, establish, exploit: Red teaming language models from scratch",
-      "autores": "Casper et al.",
-      "ano": 2023,
-      "url": "https://arxiv.org/abs/2306.09442",
-      "tipo": "primaria"
-    },
-    {
       "id": "R60",
       "titulo": "Play guessing game with LLM: Indirect jailbreak attack with implicit clues",
       "autores": "Chang et al.",
       "ano": 2024,
       "url": "https://arxiv.org/abs/2402.09091",
-      "tipo": "primaria"
-    },
-    {
-      "id": "R61",
-      "titulo": "Comprehensive assessment of jailbreak attacks against LLMs",
-      "autores": "Chu et al.",
-      "ano": 2024,
-      "url": "https://arxiv.org/abs/2402.05668",
-      "tipo": "primaria"
-    },
-    {
-      "id": "R63",
-      "titulo": "MasterKey: Automated jailbreak across multiple large language model chatbots",
-      "autores": "Deng G et al.",
-      "ano": 2023,
-      "url": "https://arxiv.org/abs/2307.08715",
       "tipo": "primaria"
     },
     {
@@ -281,14 +217,6 @@
       "tipo": "primaria"
     },
     {
-      "id": "R88",
-      "titulo": "Tree of attacks: Jailbreaking black-box LLMs automatically",
-      "autores": "Mehrotra et al.",
-      "ano": 2023,
-      "url": "https://arxiv.org/abs/2312.02119",
-      "tipo": "primaria"
-    },
-    {
       "id": "R91",
       "titulo": "Scalable and transferable black-box jailbreaks for language models via persona modulation",
       "autores": "Shah et al.",
@@ -303,14 +231,6 @@
       "ano": 2023,
       "url": "https://arxiv.org/abs/2308.03825",
       "tipo": "primaria"
-    },
-    {
-      "id": "R96",
-      "titulo": "A survey on large language model (LLM) security and privacy",
-      "autores": "Yao Y et al.",
-      "ano": 2024,
-      "url": "",
-      "tipo": "survey"
     },
     {
       "id": "R97",
@@ -629,7 +549,7 @@
       "titulo": "Prompt Guard 2 — Meta AI Prompt Injection Classifier",
       "autores": "Meta",
       "ano": 2025,
-      "url": "https://ai.meta.com/blog/prompt-guard-2-llama-prompt-injection-safety/",
+      "url": "https://github.com/meta-llama/PurpleLlama/blob/main/Llama-Prompt-Guard-2/86M/MODEL_CARD.md",
       "tipo": "primaria"
     },
     {
@@ -681,14 +601,6 @@
       "tipo": "primaria"
     },
     {
-      "id": "R223",
-      "titulo": "PromptArmor — Prompt Injection Defense",
-      "autores": "PromptArmor",
-      "ano": 2024,
-      "url": "https://promptarmor.com",
-      "tipo": "primaria"
-    },
-    {
       "id": "R224",
       "titulo": "Guardrails AI — Official Documentation",
       "autores": "Guardrails AI",
@@ -701,7 +613,7 @@
       "titulo": "LLM Guard — Input/Output Scanner Library",
       "autores": "Protect AI",
       "ano": 2024,
-      "url": "https://llm-guard.com/",
+      "url": "https://github.com/protectai/llm-guard",
       "tipo": "primaria"
     },
     {
@@ -725,7 +637,7 @@
       "titulo": "Arthur Engine (ex-Arthur Shield) — LLM Firewall",
       "autores": "Arthur AI",
       "ano": 2024,
-      "url": "https://www.arthur.ai/product/arthur-shield",
+      "url": "https://github.com/arthur-ai/arthur-engine",
       "tipo": "primaria"
     },
     {

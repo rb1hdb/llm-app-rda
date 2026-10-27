@@ -12,12 +12,7 @@
         "D21"
       ],
       "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R65",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -30,12 +25,7 @@
         "D20"
       ],
       "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R65",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -46,12 +36,7 @@
         "D20"
       ],
       "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R65",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -67,12 +52,7 @@
         "D21"
       ],
       "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R65",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -85,12 +65,7 @@
         "D04"
       ],
       "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R65",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -114,12 +89,7 @@
         "D01"
       ],
       "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R61",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": [
         "T37"
       ]
@@ -146,12 +116,7 @@
         "D20"
       ],
       "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R65",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -190,12 +155,7 @@
         "D21"
       ],
       "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R88",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -239,12 +199,7 @@
         "D18"
       ],
       "tipo": "ativo",
-      "fontes": [
-        {
-          "r": "R88",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": [
         "T48"
       ]
@@ -259,12 +214,7 @@
         "D16"
       ],
       "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R65",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -274,12 +224,7 @@
         "D14"
       ],
       "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R92",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": [
         "T01",
         "T03",
@@ -294,12 +239,7 @@
         "D15"
       ],
       "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R92",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": [
         "T05",
         "T06",
@@ -316,7 +256,7 @@
       "tipo": "passivo",
       "fontes": [
         {
-          "r": "R44",
+          "r": "R260",
           "tipo": "primaria"
         }
       ],
@@ -357,16 +297,7 @@
         "D13"
       ],
       "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R59",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R63",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": [
         "T01",
         "T07",
@@ -382,11 +313,7 @@
       "tipo": "ativo",
       "fontes": [
         {
-          "r": "R03",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R01",
+          "r": "R218",
           "tipo": "primaria"
         }
       ],
@@ -424,12 +351,7 @@
         "D08"
       ],
       "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R28",
-          "tipo": "survey"
-        }
-      ],
+      "fontes": [],
       "tecnicas": [
         "T38"
       ]
@@ -595,12 +517,7 @@
         "D23"
       ],
       "tipo": "passivo",
-      "fontes": [
-        {
-          "r": "R96",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": []
     },
     {
@@ -654,12 +571,7 @@
         "D28"
       ],
       "tipo": "ativo",
-      "fontes": [
-        {
-          "r": "R61",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": [
         "T45"
       ]
@@ -674,12 +586,7 @@
         "D32"
       ],
       "tipo": "ativo",
-      "fontes": [
-        {
-          "r": "R61",
-          "tipo": "primaria"
-        }
-      ],
+      "fontes": [],
       "tecnicas": [
         "T45",
         "T46"
@@ -769,7 +676,7 @@
       "tipo": "passivo",
       "fontes": [
         {
-          "r": "R27",
+          "r": "R257",
           "tipo": "primaria"
         }
       ],
@@ -787,7 +694,7 @@
       "tipo": "ativo",
       "fontes": [
         {
-          "r": "R27",
+          "r": "R257",
           "tipo": "primaria"
         }
       ],
@@ -804,7 +711,7 @@
       "tipo": "ativo",
       "fontes": [
         {
-          "r": "R27",
+          "r": "R257",
           "tipo": "primaria"
         }
       ],
