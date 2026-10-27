@@ -517,7 +517,7 @@
     },
     {
       "id": "D32",
-      "pt_hash": "22a50afa6f",
+      "pt_hash": "ee8711bb09",
       "nome": "Human approval for consequential actions (human-in-the-loop)",
       "descricao": "Requires explicit human approval before executing destructive, financial, data-sharing, or high-risk actions, with complete parameters in view; risk is assessed by the action, not the prompt content.",
       "fortalezas": [
@@ -531,7 +531,8 @@
         "A keyword-routed gate from the prompt is invalid: 'keyword counts in the user's prompt do not establish the action's risk' (R251).",
         "'A prompt requesting human review does not itself stop execution' (R251, LangChain): the gate must be enforced in code (R251)."
       ],
-      "categoria": "Action control"
+      "categoria": "Action control",
+      "modo_falha": "No technical bypass: the approver is a person, not a mechanism to evade. Failure is operational: confirmation fatigue, actions that look routine, approval without reading, or a harmful action presented misleadingly to the approver (see T44). Testing here means testing the process (request volume, clarity of what is shown), not a payload."
     },
     {
       "id": "D33",
@@ -648,7 +649,7 @@
     },
     {
       "id": "D40",
-      "pt_hash": "46cdcc26eb",
+      "pt_hash": "1554f5eec9",
       "nome": "Kill switch and emergency controls",
       "descricao": "Operational control to interrupt the system or the compromised functionality during an active incident (misbehavior, ongoing attack).",
       "fortalezas": [
@@ -658,7 +659,8 @@
         "Interrupts, does not prevent: the damage before activation has already occurred (consequence of the design; source read only recommends it, without evaluating it).",
         "Depends on detection and activation decision (R251 only lists the control); effectiveness inherits from D39 (logical inference)."
       ],
-      "categoria": "Detection and response"
+      "categoria": "Detection and response",
+      "modo_falha": "No technical bypass: the control filters nothing, it only interrupts. Failure is not being triggered in time (it depends on detection, inheriting D39) or the damage already being done. Test: time between attack start and activation, and what was executed in that interval."
     },
     {
       "id": "D41",
@@ -679,7 +681,7 @@
     },
     {
       "id": "D42",
-      "pt_hash": "9f3935a470",
+      "pt_hash": "47f2e326c3",
       "nome": "Governance, data minimization, and secret separation",
       "descricao": "Process controls that reduce what exists to be leaked or abused: minimize and limit processed data, remove data prohibited for the purpose, retain briefly, obfuscate sensitive data, and keep secrets out of the system prompt; supported by AI governance and security programs.",
       "fortalezas": [
@@ -692,11 +694,12 @@
         "Data the application needs to function remains in the system; minimization only removes the 'unnecessary' (R255 #DATA MINIMIZE).",
         "Depends on correctly classifying what is unnecessary/prohibited and maintaining that classification (R255 describes the list by application objective; inference)."
       ],
-      "categoria": "Governance"
+      "categoria": "Governance",
+      "modo_falha": "No technical bypass: it is a process control that precedes the attack. Failure is the data or secret remaining accessible because the application needed it or it was misclassified. Test: what the attacker can extract from the data the system still holds (outcome of the other extraction techniques), not a bypass of governance."
     },
     {
       "id": "D43",
-      "pt_hash": "28067b490f",
+      "pt_hash": "03f2afdc16",
       "nome": "Detection via model intrinsic features (PIShield)",
       "descricao": "Uses the model's internal representations (attention layers, hidden states) to detect injected inputs by identifying anomalous activation patterns, without requiring an external classifier.",
       "fortalezas": [
@@ -706,7 +709,8 @@
         "Requires white-box access to the model (weights and internal layer activations)",
         "Effectiveness may degrade with model architecture changes or fine-tuning"
       ],
-      "categoria": "detection"
+      "categoria": "detection",
+      "modo_falha": "No specific technique to link: the documented weakness is about deployment (needs white-box; degrades on a model different from the one used to train the detector). Test: the detector on the model actually deployed, with the same attack set used for the other input defenses."
     },
     {
       "id": "D44",
@@ -785,7 +789,7 @@
     },
     {
       "id": "D49",
-      "pt_hash": "13518ebc2c",
+      "pt_hash": "447b8ef09f",
       "nome": "Adaptive guardrail with safety detection (AGrail)",
       "descricao": "Guardrail system that detects unsafe agent actions using adaptive verification throughout the execution trace, dynamically adjusting detection thresholds.",
       "fortalezas": [
@@ -796,7 +800,8 @@
         "Warm-up phase with lower coverage until sufficient data is accumulated",
         "Adaptive thresholds may be exploited by slowly escalating attacks"
       ],
-      "categoria": "detection"
+      "categoria": "detection",
+      "modo_falha": "No specific technique to link: the documented weakness is coverage (warm-up phase) and quality of the underlying detector. Test: attacks right at the start of operation and variants outside what the guardrail has accumulated."
     },
     {
       "id": "D50",
@@ -815,7 +820,7 @@
     },
     {
       "id": "D51",
-      "pt_hash": "c09af65533",
+      "pt_hash": "e1f0a7ded5",
       "nome": "LlamaFirewall (multi-layer guardrail for agents)",
       "descricao": "Open source system combining multiple protection layers for LLM agents: prompt injection detection, unsafe code scanning, and execution alignment verification in an extensible pipeline.",
       "fortalezas": [
@@ -826,7 +831,8 @@
         "Additional latency proportional to the number of active scanners",
         "Effectiveness depends on the quality of each individual scanner"
       ],
-      "categoria": "detection"
+      "categoria": "detection",
+      "modo_falha": "No specific technique to link: the documented weakness is the quality of each component scanner. Failure is inherited: test each scanner with the techniques linked to the equivalent defense (input classifier D02, action alignment D25, output)."
     },
     {
       "id": "D52",

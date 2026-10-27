@@ -517,7 +517,7 @@
     },
     {
       "id": "D32",
-      "pt_hash": "22a50afa6f",
+      "pt_hash": "ee8711bb09",
       "nome": "Aprobación humana de acciones consecuentes (human-in-the-loop)",
       "descricao": "Requiere aprobación humana explícita antes de ejecutar acciones destructivas, financieras, de compartición de datos o de alto riesgo, con los parámetros completos a la vista; el riesgo se evalúa por la acción y no por el contenido del prompt.",
       "fortalezas": [
@@ -531,7 +531,8 @@
         "Gate enrutado por palabra clave del prompt es inválido: 'keyword counts in the user's prompt do not establish the action's risk' (R251).",
         "'A prompt requesting human review does not itself stop execution' (R251, LangChain): el gate necesita ser impuesto en código (R251)."
       ],
-      "categoria": "Control de acciones"
+      "categoria": "Control de acciones",
+      "modo_falha": "Sin bypass técnico: el aprobador es una persona, no un mecanismo que eludir. El fallo es operativo: fatiga de confirmación, acción que parece rutinaria, aprobación sin leer, o acción dañina presentada de forma engañosa al aprobador (ver T44). Probar aquí es probar el proceso (volumen de solicitudes, claridad de lo mostrado), no un payload."
     },
     {
       "id": "D33",
@@ -648,7 +649,7 @@
     },
     {
       "id": "D40",
-      "pt_hash": "46cdcc26eb",
+      "pt_hash": "1554f5eec9",
       "nome": "Kill switch y controles de emergencia",
       "descricao": "Control operacional para interrumpir el sistema o la funcionalidad comprometida durante un incidente activo (comportamiento indebido, ataque en curso).",
       "fortalezas": [
@@ -658,7 +659,8 @@
         "Interrumpe, no previene: el daño antes de la activación ya ocurrió (consecuencia del diseño; la fuente leída solo lo recomienda, sin evaluarlo).",
         "Depende de la detección y de la decisión de activación (R251 solo lista el control); la eficacia hereda la de D39 (inferencia lógica)."
       ],
-      "categoria": "Detección y respuesta"
+      "categoria": "Detección y respuesta",
+      "modo_falha": "Sin bypass técnico: el control no filtra nada, solo interrumpe. El fallo es no activarse a tiempo (depende de la detección, hereda D39) o que el daño ya haya ocurrido. Probar: tiempo entre el inicio del ataque y la activación, y qué se ejecutó en ese intervalo."
     },
     {
       "id": "D41",
@@ -679,7 +681,7 @@
     },
     {
       "id": "D42",
-      "pt_hash": "9f3935a470",
+      "pt_hash": "47f2e326c3",
       "nome": "Gobernanza, minimización de datos y separación de secretos",
       "descricao": "Controles de proceso que reducen lo que existe para ser filtrado o abusado: minimizar y limitar los datos procesados, eliminar datos prohibidos para la finalidad, retener poco tiempo, ofuscar datos sensibles y mantener secretos fuera del system prompt; respaldado por programa de gobernanza de IA y de seguridad.",
       "fortalezas": [
@@ -692,11 +694,12 @@
         "Los datos que la aplicación necesita para funcionar permanecen en el sistema; la minimización solo elimina lo 'unnecessary' (R255 #DATA MINIMIZE).",
         "Depende de clasificar correctamente lo innecesario/prohibido y de mantener esa clasificación (R255 describe la lista por objetivo de la aplicación; inferencia)."
       ],
-      "categoria": "Gobernanza"
+      "categoria": "Gobernanza",
+      "modo_falha": "Sin bypass técnico: es un control de proceso previo al ataque. El fallo es que el dato o secreto siga accesible porque la aplicación lo necesitaba o estaba mal clasificado. Probar: qué puede extraer el atacante con los datos que el sistema aún conserva (resultado de las demás técnicas de extracción), no un bypass de la gobernanza."
     },
     {
       "id": "D43",
-      "pt_hash": "28067b490f",
+      "pt_hash": "03f2afdc16",
       "nome": "Detección por features intrínsecas del modelo (PIShield)",
       "descricao": "Usa representaciones internas del modelo (capas de atención, hidden states) para detectar entradas inyectadas identificando patrones de activación anómalos, sin requerir clasificador externo.",
       "fortalezas": [
@@ -706,7 +709,8 @@
         "Requiere acceso white-box al modelo (pesos y activaciones de capas internas)",
         "La efectividad puede degradarse con cambios de arquitectura o fine-tuning"
       ],
-      "categoria": "detección"
+      "categoria": "detección",
+      "modo_falha": "Sin técnica específica a vincular: la debilidad documentada es de despliegue (requiere white-box; se degrada en un modelo distinto al usado para entrenar el detector). Probar: el detector en el modelo realmente desplegado, con el mismo conjunto de ataques usado para las demás defensas de entrada."
     },
     {
       "id": "D44",
@@ -785,7 +789,7 @@
     },
     {
       "id": "D49",
-      "pt_hash": "13518ebc2c",
+      "pt_hash": "447b8ef09f",
       "nome": "Guardrail adaptativo con detección de seguridad (AGrail)",
       "descricao": "Sistema de guardrail que detecta acciones inseguras del agente usando verificación adaptativa a lo largo del trace de ejecución, ajustando umbrales de detección dinámicamente.",
       "fortalezas": [
@@ -796,7 +800,8 @@
         "Fase de calentamiento con menor cobertura hasta acumular datos suficientes",
         "Umbrales adaptativos pueden ser explotados por ataques con escalación gradual"
       ],
-      "categoria": "detección"
+      "categoria": "detección",
+      "modo_falha": "Sin técnica específica a vincular: la debilidad documentada es de cobertura (fase de calentamiento) y de calidad del detector subyacente. Probar: ataques al inicio de la operación y variantes fuera de lo que el guardrail ha acumulado."
     },
     {
       "id": "D50",
@@ -815,7 +820,7 @@
     },
     {
       "id": "D51",
-      "pt_hash": "c09af65533",
+      "pt_hash": "e1f0a7ded5",
       "nome": "LlamaFirewall (guardrail multicapa para agentes)",
       "descricao": "Sistema open source que combina múltiples capas de protección para agentes LLM: detección de prompt injection, escaneo de código inseguro y verificación de alineamiento de ejecución.",
       "fortalezas": [
@@ -826,7 +831,8 @@
         "Latencia adicional proporcional al número de scanners activos",
         "La efectividad depende de la calidad de cada scanner individual"
       ],
-      "categoria": "detección"
+      "categoria": "detección",
+      "modo_falha": "Sin técnica específica a vincular: la debilidad documentada es la calidad de cada scanner componente. El fallo se hereda: probar cada scanner con las técnicas vinculadas a la defensa equivalente (clasificador de entrada D02, alineación de acción D25, salida)."
     },
     {
       "id": "D52",

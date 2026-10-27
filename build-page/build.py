@@ -121,7 +121,7 @@ def validate_translations(data):
 # Generic overlays: translation files hold only translated text (+ id and pt_hash); PT is the single source.
 # (list_path inside the PT file, translated text keys, structural keys that must match PT)
 GENERIC = {
-    "defesas":  (("defesas",),  {"nome", "descricao", "fortalezas", "fraquezas", "categoria"}, False),
+    "defesas":  (("defesas",),  {"nome", "descricao", "fortalezas", "fraquezas", "categoria", "modo_falha"}, False),
     "sinais":   (("sinais",),   {"texto"}, False),
     "recon":    (("prompts",),  {"titulo", "quando", "objetivo", "interpretacao", "rotulo"}, False),
     "wiki":     (("artigos",),  {"titulo", "texto", "linhas", "itens"}, True),

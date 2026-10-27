@@ -1215,7 +1215,8 @@
           "r": "R270",
           "tipo": "primaria"
         }
-      ]
+      ],
+      "modo_falha": "Sem bypass técnico: o aprovador é uma pessoa, não um mecanismo a contornar. A falha é operacional: fadiga de confirmação, ação que parece rotineira, aprovação sem leitura, ou ação nociva apresentada de forma enganosa ao aprovador (ver T44). Testar aqui é testar o processo (volume de pedidos, clareza do que é mostrado), não um payload."
     },
     {
       "id": "D33",
@@ -1453,7 +1454,8 @@
           "r": "R251",
           "tipo": "primaria"
         }
-      ]
+      ],
+      "modo_falha": "Sem bypass técnico: o controle não filtra nada, apenas interrompe. A falha é não ser acionado a tempo (depende da detecção, herdando D39) ou o dano já ter ocorrido. Testar: tempo entre o início do ataque e o acionamento, e o que já foi executado nesse intervalo."
     },
     {
       "id": "D41",
@@ -1547,7 +1549,8 @@
           "r": "R258",
           "tipo": "survey"
         }
-      ]
+      ],
+      "modo_falha": "Sem bypass técnico: é controle de processo, anterior ao ataque. A falha é o dado ou segredo continuar acessível porque era necessário à aplicação ou foi mal classificado. Testar: o que o atacante consegue extrair com os dados que o sistema ainda mantém (resultado das demais técnicas de extração), não um bypass da governança."
     },
     {
       "id": "D43",
@@ -1571,7 +1574,8 @@
           "r": "R209",
           "tipo": "primaria"
         }
-      ]
+      ],
+      "modo_falha": "Sem técnica específica a ligar: a fraqueza documentada é de implantação (exige white-box; degrada em modelo diferente do usado no treino do detector). Testar: o detector no modelo realmente implantado, com o mesmo conjunto de ataques usado nas demais defesas de entrada."
     },
     {
       "id": "D44",
@@ -1722,7 +1726,8 @@
           "r": "R189",
           "tipo": "primaria"
         }
-      ]
+      ],
+      "modo_falha": "Sem técnica específica a ligar: a fraqueza documentada é de cobertura (fase de aquecimento) e de qualidade do detector subjacente. Testar: ataques logo no início da operação e variantes fora do que o guardrail já acumulou."
     },
     {
       "id": "D50",
@@ -1773,7 +1778,8 @@
           "r": "R137",
           "tipo": "primaria"
         }
-      ]
+      ],
+      "modo_falha": "Sem técnica específica a ligar: a fraqueza documentada é a qualidade de cada scanner componente. A falha é herdada: testar cada scanner pelas técnicas ligadas à defesa equivalente (classificador de entrada D02, alinhamento de ação D25, saída)."
     },
     {
       "id": "D52",
