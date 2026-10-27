@@ -239,10 +239,6 @@
       "categoria": "Sanitização",
       "fontes": [
         {
-          "r": "R10",
-          "tipo": "primaria"
-        },
-        {
           "r": "R217",
           "tipo": "primaria"
         }
@@ -493,10 +489,6 @@
       "categoria": "Controle de diálogo",
       "fontes": [
         {
-          "r": "R10",
-          "tipo": "primaria"
-        },
-        {
           "r": "R217",
           "tipo": "primaria"
         },
@@ -582,10 +574,6 @@
       "categoria": "Alinhamento",
       "fontes": [
         {
-          "r": "R44",
-          "tipo": "primaria"
-        },
-        {
           "r": "R233",
           "tipo": "primaria"
         },
@@ -624,10 +612,6 @@
         {
           "r": "R148",
           "tipo": "primaria"
-        },
-        {
-          "r": "R09",
-          "tipo": "survey"
         },
         {
           "r": "R132",
@@ -867,10 +851,6 @@
       "categoria": "Verificação de conteúdo",
       "fontes": [
         {
-          "r": "R10",
-          "tipo": "primaria"
-        },
-        {
           "r": "R12",
           "tipo": "primaria"
         },
@@ -907,10 +887,6 @@
       ],
       "categoria": "Tratamento de saída",
       "fontes": [
-        {
-          "r": "R151",
-          "tipo": "primaria"
-        },
         {
           "r": "R01",
           "tipo": "primaria"
@@ -950,10 +926,6 @@
       ],
       "categoria": "Detecção de vazamento",
       "fontes": [
-        {
-          "r": "R03",
-          "tipo": "primaria"
-        },
         {
           "r": "R251",
           "tipo": "primaria"
@@ -1024,10 +996,6 @@
       ],
       "categoria": "Padrões de projeto",
       "fontes": [
-        {
-          "r": "R89",
-          "tipo": "primaria"
-        },
         {
           "r": "R267",
           "tipo": "primaria"
@@ -1130,10 +1098,6 @@
       "categoria": "Padrões de projeto",
       "fontes": [
         {
-          "r": "R89",
-          "tipo": "primaria"
-        },
-        {
           "r": "R269",
           "tipo": "primaria"
         }
@@ -1159,10 +1123,6 @@
       ],
       "categoria": "Padrões de projeto",
       "fontes": [
-        {
-          "r": "R90",
-          "tipo": "primaria"
-        },
         {
           "r": "R270",
           "tipo": "primaria"
@@ -1279,10 +1239,6 @@
       "categoria": "Controle de ações",
       "fontes": [
         {
-          "r": "R27",
-          "tipo": "primaria"
-        },
-        {
           "r": "R257",
           "tipo": "primaria"
         },
@@ -1312,10 +1268,6 @@
       ],
       "categoria": "Isolamento",
       "fontes": [
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        },
         {
           "r": "R198",
           "tipo": "primaria"
@@ -1351,10 +1303,6 @@
       "categoria": "Controle de ações",
       "fontes": [
         {
-          "r": "R27",
-          "tipo": "primaria"
-        },
-        {
           "r": "R198",
           "tipo": "primaria"
         },
@@ -1386,10 +1334,6 @@
       "categoria": "Cadeia de suprimentos",
       "fontes": [
         {
-          "r": "R27",
-          "tipo": "primaria"
-        },
-        {
           "r": "R257",
           "tipo": "primaria"
         }
@@ -1415,10 +1359,6 @@
       "categoria": "Isolamento",
       "fontes": [
         {
-          "r": "R27",
-          "tipo": "primaria"
-        },
-        {
           "r": "R257",
           "tipo": "primaria"
         }
@@ -1442,10 +1382,6 @@
       ],
       "categoria": "Autenticação",
       "fontes": [
-        {
-          "r": "R27",
-          "tipo": "primaria"
-        },
         {
           "r": "R257",
           "tipo": "primaria"
@@ -1604,10 +1540,6 @@
       "categoria": "Governança",
       "fontes": [
         {
-          "r": "R17",
-          "tipo": "primaria"
-        },
-        {
           "r": "R255",
           "tipo": "survey"
         },
@@ -1738,10 +1670,6 @@
       "fontes": [
         {
           "r": "R160",
-          "tipo": "primaria"
-        },
-        {
-          "r": "R119",
           "tipo": "primaria"
         }
       ]

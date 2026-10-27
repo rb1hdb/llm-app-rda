@@ -25,35 +25,11 @@
       "tipo": "primaria"
     },
     {
-      "id": "R09",
-      "titulo": "Security and privacy challenges of large language models: A survey",
-      "autores": "Das et al.",
-      "ano": 2025,
-      "url": "",
-      "tipo": "survey"
-    },
-    {
-      "id": "R10",
-      "titulo": "Attack prompt generation for red teaming and defending large language models",
-      "autores": "Deng B et al.",
-      "ano": 2023,
-      "url": "https://arxiv.org/abs/2310.12505",
-      "tipo": "primaria"
-    },
-    {
       "id": "R12",
       "titulo": "Not what you've signed up for: Compromising real-world LLM-integrated applications with indirect prompt injection",
       "autores": "Greshake et al.",
       "ano": 2023,
       "url": "",
-      "tipo": "primaria"
-    },
-    {
-      "id": "R17",
-      "titulo": "Thieves on sesame street! Model extraction of BERT-based APIs",
-      "autores": "Krishna et al.",
-      "ano": 2019,
-      "url": "https://arxiv.org/abs/1910.12366",
       "tipo": "primaria"
     },
     {
@@ -313,22 +289,6 @@
       "tipo": "primaria"
     },
     {
-      "id": "R89",
-      "titulo": "GPT-4 technical report",
-      "autores": "OpenAI et al.",
-      "ano": 2023,
-      "url": "https://arxiv.org/abs/2303.08774",
-      "tipo": "primaria"
-    },
-    {
-      "id": "R90",
-      "titulo": "Direct preference optimization",
-      "autores": "Rafailov et al.",
-      "ano": 2023,
-      "url": "",
-      "tipo": "primaria"
-    },
-    {
       "id": "R91",
       "titulo": "Scalable and transferable black-box jailbreaks for language models via persona modulation",
       "autores": "Shah et al.",
@@ -397,14 +357,6 @@
       "titulo": "Imprompter: Steganographic prompt injection for personal-data exfiltration",
       "autores": "Chen et al.",
       "ano": 2024,
-      "url": "",
-      "tipo": "primaria"
-    },
-    {
-      "id": "R119",
-      "titulo": "MELON: Indirect prompt injection defense via masked re-execution",
-      "autores": "Zhou H et al.",
-      "ano": 2025,
       "url": "",
       "tipo": "primaria"
     },
@@ -518,14 +470,6 @@
       "autores": "Wang P et al.",
       "ano": 2025,
       "url": "https://arxiv.org/abs/2508.01249",
-      "tipo": "primaria"
-    },
-    {
-      "id": "R151",
-      "titulo": "To protect the LLM agent against the prompt injection attack with polymorphic prompt",
-      "autores": "Wang Z et al.",
-      "ano": 2025,
-      "url": "https://arxiv.org/abs/2506.05739",
       "tipo": "primaria"
     },
     {
