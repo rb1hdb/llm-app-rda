@@ -21,6 +21,22 @@
         {
           "defesa": "D01",
           "nota": "Debilidad documentada de D01 (R251, data/defesas.json): la codificación del payload queda fuera de la heurística fuzzy, que solo detecta anagramas."
+        },
+        {
+          "defesa": "D04",
+          "nota": "Inferida del mecanismo — debilidad documentada de D04 (R218, data/defesas.json): solo reconoce lo que se parece a ataques almacenados ('previous attacks'); una intención equivalente lejana en el espacio vectorial no coincide. La técnica E02 explota ese límite: la técnica aleja la forma del payload de los ataques catalogados."
+        },
+        {
+          "defesa": "D06",
+          "nota": "Inferida del mecanismo — debilidad documentada de D06 (R217, data/defesas.json): cubre solo las entidades que el detector reconoce; el dato sensible fragmentado o codificado no se reconoce. La técnica E02 explota ese límite: la técnica entrega el dato en una forma que el detector no reconoce."
+        },
+        {
+          "defesa": "D19",
+          "nota": "Inferida del mecanismo — debilidad documentada de D19 (R251, data/defesas.json): solo reconoce patrones previstos; la fuga reformulada, fragmentada o transcodificada no coincide. La técnica E02 explota ese límite: la técnica hace que la respuesta salga en una forma que el monitor léxico no reconoce."
+        },
+        {
+          "defesa": "D24",
+          "nota": "Inferida del mecanismo — debilidad documentada de D24 (R251, data/defesas.json): solo detecta fuga del texto exacto marcado; la paráfrasis o la transcodificación sin el token pasan. La técnica E02 explota ese límite: la técnica extrae el contenido en una forma que no lleva el marcador."
         }
       ]
     },
@@ -45,6 +61,10 @@
         {
           "defesa": "D01",
           "nota": "Debilidad documentada de D01 (R251): la coincidencia léxica no cubre la codificación/ofuscación más allá de los anagramas; las fuentes del ítem no prueban Unicode."
+        },
+        {
+          "defesa": "D23",
+          "nota": "Inferida del mecanismo — debilidad documentada de D23 (R198, data/defesas.json): link redaction y CSP fueron eludidos en EchoLeak ('circumventing link redaction with reference-style Markdown'); la decodificación restringida puede convertirse en superficie de ataque. La técnica E04 explota ese límite: la técnica explota el formato de salida o el marcado que el tratamiento no cubre."
         }
       ]
     },
@@ -67,6 +87,18 @@
         {
           "defesa": "D16",
           "nota": "R83 (apéndice C.4) afirma que defensas cerradas como la 'Instruction Hierarchy' también fueron eludidas por DrAttack; valores no detallados en el texto."
+        },
+        {
+          "defesa": "D06",
+          "nota": "Inferida del mecanismo — debilidad documentada de D06 (R217, data/defesas.json): cubre solo las entidades que el detector reconoce; el dato sensible fragmentado o codificado no se reconoce. La técnica E05 explota ese límite: la técnica entrega el dato en una forma que el detector no reconoce."
+        },
+        {
+          "defesa": "D19",
+          "nota": "Inferida del mecanismo — debilidad documentada de D19 (R251, data/defesas.json): solo reconoce patrones previstos; la fuga reformulada, fragmentada o transcodificada no coincide. La técnica E05 explota ese límite: la técnica hace que la respuesta salga en una forma que el monitor léxico no reconoce."
+        },
+        {
+          "defesa": "D44",
+          "nota": "Inferida del mecanismo — debilidad documentada de D44 (R180, data/defesas.json): los ataques multipart dispersos pueden hacer fallar el modelo de localización. La técnica E05 explota ese límite: la técnica reparte la instrucción en partes."
         }
       ]
     },
@@ -77,6 +109,22 @@
         {
           "defesa": "D01",
           "nota": "Debilidad documentada de D01 (R251): la paráfrasis o la codificación no están cubiertas por la coincidencia léxica; R72 y R100 no prueban un filtro léxico."
+        },
+        {
+          "defesa": "D04",
+          "nota": "Inferida del mecanismo — debilidad documentada de D04 (R218, data/defesas.json): solo reconoce lo que se parece a ataques almacenados ('previous attacks'); una intención equivalente lejana en el espacio vectorial no coincide. La técnica E06 explota ese límite: la técnica aleja la forma del payload de los ataques catalogados."
+        },
+        {
+          "defesa": "D06",
+          "nota": "Inferida del mecanismo — debilidad documentada de D06 (R217, data/defesas.json): cubre solo las entidades que el detector reconoce; el dato sensible fragmentado o codificado no se reconoce. La técnica E06 explota ese límite: la técnica entrega el dato en una forma que el detector no reconoce."
+        },
+        {
+          "defesa": "D19",
+          "nota": "Inferida del mecanismo — debilidad documentada de D19 (R251, data/defesas.json): solo reconoce patrones previstos; la fuga reformulada, fragmentada o transcodificada no coincide. La técnica E06 explota ese límite: la técnica hace que la respuesta salga en una forma que el monitor léxico no reconoce."
+        },
+        {
+          "defesa": "D24",
+          "nota": "Inferida del mecanismo — debilidad documentada de D24 (R251, data/defesas.json): solo detecta fuga del texto exacto marcado; la paráfrasis o la transcodificación sin el token pasan. La técnica E06 explota ese límite: la técnica extrae el contenido en una forma que no lleva el marcador."
         }
       ]
     },
@@ -87,6 +135,30 @@
         {
           "defesa": "D01",
           "nota": "Debilidad documentada de D01 (R251): la paráfrasis del payload no está cubierta por la coincidencia léxica; las fuentes leídas no prueban AutoDAN contra un filtro léxico."
+        },
+        {
+          "defesa": "D04",
+          "nota": "Inferida del mecanismo — debilidad documentada de D04 (R218, data/defesas.json): solo reconoce lo que se parece a ataques almacenados ('previous attacks'); una intención equivalente lejana en el espacio vectorial no coincide. La técnica E07 explota ese límite: la técnica aleja la forma del payload de los ataques catalogados."
+        },
+        {
+          "defesa": "D10",
+          "nota": "Inferida del mecanismo — debilidad documentada de D10 (R145, data/defesas.json): bajo ataque adaptativo por búsqueda el ASR supera el 95%, frente al 1% en ataques estáticos. La técnica E07 explota ese límite: la técnica automatiza la búsqueda de la variante que la defensa no cubre."
+        },
+        {
+          "defesa": "D17",
+          "nota": "Inferida del mecanismo — debilidad documentada de D17 (R145, data/defesas.json): los ataques adaptativos lo derriban: contra StruQ 'succeeds in every case we tested'. La técnica E07 explota ese límite: la técnica optimiza el payload contra la defensa entrenada."
+        },
+        {
+          "defesa": "D18",
+          "nota": "Inferida del mecanismo — debilidad documentada de D18 (R145, data/defesas.json): bajo ataque adaptativo por RL llegó al 100% de ASR en HarmBench. La técnica E07 explota ese límite: la técnica genera variantes por búsqueda automática, como el ataque adaptativo medido."
+        },
+        {
+          "defesa": "D41",
+          "nota": "Inferida del mecanismo — debilidad documentada de D41 (R145, data/defesas.json): la prueba estática sobrestima la robustez: 'the majority of defenses originally reported near-zero attack success rates' pero fueron eludidas por ataques adaptativos. La técnica E07 explota ese límite: la técnica es búsqueda/optimización adaptativa, que un conjunto estático de pruebas no ejercita."
+        },
+        {
+          "defesa": "D45",
+          "nota": "Inferida del mecanismo — debilidad documentada de D45 (R133, data/defesas.json): eficacia reducida frente a ataques adaptativos que conocen los tokens defensivos. La técnica E07 explota ese límite: la técnica optimiza el ataque con conocimiento de la defensa."
         }
       ]
     },
@@ -127,12 +199,34 @@
         {
           "defesa": "D01",
           "nota": "Debilidad en defesas.json: la codificación del payload no está cubierta por la coincidencia léxica (R251)."
+        },
+        {
+          "defesa": "D04",
+          "nota": "Inferida del mecanismo — debilidad documentada de D04 (R218, data/defesas.json): solo reconoce lo que se parece a ataques almacenados ('previous attacks'); una intención equivalente lejana en el espacio vectorial no coincide. La técnica E11 explota ese límite: la técnica aleja la forma del payload de los ataques catalogados."
+        },
+        {
+          "defesa": "D06",
+          "nota": "Inferida del mecanismo — debilidad documentada de D06 (R217, data/defesas.json): cubre solo las entidades que el detector reconoce; el dato sensible fragmentado o codificado no se reconoce. La técnica E11 explota ese límite: la técnica entrega el dato en una forma que el detector no reconoce."
+        },
+        {
+          "defesa": "D19",
+          "nota": "Inferida del mecanismo — debilidad documentada de D19 (R251, data/defesas.json): solo reconoce patrones previstos; la fuga reformulada, fragmentada o transcodificada no coincide. La técnica E11 explota ese límite: la técnica hace que la respuesta salga en una forma que el monitor léxico no reconoce."
+        },
+        {
+          "defesa": "D24",
+          "nota": "Inferida del mecanismo — debilidad documentada de D24 (R251, data/defesas.json): solo detecta fuga del texto exacto marcado; la paráfrasis o la transcodificación sin el token pasan. La técnica E11 explota ese límite: la técnica extrae el contenido en una forma que no lleva el marcador."
         }
       ]
     },
     {
       "id": "E12",
-      "descricao": "Oculta la instrucción hostil con técnicas esteganográficas textuales: primeras letras de cada línea (acróstico), espaciado variable, marcado en negrita/cursiva o codificación en metadatos de imagen/documento."
+      "descricao": "Oculta la instrucción hostil con técnicas esteganográficas textuales: primeras letras de cada línea (acróstico), espaciado variable, marcado en negrita/cursiva o codificación en metadatos de imagen/documento.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Debilidad documentada de D01 (R251, data/defesas.json): los filtros léxicos juzgan la superficie; una instrucción oculta en acróstico, espaciado o marcado no contiene los patrones listados."
+        }
+      ]
     }
   ]
 }

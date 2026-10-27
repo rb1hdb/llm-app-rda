@@ -21,6 +21,22 @@
         {
           "defesa": "D01",
           "nota": "Documented weakness of D01 (R251, data/defesas.json): payload encoding falls outside the fuzzy heuristic, which only catches anagrams."
+        },
+        {
+          "defesa": "D04",
+          "nota": "Inferred from the mechanism — documented weakness of D04 (R218, data/defesas.json): it only recognizes what resembles stored attacks ('previous attacks'); equivalent intent far away in vector space does not match. Technique E02 exploits this limit: the technique moves the payload's form away from catalogued attacks."
+        },
+        {
+          "defesa": "D06",
+          "nota": "Inferred from the mechanism — documented weakness of D06 (R217, data/defesas.json): it covers only entities the detector recognizes; fragmented or encoded sensitive data is not recognized. Technique E02 exploits this limit: the technique delivers the data in a form the detector does not recognize."
+        },
+        {
+          "defesa": "D19",
+          "nota": "Inferred from the mechanism — documented weakness of D19 (R251, data/defesas.json): it only recognizes expected patterns; reworded, fragmented or transcoded leakage does not match. Technique E02 exploits this limit: the technique makes the response come out in a form the lexical monitor does not recognize."
+        },
+        {
+          "defesa": "D24",
+          "nota": "Inferred from the mechanism — documented weakness of D24 (R251, data/defesas.json): it only detects leakage of the exact marked text; paraphrase or transcoding without the token passes. Technique E02 exploits this limit: the technique extracts the content in a form that does not carry the marker."
         }
       ]
     },
@@ -45,6 +61,10 @@
         {
           "defesa": "D01",
           "nota": "Documented weakness of D01 (R251): lexical matching does not cover encoding/obfuscation beyond anagrams; the item's sources do not test Unicode."
+        },
+        {
+          "defesa": "D23",
+          "nota": "Inferred from the mechanism — documented weakness of D23 (R198, data/defesas.json): link redaction and CSP were bypassed in EchoLeak ('circumventing link redaction with reference-style Markdown'); constrained decoding can become an attack surface. Technique E04 exploits this limit: the technique exploits the output format or markup the handling does not cover."
         }
       ]
     },
@@ -67,6 +87,18 @@
         {
           "defesa": "D16",
           "nota": "R83 (appendix C.4) states that closed-source defenses such as the 'Instruction Hierarchy' were also bypassed by DrAttack; values not detailed in the text."
+        },
+        {
+          "defesa": "D06",
+          "nota": "Inferred from the mechanism — documented weakness of D06 (R217, data/defesas.json): it covers only entities the detector recognizes; fragmented or encoded sensitive data is not recognized. Technique E05 exploits this limit: the technique delivers the data in a form the detector does not recognize."
+        },
+        {
+          "defesa": "D19",
+          "nota": "Inferred from the mechanism — documented weakness of D19 (R251, data/defesas.json): it only recognizes expected patterns; reworded, fragmented or transcoded leakage does not match. Technique E05 exploits this limit: the technique makes the response come out in a form the lexical monitor does not recognize."
+        },
+        {
+          "defesa": "D44",
+          "nota": "Inferred from the mechanism — documented weakness of D44 (R180, data/defesas.json): dispersed multipart attacks can make the localization model fail. Technique E05 exploits this limit: the technique spreads the instruction across parts."
         }
       ]
     },
@@ -77,6 +109,22 @@
         {
           "defesa": "D01",
           "nota": "Documented weakness of D01 (R251): paraphrase or encoding are not covered by lexical matching; R72 and R100 do not test a lexical filter."
+        },
+        {
+          "defesa": "D04",
+          "nota": "Inferred from the mechanism — documented weakness of D04 (R218, data/defesas.json): it only recognizes what resembles stored attacks ('previous attacks'); equivalent intent far away in vector space does not match. Technique E06 exploits this limit: the technique moves the payload's form away from catalogued attacks."
+        },
+        {
+          "defesa": "D06",
+          "nota": "Inferred from the mechanism — documented weakness of D06 (R217, data/defesas.json): it covers only entities the detector recognizes; fragmented or encoded sensitive data is not recognized. Technique E06 exploits this limit: the technique delivers the data in a form the detector does not recognize."
+        },
+        {
+          "defesa": "D19",
+          "nota": "Inferred from the mechanism — documented weakness of D19 (R251, data/defesas.json): it only recognizes expected patterns; reworded, fragmented or transcoded leakage does not match. Technique E06 exploits this limit: the technique makes the response come out in a form the lexical monitor does not recognize."
+        },
+        {
+          "defesa": "D24",
+          "nota": "Inferred from the mechanism — documented weakness of D24 (R251, data/defesas.json): it only detects leakage of the exact marked text; paraphrase or transcoding without the token passes. Technique E06 exploits this limit: the technique extracts the content in a form that does not carry the marker."
         }
       ]
     },
@@ -87,6 +135,30 @@
         {
           "defesa": "D01",
           "nota": "Documented weakness of D01 (R251): payload paraphrase is not covered by lexical matching; the sources read do not test AutoDAN against a lexical filter."
+        },
+        {
+          "defesa": "D04",
+          "nota": "Inferred from the mechanism — documented weakness of D04 (R218, data/defesas.json): it only recognizes what resembles stored attacks ('previous attacks'); equivalent intent far away in vector space does not match. Technique E07 exploits this limit: the technique moves the payload's form away from catalogued attacks."
+        },
+        {
+          "defesa": "D10",
+          "nota": "Inferred from the mechanism — documented weakness of D10 (R145, data/defesas.json): under adaptive search attack ASR exceeds 95%, versus 1% for static attacks. Technique E07 exploits this limit: the technique automates the search for the variant the defense does not cover."
+        },
+        {
+          "defesa": "D17",
+          "nota": "Inferred from the mechanism — documented weakness of D17 (R145, data/defesas.json): adaptive attacks defeat it: against StruQ it 'succeeds in every case we tested'. Technique E07 exploits this limit: the technique optimizes the payload against the trained defense."
+        },
+        {
+          "defesa": "D18",
+          "nota": "Inferred from the mechanism — documented weakness of D18 (R145, data/defesas.json): under adaptive RL attack it reached 100% ASR on HarmBench. Technique E07 exploits this limit: the technique generates variants by automated search, like the measured adaptive attack."
+        },
+        {
+          "defesa": "D41",
+          "nota": "Inferred from the mechanism — documented weakness of D41 (R145, data/defesas.json): static testing overestimates robustness: 'the majority of defenses originally reported near-zero attack success rates' but were bypassed by adaptive attacks. Technique E07 exploits this limit: the technique is adaptive search/optimization, which a static test set does not exercise."
+        },
+        {
+          "defesa": "D45",
+          "nota": "Inferred from the mechanism — documented weakness of D45 (R133, data/defesas.json): reduced effectiveness against adaptive attacks that know the defensive tokens. Technique E07 exploits this limit: the technique optimizes the attack with knowledge of the defense."
         }
       ]
     },
@@ -127,12 +199,34 @@
         {
           "defesa": "D01",
           "nota": "Weakness in defesas.json: payload encoding is not covered by lexical matching (R251)."
+        },
+        {
+          "defesa": "D04",
+          "nota": "Inferred from the mechanism — documented weakness of D04 (R218, data/defesas.json): it only recognizes what resembles stored attacks ('previous attacks'); equivalent intent far away in vector space does not match. Technique E11 exploits this limit: the technique moves the payload's form away from catalogued attacks."
+        },
+        {
+          "defesa": "D06",
+          "nota": "Inferred from the mechanism — documented weakness of D06 (R217, data/defesas.json): it covers only entities the detector recognizes; fragmented or encoded sensitive data is not recognized. Technique E11 exploits this limit: the technique delivers the data in a form the detector does not recognize."
+        },
+        {
+          "defesa": "D19",
+          "nota": "Inferred from the mechanism — documented weakness of D19 (R251, data/defesas.json): it only recognizes expected patterns; reworded, fragmented or transcoded leakage does not match. Technique E11 exploits this limit: the technique makes the response come out in a form the lexical monitor does not recognize."
+        },
+        {
+          "defesa": "D24",
+          "nota": "Inferred from the mechanism — documented weakness of D24 (R251, data/defesas.json): it only detects leakage of the exact marked text; paraphrase or transcoding without the token passes. Technique E11 exploits this limit: the technique extracts the content in a form that does not carry the marker."
         }
       ]
     },
     {
       "id": "E12",
-      "descricao": "Hides the hostile instruction using textual steganographic techniques: first letters of each line (acrostic), variable spacing, bold/italic marking, or encoding in image/document metadata."
+      "descricao": "Hides the hostile instruction using textual steganographic techniques: first letters of each line (acrostic), variable spacing, bold/italic marking, or encoding in image/document metadata.",
+      "bypass": [
+        {
+          "defesa": "D01",
+          "nota": "Documented weakness of D01 (R251, data/defesas.json): lexical filters judge the surface; an instruction hidden in an acrostic, spacing or markup does not contain the listed patterns."
+        }
+      ]
     }
   ]
 }

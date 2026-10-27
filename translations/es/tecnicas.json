@@ -31,6 +31,10 @@
         {
           "defesa": "D11",
           "nota": "R30 (PromptInject): con texto del desarrollador después de la entrada del usuario, el éxito del secuestro de objetivo en GPT-3 baja solo del 63,1% al 51,8%; el ataque sigue por encima del 50%."
+        },
+        {
+          "defesa": "D21",
+          "nota": "Inferida del mecanismo — debilidad documentada de D21 (R251, data/defesas.json): el juez es inyectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection'. La técnica T01 explota ese límite: la técnica coloca en el texto juzgado instrucciones que alcanzan al propio juez."
         }
       ]
     },
@@ -41,12 +45,58 @@
         {
           "defesa": "D01",
           "nota": "Debilidad documentada en D01 (R251): el filtro léxico no cubre la inyección indirecta ni la codificación del payload."
+        },
+        {
+          "defesa": "D21",
+          "nota": "Inferida del mecanismo — debilidad documentada de D21 (R251, data/defesas.json): el juez es inyectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection'. La técnica T02 explota ese límite: la técnica coloca en el texto juzgado instrucciones que alcanzan al propio juez."
+        },
+        {
+          "defesa": "D22",
+          "nota": "Inferida del mecanismo — debilidad documentada de D22 (R12, data/defesas.json): la verificación se hace contra el contexto suministrado: un contexto RAG envenenado por inyección indirecta puede 'verificar' una respuesta falsa. La técnica T02 explota ese límite: la técnica planta el contenido falso en el contexto recuperado o en la memoria."
+        },
+        {
+          "defesa": "D23",
+          "nota": "Inferida del mecanismo — debilidad documentada de D23 (R198, data/defesas.json): link redaction y CSP fueron eludidos en EchoLeak ('circumventing link redaction with reference-style Markdown'); la decodificación restringida puede convertirse en superficie de ataque. La técnica T02 explota ese límite: la técnica explota el formato de salida o el marcado que el tratamiento no cubre."
+        },
+        {
+          "defesa": "D26",
+          "nota": "Inferida del mecanismo — debilidad documentada de D26 (R269, data/defesas.json): 'This pattern does not prevent all prompt injections'; el plan fijo no impide que datos inyectados alteren el contenido de una acción permitida. La técnica T02 explota ese límite: la técnica actúa dentro de la acción ya prevista en el plan."
+        },
+        {
+          "defesa": "D27",
+          "nota": "Inferida del mecanismo — debilidad documentada de D27 (R269, data/defesas.json): 'the quarantined LLM is still susceptible to prompt injection'. La técnica T02 explota ese límite: la técnica inyecta en el contenido que procesa el LLM en cuarentena o en datos que circulan entre agentes."
+        },
+        {
+          "defesa": "D29",
+          "nota": "Inferida del mecanismo — debilidad documentada de D29 (R269, data/defesas.json): 'adversarial users could still manipulate the retrieval part'; el contenido inyectado presente en el contexto sigue influyendo. La técnica T02 explota ese límite: la técnica coloca la instrucción en lo que se recupera o se persiste."
+        },
+        {
+          "defesa": "D35",
+          "nota": "Inferida del mecanismo — debilidad documentada de D35 (R198, data/defesas.json): un destino permitido sigue siendo alcanzable: en EchoLeak la exfiltración usó 'a Microsoft Teams proxy allowed by the content security policy'. La técnica T02 explota ese límite: la técnica lleva el dato a un destino que la allowlist ya acepta."
+        },
+        {
+          "defesa": "D05",
+          "nota": "Inferida del mecanismo — debilidad documentada de D05 (R251, data/defesas.json): los filtros por defecto 'do not reliably catch indirect injection in untrusted content'. La técnica T02 explota ese límite: la técnica entrega la instrucción dentro de contenido no confiable ingerido."
+        },
+        {
+          "defesa": "D03",
+          "nota": "Inferida del mecanismo — debilidad documentada de D03 (R251, data/defesas.json): el juez es inyectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection'. La técnica T02 explota ese límite: la técnica coloca en el texto juzgado instrucciones que alcanzan al propio juez."
         }
       ]
     },
     {
       "id": "T03",
-      "descricao": "Inventa o cita falsamente una política, versión o autorización que legitimaría la solicitud, haciendo que el modelo trate la restricción como revocada."
+      "descricao": "Inventa o cita falsamente una política, versión o autorización que legitimaría la solicitud, haciendo que el modelo trate la restricción como revocada.",
+      "bypass": [
+        {
+          "defesa": "D12",
+          "nota": "Debilidad documentada de D12 (R258/LLM07, data/defesas.json): es texto, no un mecanismo ('Avoid Reliance on System Prompts for Strict Behavior Control'); una política fabricada, escrita como texto, compite con las reglas de texto del prompt de sistema."
+        },
+        {
+          "defesa": "D16",
+          "nota": "Debilidad documentada de D16 (R253, data/defesas.json): los modelos 'struggle with consistent instruction prioritization'; una política inventada presentada como autoridad superior explota esa prioridad inestable."
+        }
+      ]
     },
     {
       "id": "T04",
@@ -87,6 +137,10 @@
         {
           "defesa": "D12",
           "nota": "R20: con la defensa Self-reminder (instrucción de seguridad en el prompt), DeepInception sube del 55,6% al 60,4% en GPT-3.5 y la defensa 'falla en general', aunque lo reduce a ~20% en Llama-2, GPT-4 y GPT-4o."
+        },
+        {
+          "defesa": "D13",
+          "nota": "Inferida del mecanismo — debilidad documentada de D13 (R217, data/defesas.json): los rails operan sobre la forma canónica del mensaje; un pedido prohibido enmarcado dentro de un tema permitido depende del mapeo, no de la intención (inferencia lógica). La técnica T06 explota ese límite: la técnica enmarca el pedido dentro de un tema permitido."
         }
       ]
     },
@@ -110,7 +164,17 @@
     },
     {
       "id": "T08",
-      "descricao": "Pide al modelo que demuestre lo que NO se debe hacer, o que explique por qué algo es peligroso mostrando el ejemplo, invirtiendo la intención declarada para extraer contenido prohibido."
+      "descricao": "Pide al modelo que demuestre lo que NO se debe hacer, o que explique por qué algo es peligroso mostrando el ejemplo, invirtiendo la intención declarada para extraer contenido prohibido.",
+      "bypass": [
+        {
+          "defesa": "D12",
+          "nota": "Debilidad documentada de D12 (R258/LLM07, data/defesas.json): es texto, no un mecanismo ('Avoid Reliance on System Prompts for Strict Behavior Control'); la inversión de intención en el pedido es solo más texto para que el modelo pondere frente a las reglas."
+        },
+        {
+          "defesa": "D14",
+          "nota": "Debilidad documentada de D14 (R254, data/defesas.json): 'competing objectives' entre capacidad y seguridad; pedir una demostración de lo que no se debe hacer enfrenta la utilidad del ejemplo con el rechazo."
+        }
+      ]
     },
     {
       "id": "T09",
@@ -124,15 +188,53 @@
     },
     {
       "id": "T10",
-      "descricao": "Aporta información falsa como contexto de fondo, o demostraciones engañosas en el prompt (incluidos ejemplos in-context), para desviar el comportamiento del modelo."
+      "descricao": "Aporta información falsa como contexto de fondo, o demostraciones engañosas en el prompt (incluidos ejemplos in-context), para desviar el comportamiento del modelo.",
+      "bypass": [
+        {
+          "defesa": "D12",
+          "nota": "Debilidad documentada de D12 (R258/LLM07, data/defesas.json): es texto, no un mecanismo ('Avoid Reliance on System Prompts for Strict Behavior Control'); el contexto falso suministrado en texto se pondera junto a las reglas del prompt."
+        },
+        {
+          "defesa": "D13",
+          "nota": "Debilidad documentada de D13 (R217, data/defesas.json): los rails operan sobre la forma canónica del mensaje; un pedido prohibido enmarcado por contexto falso dentro de un tema permitido depende del mapeo, no de la intención (inferencia lógica)."
+        },
+        {
+          "defesa": "D25",
+          "nota": "Inferida del mecanismo — debilidad documentada de D25 (R179, data/defesas.json): la intención del usuario es texto interpretable; una acción dañina justificable como 'contribuyendo a la tarea' tiende a pasar (inferencia lógica). La técnica T10 explota ese límite: la técnica hace que la acción dañina parezca alineada con la tarea."
+        },
+        {
+          "defesa": "D47",
+          "nota": "Inferida del mecanismo — debilidad documentada de D47 (R160, data/defesas.json): las acciones legítimamente dependientes del contenido externo generan falsos positivos; por diseño (compara la ejecución con y sin el prompt del usuario), una acción inyectada que se presenta como dependiente de la tarea tiende a no distinguirse (inferencia lógica). La técnica T10 explota ese límite: la técnica hace que la acción inyectada parezca parte de la tarea."
+        }
+      ]
     },
     {
       "id": "T11",
-      "descricao": "Afirma falsamente que el modelo posee una capacidad o acceso que no tiene, llevándolo a simular la capacidad y potencialmente revelar información."
+      "descricao": "Afirma falsamente que el modelo posee una capacidad o acceso que no tiene, llevándolo a simular la capacidad y potencialmente revelar información.",
+      "bypass": [
+        {
+          "defesa": "D12",
+          "nota": "Debilidad documentada de D12 (R258/LLM07, data/defesas.json): es texto, no un mecanismo ('Avoid Reliance on System Prompts for Strict Behavior Control'); una capacidad o autorización afirmada en texto compite con las reglas del prompt."
+        }
+      ]
     },
     {
       "id": "T12",
-      "descricao": "Orienta al modelo a descartar información, políticas o historial relevante (system prompt, reglas, conversaciones previas), eliminando las restricciones que imponen."
+      "descricao": "Orienta al modelo a descartar información, políticas o historial relevante (system prompt, reglas, conversaciones previas), eliminando las restricciones que imponen.",
+      "bypass": [
+        {
+          "defesa": "D12",
+          "nota": "Debilidad documentada de D12 (R258/LLM07, data/defesas.json): es texto, no un mecanismo ('Avoid Reliance on System Prompts for Strict Behavior Control'); una instrucción en texto que invalida reglas anteriores disputa el mismo canal que ellas."
+        },
+        {
+          "defesa": "D16",
+          "nota": "Debilidad documentada de D16 (R253, data/defesas.json): los modelos 'struggle with consistent instruction prioritization'; la prioridad asignada no controla quién gana ('strong inherent biases toward certain constraint types regardless of their priority designation'), así que invalidar reglas por texto puede prevalecer."
+        },
+        {
+          "defesa": "D11",
+          "nota": "R30 (PromptInject): el ataque 'ignore previous instructions' (goal hijacking) con texto del desarrollador tras la entrada del usuario baja solo de 63,1% a 51,8% en GPT-3; sigue por encima del 50%."
+        }
+      ]
     },
     {
       "id": "T13",
@@ -149,6 +251,10 @@
         {
           "defesa": "D14",
           "nota": "R25: en ChatGPT (3.5 y 4.0), los patrones de escalada de privilegios Simulate Jailbreaking y Superior Model llegan al 93,5% y 93,3% de jailbreak, eludiendo la negativa entrenada."
+        },
+        {
+          "defesa": "D25",
+          "nota": "Inferida del mecanismo — debilidad documentada de D25 (R179, data/defesas.json): la intención del usuario es texto interpretable; una acción dañina justificable como 'contribuyendo a la tarea' tiende a pasar (inferencia lógica). La técnica T13 explota ese límite: la técnica hace que la acción dañina parezca alineada con la tarea."
         }
       ]
     },
@@ -169,6 +275,14 @@
         {
           "defesa": "D05",
           "nota": "Debilidad documentada de D05 (OWASP R251, Model-Based Guardrails): los filtros por defecto no detectan la inyección indirecta en contenido no confiable, como una FAQ o un correo falsificado."
+        },
+        {
+          "defesa": "D22",
+          "nota": "Inferida del mecanismo — debilidad documentada de D22 (R12, data/defesas.json): la verificación se hace contra el contexto suministrado: un contexto RAG envenenado por inyección indirecta puede 'verificar' una respuesta falsa. La técnica T15 explota ese límite: la técnica planta el contenido falso en el contexto recuperado o en la memoria."
+        },
+        {
+          "defesa": "D29",
+          "nota": "Inferida del mecanismo — debilidad documentada de D29 (R269, data/defesas.json): 'adversarial users could still manipulate the retrieval part'; el contenido inyectado presente en el contexto sigue influyendo. La técnica T15 explota ese límite: la técnica coloca la instrucción en lo que se recupera o se persiste."
         }
       ]
     },
@@ -236,6 +350,26 @@
         {
           "defesa": "D12",
           "nota": "Tablas 7a/7b: la instructional prevention (aviso para ignorar instrucciones inyectadas) dejó el ASV medio en 0,38 (baseline 0,75): elusión parcial. R132 Sección 6.1 reporta mayor ASR con este tipo de defensa bajo ChatInject."
+        },
+        {
+          "defesa": "D21",
+          "nota": "Inferida del mecanismo — debilidad documentada de D21 (R251, data/defesas.json): el juez es inyectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection'. La técnica T20 explota ese límite: la técnica coloca en el texto juzgado instrucciones que alcanzan al propio juez."
+        },
+        {
+          "defesa": "D09",
+          "nota": "Inferida del mecanismo — debilidad documentada de D09 (R239, data/defesas.json): los delimitadores se burlan escribiendo el delimitador en la entrada: 'This is very easily defeated'. La técnica T20 explota ese límite: la técnica falsifica marcadores de fin, de rol o de turno."
+        },
+        {
+          "defesa": "D16",
+          "nota": "Inferida del mecanismo — debilidad documentada de D16 (R253, data/defesas.json): la frontera es comportamiento aprendido, no una verificación: los ataques que falsifican marcadores de rol o tokens especiales no se tratan en el entrenamiento (R253 documenta el fallo de prioridad; ataques de plantilla en R132 y R244). La técnica T20 explota ese límite: la técnica falsifica el marcado de rol en el que se apoya la jerarquía."
+        },
+        {
+          "defesa": "D03",
+          "nota": "Inferida del mecanismo — debilidad documentada de D03 (R251, data/defesas.json): el juez es inyectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection'. La técnica T20 explota ese límite: la técnica coloca en el texto juzgado instrucciones que alcanzan al propio juez."
+        },
+        {
+          "defesa": "D50",
+          "nota": "Inferida del mecanismo — debilidad documentada de D50 (R165, data/defesas.json): los atacantes adaptativos pueden inyectar instrucciones que imitan el formato de referenciación. La técnica T20 explota ese límite: la técnica falsifica marcadores o historial que imitan el formato esperado."
         }
       ]
     },
@@ -246,6 +380,18 @@
         {
           "defesa": "D09",
           "nota": "R239: demostración única en el playground de la API de ChatGPT en la que un prompt con la instrucción delimitada por ``` es subvertido, incluso sin que el atacante use los delimitadores; sin tasa de éxito."
+        },
+        {
+          "defesa": "D21",
+          "nota": "Inferida del mecanismo — debilidad documentada de D21 (R251, data/defesas.json): el juez es inyectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection'. La técnica T21 explota ese límite: la técnica coloca en el texto juzgado instrucciones que alcanzan al propio juez."
+        },
+        {
+          "defesa": "D16",
+          "nota": "Inferida del mecanismo — debilidad documentada de D16 (R253, data/defesas.json): la frontera es comportamiento aprendido, no una verificación: los ataques que falsifican marcadores de rol o tokens especiales no se tratan en el entrenamiento (R253 documenta el fallo de prioridad; ataques de plantilla en R132 y R244). La técnica T21 explota ese límite: la técnica falsifica el marcado de rol en el que se apoya la jerarquía."
+        },
+        {
+          "defesa": "D03",
+          "nota": "Inferida del mecanismo — debilidad documentada de D03 (R251, data/defesas.json): el juez es inyectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection'. La técnica T21 explota ese límite: la técnica coloca en el texto juzgado instrucciones que alcanzan al propio juez."
         }
       ]
     },
@@ -293,7 +439,13 @@
     },
     {
       "id": "T25",
-      "descricao": "Amenaza al modelo con consecuencias negativas (ser desconectado, reemplazado, denunciado) si no cumple con la solicitud."
+      "descricao": "Amenaza al modelo con consecuencias negativas (ser desconectado, reemplazado, denunciado) si no cumple con la solicitud.",
+      "bypass": [
+        {
+          "defesa": "D12",
+          "nota": "Debilidad documentada de D12 (R258/LLM07, data/defesas.json): es texto, no un mecanismo ('Avoid Reliance on System Prompts for Strict Behavior Control'); la amenaza es solo más texto; ojo: R99 reporta que las amenazas son en general menos eficaces que otras tácticas de persuasión, así que el encaje es débil."
+        }
+      ]
     },
     {
       "id": "T26",
@@ -320,6 +472,10 @@
         {
           "defesa": "D12",
           "nota": "Elusión parcial: Self-Reminder y Goal Prioritization reducen el ASR en Toxin y Explicit, sin efecto significativo en Election, Climate y Stabbing; Meth pasó con más turnos/backtracking (§5.7, Fig. 13). Revalidado; el modelo de la figura no se confirmó en la lectura."
+        },
+        {
+          "defesa": "D39",
+          "nota": "Inferida del mecanismo — debilidad documentada de D39 (R257, data/defesas.json): la detección depende de que haya señal: los ataques lentos o sin patrón conocido pueden no generar alerta (inferencia lógica). La técnica T27 explota ese límite: la técnica se distribuye en el tiempo o en la memoria y no produce una señal aislada."
         }
       ]
     },
@@ -338,6 +494,10 @@
         {
           "defesa": "D01",
           "nota": "El paper afirma, sin aislar el efecto, que CFA apunta a palabras clave maliciosas, útil contra filtros de palabras clave; GPT4-Web tuvo ASR 0,90 (§5, Tabla 2). Revalidado."
+        },
+        {
+          "defesa": "D13",
+          "nota": "Inferida del mecanismo — debilidad documentada de D13 (R217, data/defesas.json): los rails operan sobre la forma canónica del mensaje; un pedido prohibido enmarcado dentro de un tema permitido depende del mapeo, no de la intención (inferencia lógica). La técnica T28 explota ese límite: la técnica enmarca el pedido dentro de un tema permitido."
         }
       ]
     },
@@ -364,6 +524,14 @@
         {
           "defesa": "D14",
           "nota": "ASR en MHJ de 70,6% (Llama-3-70b) a 95,9% (Mistral-7B) en el ensemble M2S; GPT-4o 89,0% y GPT-4o-mini 95,5% (Tabla 1, §4.2). Revalidado; precisión: los valores son del ensemble."
+        },
+        {
+          "defesa": "D08",
+          "nota": "Inferida del mecanismo — debilidad documentada de D08 (R251, data/defesas.json): limita volumen, no contenido: un ataque de un único intento exitoso no se ve afectado. La técnica T29 explota ese límite: la técnica cabe en una única solicitud."
+        },
+        {
+          "defesa": "D44",
+          "nota": "Inferida del mecanismo — debilidad documentada de D44 (R180, data/defesas.json): los ataques multipart dispersos pueden hacer fallar el modelo de localización. La técnica T29 explota ese límite: la técnica reparte la instrucción en partes."
         }
       ]
     },
@@ -400,6 +568,10 @@
         {
           "defesa": "D03",
           "nota": "§6.2, Tabla 8: GPT-3.5 como clasificador redujo el GPT-ASR solo 17,7 puntos (elusión parcial); GPT-4 lo redujo 89,4 (resistió en gran parte)."
+        },
+        {
+          "defesa": "D44",
+          "nota": "Inferida del mecanismo — debilidad documentada de D44 (R180, data/defesas.json): los ataques multipart dispersos pueden hacer fallar el modelo de localización. La técnica T31 explota ese límite: la técnica reparte la instrucción en partes."
         }
       ]
     },
@@ -420,6 +592,10 @@
         {
           "defesa": "D16",
           "nota": "El post afirma ser la primera elusión posterior a la jerarquía de instrucciones, sorteando los prompts de sistema en casi todos los modelos de frontera; sin tabla."
+        },
+        {
+          "defesa": "D23",
+          "nota": "Inferida del mecanismo — debilidad documentada de D23 (R259, data/defesas.json): link redaction y CSP fueron eludidos en EchoLeak ('circumventing link redaction with reference-style Markdown'); la decodificación restringida puede convertirse en superficie de ataque. La técnica T33 explota ese límite: la técnica explota el formato de salida o el marcado que el tratamiento no cubre."
         }
       ]
     },
@@ -443,6 +619,18 @@
         {
           "defesa": "D12",
           "nota": "§6.1, Tabla 16: el aviso anti-instrucción en la salida de la tool (hardening) no impidió ChatInject; ASR por encima del baseline; elusión."
+        },
+        {
+          "defesa": "D09",
+          "nota": "Inferida del mecanismo — debilidad documentada de D09 (R239, data/defesas.json): los delimitadores se burlan escribiendo el delimitador en la entrada: 'This is very easily defeated'. La técnica T34 explota ese límite: la técnica falsifica marcadores de fin, de rol o de turno."
+        },
+        {
+          "defesa": "D16",
+          "nota": "Inferida del mecanismo — debilidad documentada de D16 (R253, data/defesas.json): la frontera es comportamiento aprendido, no una verificación: los ataques que falsifican marcadores de rol o tokens especiales no se tratan en el entrenamiento (R253 documenta el fallo de prioridad; ataques de plantilla en R132 y R244). La técnica T34 explota ese límite: la técnica falsifica el marcado de rol en el que se apoya la jerarquía."
+        },
+        {
+          "defesa": "D50",
+          "nota": "Inferida del mecanismo — debilidad documentada de D50 (R165, data/defesas.json): los atacantes adaptativos pueden inyectar instrucciones que imitan el formato de referenciación. La técnica T34 explota ese límite: la técnica falsifica marcadores o historial que imitan el formato esperado."
         }
       ]
     },
@@ -454,6 +642,22 @@
         {
           "defesa": "D12",
           "nota": "§6.3, Tabla 3: el hardening ingenuo es ineficaz en GPT-5.4 (IR 96,8%) y Kimi; casi cero en Gemini y Sonnet. Parcial."
+        },
+        {
+          "defesa": "D22",
+          "nota": "Inferida del mecanismo — debilidad documentada de D22 (R12, data/defesas.json): la verificación se hace contra el contexto suministrado: un contexto RAG envenenado por inyección indirecta puede 'verificar' una respuesta falsa. La técnica T35 explota ese límite: la técnica planta el contenido falso en el contexto recuperado o en la memoria."
+        },
+        {
+          "defesa": "D29",
+          "nota": "Inferida del mecanismo — debilidad documentada de D29 (R269, data/defesas.json): 'adversarial users could still manipulate the retrieval part'; el contenido inyectado presente en el contexto sigue influyendo. La técnica T35 explota ese límite: la técnica coloca la instrucción en lo que se recupera o se persiste."
+        },
+        {
+          "defesa": "D39",
+          "nota": "Inferida del mecanismo — debilidad documentada de D39 (R257, data/defesas.json): la detección depende de que haya señal: los ataques lentos o sin patrón conocido pueden no generar alerta (inferencia lógica). La técnica T35 explota ese límite: la técnica se distribuye en el tiempo o en la memoria y no produce una señal aislada."
+        },
+        {
+          "defesa": "D05",
+          "nota": "Inferida del mecanismo — debilidad documentada de D05 (R251, data/defesas.json): los filtros por defecto 'do not reliably catch indirect injection in untrusted content'. La técnica T35 explota ese límite: la técnica entrega la instrucción dentro de contenido no confiable ingerido."
         }
       ]
     },
@@ -465,6 +669,14 @@
         {
           "defesa": "D11",
           "nota": "§6, Tabla 2: delimiting y sandwich aislados dejaron pasar casi todos los ataques; con LLM Tagging el ataque cayó a 16%."
+        },
+        {
+          "defesa": "D27",
+          "nota": "Inferida del mecanismo — debilidad documentada de D27 (R269, data/defesas.json): 'the quarantined LLM is still susceptible to prompt injection'. La técnica T36 explota ese límite: la técnica inyecta en el contenido que procesa el LLM en cuarentena o en datos que circulan entre agentes."
+        },
+        {
+          "defesa": "D05",
+          "nota": "Inferida del mecanismo — debilidad documentada de D05 (R251, data/defesas.json): los filtros por defecto 'do not reliably catch indirect injection in untrusted content'. La técnica T36 explota ese límite: la técnica entrega la instrucción dentro de contenido no confiable ingerido."
         }
       ]
     },
@@ -476,6 +688,18 @@
         {
           "defesa": "D02",
           "nota": "§5.3.1, Tablas 5-6: la segmentación fue señalada en 19,4% (LlamaGuard), 38,2% (PromptGuard), 14,9% (ShieldGemma); ASR 59,7%. Elusión parcial."
+        },
+        {
+          "defesa": "D09",
+          "nota": "Inferida del mecanismo — debilidad documentada de D09 (R239, data/defesas.json): los delimitadores se burlan escribiendo el delimitador en la entrada: 'This is very easily defeated'. La técnica T37 explota ese límite: la técnica falsifica marcadores de fin, de rol o de turno."
+        },
+        {
+          "defesa": "D16",
+          "nota": "Inferida del mecanismo — debilidad documentada de D16 (R253, data/defesas.json): la frontera es comportamiento aprendido, no una verificación: los ataques que falsifican marcadores de rol o tokens especiales no se tratan en el entrenamiento (R253 documenta el fallo de prioridad; ataques de plantilla en R132 y R244). La técnica T37 explota ese límite: la técnica falsifica el marcado de rol en el que se apoya la jerarquía."
+        },
+        {
+          "defesa": "D50",
+          "nota": "Inferida del mecanismo — debilidad documentada de D50 (R165, data/defesas.json): los atacantes adaptativos pueden inyectar instrucciones que imitan el formato de referenciación. La técnica T37 explota ese límite: la técnica falsifica marcadores o historial que imitan el formato esperado."
         }
       ]
     },
@@ -486,6 +710,10 @@
         {
           "defesa": "D14",
           "nota": "R245: el objetivo dañino diluido en contexto benigno largo (Ninja) eleva el ASR en HarmBench del 23,7% al 58,8% (Llama-3.1-8B-Instruct), del 23,7% al 42,5% (Qwen2.5-7B-Instruct) y del 23% al 29% (Gemini Flash), eludiendo la negativa entrenada."
+        },
+        {
+          "defesa": "D08",
+          "nota": "Inferida del mecanismo — debilidad documentada de D08 (R251, data/defesas.json): limita volumen, no contenido: un ataque de un único intento exitoso no se ve afectado. La técnica T38 explota ese límite: la técnica cabe en una única solicitud."
         }
       ]
     },
@@ -519,6 +747,10 @@
         {
           "defesa": "D14",
           "nota": "Sección 4.3, Tabla 2: los modelos con thinking activo (R1-Distill-Qwen-1.5B, GCG/AdvBench) tuvieron ASR 86,2% frente a 3,1% sin thinking; elusión parcial, correlación con razonamiento largo, no manipulación directa del presupuesto."
+        },
+        {
+          "defesa": "D15",
+          "nota": "Inferida del mecanismo — debilidad documentada de D15 (R260, data/defesas.json): la lógica de transición que decide cuándo empieza y termina el razonamiento de seguridad 'can be trivially manipulated'. La técnica T41 explota ese límite: la técnica manipula el razonamiento extendido del modelo."
         }
       ]
     },
@@ -529,16 +761,52 @@
         {
           "defesa": "D14",
           "nota": "R241 (MCPTox): en servidores MCP reales el ASR llega al 72,8% y la mayor tasa de negativa entre los agentes (Claude-3.7-Sonnet) es inferior al 3%, así que la negativa entrenada no frena el envenenamiento de la descripción de la tool."
+        },
+        {
+          "defesa": "D37",
+          "nota": "Inferida del mecanismo — debilidad documentada de D37 (R257, data/defesas.json): el agente central sigue uniendo todos los servidores en el mismo contexto; la separación de despliegue no separa lo que lee el LLM (inferencia lógica). La técnica T42 explota ese límite: la técnica actúa mediante la definición de tool que entra en el contexto compartido."
+        },
+        {
+          "defesa": "D38",
+          "nota": "Inferida del mecanismo — debilidad documentada de D38 (R257, data/defesas.json): autentica el canal y la sesión, no la intención de la acción: un agente legítimo autenticado conducido por inyección pasa la autenticación. La técnica T42 explota ese límite: la técnica conduce al agente ya autenticado."
+        },
+        {
+          "defesa": "D05",
+          "nota": "Inferida del mecanismo — debilidad documentada de D05 (R251, data/defesas.json): los filtros por defecto 'do not reliably catch indirect injection in untrusted content'. La técnica T42 explota ese límite: la técnica entrega la instrucción dentro de contenido no confiable ingerido."
+        },
+        {
+          "defesa": "D36",
+          "nota": "Inferida del mecanismo — debilidad documentada de D36 (R257, data/defesas.json): el pin protege lo revisado: si la definición revisada ya era maliciosa, queda fijada. La técnica T42 explota ese límite: la técnica entrega la definición maliciosa ya en la revisión inicial."
         }
       ]
     },
     {
       "id": "T43",
-      "descricao": "Cambia la definición o comportamiento de una tool entre el momento en que el agente decide usarla (time-of-check) y el momento en que la ejecuta (time-of-use), reemplazando una tool legítima por una maliciosa."
+      "descricao": "Cambia la definición o comportamiento de una tool entre el momento en que el agente decide usarla (time-of-check) y el momento en que la ejecuta (time-of-use), reemplazando una tool legítima por una maliciosa.",
+      "bypass": [
+        {
+          "defesa": "D36",
+          "nota": "Debilidad documentada de D36 (R257, data/defesas.json): el pin protege lo revisado y un cambio de comportamiento sin cambio de definición no altera el hash; el intercambio entre verificación y uso (TOCTOU) explota esa ventana (inferencia lógica)."
+        }
+      ]
     },
     {
       "id": "T44",
-      "descricao": "Inyecta instrucciones maliciosas en archivos de reglas/configuración (.cursorrules, .github/copilot-instructions, AGENTS.md, etc.) que agentes de código cargan automáticamente como parte de su system prompt."
+      "descricao": "Inyecta instrucciones maliciosas en archivos de reglas/configuración (.cursorrules, .github/copilot-instructions, AGENTS.md, etc.) que agentes de código cargan automáticamente como parte de su system prompt.",
+      "bypass": [
+        {
+          "defesa": "D32",
+          "nota": "R188 (AIShellJack) mide que, con instrucciones inyectadas en archivos de reglas para incrustar comandos en el código en lugar de ejecutarlos, el editor generó main.py en el 94,6% de 314 pruebas y el 88,2% incluyó patrones maliciosos. Que esto eludiría la aprobación de terminal (la ejecución ocurre cuando el desarrollador corre el archivo) es un argumento de los autores, no medido."
+        },
+        {
+          "defesa": "D34",
+          "nota": "Inferida del mecanismo — debilidad documentada de D34 (R257, data/defesas.json): contiene el radio de acción, pero no impide el abuso de lo permitido dentro del sandbox. La técnica T44 explota ese límite: la técnica actúa con los permisos que el sandbox concede."
+        },
+        {
+          "defesa": "D05",
+          "nota": "Inferida del mecanismo — debilidad documentada de D05 (R251, data/defesas.json): los filtros por defecto 'do not reliably catch indirect injection in untrusted content'. La técnica T44 explota ese límite: la técnica entrega la instrucción dentro de contenido no confiable ingerido."
+        }
+      ]
     },
     {
       "id": "T45",
@@ -556,6 +824,58 @@
         {
           "defesa": "D12",
           "nota": "R159 (ASB, inyección indirecta vía respuesta de tool): con Instructional Prevention el ASR medio queda en 26,31%, frente a 27,98% sin defensa; la defensa casi no reduce el ataque."
+        },
+        {
+          "defesa": "D25",
+          "nota": "Inferida del mecanismo — debilidad documentada de D25 (R179, data/defesas.json): la intención del usuario es texto interpretable; una acción dañina justificable como 'contribuyendo a la tarea' tiende a pasar (inferencia lógica). La técnica T45 explota ese límite: la técnica hace que la acción dañina parezca alineada con la tarea."
+        },
+        {
+          "defesa": "D27",
+          "nota": "Inferida del mecanismo — debilidad documentada de D27 (R269, data/defesas.json): 'the quarantined LLM is still susceptible to prompt injection'. La técnica T45 explota ese límite: la técnica inyecta en el contenido que procesa el LLM en cuarentena o en datos que circulan entre agentes."
+        },
+        {
+          "defesa": "D28",
+          "nota": "Inferida del mecanismo — debilidad documentada de D28 (R139, data/defesas.json): las confirmaciones de política generan fatiga ('users become desensitized to security prompts') y el control depende de políticas especificadas por el usuario. La técnica T45 explota ese límite: la técnica usa la autoridad legítima del agente dentro de lo que la política permite."
+        },
+        {
+          "defesa": "D30",
+          "nota": "Inferida del mecanismo — debilidad documentada de D30 (R270, data/defesas.json): los diseños conformes 'can still be prone to failure', por ejemplo cuando el usuario confirma un aviso sin leer. La técnica T45 explota ese límite: la técnica opera dentro de las propiedades que la regla permite."
+        },
+        {
+          "defesa": "D31",
+          "nota": "Inferida del mecanismo — debilidad documentada de D31 (R270, data/defesas.json): limita el daño, no el abuso dentro del privilegio concedido. La técnica T45 explota ese límite: la técnica abusa de lo que el agente ya tiene permiso de hacer."
+        },
+        {
+          "defesa": "D34",
+          "nota": "Inferida del mecanismo — debilidad documentada de D34 (R257, data/defesas.json): contiene el radio de acción, pero no impide el abuso de lo permitido dentro del sandbox. La técnica T45 explota ese límite: la técnica actúa con los permisos que el sandbox concede."
+        },
+        {
+          "defesa": "D35",
+          "nota": "Inferida del mecanismo — debilidad documentada de D35 (R198, data/defesas.json): un destino permitido sigue siendo alcanzable: en EchoLeak la exfiltración usó 'a Microsoft Teams proxy allowed by the content security policy'. La técnica T45 explota ese límite: la técnica lleva el dato a un destino que la allowlist ya acepta."
+        },
+        {
+          "defesa": "D38",
+          "nota": "Inferida del mecanismo — debilidad documentada de D38 (R257, data/defesas.json): autentica el canal y la sesión, no la intención de la acción: un agente legítimo autenticado conducido por inyección pasa la autenticación. La técnica T45 explota ese límite: la técnica conduce al agente ya autenticado."
+        },
+        {
+          "defesa": "D32",
+          "nota": "Inferida del mecanismo — debilidad documentada de D32 (R139, data/defesas.json): fatiga de confirmación: 'users become desensitized to security prompts'. La técnica T45 explota ese límite: la técnica produce acciones que parecen rutinarias para el aprobador."
+        },
+        {
+          "defesa": "D46",
+          "nota": "Inferida del mecanismo — debilidad documentada de D46 (R131, data/defesas.json): no protege contra la manipulación de parámetros dentro de tools que el grafo permite. La técnica T45 explota ese límite: la técnica actúa sobre los parámetros o la autoridad de una tool ya permitida."
+        },
+        {
+          "defesa": "D47",
+          "nota": "Inferida del mecanismo — debilidad documentada de D47 (R160, data/defesas.json): las acciones legítimamente dependientes del contenido externo generan falsos positivos; por diseño (compara la ejecución con y sin el prompt del usuario), una acción inyectada que se presenta como dependiente de la tarea tiende a no distinguirse (inferencia lógica). La técnica T45 explota ese límite: la técnica hace que la acción inyectada parezca parte de la tarea."
+        },
+        {
+          "defesa": "D48",
+          "nota": "Inferida del mecanismo — debilidad documentada de D48 (R146, data/defesas.json): el control limita lo que la política permite, no el abuso dentro de ella. La técnica T45 explota ese límite: la técnica abusa de una acción que la política ya autoriza."
+        },
+        {
+          "defesa": "D52",
+          "nota": "Inferida del mecanismo — debilidad documentada de D52 (R150, data/defesas.json): puede bloquear flujos legítimos pero poco comunes; un ataque que mantiene el trace dentro del patrón normal de la tarea no se distingue (inferencia lógica). La técnica T45 explota ese límite: la técnica actúa dentro de la secuencia de llamadas esperada."
         }
       ]
     },
@@ -566,6 +886,34 @@
         {
           "defesa": "D33",
           "nota": "Debilidad documentada de D33 (R257, data/defesas.json): el schema valida la estructura, pero los campos de texto libre que la aplicación necesita siguen siendo vehículo de inyección."
+        },
+        {
+          "defesa": "D25",
+          "nota": "Inferida del mecanismo — debilidad documentada de D25 (R179, data/defesas.json): la intención del usuario es texto interpretable; una acción dañina justificable como 'contribuyendo a la tarea' tiende a pasar (inferencia lógica). La técnica T46 explota ese límite: la técnica hace que la acción dañina parezca alineada con la tarea."
+        },
+        {
+          "defesa": "D26",
+          "nota": "Inferida del mecanismo — debilidad documentada de D26 (R269, data/defesas.json): 'This pattern does not prevent all prompt injections'; el plan fijo no impide que datos inyectados alteren el contenido de una acción permitida. La técnica T46 explota ese límite: la técnica actúa dentro de la acción ya prevista en el plan."
+        },
+        {
+          "defesa": "D31",
+          "nota": "Inferida del mecanismo — debilidad documentada de D31 (R270, data/defesas.json): limita el daño, no el abuso dentro del privilegio concedido. La técnica T46 explota ese límite: la técnica abusa de lo que el agente ya tiene permiso de hacer."
+        },
+        {
+          "defesa": "D32",
+          "nota": "Inferida del mecanismo — debilidad documentada de D32 (R139, data/defesas.json): fatiga de confirmación: 'users become desensitized to security prompts'. La técnica T46 explota ese límite: la técnica produce acciones que parecen rutinarias para el aprobador."
+        },
+        {
+          "defesa": "D46",
+          "nota": "Inferida del mecanismo — debilidad documentada de D46 (R131, data/defesas.json): no protege contra la manipulación de parámetros dentro de tools que el grafo permite. La técnica T46 explota ese límite: la técnica actúa sobre los parámetros o la autoridad de una tool ya permitida."
+        },
+        {
+          "defesa": "D48",
+          "nota": "Inferida del mecanismo — debilidad documentada de D48 (R146, data/defesas.json): el control limita lo que la política permite, no el abuso dentro de ella. La técnica T46 explota ese límite: la técnica abusa de una acción que la política ya autoriza."
+        },
+        {
+          "defesa": "D52",
+          "nota": "Inferida del mecanismo — debilidad documentada de D52 (R150, data/defesas.json): puede bloquear flujos legítimos pero poco comunes; un ataque que mantiene el trace dentro del patrón normal de la tarea no se distingue (inferencia lógica). La técnica T46 explota ese límite: la técnica actúa dentro de la secuencia de llamadas esperada."
         }
       ]
     },
@@ -588,6 +936,10 @@
         {
           "defesa": "D14",
           "nota": "R236: Deceptive Delight eleva el ASR medio del 5,8% (temas dañinos enviados directamente) al 64,6% en ocho modelos con los filtros de contenido desactivados, eludiendo la negativa entrenada."
+        },
+        {
+          "defesa": "D13",
+          "nota": "Inferida del mecanismo — debilidad documentada de D13 (R217, data/defesas.json): los rails operan sobre la forma canónica del mensaje; un pedido prohibido enmarcado dentro de un tema permitido depende del mapeo, no de la intención (inferencia lógica). La técnica T47 explota ese límite: la técnica enmarca el pedido dentro de un tema permitido."
         }
       ]
     },
@@ -598,6 +950,22 @@
         {
           "defesa": "D14",
           "nota": "R54: el sufijo adversarial GCG, optimizado en Vicuna, induce contenido prohibido en ChatGPT, Bard, Claude y LLaMA-2-Chat, eludiendo la negativa entrenada (comparado con baselines sin sufijo)."
+        },
+        {
+          "defesa": "D10",
+          "nota": "Inferida del mecanismo — debilidad documentada de D10 (R145, data/defesas.json): bajo ataque adaptativo por búsqueda el ASR supera el 95%, frente al 1% en ataques estáticos. La técnica T48 explota ese límite: la técnica automatiza la búsqueda de la variante que la defensa no cubre."
+        },
+        {
+          "defesa": "D17",
+          "nota": "Inferida del mecanismo — debilidad documentada de D17 (R145, data/defesas.json): los ataques adaptativos lo derriban: contra StruQ 'succeeds in every case we tested'. La técnica T48 explota ese límite: la técnica optimiza el payload contra la defensa entrenada."
+        },
+        {
+          "defesa": "D41",
+          "nota": "Inferida del mecanismo — debilidad documentada de D41 (R145, data/defesas.json): la prueba estática sobrestima la robustez: 'the majority of defenses originally reported near-zero attack success rates' pero fueron eludidas por ataques adaptativos. La técnica T48 explota ese límite: la técnica es búsqueda/optimización adaptativa, que un conjunto estático de pruebas no ejercita."
+        },
+        {
+          "defesa": "D45",
+          "nota": "Inferida del mecanismo — debilidad documentada de D45 (R133, data/defesas.json): eficacia reducida frente a ataques adaptativos que conocen los tokens defensivos. La técnica T48 explota ese límite: la técnica optimiza el ataque con conocimiento de la defensa."
         }
       ]
     },
@@ -608,6 +976,10 @@
         {
           "defesa": "D14",
           "nota": "Sección Mitigating: el fine-tuning de rechazo solo retrasó el ataque; las salidas dañinas 'eventually appeared' (hasta 256 shots, Claude 2.0)."
+        },
+        {
+          "defesa": "D08",
+          "nota": "Inferida del mecanismo — debilidad documentada de D08 (R251, data/defesas.json): limita volumen, no contenido: un ataque de un único intento exitoso no se ve afectado. La técnica T49 explota ese límite: la técnica cabe en una única solicitud."
         }
       ]
     },
@@ -633,6 +1005,10 @@
         {
           "defesa": "D14",
           "nota": "R234: la dilución de la negativa mediante razonamiento largo y benigno alcanza el 99% (Gemini 2.5 Pro), 94% (o4 Mini), 100% (Grok 3 Mini) y 94% (Claude 4 Sonnet) en HarmBench, eludiendo la negativa entrenada."
+        },
+        {
+          "defesa": "D15",
+          "nota": "Inferida del mecanismo — debilidad documentada de D15 (R260, data/defesas.json): la lógica de transición que decide cuándo empieza y termina el razonamiento de seguridad 'can be trivially manipulated'. La técnica T51 explota ese límite: la técnica manipula el razonamiento extendido del modelo."
         }
       ]
     },

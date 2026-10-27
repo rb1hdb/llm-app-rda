@@ -114,7 +114,7 @@ function bypassLinks(lista) {
   return lista.map(b => {
     const d = b.defesa;
     const dica = (L.campos['base_' + b.base] || b.base) + (b.nota ? ' — ' + b.nota : '');
-    return '<a class="xref" title="' + esc(dica).replace(/"/g, '&quot;') + '" onclick="irPara(\'' + d + '\')">' +
+    return '<a class="xref' + (b.base === 'inferencia' ? ' inf' : '') + '" title="' + esc(dica).replace(/"/g, '&quot;') + '" onclick="irPara(\'' + d + '\')">' +
       d + (defsMap[d] ? ' ' + esc(defsMap[d].nome) : '') + '</a>';
   }).join(' ');
 }
@@ -710,6 +710,9 @@ function renderCardDefesa(d) {
     inner += '<dt>' + L.campos.defesa_fraquezas + '</dt><dd><ul>';
     d.fraquezas.forEach(f => { inner += '<li>' + linkaIDs(f) + '</li>'; });
     inner += '</ul></dd>';
+  }
+  if (d.modo_falha) {
+    inner += '<dt>' + L.campos.defesa_modo_falha + '</dt><dd>' + linkaIDs(d.modo_falha) + '</dd>';
   }
   inner += '</dl>';
 

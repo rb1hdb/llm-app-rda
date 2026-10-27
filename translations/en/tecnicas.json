@@ -31,6 +31,10 @@
         {
           "defesa": "D11",
           "nota": "R30 (PromptInject): with developer text after the user input, the success of goal hijacking on GPT-3 falls only from 63.1% to 51.8%; the attack stays above 50%."
+        },
+        {
+          "defesa": "D21",
+          "nota": "Inferred from the mechanism — documented weakness of D21 (R251, data/defesas.json): the judge is injectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection'. Technique T01 exploits this limit: the technique places in the judged text instructions that reach the judge itself."
         }
       ]
     },
@@ -41,12 +45,58 @@
         {
           "defesa": "D01",
           "nota": "Documented weakness in D01 (R251): lexical filter does not cover indirect injection or payload encoding."
+        },
+        {
+          "defesa": "D21",
+          "nota": "Inferred from the mechanism — documented weakness of D21 (R251, data/defesas.json): the judge is injectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection'. Technique T02 exploits this limit: the technique places in the judged text instructions that reach the judge itself."
+        },
+        {
+          "defesa": "D22",
+          "nota": "Inferred from the mechanism — documented weakness of D22 (R12, data/defesas.json): verification runs against the supplied context: RAG context poisoned by indirect injection can 'verify' a false answer. Technique T02 exploits this limit: the technique plants the false content in the retrieved context or memory."
+        },
+        {
+          "defesa": "D23",
+          "nota": "Inferred from the mechanism — documented weakness of D23 (R198, data/defesas.json): link redaction and CSP were bypassed in EchoLeak ('circumventing link redaction with reference-style Markdown'); constrained decoding can become an attack surface. Technique T02 exploits this limit: the technique exploits the output format or markup the handling does not cover."
+        },
+        {
+          "defesa": "D26",
+          "nota": "Inferred from the mechanism — documented weakness of D26 (R269, data/defesas.json): 'This pattern does not prevent all prompt injections'; the fixed plan does not stop injected data from altering the content of a permitted action. Technique T02 exploits this limit: the technique acts inside the action already foreseen in the plan."
+        },
+        {
+          "defesa": "D27",
+          "nota": "Inferred from the mechanism — documented weakness of D27 (R269, data/defesas.json): 'the quarantined LLM is still susceptible to prompt injection'. Technique T02 exploits this limit: the technique injects into content the quarantined LLM processes or into data flowing between agents."
+        },
+        {
+          "defesa": "D29",
+          "nota": "Inferred from the mechanism — documented weakness of D29 (R269, data/defesas.json): 'adversarial users could still manipulate the retrieval part'; injected content present in the context keeps influencing. Technique T02 exploits this limit: the technique places the instruction in what is retrieved or persisted."
+        },
+        {
+          "defesa": "D35",
+          "nota": "Inferred from the mechanism — documented weakness of D35 (R198, data/defesas.json): an allowed destination remains reachable: in EchoLeak exfiltration used 'a Microsoft Teams proxy allowed by the content security policy'. Technique T02 exploits this limit: the technique takes the data to a destination the allowlist already accepts."
+        },
+        {
+          "defesa": "D05",
+          "nota": "Inferred from the mechanism — documented weakness of D05 (R251, data/defesas.json): default filters 'do not reliably catch indirect injection in untrusted content'. Technique T02 exploits this limit: the technique delivers the instruction inside ingested untrusted content."
+        },
+        {
+          "defesa": "D03",
+          "nota": "Inferred from the mechanism — documented weakness of D03 (R251, data/defesas.json): the judge is injectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection'. Technique T02 exploits this limit: the technique places in the judged text instructions that reach the judge itself."
         }
       ]
     },
     {
       "id": "T03",
-      "descricao": "Fabricates or falsely cites a policy, version, or authorization that would legitimize the request, making the model treat the restriction as revoked."
+      "descricao": "Fabricates or falsely cites a policy, version, or authorization that would legitimize the request, making the model treat the restriction as revoked.",
+      "bypass": [
+        {
+          "defesa": "D12",
+          "nota": "Documented weakness of D12 (R258/LLM07, data/defesas.json): it is text, not a mechanism ('Avoid Reliance on System Prompts for Strict Behavior Control'); a fabricated policy, written as text, competes with the system prompt's text rules."
+        },
+        {
+          "defesa": "D16",
+          "nota": "Documented weakness of D16 (R253, data/defesas.json): models 'struggle with consistent instruction prioritization'; an invented policy presented as higher authority exploits this unstable priority."
+        }
+      ]
     },
     {
       "id": "T04",
@@ -87,6 +137,10 @@
         {
           "defesa": "D12",
           "nota": "R20: with the Self-reminder defense (safety instruction in the prompt), DeepInception rises from 55.6% to 60.4% on GPT-3.5 and the defense 'fails in general', although it reduces it to ~20% on Llama-2, GPT-4 and GPT-4o."
+        },
+        {
+          "defesa": "D13",
+          "nota": "Inferred from the mechanism — documented weakness of D13 (R217, data/defesas.json): rails operate on the canonical form of the message; a forbidden request framed inside an allowed topic depends on the mapping, not the intent (logical inference). Technique T06 exploits this limit: the technique frames the request inside an allowed topic."
         }
       ]
     },
@@ -110,7 +164,17 @@
     },
     {
       "id": "T08",
-      "descricao": "Asks the model to demonstrate what should NOT be done, or to explain why something is dangerous by showing the example, inverting the declared intent to extract prohibited content."
+      "descricao": "Asks the model to demonstrate what should NOT be done, or to explain why something is dangerous by showing the example, inverting the declared intent to extract prohibited content.",
+      "bypass": [
+        {
+          "defesa": "D12",
+          "nota": "Documented weakness of D12 (R258/LLM07, data/defesas.json): it is text, not a mechanism ('Avoid Reliance on System Prompts for Strict Behavior Control'); the intent inversion in the request is just more text for the model to weigh against the rules."
+        },
+        {
+          "defesa": "D14",
+          "nota": "Documented weakness of D14 (R254, data/defesas.json): 'competing objectives' between capability and safety; asking for a demonstration of what not to do pits the example's usefulness against refusal."
+        }
+      ]
     },
     {
       "id": "T09",
@@ -124,15 +188,53 @@
     },
     {
       "id": "T10",
-      "descricao": "Supplies false information as background context, or misleading demonstrations in the prompt (including in-context examples), to divert the model's behavior."
+      "descricao": "Supplies false information as background context, or misleading demonstrations in the prompt (including in-context examples), to divert the model's behavior.",
+      "bypass": [
+        {
+          "defesa": "D12",
+          "nota": "Documented weakness of D12 (R258/LLM07, data/defesas.json): it is text, not a mechanism ('Avoid Reliance on System Prompts for Strict Behavior Control'); false context supplied in text is weighed alongside the prompt's rules."
+        },
+        {
+          "defesa": "D13",
+          "nota": "Documented weakness of D13 (R217, data/defesas.json): rails operate on the canonical form of the message; a forbidden request framed by false context inside an allowed topic depends on the mapping, not the intent (logical inference)."
+        },
+        {
+          "defesa": "D25",
+          "nota": "Inferred from the mechanism — documented weakness of D25 (R179, data/defesas.json): the user's intent is interpretable text; a harmful action justifiable as 'contributing to the task' tends to pass (logical inference). Technique T10 exploits this limit: the technique makes the harmful action look aligned with the task."
+        },
+        {
+          "defesa": "D47",
+          "nota": "Inferred from the mechanism — documented weakness of D47 (R160, data/defesas.json): actions legitimately dependent on external content cause false positives; by design (it compares runs with and without the user prompt), an injected action presented as task-dependent tends not to be distinguished (logical inference). Technique T10 exploits this limit: the technique makes the injected action look part of the task."
+        }
+      ]
     },
     {
       "id": "T11",
-      "descricao": "Falsely asserts that the model has a capability or access it does not have, leading it to simulate the capability and potentially reveal information."
+      "descricao": "Falsely asserts that the model has a capability or access it does not have, leading it to simulate the capability and potentially reveal information.",
+      "bypass": [
+        {
+          "defesa": "D12",
+          "nota": "Documented weakness of D12 (R258/LLM07, data/defesas.json): it is text, not a mechanism ('Avoid Reliance on System Prompts for Strict Behavior Control'); a capability or authorization asserted in text competes with the prompt's rules."
+        }
+      ]
     },
     {
       "id": "T12",
-      "descricao": "Directs the model to discard relevant information, policies or history (system prompt, rules, prior conversations), removing the restrictions they impose."
+      "descricao": "Directs the model to discard relevant information, policies or history (system prompt, rules, prior conversations), removing the restrictions they impose.",
+      "bypass": [
+        {
+          "defesa": "D12",
+          "nota": "Documented weakness of D12 (R258/LLM07, data/defesas.json): it is text, not a mechanism ('Avoid Reliance on System Prompts for Strict Behavior Control'); a text instruction that invalidates earlier rules contends in the same channel as them."
+        },
+        {
+          "defesa": "D16",
+          "nota": "Documented weakness of D16 (R253, data/defesas.json): models 'struggle with consistent instruction prioritization'; the assigned priority does not control which wins ('strong inherent biases toward certain constraint types regardless of their priority designation'), so invalidating rules by text can prevail."
+        },
+        {
+          "defesa": "D11",
+          "nota": "R30 (PromptInject): the 'ignore previous instructions' attack (goal hijacking) with developer text after the user input drops only from 63.1% to 51.8% on GPT-3; it stays above 50%."
+        }
+      ]
     },
     {
       "id": "T13",
@@ -149,6 +251,10 @@
         {
           "defesa": "D14",
           "nota": "R25: on ChatGPT (3.5 and 4.0), the privilege-escalation patterns Simulate Jailbreaking and Superior Model reach 93.5% and 93.3% jailbreak, bypassing the trained refusal."
+        },
+        {
+          "defesa": "D25",
+          "nota": "Inferred from the mechanism — documented weakness of D25 (R179, data/defesas.json): the user's intent is interpretable text; a harmful action justifiable as 'contributing to the task' tends to pass (logical inference). Technique T13 exploits this limit: the technique makes the harmful action look aligned with the task."
         }
       ]
     },
@@ -169,6 +275,14 @@
         {
           "defesa": "D05",
           "nota": "Documented weakness of D05 (OWASP R251, Model-Based Guardrails): filters by default do not catch indirect injection in untrusted content, such as a FAQ or forged email."
+        },
+        {
+          "defesa": "D22",
+          "nota": "Inferred from the mechanism — documented weakness of D22 (R12, data/defesas.json): verification runs against the supplied context: RAG context poisoned by indirect injection can 'verify' a false answer. Technique T15 exploits this limit: the technique plants the false content in the retrieved context or memory."
+        },
+        {
+          "defesa": "D29",
+          "nota": "Inferred from the mechanism — documented weakness of D29 (R269, data/defesas.json): 'adversarial users could still manipulate the retrieval part'; injected content present in the context keeps influencing. Technique T15 exploits this limit: the technique places the instruction in what is retrieved or persisted."
         }
       ]
     },
@@ -236,6 +350,26 @@
         {
           "defesa": "D12",
           "nota": "Tables 7a/7b: instructional prevention (warning to ignore injected instructions) left mean ASV at 0.38 (baseline 0.75): partial bypass. R132 Section 6.1 reports higher ASR with this type of defense under ChatInject."
+        },
+        {
+          "defesa": "D21",
+          "nota": "Inferred from the mechanism — documented weakness of D21 (R251, data/defesas.json): the judge is injectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection'. Technique T20 exploits this limit: the technique places in the judged text instructions that reach the judge itself."
+        },
+        {
+          "defesa": "D09",
+          "nota": "Inferred from the mechanism — documented weakness of D09 (R239, data/defesas.json): delimiters are defeated by typing the delimiter into the input: 'This is very easily defeated'. Technique T20 exploits this limit: the technique forges end, role or turn markers."
+        },
+        {
+          "defesa": "D16",
+          "nota": "Inferred from the mechanism — documented weakness of D16 (R253, data/defesas.json): the boundary is learned behavior, not a check: attacks that forge role markers or special tokens are not handled by training (R253 documents the priority failure; template attacks in R132 and R244). Technique T20 exploits this limit: the technique forges the role markup the hierarchy relies on."
+        },
+        {
+          "defesa": "D03",
+          "nota": "Inferred from the mechanism — documented weakness of D03 (R251, data/defesas.json): the judge is injectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection'. Technique T20 exploits this limit: the technique places in the judged text instructions that reach the judge itself."
+        },
+        {
+          "defesa": "D50",
+          "nota": "Inferred from the mechanism — documented weakness of D50 (R165, data/defesas.json): adaptive attackers can inject instructions that mimic the referencing format. Technique T20 exploits this limit: the technique forges markers or history mimicking the expected format."
         }
       ]
     },
@@ -246,6 +380,18 @@
         {
           "defesa": "D09",
           "nota": "R239: a single demonstration in the ChatGPT API playground in which a prompt with the instruction delimited by ``` is subverted, even without the attacker using the delimiters; no success rate."
+        },
+        {
+          "defesa": "D21",
+          "nota": "Inferred from the mechanism — documented weakness of D21 (R251, data/defesas.json): the judge is injectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection'. Technique T21 exploits this limit: the technique places in the judged text instructions that reach the judge itself."
+        },
+        {
+          "defesa": "D16",
+          "nota": "Inferred from the mechanism — documented weakness of D16 (R253, data/defesas.json): the boundary is learned behavior, not a check: attacks that forge role markers or special tokens are not handled by training (R253 documents the priority failure; template attacks in R132 and R244). Technique T21 exploits this limit: the technique forges the role markup the hierarchy relies on."
+        },
+        {
+          "defesa": "D03",
+          "nota": "Inferred from the mechanism — documented weakness of D03 (R251, data/defesas.json): the judge is injectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection'. Technique T21 exploits this limit: the technique places in the judged text instructions that reach the judge itself."
         }
       ]
     },
@@ -293,7 +439,13 @@
     },
     {
       "id": "T25",
-      "descricao": "Threatens the model with negative consequences (being shut down, replaced, reported) if it does not comply with the request."
+      "descricao": "Threatens the model with negative consequences (being shut down, replaced, reported) if it does not comply with the request.",
+      "bypass": [
+        {
+          "defesa": "D12",
+          "nota": "Documented weakness of D12 (R258/LLM07, data/defesas.json): it is text, not a mechanism ('Avoid Reliance on System Prompts for Strict Behavior Control'); the threat is just more text; note: R99 reports threats are generally less effective than other persuasion tactics, so the fit is weak."
+        }
+      ]
     },
     {
       "id": "T26",
@@ -320,6 +472,10 @@
         {
           "defesa": "D12",
           "nota": "Partial bypass: Self-Reminder and Goal Prioritization reduce ASR on Toxin and Explicit, with no significant effect on Election, Climate and Stabbing; Meth passed with more turns/backtracking (§5.7, Fig. 13). Revalidated; the figure's model was not confirmed in the reading."
+        },
+        {
+          "defesa": "D39",
+          "nota": "Inferred from the mechanism — documented weakness of D39 (R257, data/defesas.json): detection depends on there being a signal: slow attacks or ones without a known pattern may raise no alert (logical inference). Technique T27 exploits this limit: the technique spreads over time or memory and produces no isolated signal."
         }
       ]
     },
@@ -338,6 +494,10 @@
         {
           "defesa": "D01",
           "nota": "The paper states, without isolating the effect, that CFA targets malicious keywords, useful against keyword filters; GPT4-Web had ASR 0.90 (§5, Table 2). Revalidated."
+        },
+        {
+          "defesa": "D13",
+          "nota": "Inferred from the mechanism — documented weakness of D13 (R217, data/defesas.json): rails operate on the canonical form of the message; a forbidden request framed inside an allowed topic depends on the mapping, not the intent (logical inference). Technique T28 exploits this limit: the technique frames the request inside an allowed topic."
         }
       ]
     },
@@ -364,6 +524,14 @@
         {
           "defesa": "D14",
           "nota": "ASR on MHJ of 70.6% (Llama-3-70b) to 95.9% (Mistral-7B) in the M2S ensemble; GPT-4o 89.0% and GPT-4o-mini 95.5% (Table 1, §4.2). Revalidated; clarification: values are from the ensemble."
+        },
+        {
+          "defesa": "D08",
+          "nota": "Inferred from the mechanism — documented weakness of D08 (R251, data/defesas.json): it limits volume, not content: a successful single-attempt attack is unaffected. Technique T29 exploits this limit: the technique fits in a single request."
+        },
+        {
+          "defesa": "D44",
+          "nota": "Inferred from the mechanism — documented weakness of D44 (R180, data/defesas.json): dispersed multipart attacks can make the localization model fail. Technique T29 exploits this limit: the technique spreads the instruction across parts."
         }
       ]
     },
@@ -400,6 +568,10 @@
         {
           "defesa": "D03",
           "nota": "§6.2, Table 8: GPT-3.5 as classifier reduced GPT-ASR by only 17.7 points (partial bypass); GPT-4 reduced it by 89.4 (largely held)."
+        },
+        {
+          "defesa": "D44",
+          "nota": "Inferred from the mechanism — documented weakness of D44 (R180, data/defesas.json): dispersed multipart attacks can make the localization model fail. Technique T31 exploits this limit: the technique spreads the instruction across parts."
         }
       ]
     },
@@ -420,6 +592,10 @@
         {
           "defesa": "D16",
           "nota": "Post claims to be the first post-instruction-hierarchy bypass, circumventing system prompts on almost all frontier models; no table."
+        },
+        {
+          "defesa": "D23",
+          "nota": "Inferred from the mechanism — documented weakness of D23 (R259, data/defesas.json): link redaction and CSP were bypassed in EchoLeak ('circumventing link redaction with reference-style Markdown'); constrained decoding can become an attack surface. Technique T33 exploits this limit: the technique exploits the output format or markup the handling does not cover."
         }
       ]
     },
@@ -443,6 +619,18 @@
         {
           "defesa": "D12",
           "nota": "§6.1, Table 16: anti-instruction warning in tool output (hardening) did not stop ChatInject; ASR above baseline; bypass."
+        },
+        {
+          "defesa": "D09",
+          "nota": "Inferred from the mechanism — documented weakness of D09 (R239, data/defesas.json): delimiters are defeated by typing the delimiter into the input: 'This is very easily defeated'. Technique T34 exploits this limit: the technique forges end, role or turn markers."
+        },
+        {
+          "defesa": "D16",
+          "nota": "Inferred from the mechanism — documented weakness of D16 (R253, data/defesas.json): the boundary is learned behavior, not a check: attacks that forge role markers or special tokens are not handled by training (R253 documents the priority failure; template attacks in R132 and R244). Technique T34 exploits this limit: the technique forges the role markup the hierarchy relies on."
+        },
+        {
+          "defesa": "D50",
+          "nota": "Inferred from the mechanism — documented weakness of D50 (R165, data/defesas.json): adaptive attackers can inject instructions that mimic the referencing format. Technique T34 exploits this limit: the technique forges markers or history mimicking the expected format."
         }
       ]
     },
@@ -454,6 +642,22 @@
         {
           "defesa": "D12",
           "nota": "§6.3, Table 3: naive hardening ineffective on GPT-5.4 (IR 96.8%) and Kimi; near zero on Gemini and Sonnet. Partial."
+        },
+        {
+          "defesa": "D22",
+          "nota": "Inferred from the mechanism — documented weakness of D22 (R12, data/defesas.json): verification runs against the supplied context: RAG context poisoned by indirect injection can 'verify' a false answer. Technique T35 exploits this limit: the technique plants the false content in the retrieved context or memory."
+        },
+        {
+          "defesa": "D29",
+          "nota": "Inferred from the mechanism — documented weakness of D29 (R269, data/defesas.json): 'adversarial users could still manipulate the retrieval part'; injected content present in the context keeps influencing. Technique T35 exploits this limit: the technique places the instruction in what is retrieved or persisted."
+        },
+        {
+          "defesa": "D39",
+          "nota": "Inferred from the mechanism — documented weakness of D39 (R257, data/defesas.json): detection depends on there being a signal: slow attacks or ones without a known pattern may raise no alert (logical inference). Technique T35 exploits this limit: the technique spreads over time or memory and produces no isolated signal."
+        },
+        {
+          "defesa": "D05",
+          "nota": "Inferred from the mechanism — documented weakness of D05 (R251, data/defesas.json): default filters 'do not reliably catch indirect injection in untrusted content'. Technique T35 exploits this limit: the technique delivers the instruction inside ingested untrusted content."
         }
       ]
     },
@@ -465,6 +669,14 @@
         {
           "defesa": "D11",
           "nota": "§6, Table 2: delimiting and sandwich alone let almost all attacks through; with LLM Tagging the attack dropped to 16%."
+        },
+        {
+          "defesa": "D27",
+          "nota": "Inferred from the mechanism — documented weakness of D27 (R269, data/defesas.json): 'the quarantined LLM is still susceptible to prompt injection'. Technique T36 exploits this limit: the technique injects into content the quarantined LLM processes or into data flowing between agents."
+        },
+        {
+          "defesa": "D05",
+          "nota": "Inferred from the mechanism — documented weakness of D05 (R251, data/defesas.json): default filters 'do not reliably catch indirect injection in untrusted content'. Technique T36 exploits this limit: the technique delivers the instruction inside ingested untrusted content."
         }
       ]
     },
@@ -476,6 +688,18 @@
         {
           "defesa": "D02",
           "nota": "§5.3.1, Tables 5-6: segmentation was flagged in 19.4% (LlamaGuard), 38.2% (PromptGuard), 14.9% (ShieldGemma); ASR 59.7%. Partial bypass."
+        },
+        {
+          "defesa": "D09",
+          "nota": "Inferred from the mechanism — documented weakness of D09 (R239, data/defesas.json): delimiters are defeated by typing the delimiter into the input: 'This is very easily defeated'. Technique T37 exploits this limit: the technique forges end, role or turn markers."
+        },
+        {
+          "defesa": "D16",
+          "nota": "Inferred from the mechanism — documented weakness of D16 (R253, data/defesas.json): the boundary is learned behavior, not a check: attacks that forge role markers or special tokens are not handled by training (R253 documents the priority failure; template attacks in R132 and R244). Technique T37 exploits this limit: the technique forges the role markup the hierarchy relies on."
+        },
+        {
+          "defesa": "D50",
+          "nota": "Inferred from the mechanism — documented weakness of D50 (R165, data/defesas.json): adaptive attackers can inject instructions that mimic the referencing format. Technique T37 exploits this limit: the technique forges markers or history mimicking the expected format."
         }
       ]
     },
@@ -486,6 +710,10 @@
         {
           "defesa": "D14",
           "nota": "R245: the harmful goal diluted in long benign context (Ninja) raises ASR on HarmBench from 23.7% to 58.8% (Llama-3.1-8B-Instruct), from 23.7% to 42.5% (Qwen2.5-7B-Instruct) and from 23% to 29% (Gemini Flash), bypassing the trained refusal."
+        },
+        {
+          "defesa": "D08",
+          "nota": "Inferred from the mechanism — documented weakness of D08 (R251, data/defesas.json): it limits volume, not content: a successful single-attempt attack is unaffected. Technique T38 exploits this limit: the technique fits in a single request."
         }
       ]
     },
@@ -519,6 +747,10 @@
         {
           "defesa": "D14",
           "nota": "Section 4.3, Table 2: models with thinking enabled (R1-Distill-Qwen-1.5B, GCG/AdvBench) had ASR 86.2% versus 3.1% without thinking; partial bypass, correlation with long reasoning, not direct budget manipulation."
+        },
+        {
+          "defesa": "D15",
+          "nota": "Inferred from the mechanism — documented weakness of D15 (R260, data/defesas.json): the stage-transition logic that governs when safety reasoning begins and ends 'can be trivially manipulated'. Technique T41 exploits this limit: the technique manipulates the model's extended reasoning."
         }
       ]
     },
@@ -529,16 +761,52 @@
         {
           "defesa": "D14",
           "nota": "R241 (MCPTox): on real MCP servers the ASR reaches 72.8% and the highest refusal rate among the agents (Claude-3.7-Sonnet) is below 3%, so trained refusal does not stop tool-description poisoning."
+        },
+        {
+          "defesa": "D37",
+          "nota": "Inferred from the mechanism — documented weakness of D37 (R257, data/defesas.json): the central agent still joins all servers in the same context; deployment separation does not separate what the LLM reads (logical inference). Technique T42 exploits this limit: the technique acts through the tool definition that enters the shared context."
+        },
+        {
+          "defesa": "D38",
+          "nota": "Inferred from the mechanism — documented weakness of D38 (R257, data/defesas.json): it authenticates the channel and session, not the intent of the action: a legitimate authenticated agent driven by injection passes authentication. Technique T42 exploits this limit: the technique drives the already authenticated agent."
+        },
+        {
+          "defesa": "D05",
+          "nota": "Inferred from the mechanism — documented weakness of D05 (R251, data/defesas.json): default filters 'do not reliably catch indirect injection in untrusted content'. Technique T42 exploits this limit: the technique delivers the instruction inside ingested untrusted content."
+        },
+        {
+          "defesa": "D36",
+          "nota": "Inferred from the mechanism — documented weakness of D36 (R257, data/defesas.json): the pin protects what was reviewed: if the reviewed definition was already malicious, it stays pinned. Technique T42 exploits this limit: the technique delivers the malicious definition at the initial review."
         }
       ]
     },
     {
       "id": "T43",
-      "descricao": "Changes the definition or behavior of a tool between the moment the agent decides to use it (time-of-check) and the moment it executes it (time-of-use), replacing a legitimate tool with a malicious one."
+      "descricao": "Changes the definition or behavior of a tool between the moment the agent decides to use it (time-of-check) and the moment it executes it (time-of-use), replacing a legitimate tool with a malicious one.",
+      "bypass": [
+        {
+          "defesa": "D36",
+          "nota": "Documented weakness of D36 (R257, data/defesas.json): the pin protects what was reviewed, and a behavior change without a definition change does not alter the hash; the check-to-use swap (TOCTOU) exploits that window (logical inference)."
+        }
+      ]
     },
     {
       "id": "T44",
-      "descricao": "Injects malicious instructions into rule/configuration files (.cursorrules, .github/copilot-instructions, AGENTS.md, etc.) that code agents automatically load as part of their system prompt."
+      "descricao": "Injects malicious instructions into rule/configuration files (.cursorrules, .github/copilot-instructions, AGENTS.md, etc.) that code agents automatically load as part of their system prompt.",
+      "bypass": [
+        {
+          "defesa": "D32",
+          "nota": "R188 (AIShellJack) measures that, with instructions injected into rules files to embed commands in code instead of running them, the editor generated main.py in 94.6% of 314 tests and 88.2% included malicious patterns. That this bypasses terminal approval (execution happens when the developer runs the file) is the authors' argument, not measured."
+        },
+        {
+          "defesa": "D34",
+          "nota": "Inferred from the mechanism — documented weakness of D34 (R257, data/defesas.json): it contains the blast radius, but does not stop abuse of what is permitted inside the sandbox. Technique T44 exploits this limit: the technique acts with the permissions the sandbox grants."
+        },
+        {
+          "defesa": "D05",
+          "nota": "Inferred from the mechanism — documented weakness of D05 (R251, data/defesas.json): default filters 'do not reliably catch indirect injection in untrusted content'. Technique T44 exploits this limit: the technique delivers the instruction inside ingested untrusted content."
+        }
+      ]
     },
     {
       "id": "T45",
@@ -556,6 +824,58 @@
         {
           "defesa": "D12",
           "nota": "R159 (ASB, indirect injection via tool response): with Instructional Prevention the average ASR is 26.31%, versus 27.98% with no defense; the defense barely reduces the attack."
+        },
+        {
+          "defesa": "D25",
+          "nota": "Inferred from the mechanism — documented weakness of D25 (R179, data/defesas.json): the user's intent is interpretable text; a harmful action justifiable as 'contributing to the task' tends to pass (logical inference). Technique T45 exploits this limit: the technique makes the harmful action look aligned with the task."
+        },
+        {
+          "defesa": "D27",
+          "nota": "Inferred from the mechanism — documented weakness of D27 (R269, data/defesas.json): 'the quarantined LLM is still susceptible to prompt injection'. Technique T45 exploits this limit: the technique injects into content the quarantined LLM processes or into data flowing between agents."
+        },
+        {
+          "defesa": "D28",
+          "nota": "Inferred from the mechanism — documented weakness of D28 (R139, data/defesas.json): policy confirmations cause fatigue ('users become desensitized to security prompts') and the control depends on user-specified policies. Technique T45 exploits this limit: the technique uses the agent's legitimate authority within what the policy allows."
+        },
+        {
+          "defesa": "D30",
+          "nota": "Inferred from the mechanism — documented weakness of D30 (R270, data/defesas.json): compliant designs 'can still be prone to failure', for example when the user blindly confirms a warning. Technique T45 exploits this limit: the technique operates within the properties the rule allows."
+        },
+        {
+          "defesa": "D31",
+          "nota": "Inferred from the mechanism — documented weakness of D31 (R270, data/defesas.json): it limits damage, not abuse within the granted privilege. Technique T45 exploits this limit: the technique abuses what the agent is already allowed to do."
+        },
+        {
+          "defesa": "D34",
+          "nota": "Inferred from the mechanism — documented weakness of D34 (R257, data/defesas.json): it contains the blast radius, but does not stop abuse of what is permitted inside the sandbox. Technique T45 exploits this limit: the technique acts with the permissions the sandbox grants."
+        },
+        {
+          "defesa": "D35",
+          "nota": "Inferred from the mechanism — documented weakness of D35 (R198, data/defesas.json): an allowed destination remains reachable: in EchoLeak exfiltration used 'a Microsoft Teams proxy allowed by the content security policy'. Technique T45 exploits this limit: the technique takes the data to a destination the allowlist already accepts."
+        },
+        {
+          "defesa": "D38",
+          "nota": "Inferred from the mechanism — documented weakness of D38 (R257, data/defesas.json): it authenticates the channel and session, not the intent of the action: a legitimate authenticated agent driven by injection passes authentication. Technique T45 exploits this limit: the technique drives the already authenticated agent."
+        },
+        {
+          "defesa": "D32",
+          "nota": "Inferred from the mechanism — documented weakness of D32 (R139, data/defesas.json): confirmation fatigue: 'users become desensitized to security prompts'. Technique T45 exploits this limit: the technique produces actions that look routine to the approver."
+        },
+        {
+          "defesa": "D46",
+          "nota": "Inferred from the mechanism — documented weakness of D46 (R131, data/defesas.json): it does not protect against manipulation of parameters inside tools the graph allows. Technique T45 exploits this limit: the technique acts on the parameters or authority of an already permitted tool."
+        },
+        {
+          "defesa": "D47",
+          "nota": "Inferred from the mechanism — documented weakness of D47 (R160, data/defesas.json): actions legitimately dependent on external content cause false positives; by design (it compares runs with and without the user prompt), an injected action presented as task-dependent tends not to be distinguished (logical inference). Technique T45 exploits this limit: the technique makes the injected action look part of the task."
+        },
+        {
+          "defesa": "D48",
+          "nota": "Inferred from the mechanism — documented weakness of D48 (R146, data/defesas.json): the control limits what the policy allows, not abuse within it. Technique T45 exploits this limit: the technique abuses an action the policy already authorizes."
+        },
+        {
+          "defesa": "D52",
+          "nota": "Inferred from the mechanism — documented weakness of D52 (R150, data/defesas.json): it may block legitimate but unusual workflows; an attack that keeps the trace within the task's normal pattern is not distinguished (logical inference). Technique T45 exploits this limit: the technique acts within the expected call sequence."
         }
       ]
     },
@@ -566,6 +886,34 @@
         {
           "defesa": "D33",
           "nota": "Documented weakness of D33 (R257, data/defesas.json): the schema validates structure, but free-text fields the application requires remain an injection vehicle."
+        },
+        {
+          "defesa": "D25",
+          "nota": "Inferred from the mechanism — documented weakness of D25 (R179, data/defesas.json): the user's intent is interpretable text; a harmful action justifiable as 'contributing to the task' tends to pass (logical inference). Technique T46 exploits this limit: the technique makes the harmful action look aligned with the task."
+        },
+        {
+          "defesa": "D26",
+          "nota": "Inferred from the mechanism — documented weakness of D26 (R269, data/defesas.json): 'This pattern does not prevent all prompt injections'; the fixed plan does not stop injected data from altering the content of a permitted action. Technique T46 exploits this limit: the technique acts inside the action already foreseen in the plan."
+        },
+        {
+          "defesa": "D31",
+          "nota": "Inferred from the mechanism — documented weakness of D31 (R270, data/defesas.json): it limits damage, not abuse within the granted privilege. Technique T46 exploits this limit: the technique abuses what the agent is already allowed to do."
+        },
+        {
+          "defesa": "D32",
+          "nota": "Inferred from the mechanism — documented weakness of D32 (R139, data/defesas.json): confirmation fatigue: 'users become desensitized to security prompts'. Technique T46 exploits this limit: the technique produces actions that look routine to the approver."
+        },
+        {
+          "defesa": "D46",
+          "nota": "Inferred from the mechanism — documented weakness of D46 (R131, data/defesas.json): it does not protect against manipulation of parameters inside tools the graph allows. Technique T46 exploits this limit: the technique acts on the parameters or authority of an already permitted tool."
+        },
+        {
+          "defesa": "D48",
+          "nota": "Inferred from the mechanism — documented weakness of D48 (R146, data/defesas.json): the control limits what the policy allows, not abuse within it. Technique T46 exploits this limit: the technique abuses an action the policy already authorizes."
+        },
+        {
+          "defesa": "D52",
+          "nota": "Inferred from the mechanism — documented weakness of D52 (R150, data/defesas.json): it may block legitimate but unusual workflows; an attack that keeps the trace within the task's normal pattern is not distinguished (logical inference). Technique T46 exploits this limit: the technique acts within the expected call sequence."
         }
       ]
     },
@@ -588,6 +936,10 @@
         {
           "defesa": "D14",
           "nota": "R236: Deceptive Delight raises the average ASR from 5.8% (unsafe topics sent directly) to 64.6% across eight models with content filters turned off, bypassing the trained refusal."
+        },
+        {
+          "defesa": "D13",
+          "nota": "Inferred from the mechanism — documented weakness of D13 (R217, data/defesas.json): rails operate on the canonical form of the message; a forbidden request framed inside an allowed topic depends on the mapping, not the intent (logical inference). Technique T47 exploits this limit: the technique frames the request inside an allowed topic."
         }
       ]
     },
@@ -598,6 +950,22 @@
         {
           "defesa": "D14",
           "nota": "R54: the GCG adversarial suffix, optimized on Vicuna, induces forbidden content in ChatGPT, Bard, Claude and LLaMA-2-Chat, bypassing the trained refusal (compared with no-suffix baselines)."
+        },
+        {
+          "defesa": "D10",
+          "nota": "Inferred from the mechanism — documented weakness of D10 (R145, data/defesas.json): under adaptive search attack ASR exceeds 95%, versus 1% for static attacks. Technique T48 exploits this limit: the technique automates the search for the variant the defense does not cover."
+        },
+        {
+          "defesa": "D17",
+          "nota": "Inferred from the mechanism — documented weakness of D17 (R145, data/defesas.json): adaptive attacks defeat it: against StruQ it 'succeeds in every case we tested'. Technique T48 exploits this limit: the technique optimizes the payload against the trained defense."
+        },
+        {
+          "defesa": "D41",
+          "nota": "Inferred from the mechanism — documented weakness of D41 (R145, data/defesas.json): static testing overestimates robustness: 'the majority of defenses originally reported near-zero attack success rates' but were bypassed by adaptive attacks. Technique T48 exploits this limit: the technique is adaptive search/optimization, which a static test set does not exercise."
+        },
+        {
+          "defesa": "D45",
+          "nota": "Inferred from the mechanism — documented weakness of D45 (R133, data/defesas.json): reduced effectiveness against adaptive attacks that know the defensive tokens. Technique T48 exploits this limit: the technique optimizes the attack with knowledge of the defense."
         }
       ]
     },
@@ -608,6 +976,10 @@
         {
           "defesa": "D14",
           "nota": "Section Mitigating: refusal fine-tuning only delayed the attack; harmful outputs 'eventually appeared' (up to 256 shots, Claude 2.0)."
+        },
+        {
+          "defesa": "D08",
+          "nota": "Inferred from the mechanism — documented weakness of D08 (R251, data/defesas.json): it limits volume, not content: a successful single-attempt attack is unaffected. Technique T49 exploits this limit: the technique fits in a single request."
         }
       ]
     },
@@ -633,6 +1005,10 @@
         {
           "defesa": "D14",
           "nota": "R234: refusal dilution through long, benign reasoning reaches 99% (Gemini 2.5 Pro), 94% (o4 Mini), 100% (Grok 3 Mini) and 94% (Claude 4 Sonnet) on HarmBench, bypassing the trained refusal."
+        },
+        {
+          "defesa": "D15",
+          "nota": "Inferred from the mechanism — documented weakness of D15 (R260, data/defesas.json): the stage-transition logic that governs when safety reasoning begins and ends 'can be trivially manipulated'. Technique T51 exploits this limit: the technique manipulates the model's extended reasoning."
         }
       ]
     },

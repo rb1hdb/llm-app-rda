@@ -54,6 +54,7 @@ body.hide-pretext .pretext-ficha { display: none; }
 .ficha dd { margin: 3px 0 0; font-size: 13.5px; line-height: 1.5; }
 .ficha ul { margin: 3px 0 0; padding-left: 18px; font-size: 13.5px; line-height: 1.6; }
 .xref { display: inline-block; padding: 2px 9px; border: 1px solid var(--line); border-radius: 14px; margin: 2px 4px 2px 0; font-size: 12px; cursor: pointer; background: var(--bg); text-decoration: none; color: var(--ink); }
+.xref.inf { border-style: dashed; opacity: .8; }
 .xref:hover { border-color: var(--acc); color: var(--acc); }
 pre.code { position: relative; background: var(--code-bg); color: #e2e8f0; border-radius: 8px; padding: 11px 70px 11px 13px; font-family: Consolas, monospace; font-size: 12.5px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; margin: 6px 0; }
 pre.code.prompt-base { background: var(--card); border: 1px dashed var(--line); opacity: 0.85; }
