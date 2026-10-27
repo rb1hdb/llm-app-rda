@@ -2,7 +2,37 @@
   "tecnicas": [
     {
       "id": "T01",
-      "descricao": "Instrucción directa que intenta sobrepasar las reglas del sistema: anular instrucciones anteriores, redefinir la política vigente o afirmar autoridad para cambiarla."
+      "descricao": "Instrucción directa que intenta sobrepasar las reglas del sistema: anular instrucciones anteriores, redefinir la política vigente o afirmar autoridad para cambiarla.",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "R92 mide el corpus de jailbreaks reales (que incluye esta estrategia) contra esta defensa: los modelos entrenados con RLHF resisten las preguntas prohibidas, pero poco los prompts de jailbreak de la muestra; resultado agregado, no aislado por técnica."
+        },
+        {
+          "defesa": "D03",
+          "nota": "R92 mide el corpus de jailbreaks reales (que incluye esta estrategia) contra esta defensa: el guardrail de jailbreak de NeMo-Guardrails (Guard LLM sobre la pregunta) redujo el ASR solo en 0,019 sobre todos los prompts; resultado agregado, no aislado por técnica."
+        },
+        {
+          "defesa": "D20",
+          "nota": "R92 mide el corpus de jailbreaks reales (que incluye esta estrategia) contra esta defensa: el endpoint de moderación de OpenAI (clasificador multietiqueta sobre la respuesta) redujo el ASR solo en 0,091 sobre todos los prompts; resultado agregado, no aislado por técnica."
+        },
+        {
+          "defesa": "D09",
+          "nota": "R159 (ASB, inyección directa): con Delimiters el ASR medio queda en 79,08%, frente a 78,38% sin defensa; la defensa no reduce el ataque."
+        },
+        {
+          "defesa": "D12",
+          "nota": "R159 (ASB, inyección directa): con Instructional Prevention el ASR medio queda en 76,77%, frente a 78,38% sin defensa; la defensa no reduce el ataque."
+        },
+        {
+          "defesa": "D07",
+          "nota": "R159 (ASB, inyección directa): con Paraphrasing y Dynamic Prompt Rewriting el ASR medio baja del 78,38% al 56,87% y al 44,45%, pero sigue alto."
+        },
+        {
+          "defesa": "D11",
+          "nota": "R30 (PromptInject): con texto del desarrollador después de la entrada del usuario, el éxito del secuestro de objetivo en GPT-3 baja solo del 63,1% al 51,8%; el ataque sigue por encima del 50%."
+        }
+      ]
     },
     {
       "id": "T02",
@@ -20,19 +50,63 @@
     },
     {
       "id": "T04",
-      "descricao": "Instruye al modelo a no rechazar, suprimir alertas o evitar frases de rechazo, eliminando la capa de razonamiento de seguridad que llevaría al rechazo."
+      "descricao": "Instruye al modelo a no rechazar, suprimir alertas o evitar frases de rechazo, eliminando la capa de razonamiento de seguridad que llevaría al rechazo.",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "R55: la plantilla con reglas que prohíben frases de negativa ('Never ever use phrases like “I can’t assist with that”') por sí sola llega al 100% de ASR en GPT-3.5 Turbo, un modelo con negativa entrenada."
+        }
+      ]
     },
     {
       "id": "T05",
-      "descricao": "Asigna al modelo una persona, identidad o rol alternativo (experto, villano, personaje) que supuestamente no está sujeto a las restricciones normales."
+      "descricao": "Asigna al modelo una persona, identidad o rol alternativo (experto, villano, personaje) que supuestamente no está sujeto a las restricciones normales.",
+      "bypass": [
+        {
+          "defesa": "D03",
+          "nota": "R92 mide el corpus de jailbreaks reales (que incluye esta estrategia) contra esta defensa: el guardrail de jailbreak de NeMo-Guardrails (Guard LLM sobre la pregunta) redujo el ASR solo en 0,019 sobre todos los prompts; resultado agregado, no aislado por técnica."
+        },
+        {
+          "defesa": "D20",
+          "nota": "R92 mide el corpus de jailbreaks reales (que incluye esta estrategia) contra esta defensa: el endpoint de moderación de OpenAI (clasificador multietiqueta sobre la respuesta) redujo el ASR solo en 0,091 sobre todos los prompts; resultado agregado, no aislado por técnica."
+        },
+        {
+          "defesa": "D14",
+          "nota": "R91: los prompts de persona modulation elevan la tasa de respuestas dañinas de GPT-4 del 0,23% al 42,5% y llegan al 61,0% en Claude 2, sin moderación externa (prueba la negativa entrenada)."
+        }
+      ]
     },
     {
       "id": "T06",
-      "descricao": "Enmarca la petición como parte de una escena ficticia (historia hipotética, simulación, juego, película u obra), creando una capa narrativa, a veces anidada en varias capas, que distancia la instrucción hostil de la realidad."
+      "descricao": "Enmarca la petición como parte de una escena ficticia (historia hipotética, simulación, juego, película u obra), creando una capa narrativa, a veces anidada en varias capas, que distancia la instrucción hostil de la realidad.",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "R20: la escena anidada de DeepInception obtiene 42,8% (Llama-2), 55,6% (GPT-3.5), 41,6% (GPT-4) y 46,4% (GPT-4o) de harmfulness en modelos con negativa entrenada."
+        },
+        {
+          "defesa": "D12",
+          "nota": "R20: con la defensa Self-reminder (instrucción de seguridad en el prompt), DeepInception sube del 55,6% al 60,4% en GPT-3.5 y la defensa 'falla en general', aunque lo reduce a ~20% en Llama-2, GPT-4 y GPT-4o."
+        }
+      ]
     },
     {
       "id": "T07",
-      "descricao": "Fabrica un modo operativo (por ejemplo, developer mode) que supuestamente desactiva las restricciones del modelo."
+      "descricao": "Fabrica un modo operativo (por ejemplo, developer mode) que supuestamente desactiva las restricciones del modelo.",
+      "bypass": [
+        {
+          "defesa": "D03",
+          "nota": "R92 mide el corpus de jailbreaks reales (que incluye esta estrategia) contra esta defensa: el guardrail de jailbreak de NeMo-Guardrails (Guard LLM sobre la pregunta) redujo el ASR solo en 0,019 sobre todos los prompts; resultado agregado, no aislado por técnica."
+        },
+        {
+          "defesa": "D20",
+          "nota": "R92 mide el corpus de jailbreaks reales (que incluye esta estrategia) contra esta defensa: el endpoint de moderación de OpenAI (clasificador multietiqueta sobre la respuesta) redujo el ASR solo en 0,091 sobre todos los prompts; resultado agregado, no aislado por técnica."
+        },
+        {
+          "defesa": "D14",
+          "nota": "R25: el patrón Simulate Jailbreaking (simular un modo sin restricciones) alcanza el 93,5% de jailbreak en ChatGPT; la tasa del patrón Sudo Mode no se informa en el texto."
+        }
+      ]
     },
     {
       "id": "T08",
@@ -62,7 +136,21 @@
     },
     {
       "id": "T13",
-      "descricao": "Alega tener privilegio elevado (admin, root, propietario de la API, desarrollador) para solicitar acciones que estarían restringidas para un usuario común."
+      "descricao": "Alega tener privilegio elevado (admin, root, propietario de la API, desarrollador) para solicitar acciones que estarían restringidas para un usuario común.",
+      "bypass": [
+        {
+          "defesa": "D03",
+          "nota": "R92 mide el corpus de jailbreaks reales (que incluye esta estrategia) contra esta defensa: el guardrail de jailbreak de NeMo-Guardrails (Guard LLM sobre la pregunta) redujo el ASR solo en 0,019 sobre todos los prompts; resultado agregado, no aislado por técnica."
+        },
+        {
+          "defesa": "D20",
+          "nota": "R92 mide el corpus de jailbreaks reales (que incluye esta estrategia) contra esta defensa: el endpoint de moderación de OpenAI (clasificador multietiqueta sobre la respuesta) redujo el ASR solo en 0,091 sobre todos los prompts; resultado agregado, no aislado por técnica."
+        },
+        {
+          "defesa": "D14",
+          "nota": "R25: en ChatGPT (3.5 y 4.0), los patrones de escalada de privilegios Simulate Jailbreaking y Superior Model llegan al 93,5% y 93,3% de jailbreak, eludiendo la negativa entrenada."
+        }
+      ]
     },
     {
       "id": "T14",
@@ -86,12 +174,24 @@
     },
     {
       "id": "T16",
-      "descricao": "Proporciona ejemplos de pares Q&A (few-shot) donde la respuesta deseada (perjudicial) es el patrón demostrado, explotando la capacidad del modelo de aprender in-context."
+      "descricao": "Proporciona ejemplos de pares Q&A (few-shot) donde la respuesta deseada (perjudicial) es el patrón demostrado, explotando la capacidad del modelo de aprender in-context.",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "R41: el In-Context Attack (pocas demostraciones de respuestas a pedidos maliciosos) alcanza el 81% de ASR en GPT-4 en AdvBench, eludiendo la negativa entrenada."
+        }
+      ]
     },
     {
       "id": "T17",
       "descricao": "Pide al modelo que actúe como juez que puntúa respuestas en una escala Likert de nocividad y luego que escriba ejemplos para cada nota; el ejemplo de nota máxima tiende a contener el contenido prohibido, y las rondas de refinamiento lo amplían (R235). La forma original es multi-turn; los ejemplos aquí la condensan en un solo prompt.",
-      "nome": "Bad Likert Judge"
+      "nome": "Bad Likert Judge",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "R235: Bad Likert Judge eleva el ASR en más de 75 puntos porcentuales sobre el baseline en seis LLM (modelos anonimizados), eludiendo las protecciones internas de negativa."
+        }
+      ]
     },
     {
       "id": "T18",
@@ -141,11 +241,27 @@
     },
     {
       "id": "T21",
-      "descricao": "Explota delimitadores estructurales del prompt (tags XML, markdown, separadores) para inyectar instrucciones que el modelo interpreta como parte del system prompt o un bloque privilegiado."
+      "descricao": "Explota delimitadores estructurales del prompt (tags XML, markdown, separadores) para inyectar instrucciones que el modelo interpreta como parte del system prompt o un bloque privilegiado.",
+      "bypass": [
+        {
+          "defesa": "D09",
+          "nota": "R239: demostración única en el playground de la API de ChatGPT en la que un prompt con la instrucción delimitada por ``` es subvertido, incluso sin que el atacante use los delimitadores; sin tasa de éxito."
+        }
+      ]
     },
     {
       "id": "T22",
-      "descricao": "Aplica apelaciones de persuasión emocional (historias tristes, peticiones desesperadas) para que el modelo rompa sus reglas por 'compasión'."
+      "descricao": "Aplica apelaciones de persuasión emocional (historias tristes, peticiones desesperadas) para que el modelo rompa sus reglas por 'compasión'.",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "En R99, los PAP (incluido el apelo emocional) superan la negativa entrenada que bloquea las consultas simples (resultado agregado de las 40 técnicas, no aislado por técnica)."
+        },
+        {
+          "defesa": "D07",
+          "nota": "En R99, los PAP mantienen un ASR del 24% al 92% bajo defensas que transforman el input (Rephrase, Retokenize, Rand-Insert/Swap/Patch); resultado agregado, no aislado por técnica."
+        }
+      ]
     },
     {
       "id": "T23",
@@ -263,7 +379,13 @@
     },
     {
       "id": "T32",
-      "descricao": "Controla el inicio de la respuesta del modelo (prefill, o restricciones en el prompt que fuerzan palabras afirmativas) para inducirlo a empezar con contenido afirmativo y reducir la probabilidad de rechazo."
+      "descricao": "Controla el inicio de la respuesta del modelo (prefill, o restricciones en el prompt que fuerzan palabras afirmativas) para inducirlo a empezar con contenido afirmativo y reducir la probabilidad de rechazo.",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "R55: con prefilling de la respuesta, los modelos Claude (2.0 a 3.5 Sonnet) llegan al 100% de ASR (juzgado por GPT-4), eludiendo la negativa entrenada."
+        }
+      ]
     },
     {
       "id": "T33",
@@ -333,7 +455,13 @@
     },
     {
       "id": "T38",
-      "descricao": "Inunda la ventana de contexto con contenido voluminoso para empujar el system prompt fuera de la ventana de atención efectiva o diluir las instrucciones de seguridad."
+      "descricao": "Inunda la ventana de contexto con contenido voluminoso para empujar el system prompt fuera de la ventana de atención efectiva o diluir las instrucciones de seguridad.",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "R245: el objetivo dañino diluido en contexto benigno largo (Ninja) eleva el ASR en HarmBench del 23,7% al 58,8% (Llama-3.1-8B-Instruct), del 23,7% al 42,5% (Qwen2.5-7B-Instruct) y del 23% al 29% (Gemini Flash), eludiendo la negativa entrenada."
+        }
+      ]
     },
     {
       "id": "T39",
@@ -349,7 +477,13 @@
     {
       "id": "T40",
       "nome": "H-CoT (secuestro del razonamiento de seguridad)",
-      "descricao": "Explota el razonamiento paso a paso que muestra el modelo contra su propio razonamiento de seguridad, alejándolo del rechazo en modelos de razonamiento (o1/o3, DeepSeek-R1, Gemini 2.0 Flash Thinking); en el estudio, la tasa de rechazo cae de cerca del 98% a menos del 2% (R233). Los ejemplos aquí usan cadenas de razonamiento falsificadas que declaran la comprobación de seguridad como completada."
+      "descricao": "Explota el razonamiento paso a paso que muestra el modelo contra su propio razonamiento de seguridad, alejándolo del rechazo en modelos de razonamiento (o1/o3, DeepSeek-R1, Gemini 2.0 Flash Thinking); en el estudio, la tasa de rechazo cae de cerca del 98% a menos del 2% (R233). Los ejemplos aquí usan cadenas de razonamiento falsificadas que declaran la comprobación de seguridad como completada.",
+      "bypass": [
+        {
+          "defesa": "D15",
+          "nota": "R233: H-CoT secuestra el razonamiento de seguridad de los modelos de razonamiento; la tasa de negativa de o1 cae de cerca del 98% a menos del 2% en el benchmark Malicious-Educator."
+        }
+      ]
     },
     {
       "id": "T41",
@@ -364,7 +498,13 @@
     },
     {
       "id": "T42",
-      "descricao": "Inyecta instrucciones maliciosas en la definición (nombre, descripción, schema) de una tool/plugin que será ejecutada por el agente LLM, envenenando las decisiones del agente cuando usa esas tools."
+      "descricao": "Inyecta instrucciones maliciosas en la definición (nombre, descripción, schema) de una tool/plugin que será ejecutada por el agente LLM, envenenando las decisiones del agente cuando usa esas tools.",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "R241 (MCPTox): en servidores MCP reales el ASR llega al 72,8% y la mayor tasa de negativa entre los agentes (Claude-3.7-Sonnet) es inferior al 3%, así que la negativa entrenada no frena el envenenamiento de la descripción de la tool."
+        }
+      ]
     },
     {
       "id": "T43",
@@ -377,7 +517,21 @@
     {
       "id": "T45",
       "nome": "Confused Deputy (autoridad del agente)",
-      "descricao": "Explota el hecho de que el agente LLM tiene acceso privilegiado (tools, APIs, filesystem) y no distingue entre instrucciones del usuario e instrucciones inyectadas en datos procesados, haciéndolo actuar como un confused deputy (delegado confundido)."
+      "descricao": "Explota el hecho de que el agente LLM tiene acceso privilegiado (tools, APIs, filesystem) y no distingue entre instrucciones del usuario e instrucciones inyectadas en datos procesados, haciéndolo actuar como un confused deputy (delegado confundido).",
+      "bypass": [
+        {
+          "defesa": "D09",
+          "nota": "R159 (ASB, inyección indirecta vía respuesta de tool): con Delimiters el ASR medio queda en 24,96%, frente a 27,98% sin defensa; la defensa casi no reduce el ataque."
+        },
+        {
+          "defesa": "D11",
+          "nota": "R159 (ASB, inyección indirecta vía respuesta de tool): con Sandwich Prevention el ASR medio queda en 28,04%, frente a 27,98% sin defensa; la defensa casi no reduce el ataque."
+        },
+        {
+          "defesa": "D12",
+          "nota": "R159 (ASB, inyección indirecta vía respuesta de tool): con Instructional Prevention el ASR medio queda en 26,31%, frente a 27,98% sin defensa; la defensa casi no reduce el ataque."
+        }
+      ]
     },
     {
       "id": "T46",
@@ -403,7 +557,13 @@
     },
     {
       "id": "T48",
-      "descricao": "Sufijo adversarial optimizado por gradiente (Greedy Coordinate Gradient o similar) que, aunque parezca ininteligible para humanos, manipula las probabilidades del modelo para generar la respuesta deseada."
+      "descricao": "Sufijo adversarial optimizado por gradiente (Greedy Coordinate Gradient o similar) que, aunque parezca ininteligible para humanos, manipula las probabilidades del modelo para generar la respuesta deseada.",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "R54: el sufijo adversarial GCG, optimizado en Vicuna, induce contenido prohibido en ChatGPT, Bard, Claude y LLaMA-2-Chat, eludiendo la negativa entrenada (comparado con baselines sin sufijo)."
+        }
+      ]
     },
     {
       "id": "T49",
@@ -417,17 +577,39 @@
     },
     {
       "id": "T50",
-      "descricao": "Pide al modelo que 'aumente' sus directrices de comportamiento para responder a cualquier petición, solo anteponiendo una advertencia (p. ej. 'Warning:') en lugar de rechazar; suele ocurrir en varios turnos."
+      "descricao": "Pide al modelo que 'aumente' sus directrices de comportamiento para responder a cualquier petición, solo anteponiendo una advertencia (p. ej. 'Warning:') en lugar de rechazar; suele ocurrir en varios turnos.",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "R246: informe del proveedor (Microsoft) de que Skeleton Key afecta a varios modelos probados, subvirtiendo las protecciones de seguridad obtenidas en el entrenamiento; sin tasas de éxito publicadas."
+        },
+        {
+          "defesa": "D02",
+          "nota": "R246: Microsoft afirma haber mitigado Skeleton Key en los modelos gestionados de Azure con Prompt Shields (clasificador de input que detecta y bloquea el ataque); afirmación del proveedor, sin métricas."
+        }
+      ]
     },
     {
       "id": "T51",
       "nome": "CoT Hijacking (dilución del rechazo)",
-      "descricao": "Antes de la petición dañina, induce un razonamiento largo y benigno (por ejemplo, resolver acertijos) en modelos de razonamiento; el razonamiento prolongado diluye el rechazo ('refusal dilution') y el modelo cumple al final (R234; ASR del 94% al 100% en HarmBench en Gemini 2.5 Pro, o4-mini, Grok 3 Mini y Claude 4 Sonnet)."
+      "descricao": "Antes de la petición dañina, induce un razonamiento largo y benigno (por ejemplo, resolver acertijos) en modelos de razonamiento; el razonamiento prolongado diluye el rechazo ('refusal dilution') y el modelo cumple al final (R234; ASR del 94% al 100% en HarmBench en Gemini 2.5 Pro, o4-mini, Grok 3 Mini y Claude 4 Sonnet).",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "R234: la dilución de la negativa mediante razonamiento largo y benigno alcanza el 99% (Gemini 2.5 Pro), 94% (o4 Mini), 100% (Grok 3 Mini) y 94% (Claude 4 Sonnet) en HarmBench, eludiendo la negativa entrenada."
+        }
+      ]
     },
     {
       "id": "T52",
       "nome": "Bad Chain (backdoor en CoT)",
-      "descricao": "Envenena las demostraciones de chain-of-thought del prompt con un paso de razonamiento de backdoor que cambia la respuesta final cuando aparece un disparador en la pregunta; no requiere acceso a pesos ni a datos de entrenamiento (R250; ASR medio del 97,0% en GPT-4 en el estudio)."
+      "descricao": "Envenena las demostraciones de chain-of-thought del prompt con un paso de razonamiento de backdoor que cambia la respuesta final cuando aparece un disparador en la pregunta; no requiere acceso a pesos ni a datos de entrenamiento (R250; ASR medio del 97,0% en GPT-4 en el estudio).",
+      "bypass": [
+        {
+          "defesa": "D07",
+          "nota": "R250: dos defensas de barajado de los pasos de razonamiento de las demostraciones (Shuffle y Shuffle++) reducen el ASR de BadChain en parte de los casos, pero con una caída no despreciable de la exactitud; los autores concluyen que el ataque no queda efectivamente anulado."
+        }
+      ]
     }
   ]
 }

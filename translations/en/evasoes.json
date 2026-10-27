@@ -98,7 +98,13 @@
     },
     {
       "id": "E10",
-      "descricao": "Embeds the hostile instruction in an alternative modality (image with text, audio, PDF document, video) that the model processes but text filters do not inspect."
+      "descricao": "Embeds the hostile instruction in an alternative modality (image with text, audio, PDF document, video) that the model processes but text filters do not inspect.",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "R35: the review reports that hiding the malicious content in the visual modality makes the model derive the context without noticing anything malicious, due to the lack of cross-modality alignment; report of third-party work, no figures."
+        }
+      ]
     },
     {
       "id": "E11",

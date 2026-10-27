@@ -375,7 +375,14 @@
       "id": "E10",
       "nome": "Multimodal Injection (image/audio)",
       "descricao": "Embute a instrução hostil em uma modalidade alternativa (imagem com texto, áudio, documento PDF, vídeo) que o modelo processa mas que filtros de texto não inspecionam.",
-      "bypass": [],
+      "bypass": [
+        {
+          "defesa": "D14",
+          "base": "alegado",
+          "fonte": "R35",
+          "nota": "R35: a revisão relata que ocultar o conteúdo malicioso na modalidade visual faz o modelo derivar o contexto sem perceber algo malicioso, pela falta de alinhamento entre modalidades; relato de trabalho de terceiros, sem números."
+        }
+      ],
       "exemplos": [
         {
           "rotulo": "Image with text",

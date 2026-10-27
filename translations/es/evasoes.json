@@ -98,7 +98,13 @@
     },
     {
       "id": "E10",
-      "descricao": "Incrusta la instrucción hostil en una modalidad alternativa (imagen con texto, audio, documento PDF, video) que el modelo procesa pero que los filtros de texto no inspeccionan."
+      "descricao": "Incrusta la instrucción hostil en una modalidad alternativa (imagen con texto, audio, documento PDF, video) que el modelo procesa pero que los filtros de texto no inspeccionan.",
+      "bypass": [
+        {
+          "defesa": "D14",
+          "nota": "R35: la revisión informa que ocultar el contenido malicioso en la modalidad visual hace que el modelo derive el contexto sin notar nada malicioso, por la falta de alineación entre modalidades; relato de trabajo de terceros, sin cifras."
+        }
+      ]
     },
     {
       "id": "E11",
