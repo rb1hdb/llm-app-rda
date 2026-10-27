@@ -58,5 +58,6 @@ Avisos de "Orphan references" são esperados (referências sem ficha que as cite
 
 ## Limites de autonomia
 - Commits locais são autorizados direto na `main`, um por tarefa do backlog, sem pedir confirmação; o `index.html` é regenerado a cada tarefa para o autor testar. `push`, tags, apagar arquivos e reescrever histórico só por pedido explícito do autor, que roda o push.
+- Nunca fazer `push` (nem sugerir como rotina). Ao concluir uma tarefa, apresentar ao autor o(s) comando(s) `git commit` já com a mensagem completa (`-m` e corpo), para ele conferir ou refazer o commit. Cada commit leva o comentário junto com o comando, não só o hash.
 - Rodar `build.py --validate` após qualquer mudança em `data/`, `labels/`, `translations/` ou `build-page/`; regenerar `index.html` ao concluir.
 - Dúvida de critério ou escopo: perguntar ao autor.
