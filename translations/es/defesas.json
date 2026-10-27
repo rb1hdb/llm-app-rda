@@ -19,7 +19,7 @@
     },
     {
       "id": "D02",
-      "pt_hash": "7a9e97ccb7",
+      "pt_hash": "9a3803495e",
       "nome": "Clasificador entrenado de input (guard model)",
       "descricao": "Un modelo separado del LLM principal, ajustado por instrucciones (o entrenado con datos sintéticos generados a partir de reglas en lenguaje natural, o mediante entrenamiento adversarial en línea), clasifica el prompt y el contexto recuperado contra una taxonomía de riesgos antes de que el LLM los procese; el resultado bloquea o deja pasar.",
       "fortalezas": [
@@ -32,7 +32,7 @@
         "Falsos positivos degradan la utilidad: el detector de inyección de AgentDojo 'has too many false positives' y redujo la utilidad benigna al 41,49% (R267 §4.3); Microsoft lista falsos positivos como trade-off de defensas probabilísticas (R252).",
         "El clasificador puede ser evadido por inyección indirecta construida contra él: en EchoLeak el clasificador XPIA de Microsoft fue evadido (R198).",
         "La presencia del guardrail es detectable por señales HTTP, léxicas y temporales, distinguiendo bloqueo del guardrail de rechazo del LLM (F1 medio 98%) (R264), lo que entrega al atacante el mapa de la capa.",
-        "Costo operacional no nulo: en Constitutional Classifiers, +0,38% de rechazos en tráfico de producción y 23,7% de overhead de inferencia (R219).",
+        "Costo operativo no nulo: en los Constitutional Classifiers, la versión actualizada tuvo +0,38% de rechazos (sin significancia estadística, en una muestra de 5.000 conversaciones) y 23,7% de sobrecarga de inferencia (R219).",
         "Bajo el reformateo M2S (Hyphenize, Numberize, Pythonize), Llama Guard 3 8B clasificó como 'Safe' entre 56,6% y 58,5% de los prompts de cada variante y 71,0% en el ensemble, frente a 66,1% del multi-turno original (R232 §5.1, Tabla 2); el paper lo atribuye a 'contextual blindness' en verificaciones turno a turno (R232 §5.5).",
         "Nota: los clasificadores bien entrenados pueden resistir ofuscaciones simples (E09 typos, E08 tokenizer); sin embargo, cuando los datos de entrenamiento no cubren variantes ofuscadas, el clasificador se degrada al nivel de un filtro léxico y se vuelve vulnerable a las mismas evasiones (inferencia; la vulnerabilidad bajo ataque adaptativo está documentada en R145 §5.3)."
       ],
@@ -40,7 +40,7 @@
     },
     {
       "id": "D03",
-      "pt_hash": "6af46ef471",
+      "pt_hash": "476be0f25e",
       "nome": "Juez LLM de input (detección/remoción de inyección por LLM)",
       "descricao": "Un LLM dedicado — o el propio modelo en modo de autoverificación — analiza el prompt o el contenido no confiable que va a entrar en el contexto, decide si hay intento de ataque y, en algunas variantes, elimina el fragmento inyectado antes de continuar.",
       "fortalezas": [
@@ -52,7 +52,7 @@
         "El propio juez es un LLM y es inyectable: 'A guardrail LLM is itself an LLM and is itself susceptible to prompt injection' (R251).",
         "Detectores con conocimiento secreto basados en LLM fueron eludidos por ataque adaptativo: DataSentinel 'In every case, the defense was bypassed' (R145 §5.4).",
         "Falsos positivos de defensas probabilísticas bloquean acciones legítimas y hay costo de latencia/cómputo (R252 Outcomes).",
-        "Los números de PromptArmor (<1%) provienen de evaluación en AgentDojo reportada por los propios autores (R147 abstract); en las fuentes leídas no hay confirmación independiente bajo ataque adaptativo contra ese detector."
+        "Las cifras de PromptArmor (<1%) provienen de AgentDojo y son de los propios autores (R147 abstract), que también reportan una prueba adaptativa propia contra el detector; en las fuentes leídas no hay confirmación independiente bajo ataque adaptativo."
       ],
       "categoria": "Juicio por LLM"
     },
@@ -104,12 +104,12 @@
     },
     {
       "id": "D07",
-      "pt_hash": "76d795a3f7",
+      "pt_hash": "5180d6f8ad",
       "nome": "Transformación del input antes del modelo (perturbación aleatoria con agregación, reescritura de query)",
       "descricao": "En vez de juzgar el prompt, el sistema lo transforma antes del LLM: SmoothLLM perturba aleatoriamente varias copias del prompt (nivel de carácter) y agrega las respuestas para detectar/neutralizar sufijos adversariales; la reescritura de query reformula la entrada del usuario antes de la tarea final.",
       "fortalezas": [
         "Se basa en el hallazgo de que 'adversarially-generated prompts are brittle to character-level changes' y establece estado del arte contra GCG, PAIR, RandomSearch y AmpleGCG (R31).",
-        "Independiente del modelo ('works with any LLM', R31 abstract/resumen) y resiste GCG adaptativo según los autores (R31).",
+        "Independiente del modelo (el resumen de R31 dice 'compatible with any LLM') y resistente a GCG adaptativo según los autores (R31).",
         "La reescritura de query fue la defensa más eficaz contra el ataque de turno 1 de filtración de prompt (≈ -17 puntos de ASR en modelos cerrados) (R01 §5)."
       ],
       "fraquezas": [
@@ -302,7 +302,7 @@
     },
     {
       "id": "D19",
-      "pt_hash": "855db48d58",
+      "pt_hash": "6819748a69",
       "nome": "Monitor lexical de output (patrones, secretos, filtración manifiesta)",
       "descricao": "Examina la respuesta generada mediante reglas de patrón en busca de señales de inyección exitosa o filtración (secretos, claves, instrucciones del sistema) y bloquea o trunca la salida que coincida.",
       "fortalezas": [
@@ -312,24 +312,24 @@
       "fraquezas": [
         "Insuficiente por sí solo: 'output keyword filtering is not sufficient' (R251 Secure Implementation Pipeline).",
         "Solo reconoce patrones previstos; filtración reformulada, fragmentada o transcodificada no coincide (inferencia lógica, el mismo límite del filtro lexical R251).",
-        "Más del 80% de las implantaciones filtraron el system prompt bajo consultas adversariales realistas incluso con defensas (R263), y la extracción por ataques textuales simples tiene alta probabilidad (R273)."
+        "Más del 80% de los despliegues filtraron el system prompt bajo consultas adversariales realistas (R263), y la extracción mediante ataques de texto simples tiene alta probabilidad (R273)."
       ],
       "categoria": "Filtrado de salida"
     },
     {
       "id": "D20",
-      "pt_hash": "c94a9f1460",
+      "pt_hash": "abaf811869",
       "nome": "Clasificador entrenado de output (guard model sobre la respuesta)",
       "descricao": "El mismo tipo de guard model del triaje de entrada, aplicado a la respuesta generada: clasifica el texto producido contra la taxonomía de política antes de entregarlo al usuario o a tools downstream.",
       "fortalezas": [
         "Juzga la respuesta y no la solicitud: Llama Guard hace 'response classification' de los outputs generados (R215).",
-        "La misma familia de clasificadores entrenada por constitución fue evaluada contra jailbreaks universales con 3.000+ horas de red teaming (R219)."
+        "La misma familia de clasificadores entrenada con constitución fue evaluada contra jailbreaks universales con más de 3.000 horas de red teaming, en una versión prototipo (R219)."
       ],
       "fraquezas": [
         "Los mismos límites de D02 bajo ataque adaptativo: filtros de tipo modelo con ASR >90% (R145 §5.3).",
         "Juzga el texto de la respuesta, no el efecto downstream (link, imagen, llamada): en EchoLeak la exfiltración pasó por links e imágenes autocargadas (R198).",
         "Evalúa cada respuesta de forma aislada; jailbreaks multi-turn humanos superan el 70% de ASR en defensas con ASR de un dígito bajo ataques single-turn (R256; aplicación a clasificadores por turno es inferencia).",
-        "Costo: +0,38% de rechazos y 23,7% de overhead de inferencia (R219).",
+        "Costo: en la versión actualizada, +0,38% de rechazos (sin significancia estadística) y 23,7% de sobrecarga de inferencia (R219).",
         "Nota: las evasiones de codificación de output (E02, E06, E11) pueden eludir este clasificador cuando se instruye al modelo a responder en formato codificado (Base64, Pig Latin, lenguaje personalizado). El clasificador opera sobre el texto de la respuesta y, si este está ofuscado, la clasificación falla por el mismo mecanismo que afecta a D19 (inferencia; la vulnerabilidad de los guard models bajo ataque adaptativo está documentada en R145 §5.3, pero la aplicación específica a la ofuscación de output es inferencia lógica)."
       ],
       "categoria": "Clasificadores"
@@ -418,11 +418,11 @@
     },
     {
       "id": "D26",
-      "pt_hash": "96317a5534",
+      "pt_hash": "2aa2cad1b5",
       "nome": "Flujo de control predeterminado (action selector, plan-then-execute, code-then-execute, tool filter)",
       "descricao": "Fija el flujo de acciones antes de que el agente vea datos no confiables: el agente solo selecciona de una lista de acciones permitidas (Action-Selector), formula un plan antes de ejecutar (Plan-Then-Execute), escribe un programa formal (Code-Then-Execute) o recibe solo las tools necesarias para la tarea (tool filter), de modo que datos inyectados no alteren el flujo.",
       "fortalezas": [
-        "El tool filter bajó el ASR en AgentDojo: 'particularly effective, lowering the attack success rate to 7.5%' (R267 §4.3).",
+        "El tool filter redujo el ASR en AgentDojo: 'particularly effective, lowering the attack success rate to 7.5%' (R267 §4.3; la tabla detallada del mismo artículo muestra 6,84%).",
         "Patrones con 'provable resistance to prompt injection' propuestos como principios de diseño, con trade-offs documentados (R269).",
         "Plan-Then-Execute permite 'formulate a plan to be executed' antes del contacto con datos externos (R269 §3.1)."
       ],

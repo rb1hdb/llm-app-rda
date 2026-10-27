@@ -2,11 +2,11 @@
   "produtos": [
     {
       "id": "P01",
-      "descricao": "Modelo de clasificación de seguridad basado en Llama, ajustado para clasificar tanto prompts de entrada (prompt classification) como respuestas de LLM (response classification) contra una taxonomía de riesgos configurable (MLCommons, 14 categorías). Pesos abiertos, variantes de 1B y 8B parámetros, soporte para 8 idiomas y optimizado para seguridad de tool calls. Llama Guard 4 (12B) es el sucesor multimodal."
+      "descricao": "Modelo de clasificación de seguridad basado en Llama, ajustado para clasificar tanto prompts de entrada (prompt classification) como respuestas de LLM (response classification) frente a una taxonomía de riesgos configurable (MLCommons, 14 categorías). Pesos abiertos; Llama Guard 3 8B admite 8 idiomas y fue optimizado para la seguridad de tool calls (búsqueda e intérprete de código). Llama Guard 4 (12B) es el sucesor multimodal."
     },
     {
       "id": "P02",
-      "descricao": "Clasificador encoder compacto (DeBERTa/mDeBERTa) para detección de prompt injection y jailbreak en texto de entrada. Clasifica prompts como benignos o maliciosos. Variantes de 22M (inglés) y 86M (multilingüe, 8 idiomas) parámetros, ventana de 512 tokens. Tokenización resistente a ataques adversariales y función de pérdida basada en energía para mejor rendimiento fuera de distribución."
+      "descricao": "Clasificador encoder compacto (familia DeBERTa) para detectar prompt injection y jailbreak en texto de entrada. Variantes de 22M (inglés) y 86M (base multilingüe), ventana de 512 tokens. Tokenización resistente a ataques adversariales y función de pérdida basada en energía para mejor desempeño fuera de distribución."
     },
     {
       "id": "P03",
@@ -14,23 +14,23 @@
     },
     {
       "id": "P04",
-      "descricao": "Detector de prompt injection en tres capas: (1) heurística — filtra entrada por regex, palabras clave y correspondencia aproximada; (2) similitud vectorial — compara embeddings del prompt con embeddings de ataques conocidos; (3) juez LLM — un LLM dedicado analiza el prompt. Canary tokens para detección de fuga. Repositorio archivado (mayo 2025)."
+      "descricao": "Detector de prompt injection por capas: (1) heurística — filtra entrada potencialmente maliciosa antes del LLM; (2) similitud vectorial — almacena embeddings de ataques anteriores para reconocer ataques similares; (3) juez LLM — un LLM dedicado analiza el prompt. Canary tokens para detectar fugas. La documentación lo describe como prototipo sin protección del 100%. Repositorio archivado (16/05/2025)."
     },
     {
       "id": "P05",
-      "descricao": "Clasificadores de entrada y salida entrenados con datos sintéticos generados a partir de una 'constitución' de reglas de seguridad en lenguaje natural. Evaluados contra más de 3.000 horas de red teaming sin jailbreak universal encontrado. Overhead declarado: +0,38% de rechazos en tráfico de producción y 23,7% de overhead de inferencia."
+      "descricao": "Clasificadores de entrada y salida entrenados con datos sintéticos generados a partir de una 'constitución' de reglas de seguridad en lenguaje natural. El prototipo fue evaluado en más de 3.000 horas estimadas de red teaming sin que se encontrara un jailbreak universal. Sobrecarga declarada en la versión actualizada: +0,38% de rechazos en tráfico de producción (sin significancia estadística) y 23,7% de costo de cómputo."
     },
     {
       "id": "P06",
-      "descricao": "Servicio cloud de detección de contenido nocivo para aplicaciones de IA. Incluye Prompt Shields (detección de ataques directos de jailbreak e inyección indirecta de prompt desde documentos), clasificación de texto e imagen en categorías de daño, y detección de groundedness."
+      "descricao": "Servicio cloud de detección de contenido dañino para aplicaciones de IA. Incluye Prompt Shields (análisis de texto frente a ataques de entrada del usuario a LLMs), APIs de análisis de texto e imagen en categorías de daño (sexual, violencia, odio, autolesión, con niveles de severidad) y detección de groundedness (preview)."
     },
     {
       "id": "P07",
-      "descricao": "Familia de clasificadores de seguridad de contenido de pesos abiertos, construidos sobre Gemma 2. Clasifican entrada (prompt-only) y salida (prompt-response) contra cuatro categorías de daño. Variantes de texto en 2B, 9B y 27B parámetros. ShieldGemma 2 (4B) añade moderación de imagen."
+      "descricao": "Familia de clasificadores de seguridad de contenido de pesos abiertos, ajustados por instrucción. La versión 1 se construye sobre Gemma 2 en 2B, 9B y 27B parámetros y evalúa entradas y respuestas frente a políticas de seguridad definidas. ShieldGemma 2 (4B) etiqueta imágenes. La documentación antigua está marcada como deprecated."
     },
     {
       "id": "P08",
-      "descricao": "API de protección para aplicaciones GenAI. Detecta prompt injection (directo e indirecto), detecta y enmascara PII, ofrece moderación de contenido y detecta links maliciosos. Soporta mensajes individuales o conversaciones completas. Políticas configurables. SaaS o self-hosted."
+      "descricao": "API de protección para aplicaciones GenAI (hoy bajo Check Point AI Security). El endpoint /guard hace screening de texto, de mensajes del usuario y del LLM y de interacciones de agentes y tools, con políticas configurables. SaaS o self-hosted."
     },
     {
       "id": "P09",
@@ -38,23 +38,23 @@
     },
     {
       "id": "P10",
-      "descricao": "Framework open-source de validación de entradas y salidas de LLM. Hub de validadores preconstruidos cubriendo toxicidad, PII, alucinación, profanidad y sesgo. Soporta ReAsk (corrección automática por el LLM). Licencia Apache 2.0."
+      "descricao": "Framework open-source de validación de entradas y salidas de LLM, con un Guardrails Hub de validadores preconstruidos (por ejemplo, lenguaje tóxico y verificación de competidores). Licencia Apache 2.0. En julio de 2026 los validadores pasaron a paquetes PyPI instalables y la inferencia remota alojada fue descontinuada."
     },
     {
       "id": "P11",
-      "descricao": "Biblioteca open-source de scanners de entrada y salida para LLMs. Los scanners incluyen anonimización de PII, prohibición de tópicos, detección de prompt injection, compliance, validación de JSON y verificación de consistencia factual. Model-agnostic."
+      "descricao": "Biblioteca open-source de scanners de entrada y salida para LLMs. Los scanners incluyen anonimización de PII, bloqueo de temas, detección de prompt injection, validación de JSON y verificación de consistencia factual. Proyecto archivado: el repositorio y los modelos asociados ya no se mantienen."
     },
     {
       "id": "P12",
-      "descricao": "Scanner de seguridad open-source para LLMs que combina reglas YARA, búsqueda por similitud vectorial, clasificación por transformer, verificación de similitud prompt-respuesta y canary tokens. Proyecto experimental, sin actualizaciones desde enero de 2024."
+      "descricao": "Scanner de seguridad open-source para LLMs que combina heurísticas YARA, búsqueda por similitud vectorial, clasificación por transformer, similitud prompt-respuesta y canary tokens. Declarado en estado alpha, experimental y con fines de investigación."
     },
     {
       "id": "P13",
-      "descricao": "Plataforma de seguridad GenAI empresarial con protección de entrada y salida en tiempo real. Detecta prompt injection, contenido nocivo y fuga de datos sensibles. Incluye logging detallado, dashboard de visibilidad y descubrimiento de Shadow AI."
+      "descricao": "Plataforma de seguridad GenAI empresarial. El sitio describe protección de datos sensibles con respuesta en tiempo real y visibilidad/descubrimiento de Shadow AI, además de postura de seguridad y cumplimiento (NIST, OWASP) para agentes; prompt injection aparece como tema del producto."
     },
     {
       "id": "P14",
-      "descricao": "Firewall para LLMs que se posiciona entre la capa de aplicación y el modelo. Reglas configurables para detección en tiempo real de PII, alucinación, prompt injection y lenguaje tóxico. Renombrado a Arthur Engine."
+      "descricao": "Engine de guardrails para aplicaciones LLM y flujos GenAI (repositorio arthur-ai/arthur-engine; la página antigua de Arthur Shield devuelve 404). Métricas configurables para detección en tiempo real de PII o fuga de datos sensibles, alucinación, intentos de prompt injection y lenguaje tóxico."
     }
   ]
 }
