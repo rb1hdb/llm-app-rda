@@ -92,7 +92,7 @@ llm-app-rda/
 │   ├── sinais.json         <- 66 señales
 │   ├── tecnicas.json       <- 52 técnicas
 │   ├── evasoes.json        <- 12 evasiones
-│   ├── recon.json          <- 37 prompts de recon
+│   ├── recon.json          <- 36 prompts de recon
 │   ├── produtos.json       <- 14 productos
 │   ├── referencias.json    <- 125 referencias
 │   ├── wiki.json           <- 8 artículos
