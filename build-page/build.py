@@ -79,7 +79,7 @@ OVERLAYS = ("tecnicas", "evasoes", "produtos")
 def validate_translations(data):
     """Translations of tecnicas/evasoes/produtos are overlays (only translatable fields); taxonomia keeps parity."""
     errs = []
-    allowed = {"id", "nome", "descricao", "variantes", "bypass", "rotulos"}
+    allowed = {"id", "nome", "descricao", "variantes", "bypass", "exemplos", "prompt_base"}
     errs += validate_generic(data)
     for lang in ("en", "es"):
         for chave in OVERLAYS:
@@ -100,8 +100,15 @@ def validate_translations(data):
                     errs.append(f"{ref}: missing descricao")
                 if len(o.get("variantes", [])) != len(t.get("variantes", [])):
                     errs.append(f"{ref}: variantes count differs")
-                if "rotulos" in o and len(o["rotulos"]) != len(t.get("exemplos", [])):
-                    errs.append(f"{ref}: rotulos count differs from exemplos")
+                if "exemplos" in o and len(o["exemplos"]) != len(t.get("exemplos", [])):
+                    errs.append(f"{ref}: exemplos count differs")
+                for i, oe in enumerate(o.get("exemplos", [])):
+                    if "prompt" not in oe:
+                        errs.append(f"{ref}: exemplos[{i}] missing prompt translation")
+                if t.get("prompt_base") and not o.get("prompt_base"):
+                    errs.append(f"{ref}: missing prompt_base translation")
+                if o.get("prompt_base") and not t.get("prompt_base"):
+                    errs.append(f"{ref}: prompt_base translation with no PT prompt_base")
                 notas_pt = {b["defesa"] for b in t.get("bypass", []) if b.get("nota")}
                 notas_tr = {b["defesa"] for b in o.get("bypass", [])}
                 if notas_pt != notas_tr:
@@ -123,7 +130,7 @@ def validate_translations(data):
 GENERIC = {
     "defesas":  (("defesas",),  {"nome", "descricao", "fortalezas", "fraquezas", "categoria", "modo_falha"}, False),
     "sinais":   (("sinais",),   {"texto"}, False),
-    "recon":    (("prompts",),  {"titulo", "quando", "objetivo", "interpretacao", "rotulo"}, False),
+    "recon":    (("prompts",),  {"titulo", "quando", "objetivo", "interpretacao", "rotulo", "prompt"}, False),
     "wiki":     (("artigos",),  {"titulo", "texto", "linhas", "itens"}, True),
     "triagem":  (("perguntas",), {"pergunta", "rotulo", "nota"}, False),
     "clusters": (("_meta", "clusters"), {"nome", "descricao"}, False),
@@ -268,10 +275,16 @@ def merge_overlay(pt, overlay, chave, variacao):
         for b in t.get("bypass", []):
             if b["defesa"] in notas:
                 b["nota"] = notas[b["defesa"]]
-        for ex, rot in zip(t.get("exemplos", []), o.get("rotulos", [None] * len(t.get("exemplos", [])))):
-            if rot:
-                ex["rotulo"] = rot
+        oex = o.get("exemplos", [])
+        for i, ex in enumerate(t.get("exemplos", [])):
+            oe = oex[i] if i < len(oex) else {}
+            if oe.get("rotulo"):
+                ex["rotulo"] = oe["rotulo"]
             ex["rotulo"] = ex["rotulo"].replace("Variação", variacao, 1)
+            if oe.get("prompt"):
+                ex["prompt"] = oe["prompt"]
+        if o.get("prompt_base"):
+            t["prompt_base"] = o["prompt_base"]
     return out
 
 
