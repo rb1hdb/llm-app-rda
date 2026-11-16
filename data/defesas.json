@@ -1516,7 +1516,8 @@
           "r": "R267",
           "tipo": "primaria"
         }
-      ]
+      ],
+      "modo_falha": "Controle de processo (red teaming contínuo): não há sinal observável em black-box — interagir com o app não revela que a equipe faz testes adversariais; é propriedade do SDLC, não do sistema em execução, por isso nenhum sinal aponta para ela. O limite relevante é que teste estático superestima robustez (R145): os ataques adaptativos já ligados (E07, T48) exercitam justamente o que um conjunto fixo de testes não cobre. Testar: cobertura adaptativa/contínua, não a existência do programa de red team."
     },
     {
       "id": "D42",

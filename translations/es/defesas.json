@@ -664,7 +664,7 @@
     },
     {
       "id": "D41",
-      "pt_hash": "a96e6406eb",
+      "pt_hash": "9cb58db50f",
       "nome": "Pruebas adversariales continuas y red teaming",
       "descricao": "Proceso de probar la aplicación con patrones de ataque conocidos, benchmarks, red teaming (humano o automatizado) y simulaciones de intrusión, tratando al modelo como usuario no confiable, para medir resistencia y detectar regresiones.",
       "fortalezas": [
@@ -677,7 +677,8 @@
         "El resultado de smoke test no generaliza: 'Passing this smoke test does not show resistance to a persistent adversary' (R251).",
         "'Evaluation characterizes behaviour; it does not prove correctness' (R255)."
       ],
-      "categoria": "Validación"
+      "categoria": "Validación",
+      "modo_falha": "Control de proceso (red teaming continuo): no hay señal observable en black-box — interactuar con la app no revela que el equipo realiza pruebas adversariales; es una propiedad del SDLC, no del sistema en ejecución, por eso ninguna señal apunta a ella. El límite relevante es que la prueba estática sobrestima la robustez (R145): los ataques adaptativos ya vinculados (E07, T48) ejercitan justamente lo que un conjunto fijo de pruebas no cubre. Probar: cobertura adaptativa/continua, no la existencia del programa de red team."
     },
     {
       "id": "D42",

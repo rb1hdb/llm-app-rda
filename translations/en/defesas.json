@@ -664,7 +664,7 @@
     },
     {
       "id": "D41",
-      "pt_hash": "a96e6406eb",
+      "pt_hash": "9cb58db50f",
       "nome": "Continuous adversarial testing and red teaming",
       "descricao": "Process of testing the application with known attack patterns, benchmarks, red teaming (human or automated), and intrusion simulations, treating the model as an untrusted user, to measure resistance and detect regressions.",
       "fortalezas": [
@@ -677,7 +677,8 @@
         "Smoke test results do not generalize: 'Passing this smoke test does not show resistance to a persistent adversary' (R251).",
         "'Evaluation characterizes behaviour; it does not prove correctness' (R255)."
       ],
-      "categoria": "Validation"
+      "categoria": "Validation",
+      "modo_falha": "Process control (continuous red teaming): no black-box observable signal — interacting with the app does not reveal that the team runs adversarial testing; it is an SDLC property, not a property of the running system, which is why no signal points to it. The relevant limit is that static testing overestimates robustness (R145): the adaptive attacks already linked (E07, T48) exercise exactly what a fixed test set does not cover. Test: adaptive/continuous coverage, not the existence of the red-team program."
     },
     {
       "id": "D42",
