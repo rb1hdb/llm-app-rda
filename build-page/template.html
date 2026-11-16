@@ -663,8 +663,6 @@ function renderSinais() {
     h += '<span class="sid">' + s.id + '</span> ';
     h += esc(s.texto);
     h += '<span class="sdef">' + cnt(defCount, L.contadores.defesa, L.contadores.defesas) + '</span>';
-    const tecCount = (s.tecnicas || []).length;
-    if (tecCount) h += '<span class="sdef stec">' + cnt(tecCount, L.contadores.tecnica, L.contadores.tecnicas) + '</span>';
     h += '</label>';
   });
   h += '</div>';

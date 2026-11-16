@@ -69,7 +69,6 @@ pre.code.prompt-base { background: var(--card); border: 1px dashed var(--line); 
 .siglist label:hover { color: var(--acc); }
 .siglist .sid { color: var(--mut); font-size: 11px; font-weight: 700; width: 30px; }
 .siglist .sdef { color: var(--mut); font-size: 11px; margin-left: auto; white-space: nowrap; }
-.siglist .stec { margin-left: 8px; color: var(--acc); }
 .grupoh { margin: 22px 0 10px; font-size: 13.5px; color: var(--vio); font-weight: 700; border-bottom: 1px solid var(--line); padding-bottom: 5px; }
 .grupoh .turno { color: var(--mut); font-weight: 600; font-size: 12px; }
 .empty { color: var(--mut); font-size: 13px; padding: 26px 0; text-align: center; }
