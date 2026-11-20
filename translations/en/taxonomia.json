@@ -74,7 +74,7 @@
       ]
     },
     {
-      "t": "Target (14)",
+      "t": "Target (16)",
       "filhos": [
         {
           "t": "Web-Only (out-of-scope)"
@@ -105,7 +105,13 @@
           "t": "Data",
           "filhos": [
             {
-              "t": "Logger",
+              "t": "RAG"
+            },
+            {
+              "t": "Memory"
+            },
+            {
+              "t": "Logs",
               "filhos": [
                 {
                   "t": "Log Data",
